@@ -597,10 +597,17 @@ h3 { font-size: 1.15rem; }
     display: none;
     flex-direction: column;
     align-items: stretch;
+    flex-wrap: nowrap;
     gap: 0;
+    width: 100%;
   }
-  .nav.is-open { display: flex; }
-  .nav a { min-height: 44px; border-bottom: 1px solid var(--border); }
+  .nav.is-open { display: flex; flex-direction: column; }
+  .nav a {
+    min-height: 44px;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+    width: 100%;
+  }
   .nav a[aria-current="page"] { border-bottom-color: var(--border); }
   .menu-btn { display: inline-flex; align-items: center; justify-content: center; align-self: flex-end; }
   .header-inner { flex-wrap: wrap; }
