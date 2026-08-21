@@ -270,6 +270,9 @@
       copy.dataset.words = all;
     }
     syncShare(lettersEl.value.trim());
+    saveRecent(lettersEl.value);
+    maybeSolveDaily(matches);
+    if ($("share")) $("share").hidden = false;
     return matches;
   }
 
@@ -401,6 +404,147 @@
     });
   });
   $("copy")?.addEventListener("click", () => copyWords($("copy")));
+
+  function toast(msg) {
+    let n = document.getElementById("toast");
+    if (!n) {
+      n = document.createElement("div");
+      n.id = "toast";
+      n.className = "toast";
+      n.setAttribute("role", "status");
+      document.body.appendChild(n);
+    }
+    n.textContent = msg;
+    n.classList.add("show");
+    clearTimeout(n._t);
+    n._t = setTimeout(() => n.classList.remove("show"), 1300);
+  }
+
+  const prevCopy = copyWords;
+  copyWords = function (btn) {
+    prevCopy(btn);
+    toast("Copied");
+  };
+
+  document.getElementById("themeBtn")?.addEventListener("click", () => {
+    const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    try { localStorage.setItem("wu_theme", next); } catch {}
+  });
+
+  $("share")?.addEventListener("click", async () => {
+    const q = lettersEl.value.trim().toUpperCase();
+    const data = { title: q ? "Words from " + q : "Word Unscrambler", url: location.href };
+    try {
+      if (navigator.share) await navigator.share(data);
+      else {
+        await navigator.clipboard.writeText(location.href);
+        toast("Link copied");
+      }
+    } catch {}
+  });
+
+  function renderRecents() {
+    const box = $("recents");
+    if (!box) return;
+    let r = [];
+    try { r = JSON.parse(localStorage.getItem("wu_recent") || "[]"); } catch {}
+    box.replaceChildren();
+    if (!r.length) {
+      box.textContent = "Racks you type are saved on this device.";
+      return;
+    }
+    r.forEach((q) => {
+      const b = el("button", "chip", q);
+      b.type = "button";
+      b.addEventListener("click", () => { lettersEl.value = q; collect(); lettersEl.focus(); });
+      box.appendChild(b);
+    });
+  }
+  function saveRecent(q) {
+    const v = (q || "").toUpperCase().replace(/[^A-Z?]/g, "");
+    if (v.length < 3) return;
+    let r = [];
+    try { r = JSON.parse(localStorage.getItem("wu_recent") || "[]"); } catch {}
+    r = [v, ...r.filter((x) => x !== v)].slice(0, 8);
+    try { localStorage.setItem("wu_recent", JSON.stringify(r)); } catch {}
+    renderRecents();
+  }
+
+  const DAILY_WORDS = "LETTERS PUZZLES ENGLISH PLAYING READING WRITING NATURAL PRESENT STRANGE RESULTS MACHINE ALREADY PROBLEM SERVICE PICTURE BETWEEN WITHOUT GREATER ANOTHER BECAUSE THROUGH JUMBLED RACKETS FINDERS SOLVING WORDING".split(" ");
+  function dayKey() {
+    return new Date().toISOString().slice(0, 10);
+  }
+  function mulberry(a) {
+    return function () {
+      let t = (a += 0x6d2b79f5);
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function scramble(word, seed) {
+    const rnd = mulberry(seed);
+    const arr = word.split("");
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(rnd() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    const out = arr.join("");
+    return out === word ? word.slice(1) + word[0] : out;
+  }
+  function dailySeed() {
+    return Number(dayKey().replace(/-/g, "")) || 1;
+  }
+  const dailyAnswer = DAILY_WORDS[Math.floor(mulberry(dailySeed())() * DAILY_WORDS.length)];
+  const dailyScramble = scramble(dailyAnswer, dailySeed() + 17);
+
+  function dailyInit() {
+    const scrambleEl = $("dailyScramble");
+    if (!scrambleEl) return;
+    scrambleEl.textContent = dailyScramble;
+    const key = dayKey();
+    let last = "";
+    let streak = 0;
+    try {
+      last = localStorage.getItem("wu_daily_last") || "";
+      streak = parseInt(localStorage.getItem("wu_daily_streak") || "0", 10) || 0;
+    } catch {}
+    const solved = last === key;
+    const meta = $("dailyMeta");
+    if (meta) meta.textContent = solved ? "Solved · streak " + streak : "New seven-letter jumble · streak " + streak;
+    if (solved) $("daily")?.classList.add("is-solved");
+    $("dailyPlay")?.addEventListener("click", () => {
+      setMode("anagram");
+      lettersEl.value = dailyScramble;
+      collect();
+      lettersEl.focus();
+    });
+  }
+  function maybeSolveDaily(matches) {
+    if (!matches || !matches.some((m) => m.word === dailyAnswer.toLowerCase())) return;
+    const key = dayKey();
+    let last = "";
+    let streak = 0;
+    try {
+      last = localStorage.getItem("wu_daily_last") || "";
+      streak = parseInt(localStorage.getItem("wu_daily_streak") || "0", 10) || 0;
+    } catch {}
+    if (last === key) return;
+    const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+    streak = last === yesterday ? streak + 1 : 1;
+    try {
+      localStorage.setItem("wu_daily_last", key);
+      localStorage.setItem("wu_daily_streak", String(streak));
+    } catch {}
+    $("daily")?.classList.add("is-solved");
+    const meta = $("dailyMeta");
+    if (meta) meta.textContent = "Solved · streak " + streak;
+    toast("Daily solved · streak " + streak);
+  }
+
+  dailyInit();
+  renderRecents();
 
   const params = new URLSearchParams(location.search);
   if (params.get("q")) lettersEl.value = params.get("q");
