@@ -1,5 +1,5 @@
-const GH = "https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/1275ee56d160b6a63feeebbfaef36a24dec44038/";
-const VER = "20260821x";
+const GH = "https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/main/";
+const VER = "20260821ad";
 const CANONICAL_HOST = "lettersunscrambler.com";
 const DICT = "https://raw.githubusercontent.com/dolph/dictionary/master/enable1.txt";
 const ROUTES = {
@@ -25,10 +25,14 @@ const ROUTES = {
   "/bingo-stems": "bingo-stems.html",
   "/about": "about.html",
   "/privacy": "privacy.html",
-  "/terms": "terms.html"
+  "/terms": "terms.html",
+  "/contact": "contact.html",
+  "/unscramble/listen": "unscramble-listen.html",
+  "/unscramble/aeinrst": "unscramble-aeinrst.html",
+  "/unscramble/scrabble": "unscramble-scrabble.html"
 };
 const ALLOW = new Set(Object.values(ROUTES).concat([
-  "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest","llms.txt"
+  "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest","llms.txt","b7e4c91a0f3d68e25a14c0b9d8e7f612.txt"
 ]));
 const LONG = new Set(["css","js","svg","jpg","webmanifest"]);
 const MIME = {
@@ -83,7 +87,7 @@ async function pull(name) {
   const ttl = LONG.has(ext) ? 86400 : 0;
   for (let i = 0; i < 3; i++) {
     try {
-      const r = await fetch(GH + name + "?v=" + VER, { cf: { cacheTtl: ttl, cacheEverything: true } });
+      const r = await fetch(GH + name, { cf: { cacheTtl: ttl } });
       if (r.ok) {
         const buf = await r.arrayBuffer();
         if (buf.byteLength > 20) return buf;

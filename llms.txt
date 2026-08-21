@@ -5,6 +5,9 @@ Free English word unscrambler and anagram solver for Scrabble, Wordle, jumble an
 - Site: https://lettersunscrambler.com/
 - Dictionary: ENABLE (~168,000 words), scored with Scrabble and Words With Friends points
 - Instant solver: https://lettersunscrambler.com/?q=LISTEN
+- Example (HTML): https://lettersunscrambler.com/unscramble/listen
+- Bingo stem: https://lettersunscrambler.com/unscramble/aeinrst
+- Contact: https://lettersunscrambler.com/contact
 - Wildcards: use ? for a blank tile (max two)
 
 ## Tools
