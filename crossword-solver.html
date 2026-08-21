@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,640&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=7" />
+  <link rel="stylesheet" href="/styles.css?v=8" />
   <link rel="preconnect" href="https://www.googletagmanager.com" />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-VR1EE3K51N"></script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2666058844257008" crossorigin="anonymous"></script>
@@ -67,40 +67,33 @@
 <main class="wrap" id="main">
   <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <span>Crossword solver</span></nav>
   <section class="hero">
-    <p class="kicker">Known letters · blanks</p>
     <h1>Crossword solver</h1>
-    <p class="lede">Type the clue pattern. Use ? for empty squares.</p>
+    <p class="lede">Type the pattern. Use ? for blanks.</p>
   </section>
   <section class="panel" aria-labelledby="letters-label">
-      <ol class="how-steps" aria-label="How to use">
-        <li><span>1</span>Type known letters</li>
-        <li><span>2</span>Put ? in empty squares</li>
-        <li><span>3</span>Tap a match to copy it</li>
-      </ol>
       <label class="field-label" id="letters-label" for="letters">Letters</label>
       <div class="input-row">
         <input id="letters" type="text" maxlength="16" autocomplete="off" spellcheck="false" inputmode="text" placeholder="C?O??" aria-describedby="coach" />
         <button class="primary" id="go" type="button">Find words</button>
       </div>
-      <p class="coach" id="coach">Type the crossword pattern. Use ? for a blank square, like C?O??.</p>
+      <p class="coach" id="coach">Use ? for a blank tile. Words appear as you type.</p>
       <div class="tiles" id="tiles" aria-hidden="true"></div>
-      <p class="try-label">What do you want?</p>
-      <div class="modes" role="group" aria-label="Mode">
-        <button class="mode" type="button" data-mode="subset" aria-pressed="false" title="Every word you can make, including shorter ones">All words</button>
-        <button class="mode" type="button" data-mode="anagram" aria-pressed="false" title="Words that use every letter">Anagrams</button>
-        <button class="mode" type="button" data-mode="wordle" aria-pressed="false" title="Five-letter Wordle guesses">Wordle</button>
-        <button class="mode" type="button" data-mode="pattern" aria-pressed="true" title="Crossword pattern with ? blanks">Pattern</button>
+      <div class="modes" role="tablist" aria-label="Mode">
+        <button class="mode" type="button" data-mode="subset" aria-pressed="false">All words</button>
+        <button class="mode" type="button" data-mode="anagram" aria-pressed="false">Anagrams</button>
+        <button class="mode" type="button" data-mode="wordle" aria-pressed="false">Wordle</button>
+        <button class="mode" type="button" data-mode="pattern" aria-pressed="true">Pattern</button>
       </div>
-      <p class="try-label">Try an example</p>
-      <div class="examples" aria-label="Try an example"><button class="chip" type="button" data-ex="C?O??">C?O??</button><button class="chip" type="button" data-ex="A?E">A?E</button><button class="chip" type="button" data-ex="??ING">??ING</button></div>
+      <p class="try-label">Length</p>
+      <div class="len-row" role="group" aria-label="Word length"><button type="button" class="len" data-len="" aria-pressed="true">Any</button><button type="button" class="len" data-len="2" aria-pressed="false">2</button><button type="button" class="len" data-len="3" aria-pressed="false">3</button><button type="button" class="len" data-len="4" aria-pressed="false">4</button><button type="button" class="len" data-len="5" aria-pressed="false">5</button><button type="button" class="len" data-len="6" aria-pressed="false">6</button><button type="button" class="len" data-len="7" aria-pressed="false">7</button><button type="button" class="len" data-len="8" aria-pressed="false">8</button><button type="button" class="len" data-len="9+" aria-pressed="false">9+</button></div>
       <div id="wordleFields" hidden><div class="clue-block">
           <p class="field-label">Green letters</p>
-          <p class="mini">Right letter, right place. Leave a box empty if you do not know it.</p>
           <div class="wordle-row" aria-label="Green letters">
-            <input data-slot maxlength="1" inputmode="text" aria-label="Green letter 1" placeholder="1" /><input data-slot maxlength="1" inputmode="text" aria-label="Green letter 2" placeholder="2" /><input data-slot maxlength="1" inputmode="text" aria-label="Green letter 3" placeholder="3" /><input data-slot maxlength="1" inputmode="text" aria-label="Green letter 4" placeholder="4" /><input data-slot maxlength="1" inputmode="text" aria-label="Green letter 5" placeholder="5" />
+            <input data-slot maxlength="1" inputmode="text" aria-label="Position 1" placeholder="1" /><input data-slot maxlength="1" inputmode="text" aria-label="Position 2" placeholder="2" /><input data-slot maxlength="1" inputmode="text" aria-label="Position 3" placeholder="3" /><input data-slot maxlength="1" inputmode="text" aria-label="Position 4" placeholder="4" /><input data-slot maxlength="1" inputmode="text" aria-label="Position 5" placeholder="5" />
           </div>
-          <p class="mini">Yellows: type them in the letters box above. Greys: open More options → Exclude.</p>
+          <p class="mini">Yellows in the box above. Greys in More options → Exclude.</p>
         </div></div>
+      <div class="examples" aria-label="Try an example"><button class="chip" type="button" data-ex="C?O??">C?O??</button><button class="chip" type="button" data-ex="A?E">A?E</button><button class="chip" type="button" data-ex="??ING">??ING</button></div>
       <details class="more">
         <summary>More options</summary>
         <div class="filters">
@@ -110,7 +103,7 @@
           <div><label for="length">Exact length</label><input id="length" type="number" min="2" max="15" inputmode="numeric" value="" /></div>
         </div>
         <div class="filters" style="margin-top:12px">
-          <div><label for="exclude">Exclude (grey letters)</label><input id="exclude" type="text" maxlength="16" autocomplete="off" placeholder="letters to avoid" /></div>
+          <div><label for="exclude">Exclude letters</label><input id="exclude" type="text" maxlength="16" autocomplete="off" placeholder="grey tiles" /></div>
           <div>
             <label>Score</label>
             <div class="sorts">
@@ -126,17 +119,17 @@
             </div>
           </div>
         </div>
-        <p class="hint">Blank tile: type <code>?</code>. Dictionary: ENABLE, <span id="dictCount">loading</span> words.</p>
+        <p class="hint">Dictionary: ENABLE, <span id="dictCount">loading</span> words.</p>
       </details>
     </section>
     <div class="status">
-      <h2 id="resultsHeading">Results <span id="resultMeta"></span></h2>
+      <h2 id="resultsHeading">Words <span id="resultMeta"></span></h2>
       <div class="toolbar">
         <button class="ghost" id="copy" type="button" hidden>Copy all</button>
       </div>
     </div>
-    <div id="results" class="empty">Type letters above. Words appear as you type.</div>
-    <script src="/app.js?v=5" defer></script>
+    <div id="results" class="empty">Your words will show here.</div>
+    <script src="/app.js?v=6" defer></script>
   <section class="prose"><h2>Fill a crossword slot</h2>
     <p>Unlike the unscrambler, this page treats your input as a mask, not a rack. <code>P?T</code> finds PAT, PET, PIT, POT, PUT. Combine with Starts / Ends / Contains if a crossing has already given you extra letters.</p>
     <p>For a full anagram of leftover letters, switch to the <a href="/anagram-solver">anagram solver</a>.</p></section>

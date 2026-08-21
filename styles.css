@@ -198,7 +198,7 @@ button:not(:disabled), [role="button"]:not(:disabled) { cursor: pointer; }
   font-weight: 600;
   font-size: var(--text-sm);
 }
-.hero { padding: var(--space-7) 0 var(--space-5); }
+.hero { padding: 0.65rem 0 0.35rem; }
 .kicker {
   font-size: var(--text-xs);
   font-weight: 700;
@@ -218,9 +218,9 @@ h1 { font-size: var(--text-2xl); line-height: var(--leading-tight); max-width: 1
 h2 { font-size: var(--text-xl); line-height: var(--leading-snug); }
 h3 { font-size: 1.15rem; }
 .lede {
-  margin: var(--space-4) 0 0;
+  margin: 0.4rem 0 0.9rem;
   color: var(--fg-muted);
-  max-width: 52ch;
+  max-width: 36ch;
   font-size: 1.12rem;
   text-wrap: pretty;
 }
@@ -328,22 +328,22 @@ h3 { font-size: 1.15rem; }
 }
 .input-row input[type="text"] {
   flex: 1;
-  min-height: 54px;
+  min-height: 64px;
   border: 1px solid var(--border-strong);
-  border-radius: 16px;
-  padding: 0 16px;
+  border-radius: 18px;
+  padding: 0 18px;
   background: #fff;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   font-weight: 650;
-  font-size: 1.08rem;
+  font-size: 1.22rem;
   font-family: var(--font-display);
 }
 .primary {
-  min-height: 54px;
+  min-height: 64px;
   padding: 0 22px;
   border: 0;
-  border-radius: 16px;
+  border-radius: 18px;
   background: var(--felt);
   color: var(--felt-fg);
   font-weight: 650;
@@ -724,3 +724,45 @@ h3 { font-size: 1.15rem; }
   color: #1c1710;
   border: 1px solid #cbbda6;
 }
+.len-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.len {
+  min-width: 40px;
+  min-height: 40px;
+  padding: 0 11px;
+  border: 1px solid var(--border);
+  background: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 999px;
+}
+.len[aria-pressed="true"] {
+  background: #1f4a38;
+  color: #f7f1e4;
+  border-color: #1f4a38;
+}
+.modes {
+  gap: 0 !important;
+  border-bottom: 1px solid var(--border);
+  margin-top: 0.85rem;
+}
+.modes .mode {
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+  border-bottom: 2px solid transparent;
+  min-height: 42px;
+  margin-bottom: -1px;
+}
+.modes .mode[aria-pressed="true"] {
+  border-bottom-color: #1f4a38;
+  background: transparent;
+  color: #1f4a38;
+  box-shadow: none;
+}
+.word b { font-size: 1.08rem; letter-spacing: 0.03em; }
+.how-steps { display: none; }
+@media (max-width: 720px) {
+  .panel { position: sticky; top: 0; z-index: 5; }
+}
+

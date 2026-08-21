@@ -111,9 +111,11 @@
 
     if (!input && mode !== "wordle") {
       box.className = "empty";
-      box.textContent = ready ? "Type letters above. Words appear as you type." : "Loading the dictionary…";
+      box.textContent = ready ? "Your words will show here." : "Loading the dictionary…";
       meta.textContent = "";
       if (copy) copy.hidden = true;
+      const heading = $("resultsHeading");
+      if (heading) heading.childNodes[0].textContent = "Words ";
       syncShare("");
       return [];
     }
@@ -137,7 +139,10 @@
     const ends = ($("ends")?.value || "").toLowerCase().trim();
     const contains = ($("contains")?.value || "").toLowerCase().trim();
     const exclude = ($("exclude")?.value || "").toLowerCase().replace(/[^a-z]/g, "");
-    const exact = $("length")?.value ? parseInt($("length").value, 10) : null;
+    const chip = document.querySelector(".len[aria-pressed='true']");
+    const lenKey = chip ? chip.dataset.len : "";
+    const exact = lenKey && lenKey !== "9+" ? parseInt(lenKey, 10) : ($("length")?.value ? parseInt($("length").value, 10) : null);
+    const minNine = lenKey === "9+";
     const pattern = mode === "wordle" ? wordlePattern() : mode === "pattern" ? input.toLowerCase().replace(/[^a-z?.*]/g, "") : "";
     const maxLen = input ? input.replace(/[^a-zA-Z?*]/g, "").length : 15;
     const minLen = 2;
@@ -167,7 +172,7 @@
         matches.push({ word, len: word.length, score: scoreWord(word) });
       }
     } else {
-      const from = exact || minLen;
+      const from = exact || (minNine ? 9 : minLen);
       const to = exact || (mode === "wordle" ? 5 : maxLen);
       const lo = mode === "wordle" ? 5 : from;
       const hi = mode === "wordle" ? 5 : Math.min(to, 15);
@@ -255,11 +260,10 @@
     });
     box.appendChild(frag);
     const bingoNote = mode !== "wordle" && matches.some((m) => m.len >= 7 && m.len === maxLen);
+    const heading = $("resultsHeading");
+    if (heading) heading.childNodes[0].textContent = matches.length.toLocaleString("en-GB") + " words ";
     meta.textContent =
-      "(" +
-      matches.length.toLocaleString("en-GB") +
-      (bingoNote ? " · bingos marked" : "") +
-      ")";
+      bingoNote ? "· bingos marked" : "";
     const all = matches.map((m) => m.word).join(", ");
     if (copy) {
       copy.hidden = false;
@@ -385,6 +389,14 @@
     btn.addEventListener("click", () => {
       scoring = btn.dataset.score;
       document.querySelectorAll("[data-score]").forEach((b) => b.setAttribute("aria-pressed", b === btn ? "true" : "false"));
+      collect();
+    });
+  });
+  document.querySelectorAll(".len").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".len").forEach((b) => b.setAttribute("aria-pressed", b === btn ? "true" : "false"));
+      const lenEl = $("length");
+      if (lenEl) lenEl.value = btn.dataset.len === "9+" ? "" : (btn.dataset.len || "");
       collect();
     });
   });
