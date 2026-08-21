@@ -1,5 +1,6 @@
 const GH = "https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/main/";
-const VER = "20260821e";
+const VER = "20260821f";
+const CANONICAL_HOST = "lettersunscrambler.com";
 const DICT = "https://raw.githubusercontent.com/dolph/dictionary/master/enable1.txt";
 const ROUTES = {
   "/": "index.html",
@@ -87,15 +88,24 @@ async function pull(name) {
   return null;
 }
 async function asset(env, ctx, name) {
-  let buf = await env.SITE.get(name, { type: "arrayBuffer" });
-  if (buf && buf.byteLength > 20) return buf;
-  buf = await pull(name);
+  const staleOk = !name.endsWith(".html") && name !== "robots.txt" && name !== "sitemap.xml";
+  if (staleOk) {
+    const cached = await env.SITE.get(name, { type: "arrayBuffer" });
+    if (cached && cached.byteLength > 20) return cached;
+  }
+  const buf = await pull(name);
   if (buf) ctx.waitUntil(env.SITE.put(name, buf));
   return buf;
 }
 export default {
   async fetch(req, env, ctx) {
     const url = new URL(req.url);
+    if (url.hostname !== CANONICAL_HOST) {
+      url.hostname = CANONICAL_HOST;
+      url.protocol = "https:";
+      url.port = "";
+      return Response.redirect(url.toString(), 301);
+    }
     let p = url.pathname;
     if (p.length > 1 && p.endsWith("/")) p = p.slice(0, -1);
     if (p === "/words.txt") return dictionary();
