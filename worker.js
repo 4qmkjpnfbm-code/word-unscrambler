@@ -1,5 +1,5 @@
 const GH = "https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/main/";
-const VER = "20260821q";
+const VER = "20260821r";
 const CANONICAL_HOST = "lettersunscrambler.com";
 const DICT = "https://raw.githubusercontent.com/dolph/dictionary/master/enable1.txt";
 const ROUTES = {
@@ -30,6 +30,7 @@ const ROUTES = {
 const ALLOW = new Set(Object.values(ROUTES).concat([
   "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest"
 ]));
+const LONG = new Set(["css","js","svg","jpg","webmanifest"]);
 const MIME = {
   html: "text/html;charset=UTF-8",
   css: "text/css;charset=UTF-8",
@@ -55,10 +56,11 @@ function extraWords() {
   return ["qi","za","ok","hm","mm","uh","um","ew","fe","gi","gu","ko","ky","ny","po","st","te","wo","yu","zo"];
 }
 function headers(name) {
-  const html = name.endsWith(".html");
+  const ext = name.includes(".") ? name.split(".").pop() : "html";
+  const long = LONG.has(ext);
   return {
     "content-type": mime(name),
-    "cache-control": html ? "public, max-age=30" : "public, max-age=86400",
+    "cache-control": long ? "public, max-age=86400" : "public, max-age=60",
     ...SEC
   };
 }
@@ -77,9 +79,11 @@ async function dictionary() {
   });
 }
 async function pull(name) {
+  const ext = name.includes(".") ? name.split(".").pop() : "html";
+  const ttl = LONG.has(ext) ? 86400 : 120;
   for (let i = 0; i < 3; i++) {
     try {
-      const r = await fetch(GH + name + "?v=" + VER, { cf: { cacheTtl: 0 } });
+      const r = await fetch(GH + name + "?v=" + VER, { cf: { cacheTtl: ttl, cacheEverything: true } });
       if (r.ok) {
         const buf = await r.arrayBuffer();
         if (buf.byteLength > 20) return buf;
@@ -87,9 +91,6 @@ async function pull(name) {
     } catch (e) {}
   }
   return null;
-}
-async function asset(env, ctx, name) {
-  return pull(name);
 }
 export default {
   async fetch(req, env, ctx) {
@@ -101,20 +102,21 @@ export default {
       return Response.redirect(url.toString(), 301);
     }
     let p = url.pathname;
+    if (p === "/favicon.ico") p = "/favicon.svg";
     if (p.length > 1 && p.endsWith("/")) p = p.slice(0, -1);
     if (p === "/words.txt") return dictionary();
     let name = ROUTES[p];
     if (!name && p.startsWith("/") && ALLOW.has(p.slice(1))) name = p.slice(1);
     if (!name) {
-      const miss = await asset(env, ctx, "404.html");
+      const miss = await pull("404.html");
       return new Response(miss || "Not found", {
         status: 404,
         headers: { "content-type": "text/html;charset=UTF-8", "cache-control": "no-store", ...SEC }
       });
     }
-    const buf = await asset(env, ctx, name);
+    const buf = await pull(name);
     if (!buf) {
-      const miss = await asset(env, ctx, "404.html");
+      const miss = await pull("404.html");
       return new Response(miss || "Not found", {
         status: 404,
         headers: { "content-type": "text/html;charset=UTF-8", "cache-control": "no-store", ...SEC }
