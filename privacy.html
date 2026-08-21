@@ -27,7 +27,21 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,640&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=5" />
+  <link rel="stylesheet" href="/styles.css?v=6" />
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VR1EE3K51N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('consent', 'default', {
+      analytics_storage: 'denied',
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied'
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-VR1EE3K51N');
+  </script>
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","name":"Word Unscrambler","legalName":"HDK Distribution Ltd","url":"https://lettersunscrambler.com/","address":{"@type":"PostalAddress","addressCountry":"GB"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lettersunscrambler.com/"},{"@type":"ListItem","position":2,"name":"Privacy Policy","item":"https://lettersunscrambler.com/privacy"}]}]}</script>
 </head>
 <body>
@@ -56,9 +70,9 @@
     <p>The unscrambler runs in your browser. The letters you type are not sent to us. We do not run accounts, newsletters or login.</p>
     <p>Our host (Cloudflare) may process technical logs such as IP address, browser type, and requested URL to deliver and secure the site. Those logs are processed as a service provider.</p>
     <h2>Cookies and ads</h2>
-    <p>This version does not set advertising or analytics cookies. If we later add Google AdSense or analytics, we will update this page and, where required, ask for consent before non-essential cookies.</p>
+    <p>Essential cookies: none required to use the unscrambler. Optional analytics: if you click Accept on the cookie bar, we load Google Analytics 4 (measurement ID G-VR1EE3K51N). That can include a truncated IP, device/browser type, pages viewed, and approximate location. Legal basis: consent. You can Reject, and you can clear site data in your browser to be asked again. We do not currently run advertising cookies. If we add Google AdSense later, we will ask for separate advertising consent.</p>
     <h2>Legal bases</h2>
-    <p>Hosting and security logs: legitimate interests in running a safe website. Any future ads: consent where UK law requires it.</p>
+    <p>Hosting and security logs: legitimate interests in running a safe website. Analytics: consent. Future ads: consent where UK law requires it.</p>
     <h2>Your rights</h2>
     <p>You can request access, correction, deletion, restriction or objection, and you may complain to the ICO (ico.org.uk). Because we do not hold accounts, there is usually no personal profile to delete.</p>
     <h2>Contact</h2>
@@ -106,11 +120,40 @@
     (function(){
       var btn = document.querySelector("[data-nav]");
       var nav = document.getElementById("site-nav");
-      if (!btn || !nav) return;
-      btn.addEventListener("click", function(){
-        var open = nav.classList.toggle("is-open");
-        btn.setAttribute("aria-expanded", open ? "true" : "false");
-        btn.textContent = open ? "Close" : "Menu";
+      if (btn && nav) {
+        btn.addEventListener("click", function(){
+          var open = nav.classList.toggle("is-open");
+          btn.setAttribute("aria-expanded", open ? "true" : "false");
+          btn.textContent = open ? "Close" : "Menu";
+        });
+      }
+      var KEY = "wu_consent";
+      function apply(v){
+        if (typeof gtag !== "function") return;
+        gtag("consent", "update", {
+          analytics_storage: v === "granted" ? "granted" : "denied",
+          ad_storage: "denied",
+          ad_user_data: "denied",
+          ad_personalization: "denied"
+        });
+      }
+      try {
+        var saved = localStorage.getItem(KEY);
+        if (saved) { apply(saved); return; }
+      } catch (e) {}
+      var bar = document.createElement("div");
+      bar.className = "consent";
+      bar.setAttribute("role", "dialog");
+      bar.setAttribute("aria-label", "Cookie choices");
+      bar.innerHTML = '<p>We use optional analytics cookies (Google Analytics) to see which tools people use. Your letters stay in this browser. <a href="/privacy">Privacy</a></p><div class="consent-actions"><button type="button" data-c="granted">Accept</button><button type="button" class="ghost" data-c="denied">Reject</button></div>';
+      document.body.appendChild(bar);
+      bar.addEventListener("click", function(e){
+        var b = e.target.closest("button[data-c]");
+        if (!b) return;
+        var v = b.getAttribute("data-c");
+        try { localStorage.setItem(KEY, v); } catch (err) {}
+        apply(v);
+        bar.remove();
       });
     })();
   </script>

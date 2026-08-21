@@ -619,3 +619,40 @@ h3 { font-size: 1.15rem; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; scroll-behavior: auto; }
 }
+.consent {
+  position: fixed;
+  z-index: 80;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem 1.25rem;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 0.95rem 1.1rem;
+  background: #f7f1e4;
+  color: #1c1710;
+  border: 1px solid #d9cbb3;
+  box-shadow: 0 16px 40px rgba(28, 23, 16, 0.18);
+}
+.consent p { margin: 0; max-width: 52ch; font-size: 0.92rem; line-height: 1.45; }
+.consent a { color: #1f4a38; font-weight: 600; }
+.consent-actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
+.consent button {
+  font: inherit;
+  font-weight: 700;
+  border: 0;
+  background: #1f4a38;
+  color: #f7f1e4;
+  padding: 0.55rem 1rem;
+  min-height: 44px;
+  cursor: pointer;
+}
+.consent button.ghost {
+  background: transparent;
+  color: #1c1710;
+  border: 1px solid #cbbda6;
+}
