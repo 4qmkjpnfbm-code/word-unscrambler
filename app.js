@@ -10,6 +10,12 @@
   let scoring = "scrabble";
   let mode = document.body.dataset.tool || "subset";
   let sortBy = "score";
+  const COACH = {
+    subset: "Type the letters on your rack. Every word you can make appears below — including shorter ones.",
+    anagram: "Type all the letters. Only words that use every letter are shown.",
+    wordle: "Green boxes = right letter, right place. Letters box = yellows. Exclude = greys.",
+    pattern: "Type the crossword pattern. Use ? for a blank square, like C?O??."
+  };
 
   const $ = (id) => document.getElementById(id);
   const lettersEl = $("letters");
@@ -105,7 +111,7 @@
 
     if (!input && mode !== "wordle") {
       box.className = "empty";
-      box.textContent = ready ? "Enter letters above to find words." : "Loading dictionary…";
+      box.textContent = ready ? "Type letters above. Words appear as you type." : "Loading the dictionary…";
       meta.textContent = "";
       if (copy) copy.hidden = true;
       syncShare("");
@@ -208,7 +214,7 @@
 
     if (!matches.length) {
       box.className = "empty";
-      box.textContent = "No words found. Try fewer filters, a ? blank, or a different mode.";
+      box.textContent = "No words match yet. Try All words, add a ? blank, or clear More options.";
       meta.textContent = "";
       if (copy) copy.hidden = true;
       return [];
@@ -323,6 +329,8 @@
     const wordle = $("wordleFields");
     if (wordle) wordle.hidden = mode !== "wordle";
     if (mode === "wordle" && $("length") && !$("length").value) $("length").value = "5";
+    const coach = $("coach");
+    if (coach && COACH[mode]) coach.textContent = COACH[mode];
     collect();
   }
 
