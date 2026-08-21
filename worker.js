@@ -1,5 +1,5 @@
 const GH = "https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/main/";
-const VER = "20260821g";
+const VER = "20260821i";
 const CANONICAL_HOST = "lettersunscrambler.com";
 const DICT = "https://raw.githubusercontent.com/dolph/dictionary/master/enable1.txt";
 const ROUTES = {
@@ -28,7 +28,7 @@ const ROUTES = {
   "/terms": "terms.html"
 };
 const ALLOW = new Set(Object.values(ROUTES).concat([
-  "styles.css","app.js","favicon.svg","og.jpg","robots.txt","sitemap.xml","404.html"
+  "styles.css","app.js","favicon.svg","og.jpg","robots.txt","sitemap.xml","404.html","ads.txt"
 ]));
 const MIME = {
   html: "text/html;charset=UTF-8",
@@ -57,7 +57,7 @@ function headers(name) {
   const html = name.endsWith(".html");
   return {
     "content-type": mime(name),
-    "cache-control": html ? "public, max-age=60" : "public, max-age=86400",
+    "cache-control": html ? "public, max-age=30" : "public, max-age=86400",
     ...SEC
   };
 }
@@ -78,7 +78,7 @@ async function dictionary() {
 async function pull(name) {
   for (let i = 0; i < 3; i++) {
     try {
-      const r = await fetch(GH + name + "?v=" + VER);
+      const r = await fetch(GH + name + "?v=" + VER, { cf: { cacheTtl: 0 } });
       if (r.ok) {
         const buf = await r.arrayBuffer();
         if (buf.byteLength > 20) return buf;
@@ -88,11 +88,6 @@ async function pull(name) {
   return null;
 }
 async function asset(env, ctx, name) {
-  const staleOk = !name.endsWith(".html") && name !== "robots.txt" && name !== "sitemap.xml";
-  if (staleOk) {
-    const cached = await env.SITE.get(name, { type: "arrayBuffer" });
-    if (cached && cached.byteLength > 20) return cached;
-  }
   const buf = await pull(name);
   if (buf) ctx.waitUntil(env.SITE.put(name, buf));
   return buf;
