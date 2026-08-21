@@ -1,5 +1,5 @@
 const GH = "https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/main/";
-const VER = "20260821u";
+const VER = "20260821v";
 const CANONICAL_HOST = "lettersunscrambler.com";
 const DICT = "https://raw.githubusercontent.com/dolph/dictionary/master/enable1.txt";
 const ROUTES = {
@@ -80,7 +80,7 @@ async function dictionary() {
 }
 async function pull(name) {
   const ext = name.includes(".") ? name.split(".").pop() : "html";
-  const ttl = LONG.has(ext) ? 86400 : 120;
+  const ttl = LONG.has(ext) ? 86400 : 0;
   for (let i = 0; i < 3; i++) {
     try {
       const r = await fetch(GH + name + "?v=" + VER, { cf: { cacheTtl: ttl, cacheEverything: true } });
