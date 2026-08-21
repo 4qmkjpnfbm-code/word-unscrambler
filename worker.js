@@ -78,7 +78,7 @@ async function dictionary() {
 async function pull(name) {
   for (let i = 0; i < 3; i++) {
     try {
-      const r = await fetch(GH + name + "?v=" + VER, { cf: { cacheTtl: 0 } });
+      const r = await fetch(GH + name + "?v=" + VER, { cf: { cacheTtl: 120, cacheEverything: true } });
       if (r.ok) {
         const buf = await r.arrayBuffer();
         if (buf.byteLength > 20) return buf;
@@ -88,9 +88,7 @@ async function pull(name) {
   return null;
 }
 async function asset(env, ctx, name) {
-  const buf = await pull(name);
-  if (buf) ctx.waitUntil(env.SITE.put(name, buf));
-  return buf;
+  return pull(name);
 }
 export default {
   async fetch(req, env, ctx) {
