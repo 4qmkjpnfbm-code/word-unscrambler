@@ -415,9 +415,11 @@
       document.body.appendChild(n);
     }
     n.textContent = msg;
+    n.classList.remove("show");
+    void n.offsetWidth;
     n.classList.add("show");
     clearTimeout(n._t);
-    n._t = setTimeout(() => n.classList.remove("show"), 1300);
+    n._t = setTimeout(() => n.classList.remove("show"), 1600);
   }
 
   const prevCopy = copyWords;

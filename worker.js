@@ -1,5 +1,5 @@
 const GH = "https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/main/";
-const VER = "20260821n";
+const VER = "20260821o";
 const CANONICAL_HOST = "lettersunscrambler.com";
 const DICT = "https://raw.githubusercontent.com/dolph/dictionary/master/enable1.txt";
 const ROUTES = {
