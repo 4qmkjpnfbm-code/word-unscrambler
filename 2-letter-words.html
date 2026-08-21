@@ -38,7 +38,9 @@
             menu.setAttribute("aria-expanded", open ? "true" : "false");
             menu.textContent = open ? "Close" : "Menu";
           }
-          menu.addEventListener("click", function () {
+          menu.addEventListener("click", function (e) {
+            e.stopPropagation();
+            e.preventDefault();
             setOpen(!nav.classList.contains("is-open"));
           });
           document.addEventListener("click", function (e) {
@@ -197,15 +199,6 @@
   </footer>
   <script>
     (function(){
-      var btn = document.querySelector("[data-nav]");
-      var nav = document.getElementById("site-nav");
-      if (btn && nav) {
-        btn.addEventListener("click", function(){
-          var open = nav.classList.toggle("is-open");
-          btn.setAttribute("aria-expanded", open ? "true" : "false");
-          btn.textContent = open ? "Close" : "Menu";
-        });
-      }
       var KEY = "wu_consent";
       function apply(v){
         if (typeof gtag !== "function") return;
