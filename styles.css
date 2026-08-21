@@ -1343,6 +1343,46 @@ html[data-theme="dark"] .word { background: #241f1b; border-color: #3d362e; colo
 html { scroll-padding-top: 72px; }
 .empty .examples { justify-content: center; margin-top: 12px; }
 
+.hook-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+.hook-row .try-label { margin: 0 4px 0 0; }
+.keypad {
+  margin-top: var(--space-4);
+  display: grid;
+  gap: 6px;
+}
+.key-row {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+.key {
+  flex: 1 1 0;
+  min-height: 42px;
+  max-width: 46px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-elevated);
+  font-family: var(--font-display);
+  font-weight: 650;
+  font-size: 0.95rem;
+}
+.key:hover { border-color: var(--felt); }
+.key:active { transform: scale(0.96); }
+.key-wide { max-width: 56px; flex: 1.3 1 0; }
+.stage-tool .key {
+  background: color-mix(in oklab, #070908 45%, transparent);
+  border-color: color-mix(in oklab, #fff 16%, transparent);
+  color: var(--stage-ink);
+}
+@media (min-width: 900px) {
+  .keypad { max-width: 520px; }
+}
 .ad-region {
   margin: var(--space-6) 0 var(--space-5);
   contain: layout style;

@@ -4,6 +4,7 @@
 
   const byLen = {};
   const bySig = {};
+  const wordSet = new Set();
   let ready = false;
   let wordCount = 0;
   let timer = 0;
@@ -479,7 +480,7 @@
     box.id = "define";
     box.hidden = true;
     box.setAttribute("aria-live", "polite");
-    box.innerHTML = '<p class="try-label" id="defineWord"></p><p id="defineText"></p><p class="define-extra" id="defineExtra"></p>';
+    box.innerHTML = '<p class="try-label" id="defineWord"></p><p id="defineText"></p><p class="define-extra" id="defineExtra"></p><div class="hook-row" id="defineHooks"></div>';
     const results = $("results");
     if (results) results.before(box);
     else document.body.appendChild(box);
@@ -507,8 +508,46 @@
     else if (word.length === rackLen) bits.push("uses the whole rack");
     if (family.length) bits.push("also " + family.join(", "));
     if (extra) extra.textContent = bits.join(" · ");
+    renderHooks(word);
     const text = await lookup(word);
     if (t && w && w.textContent === word) t.textContent = text;
+  }
+
+  function hooksOf(word) {
+    const front = [];
+    const back = [];
+    if (!word || !wordSet.size) return { front, back };
+    for (let i = 0; i < 26; i++) {
+      const ch = String.fromCharCode(97 + i);
+      if (wordSet.has(ch + word)) front.push(ch + word);
+      if (wordSet.has(word + ch)) back.push(word + ch);
+    }
+    return { front, back };
+  }
+  function renderHooks(word) {
+    const row = $("defineHooks");
+    if (!row) return;
+    row.replaceChildren();
+    const { front, back } = hooksOf(word);
+    if (!front.length && !back.length) return;
+    if (front.length) {
+      row.appendChild(el("span", "try-label", "Front hooks"));
+      front.forEach((w) => {
+        const b = el("button", "chip", w);
+        b.type = "button";
+        b.addEventListener("click", () => pickWord({ word: w, score: scoreWord(w), len: w.length }));
+        row.appendChild(b);
+      });
+    }
+    if (back.length) {
+      row.appendChild(el("span", "try-label", "Back hooks"));
+      back.forEach((w) => {
+        const b = el("button", "chip", w);
+        b.type = "button";
+        b.addEventListener("click", () => pickWord({ word: w, score: scoreWord(w), len: w.length }));
+        row.appendChild(b);
+      });
+    }
   }
 
   function hideNextPlay() {
@@ -570,6 +609,7 @@
     for (const w of words) {
       (byLen[w.length] ||= []).push(w);
       (bySig[sig(w)] ||= []).push(w);
+      wordSet.add(w);
     }
     wordCount = words.length;
     ready = true;
@@ -666,6 +706,52 @@
     b.setAttribute("aria-label", "Add a blank tile");
     b.title = "Add a blank tile. Two maximum.";
     go.after(b);
+  })();
+  (function ensureKeypad() {
+    if ($("keypad") || !lettersEl) return;
+    const box = el("div", "keypad");
+    box.id = "keypad";
+    box.setAttribute("aria-label", "Letter keys");
+    function addLetter(ch) {
+      const n = lettersEl.value.replace(/[^a-zA-Z?]/g, "").length;
+      if (n >= 16) return;
+      lettersEl.value += ch;
+      const c = $("clear");
+      if (c) c.hidden = false;
+      collect();
+    }
+    ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"].forEach((line, i) => {
+      const r = el("div", "key-row");
+      if (i === 2) {
+        const del = el("button", "key key-wide", "⌫");
+        del.type = "button";
+        del.setAttribute("aria-label", "Delete last letter");
+        del.addEventListener("click", () => {
+          lettersEl.value = lettersEl.value.slice(0, -1);
+          const c = $("clear");
+          if (c) c.hidden = !lettersEl.value;
+          collect();
+        });
+        r.appendChild(del);
+      }
+      line.split("").forEach((ch) => {
+        const b = el("button", "key", ch);
+        b.type = "button";
+        b.addEventListener("click", () => addLetter(ch));
+        r.appendChild(b);
+      });
+      if (i === 2) {
+        const blank = el("button", "key key-wide", "?");
+        blank.type = "button";
+        blank.setAttribute("aria-label", "Blank tile");
+        blank.addEventListener("click", () => $("blank")?.click());
+        r.appendChild(blank);
+      }
+      box.appendChild(r);
+    });
+    const coach = $("coach");
+    if (coach) coach.after(box);
+    else lettersEl.parentNode.after(box);
   })();
   $("blank")?.addEventListener("click", () => {
     const wilds = (lettersEl.value.match(/[?*]/g) || []).length;
