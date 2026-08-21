@@ -108,6 +108,7 @@
       box.textContent = ready ? "Enter letters above to find words." : "Loading dictionary…";
       meta.textContent = "";
       if (copy) copy.hidden = true;
+      syncShare("");
       return [];
     }
     if (!ready) {
@@ -258,12 +259,24 @@
       copy.hidden = false;
       copy.dataset.words = all;
     }
+    syncShare(lettersEl.value.trim());
     return matches;
   }
 
   function schedule() {
     clearTimeout(timer);
     timer = setTimeout(collect, 90);
+  }
+
+  function syncShare(q) {
+    try {
+      const u = new URL(location.href);
+      const cur = u.searchParams.get("q") || "";
+      if (q === cur) return;
+      if (q) u.searchParams.set("q", q);
+      else u.searchParams.delete("q");
+      history.replaceState(null, "", u.pathname + u.search + u.hash);
+    } catch {}
   }
 
   const EXTRA = "ch da di ea ee fe fy gi gu io ja ki ko ky ny ob oi ok oo ou po qi st te ug ur yu za qis zas".split(" ");

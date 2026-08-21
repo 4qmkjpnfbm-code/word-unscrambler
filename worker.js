@@ -37,12 +37,27 @@ const MIME = {
   xml: "application/xml;charset=UTF-8",
   txt: "text/plain;charset=UTF-8"
 };
+const SEC = {
+  "x-content-type-options": "nosniff",
+  "referrer-policy": "strict-origin-when-cross-origin",
+  "x-frame-options": "DENY",
+  "permissions-policy": "camera=(), microphone=(), geolocation=()",
+  "strict-transport-security": "max-age=31536000; includeSubDomains"
+};
 function mime(name) {
   const ext = name.includes(".") ? name.split(".").pop() : "html";
   return MIME[ext] || "application/octet-stream";
 }
 function extraWords() {
   return ["qi","za","ok","hm","mm","uh","um","ew","fe","gi","gu","ko","ky","ny","po","st","te","wo","yu","zo"];
+}
+function headers(name) {
+  const html = name.endsWith(".html");
+  return {
+    "content-type": mime(name),
+    "cache-control": html ? "public, max-age=60" : "public, max-age=86400",
+    ...SEC
+  };
 }
 async function dictionary() {
   const r = await fetch(DICT, { cf: { cacheTtl: 86400, cacheEverything: true } });
@@ -53,17 +68,28 @@ async function dictionary() {
     headers: {
       "content-type": "text/plain;charset=UTF-8",
       "cache-control": "public, max-age=86400",
-      "access-control-allow-origin": "*"
+      "access-control-allow-origin": "*",
+      ...SEC
     }
   });
+}
+async function pull(name) {
+  for (let i = 0; i < 3; i++) {
+    try {
+      const r = await fetch(GH + name, { cf: { cacheTtl: 120, cacheEverything: true } });
+      if (r.ok) {
+        const buf = await r.arrayBuffer();
+        if (buf.byteLength > 20) return buf;
+      }
+    } catch (e) {}
+  }
+  return null;
 }
 async function asset(env, ctx, name) {
   let buf = await env.SITE.get(name, { type: "arrayBuffer" });
   if (buf && buf.byteLength > 20) return buf;
-  const r = await fetch(GH + name);
-  if (!r.ok) return null;
-  buf = await r.arrayBuffer();
-  if (buf.byteLength > 20) ctx.waitUntil(env.SITE.put(name, buf));
+  buf = await pull(name);
+  if (buf) ctx.waitUntil(env.SITE.put(name, buf));
   return buf;
 }
 export default {
@@ -78,7 +104,7 @@ export default {
       const miss = await asset(env, ctx, "404.html");
       return new Response(miss || "Not found", {
         status: 404,
-        headers: { "content-type": "text/html;charset=UTF-8", "cache-control": "no-store" }
+        headers: { "content-type": "text/html;charset=UTF-8", "cache-control": "no-store", ...SEC }
       });
     }
     const buf = await asset(env, ctx, name);
@@ -86,17 +112,9 @@ export default {
       const miss = await asset(env, ctx, "404.html");
       return new Response(miss || "Not found", {
         status: 404,
-        headers: { "content-type": "text/html;charset=UTF-8" }
+        headers: { "content-type": "text/html;charset=UTF-8", "cache-control": "no-store", ...SEC }
       });
     }
-    const html = name.endsWith(".html");
-    return new Response(buf, {
-      headers: {
-        "content-type": mime(name),
-        "cache-control": html ? "public, max-age=60" : "public, max-age=86400",
-        "x-content-type-options": "nosniff",
-        "referrer-policy": "strict-origin-when-cross-origin"
-      }
-    });
+    return new Response(buf, { headers: headers(name) });
   }
 };
