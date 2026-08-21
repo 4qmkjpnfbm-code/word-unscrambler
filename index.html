@@ -36,8 +36,8 @@
   <link rel="apple-touch-icon" href="/og.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,640&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=11" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,560;0,9..144,640;1,9..144,480&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css?v=12" />
   <link rel="preconnect" href="https://www.googletagmanager.com" />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-VR1EE3K51N"></script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2666058844257008" crossorigin="anonymous"></script>
@@ -55,7 +55,7 @@
   </script>
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Word Unscrambler","url":"https://lettersunscrambler.com/","inLanguage":"en-GB","potentialAction":{"@type":"SearchAction","target":"https://lettersunscrambler.com/?q={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"Organization","name":"Word Unscrambler","legalName":"HDK Distribution Ltd","url":"https://lettersunscrambler.com/","address":{"@type":"PostalAddress","addressCountry":"GB"}},{"@type":"WebApplication","name":"Word Unscrambler","url":"https://lettersunscrambler.com/","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"GBP"},"description":"Free online word unscrambler and anagram solver using the ENABLE English word list.","inLanguage":"en-GB"},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a word unscrambler?","acceptedAnswer":{"@type":"Answer","text":"A word unscrambler takes a set of letters and lists every valid English word that can be formed from them, including shorter words. It is used for Scrabble, Words with Friends, Wordle, crosswords and anagram puzzles."}},{"@type":"Question","name":"Does this tool use a Scrabble dictionary?","acceptedAnswer":{"@type":"Answer","text":"It uses the ENABLE word list (about 168,000 English words), which is the public-domain list commonly used by word games. Official tournament dictionaries may differ slightly."}},{"@type":"Question","name":"How do wildcards work?","acceptedAnswer":{"@type":"Answer","text":"Type a question mark (?) for a blank or unknown letter. Each ? can stand for any one letter. Two blanks are allowed."}}]}]}</script>
 </head>
-<body data-tool="subset">
+<body data-tool="subset" class="cinematic">
   <a class="skip" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="wrap header-inner">
@@ -75,11 +75,23 @@
       </nav>
     </div>
   </header>
-<main class="wrap" id="main">
-  <section class="hero">
-    <h1>Word Unscrambler</h1>
-    <p class="lede">Type letters. Get every word you can make.</p>
-  </section>
+<main id="main">
+  <section class="stage" aria-label="Word unscrambler">
+    <div class="stage-bg" style="--stage-photo:url('/stage.jpg')" aria-hidden="true"></div>
+    <div class="orbit" id="orbit" aria-hidden="true">
+      <span class="orb" data-ch="L"></span>
+      <span class="orb" data-ch="I"></span>
+      <span class="orb" data-ch="S"></span>
+      <span class="orb" data-ch="T"></span>
+      <span class="orb" data-ch="E"></span>
+      <span class="orb" data-ch="N"></span>
+    </div>
+    <div class="wrap stage-copy">
+      <p class="kicker">Free · Instant · 168,000 words</p>
+      <h1 class="split-title"><span class="line">Unscramble</span><span class="line ital">any letters</span></h1>
+      <p class="lede">Type a rack. Every valid English word appears as you type.</p>
+    </div>
+    <div class="wrap stage-tool">
   <aside class="daily" id="daily" aria-label="Today’s scramble">
       <div>
         <p class="try-label">Today’s scramble</p>
@@ -140,6 +152,9 @@
         <p class="hint">Dictionary: ENABLE, <span id="dictCount">loading</span> words.</p>
       </details>
     </section>
+    </div>
+  </section>
+  <div class="wrap after-stage">
     <div class="status">
       <h2 id="resultsHeading">Words <span id="resultMeta"></span></h2>
       <div class="toolbar">
@@ -148,7 +163,7 @@
       </div>
     </div>
     <div id="results" class="empty">Your words will show here.</div>
-    <script src="/app.js?v=8" defer></script>
+    <script src="/app.js?v=9" defer></script>
   <section class="bento" aria-label="Come back for">
       <div class="bento-card" id="recentsCard">
         <p class="try-label">Recent racks</p>
@@ -184,6 +199,7 @@
     <a class="card" href="/anagram-solver"><h3>Anagram solver</h3><p>Use every letter. Find LISTEN → SILENT, ENLIST, TINSEL.</p></a>
     <a class="card" href="/wordle-helper"><h3>Wordle helper</h3><p>Greens, yellows and greys without leaving the page.</p></a>
     <a class="card" href="/2-letter-words"><h3>2-letter words</h3><p>The 124 two-letter ENABLE words that win endgames.</p></a>
+  </div>
   </div>
 </main>
 <footer class="site-footer">

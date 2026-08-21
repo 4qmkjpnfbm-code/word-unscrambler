@@ -70,9 +70,13 @@
     box.replaceChildren();
     const chars = raw.toUpperCase().replace(/[^A-Z?*]/g, "");
     const table = scoring === "wwf" ? WWF : SCRABBLE;
-    for (const ch of chars.slice(0, 16)) {
+    const orbit = $("orbit");
+    if (orbit) orbit.classList.toggle("is-hidden", chars.length > 0);
+    for (let i = 0; i < chars.slice(0, 16).length; i++) {
+      const ch = chars[i];
       const wild = ch === "?" || ch === "*";
       const t = el("span", wild ? "tile wild" : "tile", wild ? "?" : ch);
+      t.style.setProperty("--i", String(i));
       if (!wild) {
         const v = el("span", "val", String(table[ch.toLowerCase()] || 0));
         t.appendChild(v);
@@ -547,6 +551,28 @@
 
   dailyInit();
   renderRecents();
+
+  (function stageMotion() {
+    const stage = document.querySelector(".stage");
+    const orbit = document.querySelector(".orbit");
+    if (!stage || !orbit) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (matchMedia("(pointer: coarse)").matches) return;
+    let raf = 0;
+    let tx = 0, ty = 0, cx = 0, cy = 0;
+    function tick() {
+      cx += (tx - cx) * 0.08;
+      cy += (ty - cy) * 0.08;
+      orbit.style.transform = "translate3d(" + (cx * 28) + "px," + (cy * 18) + "px,0)";
+      raf = Math.abs(tx - cx) + Math.abs(ty - cy) > 0.001 ? requestAnimationFrame(tick) : 0;
+    }
+    stage.addEventListener("pointermove", (e) => {
+      const r = stage.getBoundingClientRect();
+      tx = (e.clientX - r.left) / r.width - 0.5;
+      ty = (e.clientY - r.top) / r.height - 0.5;
+      if (!raf) raf = requestAnimationFrame(tick);
+    });
+  })();
 
   const params = new URLSearchParams(location.search);
   if (params.get("q")) lettersEl.value = params.get("q");

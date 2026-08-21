@@ -1,5 +1,5 @@
 const GH = "https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/main/";
-const VER = "20260821o";
+const VER = "20260821p";
 const CANONICAL_HOST = "lettersunscrambler.com";
 const DICT = "https://raw.githubusercontent.com/dolph/dictionary/master/enable1.txt";
 const ROUTES = {
@@ -28,7 +28,7 @@ const ROUTES = {
   "/terms": "terms.html"
 };
 const ALLOW = new Set(Object.values(ROUTES).concat([
-  "styles.css","app.js","favicon.svg","og.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest"
+  "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest"
 ]));
 const MIME = {
   html: "text/html;charset=UTF-8",
