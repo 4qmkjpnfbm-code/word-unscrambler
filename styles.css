@@ -1219,6 +1219,41 @@ html[data-theme="dark"] .word { background: #241f1b; border-color: #3d362e; colo
   to { transform: translateX(4vw); opacity: 0.55; }
 }
 
+.define {
+  margin: 0 0 var(--space-4);
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  max-width: 65ch;
+}
+.define p { margin: 0; }
+.define #defineWord {
+  margin-bottom: 6px;
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--fg);
+}
+.define #defineText {
+  color: var(--fg-muted);
+  text-wrap: pretty;
+}
+.next-play {
+  margin: var(--space-5) 0 var(--space-4);
+}
+.next-play .examples { margin-top: 8px; }
+.next-play .chip {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+#blank {
+  white-space: nowrap;
+}
+
 
 
 

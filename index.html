@@ -37,7 +37,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,560;0,9..144,640;1,9..144,480&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=12" />
+  <link rel="stylesheet" href="/styles.css?v=13" />
+  <link rel="preload" href="/words.txt" as="fetch" crossorigin />
   <link rel="preconnect" href="https://www.googletagmanager.com" />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-VR1EE3K51N"></script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2666058844257008" crossorigin="anonymous"></script>
@@ -53,7 +54,7 @@
     gtag('js', new Date());
     gtag('config', 'G-VR1EE3K51N');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Word Unscrambler","url":"https://lettersunscrambler.com/","inLanguage":"en-GB","potentialAction":{"@type":"SearchAction","target":"https://lettersunscrambler.com/?q={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"Organization","name":"Word Unscrambler","legalName":"HDK Distribution Ltd","url":"https://lettersunscrambler.com/","address":{"@type":"PostalAddress","addressCountry":"GB"}},{"@type":"WebApplication","name":"Word Unscrambler","url":"https://lettersunscrambler.com/","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"GBP"},"description":"Free online word unscrambler and anagram solver using the ENABLE English word list.","inLanguage":"en-GB"},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a word unscrambler?","acceptedAnswer":{"@type":"Answer","text":"A word unscrambler takes a set of letters and lists every valid English word that can be formed from them, including shorter words. It is used for Scrabble, Words with Friends, Wordle, crosswords and anagram puzzles."}},{"@type":"Question","name":"Does this tool use a Scrabble dictionary?","acceptedAnswer":{"@type":"Answer","text":"It uses the ENABLE word list (about 168,000 English words), which is the public-domain list commonly used by word games. Official tournament dictionaries may differ slightly."}},{"@type":"Question","name":"How do wildcards work?","acceptedAnswer":{"@type":"Answer","text":"Type a question mark (?) for a blank or unknown letter. Each ? can stand for any one letter. Two blanks are allowed."}}]}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Word Unscrambler","url":"https://lettersunscrambler.com/","inLanguage":"en-GB","potentialAction":{"@type":"SearchAction","target":"https://lettersunscrambler.com/?q={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"Organization","name":"Word Unscrambler","legalName":"HDK Distribution Ltd","url":"https://lettersunscrambler.com/","address":{"@type":"PostalAddress","addressCountry":"GB"}},{"@type":"WebApplication","name":"Word Unscrambler","url":"https://lettersunscrambler.com/","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"GBP"},"description":"Free online word unscrambler and anagram solver using the ENABLE English word list.","inLanguage":"en-GB"},{"@type":"HowTo","name":"How to unscramble letters","description":"Find every valid English word from a jumble of letters.","step":[{"@type":"HowToStep","position":1,"name":"Type your letters","text":"Enter the letters from your rack or puzzle. Use ? for a blank tile."},{"@type":"HowToStep","position":2,"name":"Read the words","text":"Every valid word appears grouped by length, with Scrabble scores. Tap a word to copy it and see the meaning."},{"@type":"HowToStep","position":3,"name":"Share or play the next tool","text":"Use Share for a link with your letters in the URL. Open Wordle, Scrabble or word lists from the next-play row."}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a word unscrambler?","acceptedAnswer":{"@type":"Answer","text":"A word unscrambler takes a set of letters and lists every valid English word that can be formed from them, including shorter words. It is used for Scrabble, Words with Friends, Wordle, crosswords and anagram puzzles."}},{"@type":"Question","name":"Does this tool use a Scrabble dictionary?","acceptedAnswer":{"@type":"Answer","text":"It uses the ENABLE word list (about 168,000 English words), which is the public-domain list commonly used by word games. Official tournament dictionaries may differ slightly."}},{"@type":"Question","name":"How do wildcards work?","acceptedAnswer":{"@type":"Answer","text":"Type a question mark (?) for a blank or unknown letter, or tap Add blank. Each ? can stand for any one letter. Two blanks are allowed."}},{"@type":"Question","name":"How do I find the highest scoring Scrabble word?","acceptedAnswer":{"@type":"Answer","text":"Words are sorted by Scrabble points by default. Bingos that use every tile are marked. Switch the score table to Words With Friends if needed."}},{"@type":"Question","name":"What is the difference between an anagram solver and a word unscrambler?","acceptedAnswer":{"@type":"Answer","text":"An anagram solver uses every letter. A word unscrambler also returns shorter words you can make from a subset of the letters."}}]}]}</script>
 </head>
 <body data-tool="subset" class="cinematic">
   <a class="skip" href="#main">Skip to content</a>
@@ -163,7 +164,7 @@
       </div>
     </div>
     <div id="results" class="empty">Your words will show here.</div>
-    <script src="/app.js?v=9" defer></script>
+    <script src="/app.js?v=10" defer></script>
   <section class="bento" aria-label="Come back for">
       <div class="bento-card" id="recentsCard">
         <p class="try-label">Recent racks</p>
@@ -188,6 +189,18 @@
     <details>
       <summary>Can I use it for Wordle?</summary>
       <p>Yes. Switch to Wordle mode, type greens in the five boxes, put yellows in the letters field, and grey letters in Exclude. You can also browse all <a href="/5-letter-words">5-letter words</a>.</p>
+    </details>
+    <details>
+      <summary>How do blank tiles work?</summary>
+      <p>Type <code>?</code> for each blank (max two), or tap <strong>Add blank ?</strong>. The solver tries every letter in that slot — the same as a Scrabble blank.</p>
+    </details>
+    <details>
+      <summary>How do I find the highest scoring word?</summary>
+      <p>Results sort by Scrabble points by default. Bingos (using every tile, 7+ letters) are marked. Switch Score to WWF if you play Words With Friends.</p>
+    </details>
+    <details>
+      <summary>Anagram vs unscrambler?</summary>
+      <p>Unscrambler lists every word you can make, including shorter ones. <a href="/anagram-solver">Anagrams</a> only keep words that use every letter — LISTEN → SILENT, ENLIST, TINSEL.</p>
     </details>
     <details>
       <summary>Is my data collected?</summary>

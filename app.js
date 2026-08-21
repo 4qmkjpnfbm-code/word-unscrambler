@@ -121,6 +121,11 @@
       const heading = $("resultsHeading");
       if (heading) heading.childNodes[0].textContent = "Words ";
       syncShare("");
+      syncTitle("");
+      hideDefine();
+      hideNextPlay();
+      hideDefine();
+      hideNextPlay();
       return [];
     }
     if (!ready) {
@@ -135,6 +140,8 @@
       box.textContent = "Use at most two blank tiles (?). More than that explodes the search.";
       meta.textContent = "";
       if (copy) copy.hidden = true;
+      hideDefine();
+      hideNextPlay();
       return [];
     }
 
@@ -226,6 +233,8 @@
       box.textContent = "No words match yet. Try All words, add a ? blank, or clear More options.";
       meta.textContent = "";
       if (copy) copy.hidden = true;
+      hideDefine();
+      hideNextPlay();
       return [];
     }
 
@@ -248,13 +257,14 @@
         card.type = "button";
         card.appendChild(el("b", "", m.word));
         card.appendChild(el("span", "pts", m.score + " pts"));
-        card.title = "Click to copy " + m.word;
+        card.title = "Tap to copy and see the meaning of " + m.word;
         card.addEventListener("click", async () => {
           try {
             await navigator.clipboard.writeText(m.word);
             card.querySelector(".pts").textContent = "copied";
             setTimeout(() => { card.querySelector(".pts").textContent = m.score + " pts"; }, 900);
           } catch {}
+          showDefine(m.word);
         });
         grid.appendChild(card);
       });
@@ -274,9 +284,11 @@
       copy.dataset.words = all;
     }
     syncShare(lettersEl.value.trim());
+    syncTitle(lettersEl.value.trim());
     saveRecent(lettersEl.value);
     maybeSolveDaily(matches);
     if ($("share")) $("share").hidden = false;
+    renderNextPlay(lettersEl.value.trim(), matches);
     return matches;
   }
 
@@ -288,12 +300,109 @@
   function syncShare(q) {
     try {
       const u = new URL(location.href);
-      const cur = u.searchParams.get("q") || "";
-      if (q === cur) return;
       if (q) u.searchParams.set("q", q);
       else u.searchParams.delete("q");
+      const defaultMode = document.body.dataset.tool || "subset";
+      if (mode && mode !== defaultMode) u.searchParams.set("mode", mode);
+      else u.searchParams.delete("mode");
       history.replaceState(null, "", u.pathname + u.search + u.hash);
     } catch {}
+  }
+
+  const BASE_TITLE = document.title;
+  function syncTitle(q) {
+    const v = (q || "").toUpperCase().replace(/[^A-Z?]/g, "");
+    document.title = v ? ("Unscramble " + v + " – Word Unscrambler") : BASE_TITLE;
+  }
+
+  const defineCache = {};
+  function ensureDefine() {
+    let box = $("define");
+    if (box) return box;
+    box = el("aside", "define");
+    box.id = "define";
+    box.hidden = true;
+    box.setAttribute("aria-live", "polite");
+    box.innerHTML = '<p class="try-label" id="defineWord"></p><p id="defineText"></p>';
+    const results = $("results");
+    if (results) results.before(box);
+    else document.body.appendChild(box);
+    return box;
+  }
+  function hideDefine() {
+    const box = $("define");
+    if (box) box.hidden = true;
+  }
+  async function showDefine(word) {
+    const box = ensureDefine();
+    box.hidden = false;
+    const w = $("defineWord");
+    const t = $("defineText");
+    if (w) w.textContent = word;
+    if (t) t.textContent = defineCache[word] || "Looking up meaning…";
+    if (defineCache[word]) return;
+    try {
+      const r = await fetch("https://api.dictionaryapi.dev/api/v2/entries/en/" + encodeURIComponent(word));
+      const data = await r.json();
+      const meaning = data[0]?.meanings?.[0];
+      const def = meaning?.definitions?.[0]?.definition;
+      const pos = meaning?.partOfSpeech;
+      const text = def ? (pos ? pos + " · " : "") + def : "Valid ENABLE word. No short definition found.";
+      defineCache[word] = text;
+      if (t && w && w.textContent === word) t.textContent = text;
+    } catch {
+      defineCache[word] = "Valid ENABLE word. Meaning lookup is offline.";
+      if (t && w && w.textContent === word) t.textContent = defineCache[word];
+    }
+  }
+
+  function hideNextPlay() {
+    const nav = $("nextPlay");
+    if (nav) nav.hidden = true;
+  }
+  function renderNextPlay(q) {
+    let nav = $("nextPlay");
+    if (!nav) {
+      nav = el("nav", "next-play");
+      nav.id = "nextPlay";
+      nav.setAttribute("aria-label", "Related tools");
+      const results = $("results");
+      if (results) results.after(nav);
+      else return;
+    }
+    const raw = (q || "").toUpperCase().replace(/[^A-Z?]/g, "");
+    const n = raw.replace(/\?/g, "").length;
+    const seen = new Set();
+    const links = [];
+    function add(href, label) {
+      if (seen.has(href)) return;
+      seen.add(href);
+      links.push([href, label]);
+    }
+    if (n === 5) {
+      add("/wordle-helper", "Wordle helper");
+      add("/5-letter-words", "All 5-letter words");
+    }
+    if (n === 7) {
+      add("/scrabble-word-finder", "Scrabble finder");
+      add("/bingo-stems", "Bingo stems");
+      add("/7-letter-words", "All 7-letter words");
+    }
+    if (n === 2) add("/2-letter-words", "Two-letter words");
+    if (n >= 2 && n <= 8 && n !== 5 && n !== 7) add("/" + n + "-letter-words", n + "-letter list");
+    if (mode !== "anagram" && n >= 3) add("/anagram-solver?q=" + encodeURIComponent(raw), "Anagrams only");
+    add("/jumble-solver", "Jumble solver");
+    add("/crossword-solver", "Crossword solver");
+    nav.hidden = false;
+    nav.replaceChildren();
+    nav.appendChild(el("p", "try-label", "Play these next"));
+    const row = el("div", "examples");
+    links.forEach(([href, label]) => {
+      const a = el("a", "chip", label);
+      a.href = href;
+      row.appendChild(a);
+    });
+    nav.appendChild(row);
   }
 
   const EXTRA = "ch da di ea ee fe fy gi gu io ja ki ko ky ny ob oi ok oo ou po qi st te ug ur yu za qis zas".split(" ");
@@ -356,7 +465,33 @@
 
   $("go")?.addEventListener("click", collect);
   lettersEl.addEventListener("input", schedule);
-  lettersEl.addEventListener("keydown", (e) => { if (e.key === "Enter") collect(); });
+  lettersEl.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") collect();
+    if (e.key === "Escape") {
+      lettersEl.value = "";
+      collect();
+    }
+  });
+  (function addBlank() {
+    if ($("blank")) return;
+    const go = $("go");
+    if (!go || !go.parentNode) return;
+    const b = el("button", "ghost", "Add blank ?");
+    b.id = "blank";
+    b.type = "button";
+    b.title = "Insert a blank tile. Use at most two.";
+    go.after(b);
+  })();
+  $("blank")?.addEventListener("click", () => {
+    const wilds = (lettersEl.value.match(/[?*]/g) || []).length;
+    if (wilds >= 2) {
+      toast("Two blanks maximum");
+      return;
+    }
+    lettersEl.value = (lettersEl.value + "?").slice(0, 16);
+    collect();
+    lettersEl.focus();
+  });
   ["starts", "ends", "contains", "length", "exclude"].forEach((id) => {
     $(id)?.addEventListener("input", () => { if (lettersEl.value.trim() || mode === "wordle") schedule(); });
   });

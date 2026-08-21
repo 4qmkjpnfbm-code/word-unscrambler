@@ -1,0 +1,28 @@
+# Word Unscrambler
+
+Free English word unscrambler and anagram solver for Scrabble, Wordle, jumble and crossword puzzles.
+
+- Site: https://lettersunscrambler.com/
+- Dictionary: ENABLE (~168,000 words), scored with Scrabble and Words With Friends points
+- Instant solver: https://lettersunscrambler.com/?q=LISTEN
+- Wildcards: use ? for a blank tile (max two)
+
+## Tools
+
+- Anagram solver: https://lettersunscrambler.com/anagram-solver
+- Scrabble word finder: https://lettersunscrambler.com/scrabble-word-finder
+- Words With Friends: https://lettersunscrambler.com/words-with-friends
+- Wordle helper: https://lettersunscrambler.com/wordle-helper
+- Jumble solver: https://lettersunscrambler.com/jumble-solver
+- Crossword solver: https://lettersunscrambler.com/crossword-solver
+
+## Word lists
+
+- 2-letter words: https://lettersunscrambler.com/2-letter-words
+- 3-letter words: https://lettersunscrambler.com/3-letter-words
+- 5-letter words: https://lettersunscrambler.com/5-letter-words
+- Q without U: https://lettersunscrambler.com/q-without-u
+- Bingo stems: https://lettersunscrambler.com/bingo-stems
+
+Operator: HDK Distribution Ltd, United Kingdom.
+Not affiliated with Hasbro, Mattel, Zynga or The New York Times.
