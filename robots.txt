@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://word-unscrambler.hdkdistributionltd.workers.dev/sitemap.xml
