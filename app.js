@@ -462,7 +462,7 @@
     try {
       const r = await withTimeout(fetch("https://en.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(word)), 1800);
       const d = await r.json();
-      if (d && d.extract) {
+      if (d && d.type === "standard" && d.extract && d.extract.length > 40 && !/may mean/i.test(d.extract)) {
         defineCache[word] = d.extract.split(". ")[0] + ".";
         return defineCache[word];
       }
@@ -499,11 +499,12 @@
     if (w) w.textContent = word;
     if (t) t.textContent = defineCache[word] || "Looking up meaning…";
     const left = leftoverOf(lastRack || lettersEl.value, word);
+    const rackLen = (lastRack || lettersEl.value || "").replace(/[^a-zA-Z?]/g, "").length;
     const family = (bySig[sig(word)] || []).filter((x) => x !== word).slice(0, 6);
     const bits = [];
     if (typeof m === "object" && m.score) bits.push(m.score + " pts");
     if (left) bits.push("leftover " + left);
-    else if (word.length >= 7) bits.push("uses the whole rack");
+    else if (word.length === rackLen) bits.push("uses the whole rack");
     if (family.length) bits.push("also " + family.join(", "));
     if (extra) extra.textContent = bits.join(" · ");
     const text = await lookup(word);
