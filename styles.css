@@ -971,6 +971,26 @@ html[data-theme="dark"] .word { background: #241f1b; border-color: #3d362e; colo
   color: #f6ecda;
   background: color-mix(in oklab, #070908 25%, transparent);
 }
+html[data-theme="light"] .cinematic .site-header {
+  background: color-mix(in oklab, var(--bg) 86%, white);
+  color: var(--fg);
+  border-bottom-color: var(--border);
+}
+html[data-theme="light"] .cinematic .brand-name span { color: var(--fg-muted); }
+html[data-theme="light"] .cinematic .nav { color: inherit; }
+html[data-theme="light"] .cinematic .nav a:hover,
+html[data-theme="light"] .cinematic .nav a[aria-current="page"] { color: var(--fg); }
+html[data-theme="light"] .cinematic .theme-btn,
+html[data-theme="light"] .cinematic .menu-btn {
+  border-color: var(--border);
+  color: var(--fg);
+  background: transparent;
+}
+.theme-btn[aria-pressed="true"] {
+  background: var(--fg);
+  color: var(--bg);
+  border-color: var(--fg);
+}
 .cinematic .mark {
   box-shadow: 0 6px 14px -8px #000, 0 1px 0 #fff8, inset 0 -2px 0 color-mix(in oklab, var(--tile-edge) 45%, transparent);
 }
