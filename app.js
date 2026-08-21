@@ -902,4 +902,16 @@
   setMode(mode);
   if (!params.get("q")) lettersEl.focus();
   loadDict();
+
+  (function initAds() {
+    const ins = document.querySelector(".ad-box ins.adsbygoogle");
+    if (!ins || ins.getAttribute("data-adsbygoogle-status")) return;
+    const run = () => {
+      try {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch {}
+    };
+    if ("requestIdleCallback" in window) requestIdleCallback(run, { timeout: 2500 });
+    else setTimeout(run, 1200);
+  })();
 })();

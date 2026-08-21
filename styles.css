@@ -1335,6 +1335,35 @@ html[data-theme="dark"] .word { background: #241f1b; border-color: #3d362e; colo
 html { scroll-padding-top: 72px; }
 .empty .examples { justify-content: center; margin-top: 12px; }
 
+.ad-region {
+  margin: var(--space-6) 0 var(--space-5);
+  contain: layout style;
+}
+.ad-label {
+  margin: 0 0 8px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-subtle);
+}
+.ad-box {
+  min-height: 280px;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--bg-elevated) 80%, transparent);
+  contain: layout;
+}
+.ad-box ins.adsbygoogle {
+  display: block;
+  min-height: 280px;
+  width: 100%;
+}
+@media (max-width: 720px) {
+  .ad-box, .ad-box ins.adsbygoogle { min-height: 250px; }
+}
+
 
 
 
