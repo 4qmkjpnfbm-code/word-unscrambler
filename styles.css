@@ -1217,6 +1217,117 @@ html[data-theme="light"] .cinematic .menu-btn {
 .cinematic .footer-grid a:hover { color: #f6ecda; }
 .cinematic .legal-line { border-top-color: #2a2520; }
 
+html[data-theme="light"] .cinematic .site-header {
+  background: color-mix(in oklab, var(--bg) 90%, white);
+  color: var(--fg);
+  border-bottom-color: var(--border);
+  backdrop-filter: blur(14px);
+}
+html[data-theme="light"] .cinematic .brand-name span { color: var(--fg-muted); }
+html[data-theme="light"] .cinematic .nav { color: var(--fg); }
+html[data-theme="light"] .cinematic .nav a,
+html[data-theme="light"] .cinematic .nav a:hover,
+html[data-theme="light"] .cinematic .nav a[aria-current="page"] { color: var(--fg); }
+html[data-theme="light"] .cinematic .nav a[aria-current="page"] { border-bottom-color: var(--felt); }
+html[data-theme="light"] .cinematic .theme-btn,
+html[data-theme="light"] .cinematic .menu-btn {
+  border-color: var(--border);
+  color: var(--fg);
+  background: var(--bg-elevated);
+}
+html[data-theme="light"] .stage {
+  --stage-ink: var(--fg);
+  --stage-muted: var(--fg-muted);
+  background: var(--bg);
+  min-height: 0;
+  color: var(--fg);
+}
+html[data-theme="light"] .stage-bg,
+html[data-theme="light"] .stage-photo,
+html[data-theme="light"] .orbit {
+  opacity: 0;
+  visibility: hidden;
+}
+html[data-theme="light"] .stage-bg::after,
+html[data-theme="light"] .stage::after { content: none; background: none; }
+html[data-theme="light"] .split-title { color: var(--fg); }
+html[data-theme="light"] .split-title .ital { color: var(--felt); }
+html[data-theme="light"] .cinematic .stage .kicker { color: var(--felt); }
+html[data-theme="light"] .cinematic .stage .lede { color: var(--fg-muted); }
+html[data-theme="light"] .stage-tool .daily,
+html[data-theme="light"] .stage-tool .panel {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--fg);
+  box-shadow: var(--shadow);
+  backdrop-filter: none;
+}
+html[data-theme="light"] .stage-tool .daily .try-label,
+html[data-theme="light"] .stage-tool .daily .mini,
+html[data-theme="light"] .stage-tool .coach,
+html[data-theme="light"] .stage-tool .try-label,
+html[data-theme="light"] .stage-tool .mini,
+html[data-theme="light"] .stage-tool .hint,
+html[data-theme="light"] .stage-tool .filters label,
+html[data-theme="light"] .stage-tool .ghost,
+html[data-theme="light"] .stage-tool .more summary { color: var(--fg-muted); }
+html[data-theme="light"] .stage-tool .ghost:hover { color: var(--fg); }
+html[data-theme="light"] .stage-tool .field-label { color: var(--fg); }
+html[data-theme="light"] .stage-tool .hint code {
+  background: var(--bg-inset);
+  color: var(--fg);
+}
+html[data-theme="light"] .stage-tool .input-row input[type="text"],
+html[data-theme="light"] .stage-tool .filters input,
+html[data-theme="light"] .stage-tool .wordle-row input {
+  background: #fff;
+  border-color: var(--border);
+  color: var(--fg);
+  caret-color: var(--felt);
+}
+html[data-theme="light"] .stage-tool .primary {
+  background: var(--felt);
+  color: var(--felt-fg);
+}
+html[data-theme="light"] .stage-tool .primary:hover { background: var(--felt-deep); }
+html[data-theme="light"] .stage-tool .chip,
+html[data-theme="light"] .stage-tool .len,
+html[data-theme="light"] .stage-tool .key {
+  background: var(--bg);
+  border-color: var(--border);
+  color: var(--fg);
+}
+html[data-theme="light"] .stage-tool .chip:hover,
+html[data-theme="light"] .stage-tool .len:hover { color: var(--fg); border-color: var(--felt); }
+html[data-theme="light"] .stage-tool .len[aria-pressed="true"] {
+  background: var(--felt);
+  color: var(--felt-fg);
+  border-color: var(--felt);
+}
+html[data-theme="light"] .stage-tool .modes { border-bottom-color: var(--border); }
+html[data-theme="light"] .stage-tool .modes .mode { color: var(--fg-muted); }
+html[data-theme="light"] .stage-tool .modes .mode[aria-pressed="true"] {
+  color: var(--felt);
+  border-bottom-color: var(--felt);
+}
+html[data-theme="light"] .stage-tool .more { border-top-color: var(--border); }
+html[data-theme="light"] .stage-tool .wordle-row input.filled {
+  background: var(--felt);
+  color: var(--felt-fg);
+  border-color: var(--felt);
+}
+html[data-theme="light"] .cinematic .site-footer {
+  background: var(--bg-inset);
+  color: var(--fg-muted);
+}
+html[data-theme="light"] .cinematic .footer-grid h2,
+html[data-theme="light"] .cinematic .footer-grid .footer-head { color: var(--fg); }
+html[data-theme="light"] .cinematic .footer-grid a:hover { color: var(--felt); }
+html[data-theme="light"] .cinematic .legal-line { border-top-color: var(--border); }
+@media (max-width: 720px) {
+  html[data-theme="light"] .cinematic .nav a { color: var(--fg); border-bottom-color: var(--border); }
+}
+
 @media (hover: hover) and (pointer: fine) {
   .bento-card { transition: transform 420ms var(--ease), box-shadow 420ms var(--ease), opacity 420ms var(--ease); }
   .bento:hover .bento-card { transform: scale(0.985); opacity: 0.78; }
