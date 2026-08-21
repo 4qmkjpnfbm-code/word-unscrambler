@@ -43,7 +43,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,560;0,9..144,640;1,9..144,480&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=17" />
+  <link rel="stylesheet" href="/styles.css?v=18" />
   <link rel="preload" href="/stage.jpg" as="image" fetchpriority="high" />
   <link rel="preconnect" href="https://www.googletagmanager.com" />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-VR1EE3K51N"></script>
@@ -102,14 +102,6 @@
       <p class="lede">Unscramble any letters. Every valid English word appears as you type.</p>
     </div>
     <div class="wrap stage-tool">
-  <aside class="daily" id="daily" aria-label="Today’s scramble">
-      <div>
-        <p class="try-label">Today’s scramble</p>
-        <p class="daily-word" id="dailyScramble">·······</p>
-        <p class="mini" id="dailyMeta">A new seven-letter jumble every day. Come back tomorrow.</p>
-      </div>
-      <button class="ghost" id="dailyPlay" type="button">Play today’s</button>
-    </aside>
   <section class="panel" aria-labelledby="letters-label">
       <label class="field-label" id="letters-label" for="letters">Letters</label>
       <div class="input-row">
@@ -126,6 +118,11 @@
       </div>
       <p class="try-label">Length</p>
       <div class="len-row" role="group" aria-label="Word length"><button type="button" class="len" data-len="" aria-pressed="true">Any</button><button type="button" class="len" data-len="2" aria-pressed="false">2</button><button type="button" class="len" data-len="3" aria-pressed="false">3</button><button type="button" class="len" data-len="4" aria-pressed="false">4</button><button type="button" class="len" data-len="5" aria-pressed="false">5</button><button type="button" class="len" data-len="6" aria-pressed="false">6</button><button type="button" class="len" data-len="7" aria-pressed="false">7</button><button type="button" class="len" data-len="8" aria-pressed="false">8</button><button type="button" class="len" data-len="9+" aria-pressed="false">9+</button></div>
+      <div class="filters quick-filters" aria-label="Letter filters">
+        <div><label for="starts">Starts with</label><input id="starts" type="text" maxlength="5" autocomplete="off" placeholder="TH" /></div>
+        <div><label for="ends">Ends with</label><input id="ends" type="text" maxlength="5" autocomplete="off" placeholder="ING" /></div>
+        <div><label for="contains">Must include</label><input id="contains" type="text" maxlength="8" autocomplete="off" placeholder="Q" /></div>
+      </div>
       <div id="wordleFields" hidden><div class="clue-block">
           <p class="field-label">Green letters</p>
           <div class="wordle-row" aria-label="Green letters">
@@ -137,9 +134,6 @@
       <details class="more">
         <summary>More options</summary>
         <div class="filters">
-          <div><label for="starts">Starts with</label><input id="starts" type="text" maxlength="5" autocomplete="off" placeholder="TH" /></div>
-          <div><label for="ends">Ends with</label><input id="ends" type="text" maxlength="5" autocomplete="off" placeholder="ING" /></div>
-          <div><label for="contains">Must include</label><input id="contains" type="text" maxlength="8" autocomplete="off" placeholder="Q" /></div>
           <div><label for="length">Exact length</label><input id="length" type="number" min="2" max="15" inputmode="numeric" value="" /></div>
         </div>
         <div class="filters" style="margin-top:12px">
@@ -162,6 +156,14 @@
         <p class="hint">Dictionary: ENABLE, <span id="dictCount">loading</span> words.</p>
       </details>
     </section>
+    <aside class="daily" id="daily" aria-label="Today’s scramble">
+      <div>
+        <p class="try-label">Today’s scramble</p>
+        <p class="daily-word" id="dailyScramble">·······</p>
+        <p class="mini" id="dailyMeta">A new seven-letter jumble every day. Come back tomorrow.</p>
+      </div>
+      <button class="ghost" id="dailyPlay" type="button">Play today’s</button>
+    </aside>
     </div>
   </section>
   <div class="wrap after-stage">

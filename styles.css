@@ -461,6 +461,10 @@ h3 { font-size: var(--text-lg); }
   gap: var(--space-3);
   margin-top: var(--space-5);
 }
+.quick-filters {
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: var(--space-4);
+}
 .filters label {
   display: block;
   font-size: var(--text-xs);
@@ -938,6 +942,10 @@ html[data-theme="dark"] .word { background: #241f1b; border-color: #3d362e; colo
 @media (max-width: 720px) {
   .bento { grid-template-columns: 1fr; }
   .daily { flex-wrap: wrap; }
+  .orbit { display: none; }
+  .stage { min-height: 0; padding: 8px 0 28px; }
+  .quick-filters { grid-template-columns: 1fr 1fr 1fr; }
+  .cinematic .stage .lede { margin: 6px 0 10px; }
 }
 
 @keyframes tile-in {
