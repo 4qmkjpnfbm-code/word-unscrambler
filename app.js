@@ -111,6 +111,7 @@
     const box = $("results");
     const meta = $("resultMeta");
     const copy = $("copy");
+    if (!box) return [];
     box.replaceChildren();
     renderTiles(input);
 
@@ -129,10 +130,9 @@
         });
         box.appendChild(row);
       }
-      meta.textContent = "";
+      if (meta) meta.textContent = "";
       if (copy) copy.hidden = true;
-      const heading = $("resultsHeading");
-      if (heading) heading.childNodes[0].textContent = "Words from your letters ";
+      setResultsHeading("Words from your letters ");
       syncShare("");
       syncTitle("");
       hideDefine();
@@ -151,7 +151,7 @@
     if (wilds > 2) {
       box.className = "empty";
       box.textContent = "Use at most two blank tiles (?). More than that explodes the search.";
-      meta.textContent = "";
+      if (meta) meta.textContent = "";
       if (copy) copy.hidden = true;
       hideDefine();
       hideNextPlay();
@@ -246,7 +246,7 @@
     if (!matches.length) {
       box.className = "empty";
       box.textContent = "No words match yet. Try All words, add a ? blank, or clear More options.";
-      meta.textContent = "";
+      if (meta) meta.textContent = "";
       if (copy) copy.hidden = true;
       hideDefine();
       hideNextPlay();
@@ -289,9 +289,8 @@
     lastRack = input;
     lastMatches = matches;
     const bingoNote = mode !== "wordle" && matches.some((m) => m.len >= 7 && m.len === maxLen);
-    const heading = $("resultsHeading");
-    if (heading) heading.childNodes[0].textContent = matches.length.toLocaleString("en-GB") + " words from your letters ";
-    meta.textContent = bingoNote ? "· bingos marked" : "";
+    setResultsHeading(matches.length.toLocaleString("en-GB") + " words from your letters ");
+    if (meta) meta.textContent = bingoNote ? "· bingos marked" : "";
     const all = matches.map((m) => m.word).join(", ");
     if (copy) {
       copy.hidden = false;
@@ -307,6 +306,18 @@
     if ($("share")) $("share").hidden = false;
     renderNextPlay(lettersEl.value.trim(), matches);
     return matches;
+  }
+
+  function setResultsHeading(text) {
+    const heading = $("resultsHeading");
+    if (!heading) return;
+    let node = heading.firstChild;
+    if (!node || node.nodeType !== 3) {
+      node = document.createTextNode(text);
+      heading.insertBefore(node, heading.firstChild);
+      return;
+    }
+    node.textContent = text;
   }
 
   function schedule() {
@@ -663,6 +674,8 @@
     if (matchMedia("(max-width: 720px)").matches) $("results")?.scrollIntoView({ behavior: "smooth", block: "start" });
   });
   lettersEl.addEventListener("input", () => {
+    const clean = lettersEl.value.toUpperCase().replace(/[^A-Z?*]/g, "").slice(0, 16);
+    if (clean !== lettersEl.value) lettersEl.value = clean;
     const c = $("clear");
     if (c) c.hidden = !lettersEl.value;
     schedule();
@@ -718,7 +731,7 @@
       lettersEl.value += ch;
       const c = $("clear");
       if (c) c.hidden = false;
-      collect();
+      schedule();
     }
     ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"].forEach((line, i) => {
       const r = el("div", "key-row");
@@ -730,7 +743,7 @@
           lettersEl.value = lettersEl.value.slice(0, -1);
           const c = $("clear");
           if (c) c.hidden = !lettersEl.value;
-          collect();
+          schedule();
         });
         r.appendChild(del);
       }
@@ -765,9 +778,14 @@
     collect();
     lettersEl.focus();
   });
-  ["starts", "ends", "contains", "length", "exclude"].forEach((id) => {
-    $(id)?.addEventListener("input", () => { if (lettersEl.value.trim() || mode === "wordle") schedule(); });
+  ["starts", "ends", "contains", "exclude"].forEach((id) => {
+    $(id)?.addEventListener("input", (e) => {
+      const clean = e.target.value.toUpperCase().replace(/[^A-Z]/g, "");
+      if (clean !== e.target.value) e.target.value = clean;
+      if (lettersEl.value.trim() || mode === "wordle") schedule();
+    });
   });
+  $("length")?.addEventListener("input", () => { if (lettersEl.value.trim() || mode === "wordle") schedule(); });
   document.querySelectorAll("[data-slot]").forEach((s) => {
     s.addEventListener("input", (e) => {
       e.target.value = e.target.value.toUpperCase().replace(/[^A-Z]/g, "").slice(0, 1);

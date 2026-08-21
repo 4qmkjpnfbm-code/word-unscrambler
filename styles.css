@@ -1518,6 +1518,12 @@ html { scroll-padding-top: 72px; }
   margin: var(--space-6) 0 var(--space-5);
   contain: layout style;
 }
+.ad-region:not(:has(ins[data-ad-status="filled"])) {
+  display: none;
+}
+ins.adsbygoogle[data-ad-status="unfilled"] {
+  display: none !important;
+}
 .ad-label {
   margin: 0 0 8px;
   font-size: 0.68rem;
