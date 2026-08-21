@@ -115,7 +115,19 @@
 
     if (!input && mode !== "wordle") {
       box.className = "empty";
-      box.textContent = ready ? "Your words will show here." : "Loading the dictionary…";
+      box.replaceChildren();
+      const p = el("p", "", ready ? "Type a rack above. Try a famous one:" : "Loading 168,000 words…");
+      box.appendChild(p);
+      if (ready) {
+        const row = el("div", "examples");
+        ["LISTEN", "A?PLE", "AEINRST"].forEach((ex) => {
+          const b = el("button", "chip", ex);
+          b.type = "button";
+          b.addEventListener("click", () => { lettersEl.value = ex; collect(); lettersEl.focus(); });
+          row.appendChild(b);
+        });
+        box.appendChild(row);
+      }
       meta.textContent = "";
       if (copy) copy.hidden = true;
       const heading = $("resultsHeading");
@@ -124,8 +136,8 @@
       syncTitle("");
       hideDefine();
       hideNextPlay();
-      hideDefine();
-      hideNextPlay();
+      hideBest();
+      hideJumps();
       return [];
     }
     if (!ready) {
@@ -142,6 +154,8 @@
       if (copy) copy.hidden = true;
       hideDefine();
       hideNextPlay();
+      hideBest();
+      hideJumps();
       return [];
     }
 
@@ -235,6 +249,8 @@
       if (copy) copy.hidden = true;
       hideDefine();
       hideNextPlay();
+      hideBest();
+      hideJumps();
       return [];
     }
 
@@ -245,6 +261,7 @@
     const lens = Object.keys(grouped).map(Number).sort((a, b) => b - a);
     lens.forEach((len) => {
       const group = el("div", "group");
+      group.id = "len-" + len;
       const title = el("div", "group-title");
       const words = grouped[len];
       if (sortBy === "alpha") words.sort((a, b) => a.word.localeCompare(b.word));
@@ -255,17 +272,12 @@
       words.forEach((m) => {
         const card = el("button", m.len >= 7 && m.len === maxLen ? "word bingo" : "word", null);
         card.type = "button";
+        if (typeof dailyAnswer === "string" && m.word === dailyAnswer.toLowerCase()) card.classList.add("daily-hit");
+        card.dataset.word = m.word;
         card.appendChild(el("b", "", m.word));
         card.appendChild(el("span", "pts", m.score + " pts"));
-        card.title = "Tap to copy and see the meaning of " + m.word;
-        card.addEventListener("click", async () => {
-          try {
-            await navigator.clipboard.writeText(m.word);
-            card.querySelector(".pts").textContent = "copied";
-            setTimeout(() => { card.querySelector(".pts").textContent = m.score + " pts"; }, 900);
-          } catch {}
-          showDefine(m.word);
-        });
+        card.title = "Tap to copy, leftover tiles, and meaning — " + m.word;
+        card.addEventListener("click", () => pickWord(m, card, maxLen));
         grid.appendChild(card);
       });
       group.appendChild(title);
@@ -273,16 +285,20 @@
       frag.appendChild(group);
     });
     box.appendChild(frag);
+    lastRack = input;
+    lastMatches = matches;
     const bingoNote = mode !== "wordle" && matches.some((m) => m.len >= 7 && m.len === maxLen);
     const heading = $("resultsHeading");
     if (heading) heading.childNodes[0].textContent = matches.length.toLocaleString("en-GB") + " words ";
-    meta.textContent =
-      bingoNote ? "· bingos marked" : "";
+    meta.textContent = bingoNote ? "· bingos marked" : "";
     const all = matches.map((m) => m.word).join(", ");
     if (copy) {
       copy.hidden = false;
       copy.dataset.words = all;
     }
+    setCoach(matches, input);
+    renderBest(matches, input, maxLen);
+    renderJumps(lens);
     syncShare(lettersEl.value.trim());
     syncTitle(lettersEl.value.trim());
     saveRecent(lettersEl.value);
@@ -315,6 +331,146 @@
     document.title = v ? ("Unscramble " + v + " – Word Unscrambler") : BASE_TITLE;
   }
 
+  let lastRack = "";
+  let lastMatches = [];
+  let lastMaxLen = 0;
+
+  function leftoverOf(rack, word) {
+    const a = countsOf(rack || "");
+    for (const c of word) {
+      if (a.count[c]) a.count[c]--;
+      else a.wild--;
+    }
+    let s = "";
+    Object.keys(a.count).sort().forEach((ch) => {
+      if (a.count[ch] > 0) s += ch.repeat(a.count[ch]);
+    });
+    if (a.wild > 0) s += "?".repeat(a.wild);
+    return s.toUpperCase();
+  }
+
+  async function pickWord(m, card, maxLen) {
+    document.querySelectorAll(".word.is-on").forEach((n) => n.classList.remove("is-on"));
+    if (card) card.classList.add("is-on");
+    try {
+      await navigator.clipboard.writeText(m.word);
+      const pts = card?.querySelector(".pts");
+      if (pts) {
+        pts.textContent = "copied";
+        setTimeout(() => { pts.textContent = m.score + " pts"; }, 900);
+      }
+    } catch {}
+    showDefine(m, maxLen);
+  }
+
+  function setCoach(matches, input) {
+    const coach = $("coach");
+    if (!coach) return;
+    if (!input) {
+      coach.textContent = COACH[mode] || COACH.subset;
+      return;
+    }
+    if (!matches || !matches.length) return;
+    const best = matches.reduce((a, b) => (a.score > b.score || (a.score === b.score && a.len > b.len) ? a : b));
+    coach.textContent = matches.length.toLocaleString("en-GB") + " words · best " + best.word.toUpperCase() + " · " + best.score + " pts";
+  }
+
+  function hideBest() {
+    const n = $("bestPlay");
+    if (n) n.hidden = true;
+  }
+  function renderBest(matches, rack, maxLen) {
+    let card = $("bestPlay");
+    if (!card) {
+      card = el("aside", "best-play");
+      card.id = "bestPlay";
+      const results = $("results");
+      if (results) results.before(card);
+      else return;
+    }
+    if (!matches.length) {
+      card.hidden = true;
+      return;
+    }
+    const best = matches.reduce((a, b) => (a.score > b.score || (a.score === b.score && a.len > b.len) ? a : b));
+    const bingo = best.len >= 7 && best.len === maxLen;
+    const left = leftoverOf(rack, best.word);
+    card.hidden = false;
+    card.replaceChildren();
+    card.appendChild(el("p", "try-label", bingo ? "Bingo" : "Best play"));
+    const wordBtn = el("button", "best-word", best.word);
+    wordBtn.type = "button";
+    wordBtn.addEventListener("click", () => {
+      const target = document.querySelector('.word[data-word="' + best.word + '"]');
+      pickWord(best, target, maxLen);
+      target?.scrollIntoView({ block: "center", behavior: "smooth" });
+    });
+    card.appendChild(wordBtn);
+    card.appendChild(el("p", "best-meta", best.score + " pts · " + best.len + " letters" + (left ? " · leftover " + left : "")));
+    const def = el("p", "best-def");
+    def.id = "bestDef";
+    card.appendChild(def);
+    lookup(best.word).then((text) => { if (def.isConnected) def.textContent = text; });
+  }
+
+  function hideJumps() {
+    const n = $("lenJumps");
+    if (n) n.hidden = true;
+  }
+  function renderJumps(lens) {
+    let nav = $("lenJumps");
+    if (!nav) {
+      nav = el("nav", "len-jumps");
+      nav.id = "lenJumps";
+      nav.setAttribute("aria-label", "Jump to length");
+      const status = document.querySelector(".status");
+      if (status) status.after(nav);
+      else $("results")?.before(nav);
+    }
+    nav.hidden = !lens.length;
+    nav.replaceChildren();
+    lens.forEach((len) => {
+      const a = el("a", "chip", len + " letters");
+      a.href = "#len-" + len;
+      nav.appendChild(a);
+    });
+  }
+
+  function withTimeout(promise, ms) {
+    return Promise.race([
+      promise,
+      new Promise((_, rej) => setTimeout(() => rej(new Error("timeout")), ms))
+    ]);
+  }
+
+  async function lookup(word) {
+    if (defineCache[word]) return defineCache[word];
+    try {
+      const r = await withTimeout(fetch("https://api.dictionaryapi.dev/api/v2/entries/en/" + encodeURIComponent(word)), 2200);
+      const data = await r.json();
+      const meaning = data[0]?.meanings?.[0];
+      const def = meaning?.definitions?.[0];
+      const bits = [];
+      if (meaning?.partOfSpeech) bits.push(meaning.partOfSpeech);
+      if (def?.definition) bits.push(def.definition);
+      if (def?.example) bits.push("“" + def.example + "”");
+      if (bits.length) {
+        defineCache[word] = bits.join(" · ");
+        return defineCache[word];
+      }
+    } catch {}
+    try {
+      const r = await withTimeout(fetch("https://en.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(word)), 1800);
+      const d = await r.json();
+      if (d && d.extract) {
+        defineCache[word] = d.extract.split(". ")[0] + ".";
+        return defineCache[word];
+      }
+    } catch {}
+    defineCache[word] = "Valid in the ENABLE word list.";
+    return defineCache[word];
+  }
+
   const defineCache = {};
   function ensureDefine() {
     let box = $("define");
@@ -323,7 +479,7 @@
     box.id = "define";
     box.hidden = true;
     box.setAttribute("aria-live", "polite");
-    box.innerHTML = '<p class="try-label" id="defineWord"></p><p id="defineText"></p>';
+    box.innerHTML = '<p class="try-label" id="defineWord"></p><p id="defineText"></p><p class="define-extra" id="defineExtra"></p>';
     const results = $("results");
     if (results) results.before(box);
     else document.body.appendChild(box);
@@ -333,27 +489,25 @@
     const box = $("define");
     if (box) box.hidden = true;
   }
-  async function showDefine(word) {
+  async function showDefine(m) {
+    const word = typeof m === "string" ? m : m.word;
     const box = ensureDefine();
     box.hidden = false;
     const w = $("defineWord");
     const t = $("defineText");
+    const extra = $("defineExtra");
     if (w) w.textContent = word;
     if (t) t.textContent = defineCache[word] || "Looking up meaning…";
-    if (defineCache[word]) return;
-    try {
-      const r = await fetch("https://api.dictionaryapi.dev/api/v2/entries/en/" + encodeURIComponent(word));
-      const data = await r.json();
-      const meaning = data[0]?.meanings?.[0];
-      const def = meaning?.definitions?.[0]?.definition;
-      const pos = meaning?.partOfSpeech;
-      const text = def ? (pos ? pos + " · " : "") + def : "Valid ENABLE word. No short definition found.";
-      defineCache[word] = text;
-      if (t && w && w.textContent === word) t.textContent = text;
-    } catch {
-      defineCache[word] = "Valid ENABLE word. Meaning lookup is offline.";
-      if (t && w && w.textContent === word) t.textContent = defineCache[word];
-    }
+    const left = leftoverOf(lastRack || lettersEl.value, word);
+    const family = (bySig[sig(word)] || []).filter((x) => x !== word).slice(0, 6);
+    const bits = [];
+    if (typeof m === "object" && m.score) bits.push(m.score + " pts");
+    if (left) bits.push("leftover " + left);
+    else if (word.length >= 7) bits.push("uses the whole rack");
+    if (family.length) bits.push("also " + family.join(", "));
+    if (extra) extra.textContent = bits.join(" · ");
+    const text = await lookup(word);
+    if (t && w && w.textContent === word) t.textContent = text;
   }
 
   function hideNextPlay() {
@@ -463,8 +617,15 @@
     }).catch(() => {});
   }
 
-  $("go")?.addEventListener("click", collect);
-  lettersEl.addEventListener("input", schedule);
+  $("go")?.addEventListener("click", () => {
+    collect();
+    if (matchMedia("(max-width: 720px)").matches) $("results")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+  lettersEl.addEventListener("input", () => {
+    const c = $("clear");
+    if (c) c.hidden = !lettersEl.value;
+    schedule();
+  });
   lettersEl.addEventListener("keydown", (e) => {
     if (e.key === "Enter") collect();
     if (e.key === "Escape") {
@@ -472,14 +633,37 @@
       collect();
     }
   });
-  (function addBlank() {
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "/" || e.metaKey || e.ctrlKey || e.altKey) return;
+    const tag = (e.target && e.target.tagName) || "";
+    if (tag === "INPUT" || tag === "TEXTAREA") return;
+    e.preventDefault();
+    lettersEl.focus();
+    lettersEl.select();
+  });
+  (function addFieldChrome() {
+    if (!$("clear") && lettersEl.parentNode) {
+      const c = el("button", "icon-clear", "×");
+      c.id = "clear";
+      c.type = "button";
+      c.hidden = !lettersEl.value;
+      c.setAttribute("aria-label", "Clear letters");
+      c.title = "Clear";
+      lettersEl.after(c);
+      c.addEventListener("click", () => {
+        lettersEl.value = "";
+        collect();
+        lettersEl.focus();
+      });
+    }
     if ($("blank")) return;
     const go = $("go");
     if (!go || !go.parentNode) return;
-    const b = el("button", "ghost", "Add blank ?");
+    const b = el("button", "ghost blank-btn", "?");
     b.id = "blank";
     b.type = "button";
-    b.title = "Insert a blank tile. Use at most two.";
+    b.setAttribute("aria-label", "Add a blank tile");
+    b.title = "Add a blank tile. Two maximum.";
     go.after(b);
   })();
   $("blank")?.addEventListener("click", () => {
@@ -489,6 +673,8 @@
       return;
     }
     lettersEl.value = (lettersEl.value + "?").slice(0, 16);
+    const c = $("clear");
+    if (c) c.hidden = false;
     collect();
     lettersEl.focus();
   });
