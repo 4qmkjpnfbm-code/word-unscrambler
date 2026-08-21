@@ -139,6 +139,7 @@
       hideNextPlay();
       hideBest();
       hideJumps();
+      if ($("share")) $("share").hidden = true;
       return [];
     }
     if (!ready) {
@@ -157,6 +158,7 @@
       hideNextPlay();
       hideBest();
       hideJumps();
+      if ($("share")) $("share").hidden = true;
       return [];
     }
 
@@ -183,7 +185,7 @@
         if (!matchesPattern(word, pat)) continue;
         if (starts && !word.startsWith(starts)) continue;
         if (ends && !word.endsWith(ends)) continue;
-        if (contains && !word.includes(contains)) continue;
+        if (contains && ![...contains].every((c) => word.includes(c))) continue;
         if (exclude && [...exclude].some((c) => word.includes(c))) continue;
           matches.push({ word, len: word.length, score: scoreWord(word) });
       }
@@ -193,7 +195,7 @@
       for (const word of list) {
         if (starts && !word.startsWith(starts)) continue;
         if (ends && !word.endsWith(ends)) continue;
-        if (contains && !word.includes(contains)) continue;
+        if (contains && ![...contains].every((c) => word.includes(c))) continue;
         if (exclude && [...exclude].some((c) => word.includes(c))) continue;
         matches.push({ word, len: word.length, score: scoreWord(word) });
       }
@@ -202,7 +204,6 @@
       const to = exact || (mode === "wordle" ? 5 : maxLen);
       const lo = mode === "wordle" ? 5 : from;
       const hi = mode === "wordle" ? 5 : Math.min(to, 15);
-      const green = mode === "wordle" ? wordlePattern() : "";
       for (let len = hi; len >= lo; len--) {
         if (mode === "anagram" && len !== maxLen) continue;
         const list = byLen[len] || [];
@@ -210,35 +211,20 @@
           if (word.length !== len) continue;
           if (starts && !word.startsWith(starts)) continue;
           if (ends && !word.endsWith(ends)) continue;
-          if (contains && !word.includes(contains)) continue;
+          if (contains && ![...contains].every((c) => word.includes(c))) continue;
           if (exclude && [...exclude].some((c) => word.includes(c))) continue;
-          if (pattern && mode === "wordle" && !matchesPattern(word, pattern)) continue;
           if (mode === "wordle") {
+            if (pattern && !matchesPattern(word, pattern)) continue;
             if (input) {
               const need = countsOf(input);
               let ok = true;
               for (const [ch, n] of Object.entries(need.count)) {
-                const have = word.split(ch).length - 1;
-                if (have < n) {
-                  ok = false;
-                  break;
-                }
+                if ((word.split(ch).length - 1) < n) { ok = false; break; }
               }
               if (!ok) continue;
-              // Yellows must not sit on a known-green slot they don't match
-              if (green) {
-                let blocked = false;
-                for (let i = 0; i < 5; i++) {
-                  if (green[i] === "_" && need.count[word[i]] && word[i] !== green[i]) {
-                    // yellow letter in this position is allowed unless we know it isn't here;
-                    // we don't have per-slot yellows, so skip
-                  }
-                }
-                if (blocked) continue;
-              }
             }
           } else if (!canForm(word, avail)) continue;
-            matches.push({ word, len: word.length, score: scoreWord(word) });
+          matches.push({ word, len: word.length, score: scoreWord(word) });
         }
       }
     }
@@ -252,6 +238,7 @@
       hideNextPlay();
       hideBest();
       hideJumps();
+      if ($("share")) $("share").hidden = true;
       return [];
     }
 
@@ -345,7 +332,6 @@
 
   let lastRack = "";
   let lastMatches = [];
-  let lastMaxLen = 0;
 
   function leftoverOf(rack, word) {
     const a = countsOf(rack || "");
@@ -459,6 +445,7 @@
     if (defineCache[word]) return defineCache[word];
     try {
       const r = await withTimeout(fetch("https://api.dictionaryapi.dev/api/v2/entries/en/" + encodeURIComponent(word)), 2200);
+      if (!r.ok) throw new Error("define");
       const data = await r.json();
       const meaning = data[0]?.meanings?.[0];
       const def = meaning?.definitions?.[0];
@@ -473,6 +460,7 @@
     } catch {}
     try {
       const r = await withTimeout(fetch("https://en.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(word)), 1800);
+      if (!r.ok) throw new Error("wiki");
       const d = await r.json();
       if (d && d.type === "standard" && d.extract && d.extract.length > 40 && !/may mean/i.test(d.extract)) {
         defineCache[word] = d.extract.split(". ")[0] + ".";
@@ -643,7 +631,8 @@
     }
     const countEl = $("dictCount");
     if (countEl) countEl.textContent = "unavailable";
-    $("results").textContent = "Could not load the dictionary. Refresh the page.";
+    const box = $("results");
+    if (box) box.textContent = "Could not load the dictionary. Refresh the page.";
   }
 
   function setMode(next) {
@@ -665,6 +654,7 @@
     navigator.clipboard.writeText(words).then(() => {
       const prev = btn.textContent;
       btn.textContent = "Copied";
+      toast("Copied");
       setTimeout(() => { btn.textContent = prev; }, 1400);
     }).catch(() => {});
   }
@@ -852,12 +842,6 @@
     n._t = setTimeout(() => n.classList.remove("show"), 1600);
   }
 
-  const prevCopy = copyWords;
-  copyWords = function (btn) {
-    prevCopy(btn);
-    toast("Copied");
-  };
-
   $("share")?.addEventListener("click", async () => {
     const q = lettersEl.value.trim().toUpperCase();
     const data = { title: q ? "Words from " + q : "Word Unscrambler", url: location.href };
@@ -897,9 +881,10 @@
     renderRecents();
   }
 
-  const DAILY_WORDS = "LETTERS PUZZLES ENGLISH PLAYING READING WRITING NATURAL PRESENT STRANGE RESULTS MACHINE ALREADY PROBLEM SERVICE PICTURE BETWEEN WITHOUT GREATER ANOTHER BECAUSE THROUGH JUMBLED RACKETS FINDERS SOLVING WORDING".split(" ");
+  const DAILY_WORDS = "LETTERS PUZZLES ENGLISH PLAYING READING WRITING NATURAL STRANGE RESULTS MACHINE ALREADY PROBLEM SERVICE PICTURE BETWEEN WITHOUT GREATER ANOTHER BECAUSE THROUGH JUMBLED RACKETS FINDERS SOLVING WORDING".split(" ");
   function dayKey() {
-    return new Date().toISOString().slice(0, 10);
+    const d = new Date();
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
   }
   function mulberry(a) {
     return function () {
@@ -957,7 +942,9 @@
       streak = parseInt(localStorage.getItem("wu_daily_streak") || "0", 10) || 0;
     } catch {}
     if (last === key) return;
-    const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+    const y = new Date();
+    y.setDate(y.getDate() - 1);
+    const yesterday = y.getFullYear() + "-" + String(y.getMonth() + 1).padStart(2, "0") + "-" + String(y.getDate()).padStart(2, "0");
     streak = last === yesterday ? streak + 1 : 1;
     try {
       localStorage.setItem("wu_daily_last", key);
@@ -995,10 +982,12 @@
   })();
 
   const params = new URLSearchParams(location.search);
-  if (params.get("q")) lettersEl.value = params.get("q");
-  if (params.get("mode")) mode = params.get("mode");
+  const qIn = (params.get("q") || "").toUpperCase().replace(/[^A-Z?*]/g, "").slice(0, 16);
+  if (qIn) lettersEl.value = qIn;
+  const allowedMode = { subset: 1, anagram: 1, wordle: 1, pattern: 1 };
+  if (allowedMode[params.get("mode")]) mode = params.get("mode");
   setMode(mode);
-  if (!params.get("q")) lettersEl.focus();
+  if (!qIn) lettersEl.focus();
   loadDict();
 
   (function initAds() {
