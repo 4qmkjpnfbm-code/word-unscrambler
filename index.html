@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Word Unscrambler – Free Online Anagram Solver</title>
+  <meta name="description" content="Free Word Unscrambler. Enter letters and instantly find all valid English words. Perfect for Scrabble, Wordle, anagrams and puzzles." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: system-ui, -apple-system, sans-serif; }
+    .result-card { transition: all 0.15s ease; }
+    .result-card:hover { transform: translateY(-1px); }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-10">
+    <div class="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
+      <h1 class="text-xl font-bold text-indigo-600">Word Unscrambler</h1>
+      <span class="text-xs text-slate-500">Free • Instant • No signup</span>
+    </div>
+  </header>
+
+  <main class="max-w-3xl mx-auto px-4 py-8">
+
+    <!-- Input Section -->
+    <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
+      <label for="letters" class="block text-sm font-medium text-slate-700 mb-2">Enter your letters</label>
+      <div class="flex gap-3">
+        <input 
+          id="letters" 
+          type="text" 
+          placeholder="e.g. LISTEN or A?PLE" 
+          class="flex-1 px-4 py-3 text-lg border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button 
+          id="unscrambleBtn"
+          class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl transition"
+        >
+          Unscramble
+        </button>
+      </div>
+      <p class="mt-2 text-sm text-slate-500">Use ? as a wildcard for any letter</p>
+
+      <!-- Filters -->
+      <div class="mt-5 grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div>
+          <label class="block text-xs text-slate-500 mb-1">Starts with</label>
+          <input id="startsWith" type="text" class="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg" maxlength="5" />
+        </div>
+        <div>
+          <label class="block text-xs text-slate-500 mb-1">Ends with</label>
+          <input id="endsWith" type="text" class="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg" maxlength="5" />
+        </div>
+        <div>
+          <label class="block text-xs text-slate-500 mb-1">Contains</label>
+          <input id="contains" type="text" class="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg" maxlength="8" />
+        </div>
+        <div>
+          <label class="block text-xs text-slate-500 mb-1">Exact length</label>
+          <input id="exactLength" type="number" min="2" max="15" class="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section id="resultsSection" class="hidden">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-lg font-semibold">Results <span id="resultCount" class="text-slate-500 font-normal text-base"></span></h2>
+        <button id="copyAllBtn" class="text-sm text-indigo-600 hover:underline">Copy all</button>
+      </div>
+      <div id="results" class="space-y-6"></div>
+    </section>
+
+    <!-- Empty state -->
+    <div id="emptyState" class="text-center py-12 text-slate-500">
+      <p class="text-lg">Enter letters above to find words</p>
+    </div>
+
+    <!-- How it works -->
+    <section class="mt-16 bg-white rounded-2xl border border-slate-200 p-6">
+      <h2 class="text-lg font-semibold mb-3">How this Word Unscrambler works</h2>
+      <p class="text-slate-600 leading-relaxed">
+        Type any combination of letters (and optional ? wildcards). The tool instantly finds every valid English word that can be made from those letters. Results are grouped by length (longest first) and include Scrabble point values. Use the filters to narrow results for Scrabble, Wordle, crosswords or anagram puzzles.
+      </p>
+    </section>
+
+    <!-- Related tools placeholder -->
+    <section class="mt-10">
+      <h3 class="text-sm font-medium text-slate-500 mb-3">Related tools</h3>
+      <div class="flex flex-wrap gap-3">
+        <span class="px-4 py-2 bg-slate-100 text-slate-600 rounded-full text-sm">Anagram Solver</span>
+        <span class="px-4 py-2 bg-slate-100 text-slate-600 rounded-full text-sm">Word Finder</span>
+        <span class="px-4 py-2 bg-slate-100 text-slate-600 rounded-full text-sm">Syllable Counter</span>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-200 mt-16 py-8">
+    <div class="max-w-3xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-slate-500">
+      <div class="flex gap-6">
+        <a href="#" class="hover:text-indigo-600">Privacy Policy</a>
+        <a href="#" class="hover:text-indigo-600">Terms of Service</a>
+        <a href="#" class="hover:text-indigo-600">About</a>
+      </div>
+      <p>© 2026 Word Unscrambler</p>
+    </div>
+  </footer>
+
+  <script>
+    // Standard Scrabble scores
+    const SCORES = {a:1,b:3,c:3,d:2,e:1,f:4,g:2,h:4,i:1,j:8,k:5,l:1,m:3,n:1,o:1,p:3,q:10,r:1,s:1,t:1,u:1,v:4,w:4,x:8,y:4,z:10};
+
+    // Starter word list (common + Scrabble-friendly). We will expand this later with full ENABLE.
+    const WORD_LIST = `able about above accept access across act action add address age agent ago agree air all allow almost alone along already also always am among amount an and animal another answer any anyone anything appear area arm army around arrive art as ask at attack attempt attend attention audience author available average avoid away baby back bad bag ball bank bar base basic basis be beat beautiful beauty because become bed before begin behind believe below best better between beyond big bill bit black blood blue board body book born both bottom box boy break bring brother brown build building burn business but buy by call camera campaign can capital car card care career carry case cat catch cause cell center central century certain chair chance change character charge check child choice choose church city claim class clear close club coach code cold college color come common community company compare complete computer concern condition conference continue control cost could country couple course court cover create crime crisis cross cultural culture cup current cut dark data day dead deal death debate decade decide decision deep defense degree democrat democratic describe design despite detail determine develop development die difference different difficult dinner direction director discover discuss discussion disease doctor dog door down draw dream drive drop drug during each early east easy eat economic economy edge education effect effort eight either election else employee end energy enjoy enough enter entire environment especially establish even evening event ever every everyone everything evidence exact example executive exist expect experience expert explain eye face fact factor fail fall family far farm fast father fear federal feel feeling few field fight figure fill film final finally financial find fine finger finish fire firm first fish five floor fly focus follow food foot for force foreign forget form former forth forty forward four free friend from front full fund future game garden gas general generation get girl give glass go goal good government great green ground group grow growth guess gun guy hair half hand hang happen happy hard have he head health hear heart heat heavy help her here herself high him himself his history hit hold home hope hospital hot hotel hour house how however huge human hundred husband idea identify if image imagine impact important improve in include including increase indeed indicate individual industry information inside instead interest international interview into invest investment involve issue it item its itself job join just keep key kid kill kind kitchen know knowledge land language large last late later latest laugh law lawyer lay lead leader learn least leave left leg legal less let letter level lie life light like likely line link list listen little live local long look lose loss lot love low machine magazine main maintain major make man manage management manager many market marriage marry material matter may maybe me mean measure media medical meet meeting member memory mention message method middle might military million mind minute miss mission model modern moment money month more morning most mother mouth move movement movie mr mrs much music must my myself name nation national natural nature near nearly necessary need network never new news next nice night no none nor north not note nothing notice now number occur of off offer office officer official often oh oil ok old on once one only onto open operation opportunity or order organization other others our out outside over own page pain painting paper parent part particular partner party pass past patient pattern pay peace people per perform performance perhaps period person personal phone photo physical picture piece place plan plant play player point police policy political politics poor popular population position positive possible power practice prepare present president press pressure pretty prevent price private probably problem process produce product production professional professor program project property protect provide public pull purpose push put quality question quickly quite race radio raise range rate rather reach read ready real reality realize really reason receive recent recently recognize record red reduce reflect region relate relationship religious remain remember remove report represent republican require research resource respond response responsibility rest result return reveal rich right rise risk road rock role room rule run safe same save say scene school science scientist score sea season seat second section security see seek seem sell send senior sense series serious serve service set seven several sex sexual shake share she shoot short shot should shoulder show side sign significant similar simple simply since sing single sister sit site situation six size skill skin small smile so social society soldier some someone something sometimes son song soon sort sound source south space speak special specific speech spend sport spring staff stage stand standard star start state statement station stay step still stock stop store story strategy street strong structure student study stuff style subject success successful such suddenly suffer suggest summer support sure surface system table take talk task tax teach teacher team technology television tell ten tend term test than thank that the their them themselves then theory there these they thing think third this those though thought thousand threat three through throw thus time to today together tonight too top total touch toward town trade traditional training travel treat treatment tree trial trip trouble true truth try turn tv two type under understand unit until up upon us use usually value various very victim view violence visit voice vote wait walk wall want war watch water way we weapon wear week weight well west western what whatever when where whether which while white who whole whom whose why wide wife will win wind window wish with within without woman wonder word work worker working world worry would write writer wrong yard yeah year yes yet you young your yourself`.split(/\s+/);
+
+    // Pre-build for faster lookup
+    const wordsByLength = {};
+    WORD_LIST.forEach(w => {
+      const len = w.length;
+      if (!wordsByLength[len]) wordsByLength[len] = [];
+      wordsByLength[len].push(w);
+    });
+
+    function getLetterCount(str) {
+      const count = {};
+      let wildcards = 0;
+      for (const char of str.toLowerCase()) {
+        if (char === '?') wildcards++;
+        else if (/[a-z]/.test(char)) count[char] = (count[char] || 0) + 1;
+      }
+      return { count, wildcards };
+    }
+
+    function canForm(word, available) {
+      const needed = {};
+      for (const c of word) needed[c] = (needed[c] || 0) + 1;
+      let wilds = available.wildcards;
+      for (const [letter, req] of Object.entries(needed)) {
+        const have = available.count[letter] || 0;
+        if (have >= req) continue;
+        const deficit = req - have;
+        if (wilds >= deficit) wilds -= deficit;
+        else return false;
+      }
+      return true;
+    }
+
+    function scoreWord(word) {
+      return word.split('').reduce((sum, c) => sum + (SCORES[c] || 0), 0);
+    }
+
+    function unscramble() {
+      const input = document.getElementById('letters').value.trim();
+      if (!input) {
+        document.getElementById('resultsSection').classList.add('hidden');
+        document.getElementById('emptyState').classList.remove('hidden');
+        return;
+      }
+
+      const available = getLetterCount(input);
+      const starts = document.getElementById('startsWith').value.toLowerCase().trim();
+      const ends = document.getElementById('endsWith').value.toLowerCase().trim();
+      const contains = document.getElementById('contains').value.toLowerCase().trim();
+      const exactLen = document.getElementById('exactLength').value ? parseInt(document.getElementById('exactLength').value) : null;
+
+      const matches = [];
+      const maxLen = input.replace(/\?/g, '').length + available.wildcards;
+
+      for (let len = maxLen; len >= 2; len--) {
+        if (exactLen && len !== exactLen) continue;
+        const candidates = wordsByLength[len] || [];
+        for (const word of candidates) {
+          if (starts && !word.startsWith(starts)) continue;
+          if (ends && !word.endsWith(ends)) continue;
+          if (contains && !word.includes(contains)) continue;
+          if (canForm(word, available)) {
+            matches.push({ word, score: scoreWord(word), length: len });
+          }
+        }
+      }
+
+      // Group by length
+      const grouped = {};
+      matches.forEach(m => {
+        if (!grouped[m.length]) grouped[m.length] = [];
+        grouped[m.length].push(m);
+      });
+
+      // Render
+      const container = document.getElementById('results');
+      container.innerHTML = '';
+
+      if (matches.length === 0) {
+        container.innerHTML = '<p class="text-slate-500">No words found. Try different letters or fewer filters.</p>';
+      } else {
+        Object.keys(grouped).sort((a,b) => b - a).forEach(len => {
+          const group = document.createElement('div');
+          group.innerHTML = `<h3 class="text-sm font-medium text-slate-500 mb-2">${len} letters</h3>`;
+          const grid = document.createElement('div');
+          grid.className = 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2';
+          grouped[len].sort((a,b) => b.score - a.score).forEach(m => {
+            const card = document.createElement('div');
+            card.className = 'result-card bg-white border border-slate-200 rounded-lg px-3 py-2 flex justify-between items-center';
+            card.innerHTML = `<span class="font-medium">${m.word}</span><span class="text-xs text-slate-400">${m.score} pts</span>`;
+            grid.appendChild(card);
+          });
+          group.appendChild(grid);
+          container.appendChild(group);
+        });
+      }
+
+      document.getElementById('resultCount').textContent = `(${matches.length} words)`;
+      document.getElementById('resultsSection').classList.remove('hidden');
+      document.getElementById('emptyState').classList.add('hidden');
+    }
+
+    // Event listeners
+    document.getElementById('unscrambleBtn').addEventListener('click', unscramble);
+    document.getElementById('letters').addEventListener('keydown', e => {
+      if (e.key === 'Enter') unscramble();
+    });
+
+    // Live filter on change
+    ['startsWith','endsWith','contains','exactLength'].forEach(id => {
+      document.getElementById(id).addEventListener('input', () => {
+        if (document.getElementById('letters').value.trim()) unscramble();
+      });
+    });
+
+    document.getElementById('copyAllBtn').addEventListener('click', () => {
+      const words = Array.from(document.querySelectorAll('.result-card span:first-child')).map(el => el.textContent);
+      navigator.clipboard.writeText(words.join(', '));
+      document.getElementById('copyAllBtn').textContent = 'Copied!';
+      setTimeout(() => document.getElementById('copyAllBtn').textContent = 'Copy all', 1500);
+    });
+  </script>
+</body>
+</html>
