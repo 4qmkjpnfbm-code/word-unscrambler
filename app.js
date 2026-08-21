@@ -131,7 +131,7 @@
       meta.textContent = "";
       if (copy) copy.hidden = true;
       const heading = $("resultsHeading");
-      if (heading) heading.childNodes[0].textContent = "Words ";
+      if (heading) heading.childNodes[0].textContent = "Words from your letters ";
       syncShare("");
       syncTitle("");
       hideDefine();
@@ -289,7 +289,7 @@
     lastMatches = matches;
     const bingoNote = mode !== "wordle" && matches.some((m) => m.len >= 7 && m.len === maxLen);
     const heading = $("resultsHeading");
-    if (heading) heading.childNodes[0].textContent = matches.length.toLocaleString("en-GB") + " words ";
+    if (heading) heading.childNodes[0].textContent = matches.length.toLocaleString("en-GB") + " words from your letters ";
     meta.textContent = bingoNote ? "· bingos marked" : "";
     const all = matches.map((m) => m.word).join(", ");
     if (copy) {

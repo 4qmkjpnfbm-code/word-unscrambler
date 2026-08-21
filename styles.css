@@ -601,7 +601,7 @@ h3 { font-size: var(--text-lg); }
   gap: var(--space-5);
   padding: var(--space-7) 0 var(--space-6);
 }
-.footer-grid h2 {
+.footer-grid h2, .footer-grid .footer-head {
   font-family: var(--font-body);
   font-size: var(--text-xs);
   letter-spacing: 0.14em;
@@ -1175,7 +1175,7 @@ html[data-theme="dark"] .word { background: #241f1b; border-color: #3d362e; colo
   border-top: 0;
   margin-top: 0;
 }
-.cinematic .footer-grid h2 { color: #d7c39a; }
+.cinematic .footer-grid h2, .cinematic .footer-grid .footer-head { color: #d7c39a; }
 .cinematic .footer-grid a:hover { color: #f6ecda; }
 .cinematic .legal-line { border-top-color: #2a2520; }
 
