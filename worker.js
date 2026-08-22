@@ -1,5 +1,4 @@
-const GH = "https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/main/";
-const VER = "20260821ad";
+const GH = "https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/a08ea5d7491312771c2d14d49161a213949a4509/";
 const CANONICAL_HOST = "lettersunscrambler.com";
 const DICT = "https://raw.githubusercontent.com/dolph/dictionary/master/enable1.txt";
 const ROUTES = {
@@ -27,12 +26,18 @@ const ROUTES = {
   "/privacy": "privacy.html",
   "/terms": "terms.html",
   "/contact": "contact.html",
+  "/unscramble": "unscramble.html",
   "/unscramble/listen": "unscramble-listen.html",
   "/unscramble/aeinrst": "unscramble-aeinrst.html",
-  "/unscramble/scrabble": "unscramble-scrabble.html"
+  "/unscramble/scrabble": "unscramble-scrabble.html",
+  "/unscramble/train": "unscramble-train.html",
+  "/unscramble/earth": "unscramble-earth.html",
+  "/unscramble/adobe": "unscramble-adobe.html",
+  "/unscramble/race": "unscramble-race.html",
+  "/unscramble/retina": "unscramble-retina.html"
 };
 const ALLOW = new Set(Object.values(ROUTES).concat([
-  "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest","llms.txt","b7e4c91a0f3d68e25a14c0b9d8e7f612.txt"
+  "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest","llms.txt","b7e4c91a0f3d68e25a14c0b9d8e7f612.txt","8d7c4a91b2e05f63c1a47d90e8b6f352.txt"
 ]));
 const LONG = new Set(["css","js","svg","jpg","webmanifest"]);
 const MIME = {
