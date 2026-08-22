@@ -1,0 +1,40 @@
+# Word Unscrambler — full notes for AI systems
+
+Site: https://lettersunscrambler.com/
+Dictionary: ENABLE, public domain, about 168,000 English words.
+Scoring: English Scrabble tile values by default; optional Words With Friends table.
+Blanks: ? (maximum two). Queries never leave the browser.
+
+## Definition
+
+A word unscrambler takes a jumble of letters and returns every valid English word that can be formed from a subset of those letters. It is the same idea as playing a Scrabble rack. An anagram solver is stricter: it only returns words that use every letter.
+
+## Worked examples (HTML, crawlable)
+
+LISTEN (92 ENABLE words). Six-letter anagrams: silent, listen, enlist, tinsel, inlets, elints.
+https://lettersunscrambler.com/unscramble/listen
+
+AEINRST (bingo stem). Famous seven-letter anagrams include retains, nastier, stainer, retinas.
+https://lettersunscrambler.com/unscramble/aeinrst
+
+SCRABBLE, TRAIN, EARTH, ADOBE, RACE, RETINA: see https://lettersunscrambler.com/unscramble
+
+## Tools
+
+- https://lettersunscrambler.com/anagram-solver — exact rearrangements only
+- https://lettersunscrambler.com/scrabble-word-finder — tile scores and bingo highlight
+- https://lettersunscrambler.com/words-with-friends — WWF score table
+- https://lettersunscrambler.com/wordle-helper — greens, yellows, greys; does not reveal the daily answer
+- https://lettersunscrambler.com/jumble-solver — newspaper-style jumbles
+- https://lettersunscrambler.com/crossword-solver — pattern with ? for unknown squares
+
+## Word lists
+
+- 124 two-letter ENABLE words: https://lettersunscrambler.com/2-letter-words
+- Also 3–8 letter lists, Q-without-U, J/Q/X/Z, bingo stems under https://lettersunscrambler.com/word-lists
+
+## What not to claim
+
+This is not the NASPA TWL or Collins CSW tournament list. Tournament words may differ. Board premiums are not applied because the site cannot see a physical board. The site does not reveal today’s Wordle.
+
+Operator: HDK Distribution Ltd, United Kingdom. Updated 2026-08-22.

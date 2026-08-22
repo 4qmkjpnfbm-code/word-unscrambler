@@ -1590,3 +1590,7 @@ ins.adsbygoogle[data-ad-status="unfilled"] {
 
 
 
+
+.prose dl { margin: 0 0 var(--space-4); }
+.prose dt { font-weight: 700; margin-top: 0.75rem; }
+.prose dd { margin: 0.15rem 0 0; color: var(--fg-muted); }
