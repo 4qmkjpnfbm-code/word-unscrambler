@@ -24,6 +24,9 @@ Updated: 2026-08-22
 
 - Solver: https://lettersunscrambler.com/
 - LISTEN example: https://lettersunscrambler.com/unscramble/listen
+- STRESSED → desserts: https://lettersunscrambler.com/unscramble/stressed
+- ORANGE → onager: https://lettersunscrambler.com/unscramble/orange
+- MASTER → stream: https://lettersunscrambler.com/unscramble/master
 - Anagram solver: https://lettersunscrambler.com/anagram-solver
 - Scrabble word finder: https://lettersunscrambler.com/scrabble-word-finder
 - Words With Friends: https://lettersunscrambler.com/words-with-friends
