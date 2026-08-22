@@ -1,4 +1,5 @@
 const GH = "https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/12957e69c2eb0059902e2aa9f946b25169705ca3/";
+const GH_MAIN = "https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/main/";
 const CANONICAL_HOST = "lettersunscrambler.com";
 const DICT = "https://raw.githubusercontent.com/dolph/dictionary/master/enable1.txt";
 const ROUTES = {
@@ -90,15 +91,18 @@ async function dictionary() {
 }
 async function pull(name) {
   const ext = name.includes(".") ? name.split(".").pop() : "html";
-  const ttl = LONG.has(ext) ? 86400 : 0;
-  for (let i = 0; i < 3; i++) {
-    try {
-      const r = await fetch(GH + name, { cf: { cacheTtl: ttl } });
-      if (r.ok) {
-        const buf = await r.arrayBuffer();
-        if (buf.byteLength > 20) return buf;
-      }
-    } catch (e) {}
+  const ttl = LONG.has(ext) ? 86400 : 120;
+  const srcs = [GH + name, GH_MAIN + name];
+  for (const src of srcs) {
+    for (let i = 0; i < 2; i++) {
+      try {
+        const r = await fetch(src, { cf: { cacheTtl: ttl } });
+        if (r.ok) {
+          const buf = await r.arrayBuffer();
+          if (buf.byteLength > 20) return buf;
+        }
+      } catch (e) {}
+    }
   }
   return null;
 }
