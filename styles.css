@@ -1017,7 +1017,7 @@ html[data-theme="light"] .cinematic .menu-btn {
   background: #070908;
   min-height: calc(100svh - 58px);
   padding: 10px 0 40px;
-  overflow: hidden;
+  overflow: visible;
   display: grid;
   align-content: start;
   gap: 4px;
@@ -1103,12 +1103,14 @@ html[data-theme="light"] .cinematic .menu-btn {
 .stage-tool { position: relative; z-index: 2; width: var(--wrap); margin-inline: auto; }
 .stage-copy { padding-top: 4px; }
 .split-title {
-  font-size: clamp(2.55rem, 6.2vw, 5.15rem);
-  line-height: 0.9;
-  letter-spacing: -0.05em;
+  font-size: clamp(2.2rem, 5.4vw, 4.25rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
   max-width: none;
   font-weight: 560;
   color: var(--stage-ink);
+  overflow: visible;
+  padding-inline: 0.04em;
 }
 .split-title .line { display: block; }
 .split-title .ital {
@@ -1354,7 +1356,7 @@ html[data-theme="light"] .cinematic .legal-line { border-top-color: var(--border
 @media (max-width: 720px) {
   .stage { min-height: auto; padding: 4px 0 28px; align-content: start; }
   .orb { display: none; }
-  .split-title { font-size: clamp(2.35rem, 12.5vw, 3.1rem); }
+  .split-title { font-size: clamp(2.1rem, 10vw, 2.75rem); line-height: 1.05; }
   .cinematic .panel { position: static; }
   .cinematic .nav a { border-bottom-color: color-mix(in oklab, #fff 10%, transparent); color: #f6ecda; }
   html[data-theme="dark"] .nav { background: color-mix(in oklab, #171410 92%, transparent); }
@@ -1364,22 +1366,6 @@ html[data-theme="light"] .cinematic .legal-line { border-top-color: var(--border
 @media (prefers-reduced-motion: reduce) {
   .orb, .tile { animation: none; }
   .orbit { transition: none; }
-}
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .split-title .line {
-      animation: split-drift linear both;
-      animation-timeline: view();
-      animation-range: contain 0% contain 40%;
-    }
-    .split-title .ital { animation-name: split-drift-r; }
-  }
-}
-@keyframes split-drift {
-  to { transform: translateX(-4vw); opacity: 0.55; }
-}
-@keyframes split-drift-r {
-  to { transform: translateX(4vw); opacity: 0.55; }
 }
 
 .define {
