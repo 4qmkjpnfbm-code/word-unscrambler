@@ -39,6 +39,9 @@ const ROUTES = {
   "/unscramble/orange": "unscramble-orange.html",
   "/unscramble/stressed": "unscramble-stressed.html",
   "/unscramble/master": "unscramble-master.html",
+  "/unscramble/planet": "unscramble-planet.html",
+  "/unscramble/credit": "unscramble-credit.html",
+  "/unscramble/friend": "unscramble-friend.html",
   "/llms.txt": "llms.txt",
   "/llms-full.txt": "llms-full.txt",
   "/.well-known/llms.txt": "llms.txt"
