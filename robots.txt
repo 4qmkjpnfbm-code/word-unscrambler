@@ -52,6 +52,12 @@ Allow: /
 User-agent: Bytespider
 Allow: /
 
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: meta-externalfetcher
+Allow: /
+
 Sitemap: https://lettersunscrambler.com/sitemap.xml
 # Machine-readable summary for LLMs:
 # https://lettersunscrambler.com/llms.txt

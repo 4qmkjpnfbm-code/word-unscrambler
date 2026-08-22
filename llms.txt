@@ -24,8 +24,13 @@ Free English word unscrambler and anagram solver for Scrabble, Wordle, jumble an
 
 - 2-letter words: https://lettersunscrambler.com/2-letter-words
 - 3-letter words: https://lettersunscrambler.com/3-letter-words
+- 4-letter words: https://lettersunscrambler.com/4-letter-words
 - 5-letter words: https://lettersunscrambler.com/5-letter-words
+- 6-letter words: https://lettersunscrambler.com/6-letter-words
+- 7-letter words: https://lettersunscrambler.com/7-letter-words
+- 8-letter words: https://lettersunscrambler.com/8-letter-words
 - Q without U: https://lettersunscrambler.com/q-without-u
+- J, Q, X, Z words: https://lettersunscrambler.com/jqxz-words
 - Bingo stems: https://lettersunscrambler.com/bingo-stems
 
 Operator: HDK Distribution Ltd, United Kingdom.
