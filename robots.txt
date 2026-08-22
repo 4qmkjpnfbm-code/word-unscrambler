@@ -1,11 +1,17 @@
 User-agent: *
 Allow: /
+Disallow: /*?q=
+Disallow: /*?mode=
 
 User-agent: Googlebot
 Allow: /
+Disallow: /*?q=
+Disallow: /*?mode=
 
 User-agent: Bingbot
 Allow: /
+Disallow: /*?q=
+Disallow: /*?mode=
 
 User-agent: DuckDuckBot
 Allow: /

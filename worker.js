@@ -64,13 +64,14 @@ function mime(name) {
 function extraWords() {
   return ["qi","za","ok","hm","mm","uh","um","ew","fe","gi","gu","ko","ky","ny","po","st","te","wo","yu","zo"];
 }
-function headers(name) {
+function headers(name, extra) {
   const ext = name.includes(".") ? name.split(".").pop() : "html";
   const long = LONG.has(ext);
   return {
     "content-type": mime(name),
     "cache-control": long ? "public, max-age=86400" : "public, max-age=60",
-    ...SEC
+    ...SEC,
+    ...(extra || {})
   };
 }
 async function dictionary() {
@@ -131,6 +132,10 @@ export default {
         headers: { "content-type": "text/html;charset=UTF-8", "cache-control": "no-store", ...SEC }
       });
     }
-    return new Response(buf, { headers: headers(name) });
+    return new Response(buf, {
+      headers: headers(name, (url.searchParams.has("q") || url.searchParams.has("mode"))
+        ? { "x-robots-tag": "noindex, follow" }
+        : undefined)
+    });
   }
 };
