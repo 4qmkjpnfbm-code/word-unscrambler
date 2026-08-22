@@ -120,7 +120,7 @@ async function pull(name) {
 function injectModern(htmlBuf) {
   const text = new TextDecoder().decode(htmlBuf);
   if (text.includes("modern-v32.css")) return htmlBuf;
-  const link = '<link rel="stylesheet" href="/modern-v32.css?v=32" />';
+  const link = '<link rel="stylesheet" href="/modern-v32.css?v=33" />';
   let out = text;
   if (out.includes("</head>")) {
     out = out.replace("</head>", link + "\n</head>");
