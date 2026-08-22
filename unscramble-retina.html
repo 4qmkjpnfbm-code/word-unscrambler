@@ -99,14 +99,16 @@
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){ dataLayer.push(arguments); }
+    var _c = 'denied';
+    try { if (localStorage.getItem('wu_consent') === 'granted') _c = 'granted'; } catch (e) {}
     gtag('consent', 'default', {
-      analytics_storage: 'denied',
+      analytics_storage: _c,
       ad_storage: 'denied',
       ad_user_data: 'denied',
       ad_personalization: 'denied'
     });
     gtag('js', new Date());
-    gtag('config', 'G-VR1EE3K51N');
+    gtag('config', 'G-VR1EE3K51N', { anonymize_ip: true });
   </script>
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","name":"Unscramble RETINA \u2013 RETAIN, RATINE Bingo Stem","url":"https://lettersunscrambler.com/unscramble/retina","dateModified":"2026-08-21","inLanguage":"en-GB"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lettersunscrambler.com/"},{"@type":"ListItem","position":2,"name":"Examples","item":"https://lettersunscrambler.com/unscramble"},{"@type":"ListItem","position":3,"name":"Unscramble RETINA","item":"https://lettersunscrambler.com/unscramble/retina"}]}]}</script>
 </head>
@@ -191,6 +193,9 @@
           ad_user_data: "denied",
           ad_personalization: "denied"
         });
+        if (v === "granted") {
+          gtag("event", "page_view", { page_location: location.href, page_title: document.title });
+        }
       }
       try {
         var saved = localStorage.getItem(KEY);

@@ -99,14 +99,16 @@
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){ dataLayer.push(arguments); }
+    var _c = 'denied';
+    try { if (localStorage.getItem('wu_consent') === 'granted') _c = 'granted'; } catch (e) {}
     gtag('consent', 'default', {
-      analytics_storage: 'denied',
+      analytics_storage: _c,
       ad_storage: 'denied',
       ad_user_data: 'denied',
       ad_personalization: 'denied'
     });
     gtag('js', new Date());
-    gtag('config', 'G-VR1EE3K51N');
+    gtag('config', 'G-VR1EE3K51N', { anonymize_ip: true });
   </script>
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Word Unscrambler","url":"https://lettersunscrambler.com/","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"GBP"},"description":"Free online word unscrambler and anagram solver using the ENABLE English word list.","inLanguage":"en-GB"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lettersunscrambler.com/"},{"@type":"ListItem","position":2,"name":"Scrabble word finder","item":"https://lettersunscrambler.com/scrabble-word-finder"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does a bingo include the 50-point bonus?","acceptedAnswer":{"@type":"Answer","text":"The points shown are tile values only. If you use all seven tiles, add 50 on the board yourself."}},{"@type":"Question","name":"Are these words valid in tournament Scrabble?","acceptedAnswer":{"@type":"Answer","text":"Most are. ENABLE is not identical to Collins (CSW) or NASPA (TWL). When in doubt, check the official list for your club."}}]}]}</script>
 </head>
@@ -280,6 +282,9 @@
           ad_user_data: "denied",
           ad_personalization: "denied"
         });
+        if (v === "granted") {
+          gtag("event", "page_view", { page_location: location.href, page_title: document.title });
+        }
       }
       try {
         var saved = localStorage.getItem(KEY);

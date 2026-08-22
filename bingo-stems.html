@@ -99,14 +99,16 @@
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){ dataLayer.push(arguments); }
+    var _c = 'denied';
+    try { if (localStorage.getItem('wu_consent') === 'granted') _c = 'granted'; } catch (e) {}
     gtag('consent', 'default', {
-      analytics_storage: 'denied',
+      analytics_storage: _c,
       ad_storage: 'denied',
       ad_user_data: 'denied',
       ad_personalization: 'denied'
     });
     gtag('js', new Date());
-    gtag('config', 'G-VR1EE3K51N');
+    gtag('config', 'G-VR1EE3K51N', { anonymize_ip: true });
   </script>
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","name":"Word Unscrambler","legalName":"HDK Distribution Ltd","url":"https://lettersunscrambler.com/","address":{"@type":"PostalAddress","addressCountry":"GB"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lettersunscrambler.com/"},{"@type":"ListItem","position":2,"name":"Word lists","item":"https://lettersunscrambler.com/word-lists"},{"@type":"ListItem","position":3,"name":"Scrabble Bingo Stems","item":"https://lettersunscrambler.com/bingo-stems"}]}]}</script>
 </head>
@@ -203,6 +205,9 @@
           ad_user_data: "denied",
           ad_personalization: "denied"
         });
+        if (v === "granted") {
+          gtag("event", "page_view", { page_location: location.href, page_title: document.title });
+        }
       }
       try {
         var saved = localStorage.getItem(KEY);
