@@ -92,7 +92,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,640&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=26" />
+  <link rel="stylesheet" href="/styles.css?v=27" />
   <link rel="preconnect" href="https://www.googletagmanager.com" />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-VR1EE3K51N"></script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2666058844257008" crossorigin="anonymous"></script>
@@ -153,6 +153,14 @@
         <button class="primary" id="go" type="button">Find words</button>
       </div>
       <p class="coach" id="coach">Use ? for a blank tile. Words appear as you type.</p>
+      <div class="status">
+      <h2 id="resultsHeading">Words from your letters <span id="resultMeta"></span></h2>
+      <div class="toolbar">
+        <button class="ghost" id="share" type="button" hidden>Share</button>
+        <button class="ghost" id="copy" type="button" hidden>Copy all</button>
+      </div>
+    </div>
+    <div id="results" class="empty">Your words will show here.</div>
       <div class="tiles" id="tiles" aria-hidden="true"></div>
       <div class="modes" role="tablist" aria-label="Mode">
         <button class="mode" type="button" data-mode="subset" aria-pressed="true">All words</button>
@@ -167,7 +175,9 @@
           <div class="wordle-row" aria-label="Green letters">
             <input data-slot maxlength="1" inputmode="text" aria-label="Position 1" placeholder="1" /><input data-slot maxlength="1" inputmode="text" aria-label="Position 2" placeholder="2" /><input data-slot maxlength="1" inputmode="text" aria-label="Position 3" placeholder="3" /><input data-slot maxlength="1" inputmode="text" aria-label="Position 4" placeholder="4" /><input data-slot maxlength="1" inputmode="text" aria-label="Position 5" placeholder="5" />
           </div>
-          <p class="mini">Yellows in the box above. Greys in More options → Exclude.</p>
+          <p class="field-label" for="greys">Grey letters</p>
+          <input id="greys" type="text" maxlength="16" autocomplete="off" spellcheck="false" placeholder="letters not in the word" />
+          <p class="mini">Yellows go in Letters. Greens in the five boxes.</p>
         </div></div>
       <div class="examples" aria-label="Try an example"><button class="chip" type="button" data-ex="AEINRST">AEINRST</button><button class="chip" type="button" data-ex="Q?AT">Q?AT</button><button class="chip" type="button" data-ex="ZA">ZA</button><button class="chip" type="button" data-ex="SCRABBLE">SCRABBLE</button></div>
       <details class="more">
@@ -198,14 +208,6 @@
         <p class="hint">Dictionary: ENABLE, <span id="dictCount">loading</span> words.</p>
       </details>
     </section>
-    <div class="status">
-      <h2 id="resultsHeading">Words <span id="resultMeta"></span></h2>
-      <div class="toolbar">
-        <button class="ghost" id="share" type="button" hidden>Share</button>
-        <button class="ghost" id="copy" type="button" hidden>Copy all</button>
-      </div>
-    </div>
-    <div id="results" class="empty">Your words will show here.</div>
     <aside class="ad-region" aria-label="Advertisement">
       <p class="ad-label">Advertisement</p>
       <div class="ad-box">
@@ -217,7 +219,7 @@
       </div>
     </aside>
 
-    <script src="/app.js?v=19" defer></script>
+    <script src="/app.js?v=20" defer></script>
   <section class="bento" aria-label="Come back for">
       <div class="bento-card" id="recentsCard">
         <p class="try-label">Recent racks</p>

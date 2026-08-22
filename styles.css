@@ -517,6 +517,18 @@ h3 { font-size: var(--text-lg); }
   color: var(--felt-fg);
   border-color: var(--felt);
 }
+#greys {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  margin: 6px 0 8px;
+  padding: 0 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 650;
+}
 .status {
   display: flex;
   justify-content: space-between;
@@ -719,6 +731,11 @@ h3 { font-size: var(--text-lg); }
   .keypad, .tiles { display: none !important; }
   .quick-filters { display: none; }
   .coach { font-size: 0.92rem; }
+  .cinematic .stage .lede { display: none; }
+  .cinematic .stage .kicker { margin-bottom: 4px; }
+  .stage-copy { padding-top: 0; }
+  .stage { min-height: 0; padding: 0 0 20px; }
+  .status { position: static; padding: 8px 0 4px; }
   .filters, .related, .stats { grid-template-columns: 1fr 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
   .header-inner { flex-wrap: wrap; }

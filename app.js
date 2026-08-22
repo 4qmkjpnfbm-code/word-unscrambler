@@ -8,7 +8,7 @@
   let ready = false;
   let wordCount = 0;
   let timer = 0;
-  let scoring = "scrabble";
+  let scoring = document.body.dataset.score === "wwf" ? "wwf" : "scrabble";
   let mode = document.body.dataset.tool || "subset";
   let sortBy = "score";
   const COACH = {
@@ -166,7 +166,7 @@
     const starts = ($("starts")?.value || "").toLowerCase().trim();
     const ends = ($("ends")?.value || "").toLowerCase().trim();
     const contains = ($("contains")?.value || "").toLowerCase().trim();
-    const exclude = ($("exclude")?.value || "").toLowerCase().replace(/[^a-z]/g, "");
+    const exclude = (($("exclude")?.value || "") + ($("greys")?.value || "")).toLowerCase().replace(/[^a-z]/g, "");
     const chip = document.querySelector(".len[aria-pressed='true']");
     const lenKey = chip ? chip.dataset.len : "";
     const exact = lenKey && lenKey !== "9+" ? parseInt(lenKey, 10) : ($("length")?.value ? parseInt($("length").value, 10) : null);
@@ -231,7 +231,19 @@
 
     if (!matches.length) {
       box.className = "empty";
-      box.textContent = "No words match yet. Try All words, add a ? blank, or clear More options.";
+      box.replaceChildren();
+      const p = el("p", "", mode === "anagram"
+        ? "No exact anagrams for these letters. Shorter words still exist in All words."
+        : mode === "wordle"
+          ? "No 5-letter matches. Check greens, or take a letter out of yellows/greys."
+          : "No words match yet. Type ? for a blank, or switch mode.");
+      box.appendChild(p);
+      if (mode === "anagram") {
+        const b = el("button", "primary", "Show shorter words");
+        b.type = "button";
+        b.addEventListener("click", () => setMode("subset"));
+        box.appendChild(b);
+      }
       if (meta) meta.textContent = "";
       if (copy) copy.hidden = true;
       hideDefine();
@@ -761,7 +773,7 @@
     if (coach) coach.after(box);
     else lettersEl.parentNode.after(box);
   })();
-  ["starts", "ends", "contains", "exclude"].forEach((id) => {
+  ["starts", "ends", "contains", "exclude", "greys"].forEach((id) => {
     $(id)?.addEventListener("input", (e) => {
       const clean = e.target.value.toUpperCase().replace(/[^A-Z]/g, "");
       if (clean !== e.target.value) e.target.value = clean;
@@ -802,6 +814,7 @@
     });
   });
   document.querySelectorAll("[data-score]").forEach((btn) => {
+    btn.setAttribute("aria-pressed", btn.dataset.score === scoring ? "true" : "false");
     btn.addEventListener("click", () => {
       scoring = btn.dataset.score;
       document.querySelectorAll("[data-score]").forEach((b) => b.setAttribute("aria-pressed", b === btn ? "true" : "false"));
