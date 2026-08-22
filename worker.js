@@ -47,7 +47,7 @@ const ROUTES = {
   "/.well-known/llms.txt": "llms.txt"
 };
 const ALLOW = new Set(Object.values(ROUTES).concat([
-  "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest","llms.txt","llms-full.txt","b7e4c91a0f3d68e25a14c0b9d8e7f612.txt","8d7c4a91b2e05f63c1a47d90e8b6f352.txt","BingSiteAuth.xml","modern-v34.css","modern-v32.css"
+  "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest","llms.txt","llms-full.txt","b7e4c91a0f3d68e25a14c0b9d8e7f612.txt","8d7c4a91b2e05f63c1a47d90e8b6f352.txt","BingSiteAuth.xml","modern-v35.css","modern-v34.css","modern-v32.css"
 ]));
 const LONG = new Set(["css","js","svg","jpg","webmanifest"]);
 const MIME = {
@@ -76,10 +76,11 @@ function extraWords() {
 }
 function headers(name, extra) {
   const ext = name.includes(".") ? name.split(".").pop() : "html";
-  const long = LONG.has(ext);
+  const modern = name.startsWith("modern-v");
+  const long = !modern && LONG.has(ext);
   return {
     "content-type": mime(name),
-    "cache-control": long ? "public, max-age=86400" : "public, max-age=60",
+    "cache-control": modern ? "public, max-age=60, must-revalidate" : (long ? "public, max-age=86400" : "public, max-age=60"),
     ...SEC,
     ...(extra || {})
   };
@@ -100,7 +101,7 @@ async function dictionary() {
 }
 async function pull(name) {
   const ext = name.includes(".") ? name.split(".").pop() : "html";
-  const modern = name === "modern-v34.css" || name === "modern-v32.css";
+  const modern = name.startsWith("modern-v");
   const ttl = modern ? 60 : (LONG.has(ext) ? 86400 : 120);
   const srcs = modern
     ? [GH_MAIN + name, GH + name]
@@ -120,8 +121,8 @@ async function pull(name) {
 }
 function injectModern(htmlBuf) {
   const text = new TextDecoder().decode(htmlBuf);
-  if (text.includes("modern-v34.css")) return htmlBuf;
-  const link = '<link rel="stylesheet" href="/modern-v34.css?v=34" />';
+  if (text.includes("modern-v35.css")) return htmlBuf;
+  const link = '<link rel="stylesheet" href="/modern-v35.css?v=35" />';
   let out = text;
   if (out.includes("</head>")) {
     out = out.replace("</head>", link + "\n</head>");
