@@ -47,7 +47,7 @@ const ROUTES = {
   "/.well-known/llms.txt": "llms.txt"
 };
 const ALLOW = new Set(Object.values(ROUTES).concat([
-  "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest","llms.txt","llms-full.txt","b7e4c91a0f3d68e25a14c0b9d8e7f612.txt","8d7c4a91b2e05f63c1a47d90e8b6f352.txt","BingSiteAuth.xml","modern-v32.css"
+  "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest","llms.txt","llms-full.txt","b7e4c91a0f3d68e25a14c0b9d8e7f612.txt","8d7c4a91b2e05f63c1a47d90e8b6f352.txt","BingSiteAuth.xml","modern-v34.css","modern-v32.css"
 ]));
 const LONG = new Set(["css","js","svg","jpg","webmanifest"]);
 const MIME = {
@@ -100,8 +100,9 @@ async function dictionary() {
 }
 async function pull(name) {
   const ext = name.includes(".") ? name.split(".").pop() : "html";
-  const ttl = LONG.has(ext) ? 86400 : 120;
-  const srcs = name === "modern-v32.css"
+  const modern = name === "modern-v34.css" || name === "modern-v32.css";
+  const ttl = modern ? 60 : (LONG.has(ext) ? 86400 : 120);
+  const srcs = modern
     ? [GH_MAIN + name, GH + name]
     : [GH + name, GH_MAIN + name];
   for (const src of srcs) {
@@ -119,8 +120,8 @@ async function pull(name) {
 }
 function injectModern(htmlBuf) {
   const text = new TextDecoder().decode(htmlBuf);
-  if (text.includes("modern-v32.css")) return htmlBuf;
-  const link = '<link rel="stylesheet" href="/modern-v32.css?v=33" />';
+  if (text.includes("modern-v34.css")) return htmlBuf;
+  const link = '<link rel="stylesheet" href="/modern-v34.css?v=34" />';
   let out = text;
   if (out.includes("</head>")) {
     out = out.replace("</head>", link + "\n</head>");
