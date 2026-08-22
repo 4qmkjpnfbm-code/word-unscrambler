@@ -47,7 +47,7 @@ const ROUTES = {
   "/.well-known/llms.txt": "llms.txt"
 };
 const ALLOW = new Set(Object.values(ROUTES).concat([
-  "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest","llms.txt","llms-full.txt","b7e4c91a0f3d68e25a14c0b9d8e7f612.txt","8d7c4a91b2e05f63c1a47d90e8b6f352.txt","BingSiteAuth.xml"
+  "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest","llms.txt","llms-full.txt","b7e4c91a0f3d68e25a14c0b9d8e7f612.txt","8d7c4a91b2e05f63c1a47d90e8b6f352.txt","BingSiteAuth.xml","modern-v32.css"
 ]));
 const LONG = new Set(["css","js","svg","jpg","webmanifest"]);
 const MIME = {
@@ -101,7 +101,9 @@ async function dictionary() {
 async function pull(name) {
   const ext = name.includes(".") ? name.split(".").pop() : "html";
   const ttl = LONG.has(ext) ? 86400 : 120;
-  const srcs = [GH + name, GH_MAIN + name];
+  const srcs = name === "modern-v32.css"
+    ? [GH_MAIN + name, GH + name]
+    : [GH + name, GH_MAIN + name];
   for (const src of srcs) {
     for (let i = 0; i < 2; i++) {
       try {
@@ -114,6 +116,18 @@ async function pull(name) {
     }
   }
   return null;
+}
+function injectModern(htmlBuf) {
+  const text = new TextDecoder().decode(htmlBuf);
+  if (text.includes("modern-v32.css")) return htmlBuf;
+  const link = '<link rel="stylesheet" href="/modern-v32.css?v=32" />';
+  let out = text;
+  if (out.includes("</head>")) {
+    out = out.replace("</head>", link + "\n</head>");
+  } else if (out.includes("<head>")) {
+    out = out.replace("<head>", "<head>\n" + link);
+  }
+  return new TextEncoder().encode(out).buffer;
 }
 export default {
   async fetch(req, env, ctx) {
@@ -137,7 +151,7 @@ export default {
         headers: { "content-type": "text/html;charset=UTF-8", "cache-control": "no-store", ...SEC }
       });
     }
-    const buf = await pull(name);
+    let buf = await pull(name);
     if (!buf) {
       const miss = await pull("404.html");
       return new Response(miss || "Not found", {
@@ -145,6 +159,8 @@ export default {
         headers: { "content-type": "text/html;charset=UTF-8", "cache-control": "no-store", ...SEC }
       });
     }
+    const isHtml = !(name.includes(".")) || name.endsWith(".html");
+    if (isHtml) buf = injectModern(buf);
     return new Response(buf, {
       headers: headers(name, (url.searchParams.has("q") || url.searchParams.has("mode"))
         ? { "x-robots-tag": "noindex, follow" }
