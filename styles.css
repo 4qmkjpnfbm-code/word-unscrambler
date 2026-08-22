@@ -403,7 +403,7 @@ h3 { font-size: var(--text-lg); }
   border-radius: var(--radius-xs);
 }
 .tiles {
-  display: flex;
+  display: none !important;
   flex-wrap: wrap;
   gap: 6px;
   min-height: 0;
@@ -1070,6 +1070,7 @@ html[data-theme="light"] .cinematic .menu-btn {
     linear-gradient(180deg, rgba(7, 9, 8, 0.42) 0%, rgba(7, 9, 8, 0.08) 38%, rgba(7, 9, 8, 0.62) 100%);
 }
 .orbit {
+  display: none !important;
   position: absolute;
   inset: 0;
   z-index: 1;
@@ -1090,8 +1091,8 @@ html[data-theme="light"] .cinematic .menu-btn {
   font-size: 1.55rem;
   color: #1c1710;
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.34), transparent 40%),
-    url("/wood.jpg") center / cover, #e7d3a4;
+    linear-gradient(180deg, rgba(255,255,255,0.42), transparent 42%),
+    #e7d3a4;
   border-radius: 8px;
   box-shadow:
     0 22px 36px -18px #000,
