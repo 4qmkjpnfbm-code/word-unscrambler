@@ -1,36 +1,90 @@
-/* modern-v32: glass + Scroll World–inspired reveals + micro-interactions
-   Progressive enhancement only. Tool panel never animated. */
+/* modern-v33 — craft pass from Scroll World / marketing-site polish
+   Applied as progressive enhancement. Tool stays first; no long scroll story. */
 
-/* --- Advanced glass on the stage tool panel --- */
+/* ========== Stage tool: deeper glass ========== */
 .stage-tool .panel {
   background: linear-gradient(
     155deg,
-    color-mix(in oklab, #171410 42%, transparent) 0%,
-    color-mix(in oklab, #171410 62%, transparent) 100%
+    color-mix(in oklab, #171410 38%, transparent) 0%,
+    color-mix(in oklab, #171410 58%, transparent) 55%,
+    color-mix(in oklab, #171410 68%, transparent) 100%
   );
-  border: 1px solid color-mix(in oklab, #fff 18%, transparent);
-  backdrop-filter: blur(30px) saturate(1.35) brightness(1.03);
-  -webkit-backdrop-filter: blur(30px) saturate(1.35) brightness(1.03);
+  border: 1px solid color-mix(in oklab, #fff 20%, transparent);
+  backdrop-filter: blur(32px) saturate(1.4) brightness(1.04);
+  -webkit-backdrop-filter: blur(32px) saturate(1.4) brightness(1.04);
   box-shadow:
-    0 40px 90px -40px #000,
-    inset 0 1px 0 color-mix(in oklab, #fff 16%, transparent),
-    0 0 0 1px color-mix(in oklab, #fff 5%, transparent);
+    0 48px 100px -42px #000,
+    0 0 0 1px color-mix(in oklab, #fff 6%, transparent),
+    inset 0 1px 0 color-mix(in oklab, #fff 22%, transparent),
+    inset 0 -1px 0 color-mix(in oklab, #000 25%, transparent);
 }
 
-/* --- Word card micro-interaction --- */
+/* Sticky panel keeps glass readable while scrolling results */
+.stage-tool .panel {
+  transition: box-shadow 220ms ease, border-color 220ms ease;
+}
+
+/* ========== Input: focus as soft “stage light” ========== */
+.stage-tool .input-row input[type="text"],
+.stage-tool .field-wrap input[type="text"] {
+  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+.stage-tool .input-row input[type="text"]:focus,
+.stage-tool .field-wrap input[type="text"]:focus {
+  outline: none;
+  border-color: color-mix(in oklab, #d7c39a 55%, transparent);
+  box-shadow:
+    0 0 0 3px color-mix(in oklab, #d7c39a 22%, transparent),
+    0 12px 28px -16px #000;
+}
+
+/* ========== Modes / chips: tactile press ========== */
+.stage-tool .mode,
+.stage-tool .chip {
+  transition: transform 140ms cubic-bezier(0.23, 1, 0.32, 1), border-color 140ms ease, background 140ms ease, color 140ms ease;
+}
+.stage-tool .mode:hover,
+.stage-tool .chip:hover {
+  transform: translateY(-1px);
+}
+.stage-tool .mode:active,
+.stage-tool .chip:active {
+  transform: translateY(0);
+}
+
+/* ========== Word tiles: lift + whisper of scale ========== */
 .word {
   transition:
     border-color 160ms ease,
-    transform 160ms cubic-bezier(0.23, 1, 0.32, 1),
-    box-shadow 160ms cubic-bezier(0.23, 1, 0.32, 1);
+    transform 180ms cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 180ms cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform;
 }
 .word:hover {
   border-color: var(--felt, #1f4a38);
-  transform: translateY(-1px);
-  box-shadow: 0 10px 18px -14px color-mix(in oklab, var(--fg, #1c1710) 55%, transparent);
+  transform: translateY(-2px) scale(1.015);
+  box-shadow:
+    0 14px 24px -16px color-mix(in oklab, var(--fg, #1c1710) 50%, transparent),
+    0 0 0 1px color-mix(in oklab, var(--felt, #1f4a38) 18%, transparent);
+}
+.word:active {
+  transform: translateY(0) scale(1);
 }
 
-/* --- Scroll World–style reveals (compositor-safe only) --- */
+/* ========== Bento cards: soft product-card feel ========== */
+.bento-card {
+  transition:
+    transform 200ms cubic-bezier(0.23, 1, 0.32, 1),
+    border-color 200ms ease,
+    box-shadow 200ms ease;
+}
+.bento-card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in oklab, var(--felt, #1f4a38) 35%, transparent);
+  box-shadow: 0 18px 36px -24px color-mix(in oklab, var(--fg, #1c1710) 45%, transparent);
+}
+
+/* ========== Scroll World–style reveals (CSS only, compositor-safe) ========== */
 @keyframes reveal-up {
   from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -39,54 +93,58 @@
   from { opacity: 0; }
   to   { opacity: 1; }
 }
+@keyframes reveal-soft {
+  from { opacity: 0; transform: translateY(10px) scale(0.985); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
 
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
-    /* Section groups: soft rise as they enter the viewport */
     .group {
       animation: reveal-up linear both;
       animation-timeline: view();
-      animation-range: entry 0% entry 65%;
+      animation-range: entry 0% entry 62%;
     }
-
-    /* Bento / secondary cards: slightly later, lighter motion */
     .bento-card {
-      animation: reveal-up linear both;
+      animation: reveal-soft linear both;
       animation-timeline: view();
-      animation-range: entry 5% entry 70%;
+      animation-range: entry 4% entry 68%;
     }
-
-    /* FAQ + How-it-works prose blocks */
     .prose.faq,
-    .prose#how {
+    .prose#how,
+    section.prose {
       animation: reveal-up linear both;
       animation-timeline: view();
-      animation-range: entry 0% entry 60%;
+      animation-range: entry 0% entry 58%;
     }
-
-    /* First dozen result tiles — staggered feel via later start */
     .word:nth-child(-n+12) {
       animation: reveal-up linear both;
       animation-timeline: view();
-      animation-range: entry 10% entry 88%;
+      animation-range: entry 12% entry 90%;
     }
-
-    /* Group headings settle just before their cards */
+    .group-title,
     .group > h2,
-    .group > .group-title,
-    .results-meta {
+    .results-meta,
+    .bento > h2 {
       animation: reveal-fade linear both;
       animation-timeline: view();
-      animation-range: entry 0% entry 40%;
+      animation-range: entry 0% entry 38%;
     }
   }
 }
 
-/* Light theme: solid elevated panel, no glass over pale stage */
+/* ========== Light theme: solid elevated panel ========== */
 html[data-theme="light"] .stage-tool .panel {
   background: var(--bg-elevated, #fff8ea);
   border: 1px solid var(--border, color-mix(in oklab, #1c1710 12%, transparent));
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  box-shadow: var(--shadow, 0 1px 0 color-mix(in oklab, #1c1710 7%, transparent), 0 22px 50px -30px color-mix(in oklab, #1c1710 40%, transparent));
+  box-shadow:
+    0 1px 0 color-mix(in oklab, #1c1710 7%, transparent),
+    0 22px 50px -30px color-mix(in oklab, #1c1710 40%, transparent);
+}
+html[data-theme="light"] .stage-tool .input-row input[type="text"]:focus,
+html[data-theme="light"] .stage-tool .field-wrap input[type="text"]:focus {
+  border-color: var(--felt, #1f4a38);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--felt, #1f4a38) 18%, transparent);
 }
