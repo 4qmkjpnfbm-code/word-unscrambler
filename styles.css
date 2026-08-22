@@ -729,7 +729,7 @@ h3 { font-size: var(--text-lg); }
   .input-row { flex-direction: column; align-items: stretch; }
   .primary { width: 100%; min-height: 48px; }
   .keypad, .tiles { display: none !important; }
-  .quick-filters { display: none; }
+  .quick-filters, .len-row, .panel > .try-label, .panel > .examples, .daily { display: none !important; }
   .coach { font-size: 0.92rem; }
   .cinematic .stage .lede { display: none; }
   .cinematic .stage .kicker { margin-bottom: 4px; }
