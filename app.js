@@ -686,7 +686,13 @@
     lettersEl.select();
   });
   (function addFieldChrome() {
-    if (!$("clear") && lettersEl.parentNode) {
+    if (!lettersEl || !lettersEl.parentNode) return;
+    if (!lettersEl.parentElement.classList.contains("field-wrap")) {
+      const wrap = el("div", "field-wrap");
+      lettersEl.before(wrap);
+      wrap.appendChild(lettersEl);
+    }
+    if (!$("clear")) {
       const c = el("button", "icon-clear", "×");
       c.id = "clear";
       c.type = "button";
@@ -700,18 +706,10 @@
         lettersEl.focus();
       });
     }
-    if ($("blank")) return;
-    const go = $("go");
-    if (!go || !go.parentNode) return;
-    const b = el("button", "ghost blank-btn", "?");
-    b.id = "blank";
-    b.type = "button";
-    b.setAttribute("aria-label", "Add a blank tile");
-    b.title = "Add a blank tile. Two maximum.";
-    go.after(b);
   })();
   (function ensureKeypad() {
     if ($("keypad") || !lettersEl) return;
+    if (matchMedia("(max-width: 720px)").matches) return;
     const box = el("div", "keypad");
     box.id = "keypad";
     box.setAttribute("aria-label", "Letter keys");
@@ -747,7 +745,14 @@
         const blank = el("button", "key key-wide", "?");
         blank.type = "button";
         blank.setAttribute("aria-label", "Blank tile");
-        blank.addEventListener("click", () => $("blank")?.click());
+        blank.addEventListener("click", () => {
+          const wilds = (lettersEl.value.match(/[?*]/g) || []).length;
+          if (wilds >= 2) { toast("Two blanks maximum"); return; }
+          lettersEl.value = (lettersEl.value + "?").slice(0, 16);
+          const c = $("clear");
+          if (c) c.hidden = false;
+          collect();
+        });
         r.appendChild(blank);
       }
       box.appendChild(r);
@@ -756,18 +761,6 @@
     if (coach) coach.after(box);
     else lettersEl.parentNode.after(box);
   })();
-  $("blank")?.addEventListener("click", () => {
-    const wilds = (lettersEl.value.match(/[?*]/g) || []).length;
-    if (wilds >= 2) {
-      toast("Two blanks maximum");
-      return;
-    }
-    lettersEl.value = (lettersEl.value + "?").slice(0, 16);
-    const c = $("clear");
-    if (c) c.hidden = false;
-    collect();
-    lettersEl.focus();
-  });
   ["starts", "ends", "contains", "exclude"].forEach((id) => {
     $(id)?.addEventListener("input", (e) => {
       const clean = e.target.value.toUpperCase().replace(/[^A-Z]/g, "");
