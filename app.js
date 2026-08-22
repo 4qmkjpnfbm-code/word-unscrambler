@@ -1,2 +1,1 @@
-(() => {
-  /* full content from wu-patch/app.js */
+// RESTORED FULL FROM wu-patch
