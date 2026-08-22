@@ -14,8 +14,17 @@ A word unscrambler takes a jumble of letters and returns every valid English wor
 LISTEN (92 ENABLE words). Six-letter anagrams: silent, listen, enlist, tinsel, inlets, elints.
 https://lettersunscrambler.com/unscramble/listen
 
+STRESSED → desserts: https://lettersunscrambler.com/unscramble/stressed
+ORANGE → onager: https://lettersunscrambler.com/unscramble/orange
+MASTER → stream: https://lettersunscrambler.com/unscramble/master
+PLANET → platen: https://lettersunscrambler.com/unscramble/planet
+CREDIT → direct: https://lettersunscrambler.com/unscramble/credit
+FRIEND → finder: https://lettersunscrambler.com/unscramble/friend
+
 AEINRST (bingo stem). Famous seven-letter anagrams include retains, nastier, stainer, retinas.
 https://lettersunscrambler.com/unscramble/aeinrst
+
+How to unscramble letters (3 steps): https://lettersunscrambler.com/how-it-works
 
 SCRABBLE, TRAIN, EARTH, ADOBE, RACE, RETINA: see https://lettersunscrambler.com/unscramble
 

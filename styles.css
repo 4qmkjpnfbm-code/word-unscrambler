@@ -932,6 +932,8 @@ html[data-theme="dark"] .word { background: #241f1b; border-color: #3d362e; colo
   font-variant-numeric: tabular-nums;
 }
 .daily.is-solved { border-color: var(--felt); }
+body[data-tool="pattern"] .daily,
+body[data-tool="wordle"] .daily { display: none !important; }
 .bento {
   display: grid;
   grid-template-columns: 1fr 1fr;
