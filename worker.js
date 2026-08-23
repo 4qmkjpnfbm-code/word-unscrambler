@@ -2,6 +2,7 @@ const GH = "https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/2
 const GH_MAIN = "https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/main/";
 const CANONICAL_HOST = "lettersunscrambler.com";
 const DICT = "https://raw.githubusercontent.com/dolph/dictionary/master/enable1.txt";
+const FEEDBACK_TO = "hdkdistributionltd@gmail.com";
 const ROUTES = {
   "/": "index.html",
   "/anagram-solver": "anagram-solver.html",
@@ -27,6 +28,7 @@ const ROUTES = {
   "/privacy": "privacy.html",
   "/terms": "terms.html",
   "/contact": "contact.html",
+  "/feedback": "feedback.html",
   "/unscramble": "unscramble.html",
   "/unscramble/listen": "unscramble-listen.html",
   "/unscramble/aeinrst": "unscramble-aeinrst.html",
@@ -47,7 +49,7 @@ const ROUTES = {
   "/.well-known/llms.txt": "llms.txt"
 };
 const ALLOW = new Set(Object.values(ROUTES).concat([
-  "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest","llms.txt","llms-full.txt","b7e4c91a0f3d68e25a14c0b9d8e7f612.txt","8d7c4a91b2e05f63c1a47d90e8b6f352.txt","BingSiteAuth.xml","modern-v35.css","modern-v34.css","modern-v32.css"
+  "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest","llms.txt","llms-full.txt","b7e4c91a0f3d68e25a14c0b9d8e7f612.txt","8d7c4a91b2e05f63c1a47d90e8b6f352.txt","BingSiteAuth.xml","modern-v35.css","modern-v34.css","modern-v32.css","feedback.html"
 ]));
 const LONG = new Set(["css","js","svg","jpg","webmanifest"]);
 const MIME = {
@@ -68,22 +70,87 @@ const SEC = {
   "strict-transport-security": "max-age=31536000; includeSubDomains"
 };
 function mime(name) {
-  const ext = name.includes(".") ? name.split(".").pop() : "html";
+  const ext = name.indexOf(".") >= 0 ? name.split(".").pop() : "html";
   return MIME[ext] || "application/octet-stream";
 }
 function extraWords() {
   return ["qi","za","ok","hm","mm","uh","um","ew","fe","gi","gu","ko","ky","ny","po","st","te","wo","yu","zo"];
 }
 function headers(name, extra) {
-  const ext = name.includes(".") ? name.split(".").pop() : "html";
-  const modern = name.startsWith("modern-v");
+  const ext = name.indexOf(".") >= 0 ? name.split(".").pop() : "html";
+  const modern = name.indexOf("modern-v") === 0;
   const long = !modern && LONG.has(ext);
-  return {
+  const h = {
     "content-type": mime(name),
     "cache-control": modern ? "public, max-age=60, must-revalidate" : (long ? "public, max-age=86400" : "public, max-age=60"),
-    ...SEC,
-    ...(extra || {})
+    "x-content-type-options": SEC["x-content-type-options"],
+    "referrer-policy": SEC["referrer-policy"],
+    "x-frame-options": SEC["x-frame-options"],
+    "permissions-policy": SEC["permissions-policy"],
+    "strict-transport-security": SEC["strict-transport-security"]
   };
+  if (extra) {
+    const keys = Object.keys(extra);
+    for (let i = 0; i < keys.length; i++) h[keys[i]] = extra[keys[i]];
+  }
+  return h;
+}
+function json(obj, status) {
+  return new Response(JSON.stringify(obj), {
+    status: status || 200,
+    headers: {
+      "content-type": "application/json;charset=UTF-8",
+      "cache-control": "no-store",
+      "x-content-type-options": "nosniff"
+    }
+  });
+}
+function clip(s, n) {
+  s = String(s || "").replace(/\s+/g, " ").trim();
+  return s.length > n ? s.slice(0, n) : s;
+}
+async function handleFeedback(req) {
+  if (req.method === "OPTIONS") {
+    return new Response(null, { status: 204, headers: { "access-control-allow-origin": "https://lettersunscrambler.com", "access-control-allow-methods": "POST", "access-control-allow-headers": "content-type" } });
+  }
+  let data = {};
+  const ctype = (req.headers.get("content-type") || "").toLowerCase();
+  try {
+    if (ctype.indexOf("application/json") !== -1) data = await req.json();
+    else {
+      const fd = await req.formData();
+      fd.forEach(function (v, k) { data[k] = String(v); });
+    }
+  } catch (e) {
+    return json({ ok: false, error: "bad_body" }, 400);
+  }
+  if (clip(data.company, 80)) return json({ ok: true });
+  const message = clip(data.message, 4000);
+  if (message.length < 8) return json({ ok: false, error: "message" }, 400);
+  const kind = clip(data.kind, 32) || "other";
+  const rating = clip(data.rating, 2);
+  const email = clip(data.email, 120);
+  const path = clip(data.path, 180);
+  const payload = {
+    _subject: "Word Unscrambler feedback (" + kind + ")",
+    _template: "table",
+    _captcha: "false",
+    kind: kind,
+    rating: rating || "unrated",
+    message: message,
+    email: email || "(none)",
+    path: path || "/",
+    sent_at: new Date().toISOString()
+  };
+  try {
+    const r = await fetch("https://formsubmit.co/ajax/" + FEEDBACK_TO, {
+      method: "POST",
+      headers: { "content-type": "application/json", "accept": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if (r.ok) return json({ ok: true });
+  } catch (e) {}
+  return json({ ok: false, error: "delivery" }, 502);
 }
 async function dictionary() {
   const r = await fetch(DICT, { cf: { cacheTtl: 86400, cacheEverything: true } });
@@ -94,22 +161,20 @@ async function dictionary() {
     headers: {
       "content-type": "text/plain;charset=UTF-8",
       "cache-control": "public, max-age=86400",
-      "access-control-allow-origin": "*",
-      ...SEC
+      "access-control-allow-origin": "*"
     }
   });
 }
 async function pull(name) {
-  const ext = name.includes(".") ? name.split(".").pop() : "html";
-  const modern = name.startsWith("modern-v");
-  const ttl = modern ? 60 : (LONG.has(ext) ? 86400 : 120);
-  const srcs = modern
-    ? [GH_MAIN + name, GH + name]
-    : [GH + name, GH_MAIN + name];
-  for (const src of srcs) {
+  const ext = name.indexOf(".") >= 0 ? name.split(".").pop() : "html";
+  const modern = name.indexOf("modern-v") === 0;
+  const fresh = modern || name === "feedback.html" || name === "sitemap.xml";
+  const ttl = fresh ? 60 : (LONG.has(ext) ? 86400 : 120);
+  const srcs = fresh ? [GH_MAIN + name, GH + name] : [GH + name, GH_MAIN + name];
+  for (let s = 0; s < srcs.length; s++) {
     for (let i = 0; i < 2; i++) {
       try {
-        const r = await fetch(src, { cf: { cacheTtl: ttl } });
+        const r = await fetch(srcs[s], { cf: { cacheTtl: ttl } });
         if (r.ok) {
           const buf = await r.arrayBuffer();
           if (buf.byteLength > 20) return buf;
@@ -120,19 +185,19 @@ async function pull(name) {
   return null;
 }
 function injectModern(htmlBuf) {
-  const text = new TextDecoder().decode(htmlBuf);
-  if (text.includes("modern-v35.css")) return htmlBuf;
-  const link = '<link rel="stylesheet" href="/modern-v35.css?v=35" />';
-  let out = text;
-  if (out.includes("</head>")) {
-    out = out.replace("</head>", link + "\n</head>");
-  } else if (out.includes("<head>")) {
-    out = out.replace("<head>", "<head>\n" + link);
+  let out = new TextDecoder().decode(htmlBuf);
+  if (out.indexOf("modern-v35.css") === -1) {
+    const link = '<link rel="stylesheet" href="/modern-v35.css?v=35" />';
+    if (out.indexOf("</head>") !== -1) out = out.replace("</head>", link + "\n</head>");
+    else if (out.indexOf("<head>") !== -1) out = out.replace("<head>", "<head>\n" + link);
+  }
+  if (out.indexOf('href="/feedback"') === -1 && out.indexOf('href="/contact">Contact</a>') !== -1) {
+    out = out.replace('<a href="/contact">Contact</a>', '<a href="/feedback">Feedback</a>\n        <a href="/contact">Contact</a>');
   }
   return new TextEncoder().encode(out).buffer;
 }
 export default {
-  async fetch(req, env, ctx) {
+  async fetch(req) {
     const url = new URL(req.url);
     if (url.hostname !== CANONICAL_HOST) {
       url.hostname = CANONICAL_HOST;
@@ -142,26 +207,21 @@ export default {
     }
     let p = url.pathname;
     if (p === "/favicon.ico") p = "/favicon.svg";
-    if (p.length > 1 && p.endsWith("/")) p = p.slice(0, -1);
+    if (p.length > 1 && p.charAt(p.length - 1) === "/") p = p.slice(0, -1);
+    if (p === "/feedback" && (req.method === "POST" || req.method === "OPTIONS")) return handleFeedback(req);
     if (p === "/words.txt") return dictionary();
     let name = ROUTES[p];
-    if (!name && p.startsWith("/") && ALLOW.has(p.slice(1))) name = p.slice(1);
+    if (!name && p.charAt(0) === "/" && ALLOW.has(p.slice(1))) name = p.slice(1);
     if (!name) {
       const miss = await pull("404.html");
-      return new Response(miss || "Not found", {
-        status: 404,
-        headers: { "content-type": "text/html;charset=UTF-8", "cache-control": "no-store", ...SEC }
-      });
+      return new Response(miss || "Not found", { status: 404, headers: { "content-type": "text/html;charset=UTF-8", "cache-control": "no-store" } });
     }
     let buf = await pull(name);
     if (!buf) {
       const miss = await pull("404.html");
-      return new Response(miss || "Not found", {
-        status: 404,
-        headers: { "content-type": "text/html;charset=UTF-8", "cache-control": "no-store", ...SEC }
-      });
+      return new Response(miss || "Not found", { status: 404, headers: { "content-type": "text/html;charset=UTF-8", "cache-control": "no-store" } });
     }
-    const isHtml = !(name.includes(".")) || name.endsWith(".html");
+    const isHtml = name.indexOf(".") === -1 || name.slice(-5) === ".html";
     if (isHtml) buf = injectModern(buf);
     return new Response(buf, {
       headers: headers(name, (url.searchParams.has("q") || url.searchParams.has("mode"))
