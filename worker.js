@@ -49,7 +49,7 @@ const ROUTES = {
   "/.well-known/llms.txt": "llms.txt"
 };
 const ALLOW = new Set(Object.values(ROUTES).concat([
-  "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest","llms.txt","llms-full.txt","b7e4c91a0f3d68e25a14c0b9d8e7f612.txt","8d7c4a91b2e05f63c1a47d90e8b6f352.txt","BingSiteAuth.xml","modern-v35.css","modern-v34.css","modern-v32.css","feedback.html"
+  "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest","llms.txt","llms-full.txt","b7e4c91a0f3d68e25a14c0b9d8e7f612.txt","8d7c4a91b2e05f63c1a47d90e8b6f352.txt","BingSiteAuth.xml","modern-v37.css","modern-v35.css","modern-v34.css","modern-v32.css","feedback.html"
 ]));
 const LONG = new Set(["css","js","svg","jpg","webmanifest"]);
 const MIME = {
@@ -145,10 +145,21 @@ async function handleFeedback(req) {
   try {
     const r = await fetch("https://formsubmit.co/ajax/" + FEEDBACK_TO, {
       method: "POST",
-      headers: { "content-type": "application/json", "accept": "application/json" },
+      headers: {
+        "content-type": "application/json",
+        "accept": "application/json",
+        "origin": "https://lettersunscrambler.com",
+        "referer": "https://lettersunscrambler.com/feedback"
+      },
       body: JSON.stringify(payload)
     });
-    if (r.ok) return json({ ok: true });
+    const text = await r.text();
+    let body = null;
+    try { body = JSON.parse(text); } catch (e) {}
+    if (r.ok || (body && (body.success === true || body.ok === true))) return json({ ok: true });
+    if (body && /confirm|activat/i.test(String(body.message || ""))) {
+      return json({ ok: false, error: "activate", detail: body.message }, 502);
+    }
   } catch (e) {}
   return json({ ok: false, error: "delivery" }, 502);
 }
@@ -186,13 +197,24 @@ async function pull(name) {
 }
 function injectModern(htmlBuf) {
   let out = new TextDecoder().decode(htmlBuf);
-  if (out.indexOf("modern-v35.css") === -1) {
-    const link = '<link rel="stylesheet" href="/modern-v35.css?v=35" />';
+  if (out.indexOf("modern-v37.css") === -1) {
+    out = out.replace(/<link rel="stylesheet" href="\/modern-v3[0-9]\.css\?v=[0-9]+" \/>\n?/g, "");
+    const link = '<link rel="stylesheet" href="/modern-v37.css?v=37" />';
     if (out.indexOf("</head>") !== -1) out = out.replace("</head>", link + "\n</head>");
     else if (out.indexOf("<head>") !== -1) out = out.replace("<head>", "<head>\n" + link);
   }
   if (out.indexOf('href="/feedback"') === -1 && out.indexOf('href="/contact">Contact</a>') !== -1) {
     out = out.replace('<a href="/contact">Contact</a>', '<a href="/feedback">Feedback</a>\n        <a href="/contact">Contact</a>');
+  }
+  if (out.indexOf("has-consent") === -1 && out.indexOf('KEY = "wu_consent"') !== -1) {
+    out = out.replace(
+      'bar.className = "consent";',
+      'document.body.classList.add("has-consent"); bar.className = "consent";'
+    );
+    out = out.replace(
+      'bar.remove();',
+      'document.body.classList.remove("has-consent"); bar.remove();'
+    );
   }
   return new TextEncoder().encode(out).buffer;
 }
