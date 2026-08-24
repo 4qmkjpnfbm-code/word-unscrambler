@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("wu_theme");
+        if (!t) t = (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+        document.documentElement.setAttribute("data-theme", t === "dark" ? "dark" : "light");
+      } catch (e) {}
+      function sync(btn) {
+        var dark = document.documentElement.getAttribute("data-theme") === "dark";
+        if (!btn) return;
+        btn.setAttribute("aria-pressed", dark ? "true" : "false");
+        btn.setAttribute("aria-label", dark ? "Switch to light theme" : "Switch to dark theme");
+        btn.textContent = dark ? "Light" : "Dark";
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute("content", dark ? "#13110f" : "#1f4a38");
+      }
+      function bind() {
+        var btn = document.getElementById("themeBtn");
+        sync(btn);
+        if (btn && !btn.dataset.bound) {
+          btn.dataset.bound = "1";
+          btn.addEventListener("click", function () {
+            var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+            document.documentElement.setAttribute("data-theme", next);
+            try { localStorage.setItem("wu_theme", next); } catch (e) {}
+            sync(btn);
+          });
+        }
+        var menu = document.querySelector("[data-nav]");
+        var nav = document.getElementById("site-nav");
+        if (menu && nav && !menu.dataset.bound) {
+          menu.dataset.bound = "1";
+          function setOpen(open) {
+            nav.classList.toggle("is-open", open);
+            menu.setAttribute("aria-expanded", open ? "true" : "false");
+            menu.textContent = open ? "Close" : "Menu";
+          }
+          menu.addEventListener("click", function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            setOpen(!nav.classList.contains("is-open"));
+          });
+          document.addEventListener("click", function (e) {
+            if (!nav.classList.contains("is-open")) return;
+            if (nav.contains(e.target) || menu.contains(e.target)) return;
+            setOpen(false);
+          });
+          nav.querySelectorAll("a").forEach(function (a) {
+            a.addEventListener("click", function () { setOpen(false); });
+          });
+          document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") setOpen(false);
+          });
+        }
+      }
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", bind);
+      else bind();
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blank Tiles in Scrabble – How ? Wildcards Work</title>
+  <meta name="description" content="How blank tiles work in Scrabble and this word unscrambler. Type ? for a blank (max two). See every word your wildcards can make." />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <link rel="canonical" href="https://lettersunscrambler.com/guides/blank-tiles" />
+  <meta property="og:title" content="Blank Tiles in Scrabble – How ? Wildcards Work" />
+  <meta property="og:url" content="https://lettersunscrambler.com/guides/blank-tiles" />
+  <meta property="og:image" content="https://lettersunscrambler.com/og.jpg" />
+  <meta name="theme-color" content="#1f4a38" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,640&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css?v=32" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VR1EE3K51N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    var _c = 'denied';
+    try { if (localStorage.getItem('wu_consent') === 'granted') _c = 'granted'; } catch (e) {}
+    gtag('consent', 'default', { analytics_storage: _c, ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+    gtag('js', new Date());
+    gtag('config', 'G-VR1EE3K51N', { anonymize_ip: true });
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Blank Tiles in Scrabble – How ? Wildcards Work","description":"How blank tiles work in Scrabble and this word unscrambler.","url":"https://lettersunscrambler.com/guides/blank-tiles","datePublished":"2026-08-24","dateModified":"2026-08-24","author":{"@type":"Organization","name":"Word Unscrambler"}}</script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="/"><span class="mark" aria-hidden="true">W<small>4</small></span><span class="brand-name">Word Unscrambler<span>Find words from letters</span></span></a>
+      <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch colour theme">Theme</button>
+      <button class="menu-btn" type="button" data-nav aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="nav" id="site-nav" aria-label="Primary">
+        <a href="/">Unscrambler</a><a href="/scrabble-word-finder">Scrabble</a><a href="/anagram-solver">Anagrams</a><a href="/wordle-helper">Wordle</a><a href="/crossword-solver">Crossword</a><a href="/word-lists">Lists</a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap page" id="main">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/how-it-works">Guides</a> / <span>Blank tiles</span></nav>
+    <p class="kicker">Guide</p>
+    <h1>Blank tiles and the ? wildcard</h1>
+    <p>A blank tile can stand for any letter. On this site type <code>?</code> in the letters box — each question mark is one blank. You can use up to two.</p>
+    <h2>How to search with blanks</h2>
+    <ol>
+      <li>Type your known letters, then add <code>?</code> for each blank (max two).</li>
+      <li>Example: <code>A?PLE</code> finds apple, ample and other five-letter fits.</li>
+      <li>Example: <code>QI?</code> finds words that start with QI plus any third letter that forms a valid word.</li>
+    </ol>
+    <p>Blanks score zero points in Scrabble and Words With Friends. This tool lists every ENABLE word your rack can form; it does not place tiles on a board, so board premiums are not applied.</p>
+    <h2>Why only two blanks?</h2>
+    <p>Three or more wildcards explode the search space. Two is enough for a normal rack and keeps results instant in the browser.</p>
+    <h2>Try it</h2>
+    <p><a href="/?q=A%3FPLE">Unscramble A?PLE</a> · <a href="/?q=LISTEN%3F">Unscramble LISTEN?</a> · <a href="/">Open the word unscrambler</a></p>
+    <p>Related: <a href="/how-it-works">How it works</a> · <a href="/guides/scrabble-vs-wwf">Scrabble vs Words With Friends</a> · <a href="/2-letter-words">2-letter words</a></p>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div><p class="footer-head">Tools</p><a href="/">Word unscrambler</a><a href="/scrabble-word-finder">Scrabble word finder</a><a href="/wordle-helper">Wordle helper</a></div>
+      <div><p class="footer-head">Guides</p><a href="/how-it-works">How it works</a><a href="/guides/blank-tiles">Blank tiles</a><a href="/guides/scrabble-vs-wwf">Scrabble vs WWF</a></div>
+      <div><p class="footer-head">Site</p><a href="/about">About</a><a href="/feedback">Feedback</a><a href="/contact">Contact</a><a href="/privacy">Privacy</a></div>
+    </div>
+    <div class="wrap legal-line"><p>© 2026 Word Unscrambler. ENABLE dictionary. United Kingdom.</p></div>
+  </footer>
+  <script>
+    (function(){
+      var KEY="wu_consent";
+      function apply(v){ if(typeof gtag!=="function")return; gtag("consent","update",{analytics_storage:v==="granted"?"granted":"denied",ad_storage:"denied",ad_user_data:"denied",ad_personalization:"denied"}); }
+      try{ var saved=localStorage.getItem(KEY); if(saved){ apply(saved); return; } }catch(e){}
+      var bar=document.createElement("div");
+      bar.className="consent"; bar.setAttribute("role","dialog"); bar.setAttribute("aria-label","Cookie choices");
+      bar.innerHTML='<p>Optional analytics cookies only. Letters stay in this browser. <a href="/privacy">Privacy</a></p><div class="consent-actions"><button type="button" data-c="granted">Accept</button><button type="button" class="ghost" data-c="denied">Reject</button></div>';
+      document.body.appendChild(bar);
+      bar.addEventListener("click",function(e){ var b=e.target.closest("button[data-c]"); if(!b)return; var v=b.getAttribute("data-c"); try{localStorage.setItem(KEY,v);}catch(err){} apply(v); bar.remove(); });
+    })();
+  </script>
+</body>
+</html>
