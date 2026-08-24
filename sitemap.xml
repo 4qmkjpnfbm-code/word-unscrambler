@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://lettersunscrambler.com/</loc><lastmod>2026-08-23</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://lettersunscrambler.com/</loc><lastmod>2026-08-24</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
   <url><loc>https://lettersunscrambler.com/anagram-solver</loc><lastmod>2026-08-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://lettersunscrambler.com/scrabble-word-finder</loc><lastmod>2026-08-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://lettersunscrambler.com/words-with-friends</loc><lastmod>2026-08-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
@@ -9,6 +9,11 @@
   <url><loc>https://lettersunscrambler.com/crossword-solver</loc><lastmod>2026-08-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://lettersunscrambler.com/words-from-letters</loc><lastmod>2026-08-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://lettersunscrambler.com/how-it-works</loc><lastmod>2026-08-22</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://lettersunscrambler.com/guides/how-to-unscramble</loc><lastmod>2026-08-24</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://lettersunscrambler.com/guides/blank-tiles</loc><lastmod>2026-08-24</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://lettersunscrambler.com/guides/scrabble-vs-wwf</loc><lastmod>2026-08-24</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://lettersunscrambler.com/guides/wordle-starters</loc><lastmod>2026-08-24</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://lettersunscrambler.com/guides/pattern-solver</loc><lastmod>2026-08-24</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://lettersunscrambler.com/word-lists</loc><lastmod>2026-08-22</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://lettersunscrambler.com/2-letter-words</loc><lastmod>2026-08-22</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://lettersunscrambler.com/3-letter-words</loc><lastmod>2026-08-22</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
