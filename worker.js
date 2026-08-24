@@ -13,6 +13,11 @@ const ROUTES = {
   "/crossword-solver": "crossword-solver.html",
   "/words-from-letters": "words-from-letters.html",
   "/how-it-works": "how-it-works.html",
+  "/guides/blank-tiles": "guide-blank-tiles.html",
+  "/guides/scrabble-vs-wwf": "guide-scrabble-vs-wwf.html",
+  "/guides/wordle-starters": "guide-wordle-starters.html",
+  "/guides/pattern-solver": "guide-pattern-solver.html",
+  "/guides/how-to-unscramble": "guide-how-to-unscramble.html",
   "/word-lists": "word-lists.html",
   "/2-letter-words": "2-letter-words.html",
   "/3-letter-words": "3-letter-words.html",
@@ -49,7 +54,7 @@ const ROUTES = {
   "/.well-known/llms.txt": "llms.txt"
 };
 const ALLOW = new Set(Object.values(ROUTES).concat([
-  "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest","llms.txt","llms-full.txt","b7e4c91a0f3d68e25a14c0b9d8e7f612.txt","8d7c4a91b2e05f63c1a47d90e8b6f352.txt","BingSiteAuth.xml","modern-v37.css","modern-v35.css","modern-v34.css","modern-v32.css","feedback.html"
+  "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest","llms.txt","llms-full.txt","b7e4c91a0f3d68e25a14c0b9d8e7f612.txt","8d7c4a91b2e05f63c1a47d90e8b6f352.txt","BingSiteAuth.xml","modern-v37.css","modern-v35.css","modern-v34.css","modern-v32.css","feedback.html","guide-blank-tiles.html","guide-scrabble-vs-wwf.html","guide-wordle-starters.html","guide-pattern-solver.html","guide-how-to-unscramble.html"
 ]));
 const LONG = new Set(["css","js","svg","jpg","webmanifest"]);
 const MIME = {
@@ -179,7 +184,7 @@ async function dictionary() {
 async function pull(name) {
   const ext = name.indexOf(".") >= 0 ? name.split(".").pop() : "html";
   const modern = name.indexOf("modern-v") === 0;
-  const fresh = modern || name === "feedback.html" || name === "sitemap.xml";
+  const fresh = modern || name === "feedback.html" || name === "sitemap.xml" || name.indexOf("guide-") === 0;
   const ttl = fresh ? 60 : (LONG.has(ext) ? 86400 : 120);
   const srcs = fresh ? [GH_MAIN + name, GH + name] : [GH + name, GH_MAIN + name];
   for (let s = 0; s < srcs.length; s++) {
