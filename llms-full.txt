@@ -4,6 +4,30 @@ Site: https://lettersunscrambler.com/
 Dictionary: ENABLE, public domain, about 168,000 English words.
 Scoring: English Scrabble tile values by default; optional Words With Friends table.
 Blanks: ? (maximum two). Queries never leave the browser.
+Operator: HDK Distribution Ltd, United Kingdom. Updated 2026-08-26.
+
+## Agent contract
+
+No account. No API key. Prefer static HTML for published racks. Use the query string for a new rack.
+
+unscramble
+  https://lettersunscrambler.com/?q={LETTERS}
+  Optional: &mode=subset|anagram|pattern|wordle
+  Letters: A–Z and ? (max two blanks), max 16 characters.
+  Example: https://lettersunscrambler.com/?q=LISTEN
+  Anagrams only: https://lettersunscrambler.com/?q=LISTEN&mode=anagram
+  Pattern: https://lettersunscrambler.com/?q=C?O??&mode=pattern
+  URLs with q or mode send x-robots-tag: noindex, follow so they do not replace the static pages.
+
+known_example
+  https://lettersunscrambler.com/unscramble/listen (and other slugs under /unscramble/)
+  HTML, crawlable, works with JavaScript off.
+
+word_list
+  https://lettersunscrambler.com/2-letter-words
+  https://lettersunscrambler.com/word-lists
+
+Short file: https://lettersunscrambler.com/llms.txt
 
 ## Definition
 
@@ -45,5 +69,3 @@ SCRABBLE, TRAIN, EARTH, ADOBE, RACE, RETINA: see https://lettersunscrambler.com/
 ## What not to claim
 
 This is not the NASPA TWL or Collins CSW tournament list. Tournament words may differ. Board premiums are not applied because the site cannot see a physical board. The site does not reveal today’s Wordle.
-
-Operator: HDK Distribution Ltd, United Kingdom. Updated 2026-08-22.
