@@ -17,7 +17,7 @@ const ROUTES = {
   "/guides/scrabble-vs-wwf": "guide-scrabble-vs-wwf.html",
   "/guides/wordle-starters": "guide-wordle-starters.html",
   "/guides/pattern-solver": "guide-pattern-solver.html",
-  "/guides/how-to-unscramble": "guide-how-to-unscramble.html","security.txt",
+  "/guides/how-to-unscramble": "guide-how-to-unscramble.html",
   "/word-lists": "word-lists.html",
   "/2-letter-words": "2-letter-words.html",
   "/3-letter-words": "3-letter-words.html",
