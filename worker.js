@@ -184,7 +184,8 @@ async function dictionary() {
 async function pull(name) {
   const ext = name.indexOf(".") >= 0 ? name.split(".").pop() : "html";
   const modern = name.indexOf("modern-v") === 0;
-  const fresh = modern || name === "feedback.html" || name === "sitemap.xml" || name.indexOf("guide-") === 0;
+  const isHtml = ext === "html" || name.indexOf(".") === -1;
+  const fresh = modern || isHtml || name === "sitemap.xml" || name === "robots.txt";
   const ttl = fresh ? 60 : (LONG.has(ext) ? 86400 : 120);
   const srcs = fresh ? [GH_MAIN + name, GH + name] : [GH + name, GH_MAIN + name];
   for (let s = 0; s < srcs.length; s++) {
