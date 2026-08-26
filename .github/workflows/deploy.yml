@@ -1,11 +1,7 @@
 name: Deploy Worker
+# Runs only when you click Run workflow, after CLOUDFLARE_API_TOKEN is set
+# (Dashboard → Workers → Manage API tokens → Edit Cloudflare Workers).
 on:
-  push:
-    branches: [main]
-    paths:
-      - "worker.js"
-      - "wrangler.toml"
-      - ".github/workflows/deploy.yml"
   workflow_dispatch:
 jobs:
   deploy:
