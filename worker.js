@@ -189,7 +189,7 @@ async function pull(name) {
   const isHtml = ext === "html" || name.indexOf(".") === -1;
   // Stubs on main: only index.html, app.js, styles.css. Everything else prefers main so content updates go live.
   const ttl = (modern || isHtml || name === "sitemap.xml" || name === "robots.txt") ? 60 : (LONG.has(ext) ? 86400 : 120);
-  const srcs = [GH_MAIN + name, GH + name];
+  const srcs = [GH_MAIN + name + "?v=9f63820", GH + name];
   for (let s = 0; s < srcs.length; s++) {
     for (let i = 0; i < 2; i++) {
       try {
