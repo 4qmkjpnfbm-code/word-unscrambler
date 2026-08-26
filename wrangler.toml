@@ -1,0 +1,8 @@
+name = "word-unscrambler"
+main = "worker.js"
+compatibility_date = "2024-09-23"
+workers_dev = true
+
+[[kv_namespaces]]
+binding = "SITE"
+id = "3a8db125fded4e80873b31240dd5f0e8"
