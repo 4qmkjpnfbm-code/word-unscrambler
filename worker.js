@@ -185,9 +185,10 @@ async function pull(name) {
   const ext = name.indexOf(".") >= 0 ? name.split(".").pop() : "html";
   const modern = name.indexOf("modern-v") === 0;
   const isHtml = ext === "html" || name.indexOf(".") === -1;
-  const preferMain = modern || isHtml || name === "sitemap.xml" || name === "robots.txt" || name === "app.js" || name === "styles.css";
-  const ttl = preferMain ? 60 : (LONG.has(ext) ? 86400 : 120);
-  const srcs = preferMain ? [GH_MAIN + name, GH + name] : [GH + name, GH_MAIN + name];
+  const preferMain = modern || name === "sitemap.xml" || name === "robots.txt" || name === "feedback.html" || name.indexOf("guide-") === 0;
+  const preferPin = name === "index.html" || name === "app.js" || name === "styles.css" || (isHtml && !preferMain);
+  const ttl = (preferMain || preferPin) ? 60 : (LONG.has(ext) ? 86400 : 120);
+  const srcs = preferMain ? [GH_MAIN + name, GH + name] : (preferPin ? [GH + name, GH_MAIN + name] : [GH + name, GH_MAIN + name]);
   for (let s = 0; s < srcs.length; s++) {
     for (let i = 0; i < 2; i++) {
       try {
