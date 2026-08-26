@@ -17,7 +17,7 @@ const ROUTES = {
   "/guides/scrabble-vs-wwf": "guide-scrabble-vs-wwf.html",
   "/guides/wordle-starters": "guide-wordle-starters.html",
   "/guides/pattern-solver": "guide-pattern-solver.html",
-  "/guides/how-to-unscramble": "guide-how-to-unscramble.html",
+  "/guides/how-to-unscramble": "guide-how-to-unscramble.html","security.txt",
   "/word-lists": "word-lists.html",
   "/2-letter-words": "2-letter-words.html",
   "/3-letter-words": "3-letter-words.html",
@@ -51,10 +51,12 @@ const ROUTES = {
   "/unscramble/friend": "unscramble-friend.html",
   "/llms.txt": "llms.txt",
   "/llms-full.txt": "llms-full.txt",
-  "/.well-known/llms.txt": "llms.txt"
+  "/.well-known/llms.txt": "llms.txt",
+  "/.well-known/security.txt": "security.txt",
+  "/security.txt": "security.txt"
 };
 const ALLOW = new Set(Object.values(ROUTES).concat([
-  "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest","llms.txt","llms-full.txt","b7e4c91a0f3d68e25a14c0b9d8e7f612.txt","8d7c4a91b2e05f63c1a47d90e8b6f352.txt","BingSiteAuth.xml","modern-v38.css","modern-v37.css","modern-v35.css","modern-v34.css","modern-v32.css","feedback.html","guide-blank-tiles.html","guide-scrabble-vs-wwf.html","guide-wordle-starters.html","guide-pattern-solver.html","guide-how-to-unscramble.html"
+  "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest","llms.txt","llms-full.txt","b7e4c91a0f3d68e25a14c0b9d8e7f612.txt","8d7c4a91b2e05f63c1a47d90e8b6f352.txt","BingSiteAuth.xml","modern-v38.css","modern-v37.css","modern-v35.css","modern-v34.css","modern-v32.css","feedback.html","guide-blank-tiles.html","guide-scrabble-vs-wwf.html","guide-wordle-starters.html","guide-pattern-solver.html","guide-how-to-unscramble.html","security.txt"
 ]));
 const LONG = new Set(["css","js","svg","jpg","webmanifest"]);
 const MIME = {
@@ -243,6 +245,7 @@ export default {
     }
     let p = url.pathname;
     if (p === "/favicon.ico") p = "/favicon.svg";
+    if (p === "/apple-touch-icon.png" || p === "/apple-touch-icon-precomposed.png") p = "/og.jpg";
     if (p.length > 1 && p.charAt(p.length - 1) === "/") p = p.slice(0, -1);
     if (p === "/feedback" && (req.method === "POST" || req.method === "OPTIONS")) return handleFeedback(req);
     if (p === "/words.txt") return dictionary();
