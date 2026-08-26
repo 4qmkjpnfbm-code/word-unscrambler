@@ -185,6 +185,7 @@ async function pull(name) {
   const ext = name.indexOf(".") >= 0 ? name.split(".").pop() : "html";
   const modern = name.indexOf("modern-v") === 0;
   const isHtml = ext === "html" || name.indexOf(".") === -1;
+  // Stubs on main: only index.html, app.js, styles.css. Everything else prefers main so content updates go live.
   const stubRisk = name === "index.html" || name === "app.js" || name === "styles.css";
   const ttl = (modern || isHtml || stubRisk || name === "sitemap.xml" || name === "robots.txt") ? 60 : (LONG.has(ext) ? 86400 : 120);
   const srcs = stubRisk ? [GH + name, GH_MAIN + name] : [GH_MAIN + name, GH + name];
