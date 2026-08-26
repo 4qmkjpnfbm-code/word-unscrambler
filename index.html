@@ -1,1 +1,394 @@
-PLACEHOLDER
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("wu_theme");
+        if (!t) t = (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+        document.documentElement.setAttribute("data-theme", t === "dark" ? "dark" : "light");
+      } catch (e) {}
+      function sync(btn) {
+        var dark = document.documentElement.getAttribute("data-theme") === "dark";
+        if (!btn) return;
+        btn.setAttribute("aria-pressed", dark ? "true" : "false");
+        btn.setAttribute("aria-label", dark ? "Switch to light theme" : "Switch to dark theme");
+        btn.textContent = dark ? "Light" : "Dark";
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute("content", dark ? "#13110f" : "#1f4a38");
+      }
+      function bind() {
+        var btn = document.getElementById("themeBtn");
+        sync(btn);
+        if (btn && !btn.dataset.bound) {
+          btn.dataset.bound = "1";
+          btn.addEventListener("click", function () {
+            var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+            document.documentElement.setAttribute("data-theme", next);
+            try { localStorage.setItem("wu_theme", next); } catch (e) {}
+            sync(btn);
+          });
+        }
+        var menu = document.querySelector("[data-nav]");
+        var nav = document.getElementById("site-nav");
+        if (menu && nav && !menu.dataset.bound) {
+          menu.dataset.bound = "1";
+          function setOpen(open) {
+            nav.classList.toggle("is-open", open);
+            menu.setAttribute("aria-expanded", open ? "true" : "false");
+            menu.textContent = open ? "Close" : "Menu";
+          }
+          menu.addEventListener("click", function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            setOpen(!nav.classList.contains("is-open"));
+          });
+          document.addEventListener("click", function (e) {
+            if (!nav.classList.contains("is-open")) return;
+            if (nav.contains(e.target) || menu.contains(e.target)) return;
+            setOpen(false);
+          });
+          nav.querySelectorAll("a").forEach(function (a) {
+            a.addEventListener("click", function () { setOpen(false); });
+          });
+          document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") setOpen(false);
+          });
+        }
+      }
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", bind);
+      else bind();
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Word Unscrambler – Unscramble Letters Free</title>
+  <meta name="description" content="Free word unscrambler. Type letters to find every valid English word for Scrabble, Wordle and anagrams. ENABLE dictionary, blank tiles as ?, scores." />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta name="google-adsense-account" content="ca-pub-2666058844257008" />
+  <meta name="author" content="Word Unscrambler" />
+  <link rel="canonical" href="https://lettersunscrambler.com/" />
+  <link rel="alternate" type="text/plain" title="LLM summary" href="https://lettersunscrambler.com/llms.txt" />
+  <link rel="alternate" hreflang="en-GB" href="https://lettersunscrambler.com/" />
+  <link rel="alternate" hreflang="en" href="https://lettersunscrambler.com/" />
+  <link rel="alternate" hreflang="x-default" href="https://lettersunscrambler.com/" />
+  <meta property="og:site_name" content="Word Unscrambler" />
+  <meta property="og:title" content="Word Unscrambler – Unscramble Letters Free" />
+  <meta property="og:description" content="Free word unscrambler. Type letters to find every valid English word for Scrabble, Wordle and anagrams. ENABLE dictionary, blank tiles as ?, scores." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://lettersunscrambler.com/" />
+  <meta property="og:image" content="https://lettersunscrambler.com/og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:alt" content="Word Unscrambler — wooden letter tiles on a felt table" />
+  <meta property="og:locale" content="en_GB" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Word Unscrambler – Unscramble Letters Free" />
+  <meta name="twitter:description" content="Free word unscrambler. Type letters to find every valid English word for Scrabble, Wordle and anagrams." />
+  <meta name="twitter:image" content="https://lettersunscrambler.com/og.jpg" />
+  <meta name="twitter:image:alt" content="Word Unscrambler — wooden letter tiles on a felt table" />
+  <meta name="theme-color" content="#1f4a38" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/og.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,560;0,9..144,640;1,9..144,480&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css?v=30" />
+  <link rel="preload" href="/stage.jpg" as="image" fetchpriority="high" />
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VR1EE3K51N"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2666058844257008" crossorigin="anonymous"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    var _c = 'denied';
+    try { if (localStorage.getItem('wu_consent') === 'granted') _c = 'granted'; } catch (e) {}
+    gtag('consent', 'default', {
+      analytics_storage: _c,
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied'
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-VR1EE3K51N', { anonymize_ip: true });
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Word Unscrambler","url":"https://lettersunscrambler.com/","inLanguage":"en-GB","publisher":{"@id":"https://lettersunscrambler.com/#org"}},{"@type":"Organization","@id":"https://lettersunscrambler.com/#org","name":"Word Unscrambler","legalName":"HDK Distribution Ltd","url":"https://lettersunscrambler.com/","logo":{"@type":"ImageObject","url":"https://lettersunscrambler.com/og.jpg","width":1200,"height":630},"address":{"@type":"PostalAddress","addressCountry":"GB"},"contactPoint":{"@type":"ContactPoint","contactType":"customer support","email":"hdkdistributionltd@gmail.com","availableLanguage":"English"}},{"@type":"SoftwareApplication","name":"Word Unscrambler","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"GBP"},"url":"https://lettersunscrambler.com/","inLanguage":"en-GB","description":"Free in-browser word unscrambler using the ENABLE dictionary. Queries never leave the device."},{"@type":"WebPage","@id":"https://lettersunscrambler.com/#webpage","url":"https://lettersunscrambler.com/","name":"Word Unscrambler \u2013 Unscramble Letters Free","isPartOf":{"@id":"https://lettersunscrambler.com/"},"dateModified":"2026-08-26","inLanguage":"en-GB","primaryImageOfPage":{"@type":"ImageObject","url":"https://lettersunscrambler.com/og.jpg"}},{"@type":"WebApplication","name":"Word Unscrambler","url":"https://lettersunscrambler.com/","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"GBP"},"description":"Free online word unscrambler and anagram solver using the ENABLE English word list.","inLanguage":"en-GB","publisher":{"@id":"https://lettersunscrambler.com/#org"}},{"@type":"HowTo","name":"How to unscramble letters","description":"Find every valid English word from a jumble of letters.","step":[{"@type":"HowToStep","position":1,"name":"Type your letters","text":"Enter the letters from your rack or puzzle. Use ? for a blank tile."},{"@type":"HowToStep","position":2,"name":"Read the words","text":"Every valid word appears grouped by length, with Scrabble scores. Tap a word to copy it and see the meaning."},{"@type":"HowToStep","position":3,"name":"Share or play the next tool","text":"Use Share for a link with your letters in the URL. Open Wordle, Scrabble or word lists from the next-play row."}]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Word unscrambler","item":"https://lettersunscrambler.com/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a word unscrambler?","acceptedAnswer":{"@type":"Answer","text":"A word unscrambler takes a set of letters and lists every valid English word you can form from them, including shorter words. Use it for Scrabble, Words With Friends, Wordle, jumbles and crossword patterns. This site checks the ENABLE list (about 168,000 words) in your browser and scores plays with Scrabble or Words With Friends points."}},{"@type":"Question","name":"Is this free?","acceptedAnswer":{"@type":"Answer","text":"Yes. No account, no install. The solver stays free. Ads may be added later; they will never block results."}},{"@type":"Question","name":"Can I use it for Wordle?","acceptedAnswer":{"@type":"Answer","text":"Yes. Switch to Wordle mode, type greens in the five boxes, put yellows in the letters field, and grey letters in the Grey letters box. You can also browse all 5-letter words."}},{"@type":"Question","name":"How do blank tiles work?","acceptedAnswer":{"@type":"Answer","text":"Type a question mark (?) for each blank (max two), The solver tries every letter in that slot, the same as a Scrabble blank."}},{"@type":"Question","name":"How do I find the highest scoring word?","acceptedAnswer":{"@type":"Answer","text":"Results sort by Scrabble points by default. Bingos that use every tile (7+ letters) are marked. Switch Score to WWF if you play Words With Friends."}},{"@type":"Question","name":"What is the difference between an anagram solver and a word unscrambler?","acceptedAnswer":{"@type":"Answer","text":"An unscrambler lists every word you can make, including shorter ones. An anagram solver only keeps words that use every letter. LISTEN becomes SILENT, ENLIST and TINSEL."}},{"@type":"Question","name":"Is my data collected?","acceptedAnswer":{"@type":"Answer","text":"Queries stay on your device. See the privacy policy for hosting logs and future ads."}}]}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"DefinedTerm","name":"word unscrambler","description":"A tool that lists every valid English word you can make from a set of letters, including shorter words. Type LISTEN and ENABLE returns silent, listen, enlist, tinsel, inlets and elints (92 words).","url":"https://lettersunscrambler.com/","inDefinedTermSet":"https://lettersunscrambler.com/"}</script>
+</head>
+<body data-tool="subset" class="cinematic">
+  <noscript><p class="wrap">This word unscrambler needs JavaScript. Meanwhile, browse the <a href="/2-letter-words">two-letter word list</a>, <a href="/5-letter-words">5-letter words</a> or <a href="/how-it-works">how it works</a>.</p></noscript>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="/">
+        <span class="mark" aria-hidden="true">W<small>4</small></span>
+        <span class="brand-name">Word Unscrambler<span>Find words from letters</span></span>
+      </a>
+      <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch colour theme">Theme</button>
+      <button class="menu-btn" type="button" data-nav aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="nav" id="site-nav" aria-label="Primary">
+        <a href="/" aria-current="page">Unscrambler</a>
+        <a href="/scrabble-word-finder">Scrabble</a>
+        <a href="/anagram-solver">Anagrams</a>
+        <a href="/wordle-helper">Wordle</a>
+        <a href="/crossword-solver">Crossword</a>
+        <a href="/word-lists">Lists</a>
+      </nav>
+    </div>
+  </header>
+<main id="main">
+  <section class="stage" aria-label="Word unscrambler">
+    <div class="stage-bg" aria-hidden="true">
+      <img class="stage-photo" src="/stage.jpg" width="1600" height="900" alt="" fetchpriority="high" decoding="async" />
+    </div>
+    <div class="orbit" id="orbit" aria-hidden="true">
+      <span class="orb" data-ch="L"></span>
+      <span class="orb" data-ch="I"></span>
+      <span class="orb" data-ch="S"></span>
+      <span class="orb" data-ch="T"></span>
+      <span class="orb" data-ch="E"></span>
+      <span class="orb" data-ch="N"></span>
+    </div>
+    <div class="wrap stage-copy">
+      <p class="kicker">Free · Instant · 168,000 words</p>
+      <h1 class="split-title"><span class="line">Word </span><span class="line ital">unscrambler</span></h1>
+      <p class="lede">Unscramble any letters. Every valid English word appears as you type.</p>
+    </div>
+    <div class="wrap stage-tool">
+  <section class="panel" aria-labelledby="letters-label">
+      <label class="field-label" id="letters-label" for="letters">Letters</label>
+      <div class="input-row">
+        <input id="letters" type="text" maxlength="16" autocomplete="off" spellcheck="false" inputmode="text" placeholder="LISTEN or A?PLE" aria-describedby="coach" />
+        <button class="primary" id="go" type="button">Find words</button>
+      </div>
+      <p class="coach" id="coach">Use ? for a blank tile. Words appear as you type.</p>
+      <div class="status">
+      <h2 id="resultsHeading">Words from your letters <span id="resultMeta"></span></h2>
+      <div class="toolbar">
+        <button class="ghost" id="share" type="button" hidden>Share</button>
+        <button class="ghost" id="copy" type="button" hidden>Copy all</button>
+      </div>
+    </div>
+    <div id="results" class="empty">Your words will show here.</div>
+      <div class="tiles" id="tiles" aria-hidden="true"></div>
+      <div class="modes" role="tablist" aria-label="Mode">
+        <button class="mode" type="button" data-mode="subset" aria-pressed="true">All words</button>
+        <button class="mode" type="button" data-mode="anagram" aria-pressed="false">Anagrams</button>
+        <button class="mode" type="button" data-mode="wordle" aria-pressed="false">Wordle</button>
+        <button class="mode" type="button" data-mode="pattern" aria-pressed="false">Pattern</button>
+      </div>
+      <p class="try-label">Length</p>
+      <div class="len-row" role="group" aria-label="Word length"><button type="button" class="len" data-len="" aria-pressed="true">Any</button><button type="button" class="len" data-len="2" aria-pressed="false">2</button><button type="button" class="len" data-len="3" aria-pressed="false">3</button><button type="button" class="len" data-len="4" aria-pressed="false">4</button><button type="button" class="len" data-len="5" aria-pressed="false">5</button><button type="button" class="len" data-len="6" aria-pressed="false">6</button><button type="button" class="len" data-len="7" aria-pressed="false">7</button><button type="button" class="len" data-len="8" aria-pressed="false">8</button><button type="button" class="len" data-len="9+" aria-pressed="false">9+</button></div>
+      <div class="filters quick-filters" aria-label="Letter filters">
+        <div><label for="starts">Starts with</label><input id="starts" type="text" maxlength="5" autocomplete="off" placeholder="TH" /></div>
+        <div><label for="ends">Ends with</label><input id="ends" type="text" maxlength="5" autocomplete="off" placeholder="ING" /></div>
+        <div><label for="contains">Must include</label><input id="contains" type="text" maxlength="8" autocomplete="off" placeholder="Q" /></div>
+      </div>
+      <div id="wordleFields" hidden><div class="clue-block">
+          <p class="field-label">Green letters</p>
+          <div class="wordle-row" aria-label="Green letters">
+            <input data-slot maxlength="1" inputmode="text" aria-label="Position 1" placeholder="1" /><input data-slot maxlength="1" inputmode="text" aria-label="Position 2" placeholder="2" /><input data-slot maxlength="1" inputmode="text" aria-label="Position 3" placeholder="3" /><input data-slot maxlength="1" inputmode="text" aria-label="Position 4" placeholder="4" /><input data-slot maxlength="1" inputmode="text" aria-label="Position 5" placeholder="5" />
+          </div>
+          <p class="field-label" for="greys">Grey letters</p>
+          <input id="greys" type="text" maxlength="16" autocomplete="off" spellcheck="false" placeholder="letters not in the word" />
+          <p class="mini">Yellows go in Letters. Greens in the five boxes.</p>
+        </div></div>
+      <div class="examples" aria-label="Try an example"><button class="chip" type="button" data-ex="LISTEN">LISTEN</button><button class="chip" type="button" data-ex="A?PLE">A?PLE</button><button class="chip" type="button" data-ex="SCRABBLE">SCRABBLE</button><button class="chip" type="button" data-ex="AEINRST">AEINRST</button></div>
+      <details class="more">
+        <summary>More options</summary>
+        <div class="filters">
+          <div><label for="length">Exact length</label><input id="length" type="number" min="2" max="15" inputmode="numeric" value="" /></div>
+        </div>
+        <div class="filters" style="margin-top:12px">
+          <div><label for="exclude">Exclude letters</label><input id="exclude" type="text" maxlength="16" autocomplete="off" placeholder="grey tiles" /></div>
+          <div>
+            <label>Score</label>
+            <div class="sorts">
+              <button class="mode" type="button" data-score="scrabble" aria-pressed="true">Scrabble</button>
+              <button class="mode" type="button" data-score="wwf" aria-pressed="false">WWF</button>
+            </div>
+          </div>
+          <div>
+            <label>Sort</label>
+            <div class="sorts">
+              <button class="mode" type="button" data-sort="score" aria-pressed="true">Highest score</button>
+              <button class="mode" type="button" data-sort="alpha" aria-pressed="false">A–Z</button>
+            </div>
+          </div>
+        </div>
+        <p class="hint">Dictionary: ENABLE, <span id="dictCount">loading</span> words.</p>
+      </details>
+    </section>
+    <aside class="daily" id="daily" aria-label="Today’s scramble">
+      <div>
+        <p class="try-label">Today’s scramble</p>
+        <p class="daily-word" id="dailyScramble">·······</p>
+        <p class="mini" id="dailyMeta">A new seven-letter jumble every day. Come back tomorrow.</p>
+      </div>
+      <button class="ghost" id="dailyPlay" type="button">Play today’s</button>
+    </aside>
+    </div>
+  </section>
+  <div class="wrap after-stage">
+    <aside class="ad-region" aria-label="Advertisement">
+      <p class="ad-label">Advertisement</p>
+      <div class="ad-box">
+        <ins class="adsbygoogle"
+             style="display:block;min-height:280px"
+             data-ad-client="ca-pub-2666058844257008"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+      </div>
+    </aside>
+
+    <script src="/app.js?v=20" defer></script>
+  <section class="bento" aria-label="Come back for">
+      <div class="bento-card" id="recentsCard">
+        <p class="try-label">Recent racks</p>
+        <div id="recents" class="examples"></div>
+      </div>
+      <a class="bento-card" href="/wordle-helper"><p class="try-label">Daily habit</p><h3>Wordle helper</h3><p>Greens, yellows, greys. Open it every morning.</p></a>
+      <a class="bento-card" href="/scrabble-word-finder"><p class="try-label">Board games</p><h3>Scrabble finder</h3><p>Scores and bingos for a seven-tile rack.</p></a>
+      <a class="bento-card" href="/2-letter-words"><p class="try-label">Learn</p><h3>Two-letter words</h3><p>The list that wins close games.</p></a>
+    </section>
+  <section class="prose" id="how">
+    <h2>Make words from any jumble of letters</h2>
+    <p><strong>A word unscrambler</strong> lists every valid English word you can make from a set of letters, including shorter words. Type LISTEN and ENABLE returns silent, enlist, tinsel, inlets, elints and 87 shorter plays such as isle, tile, sent, in, is and it. Solving happens in your browser against the public ENABLE list (~168,000 words). Nothing you type is sent to a server.</p>
+    <dl>
+      <dt>Unscramble LISTEN</dt>
+      <dd>silent, listen, enlist, tinsel, inlets, elints — 92 ENABLE words. <a href="/unscramble/listen">HTML list</a>.</dd>
+      <dt>Blank tile</dt>
+      <dd>Type <code>?</code> (maximum two).</dd>
+      <dt>Two-letter words</dt>
+      <dd>ENABLE lists 124. Highest: QI and ZA at 11 points. <a href="/2-letter-words">Full list</a>.</dd>
+    </dl>
+    <p>Need the exact rearrangement only? Switch to <a href="/anagram-solver">Anagrams only</a>. Solving a daily puzzle? Open the <a href="/wordle-helper">Wordle helper</a> or the <a href="/jumble-solver">jumble solver</a>. Playing a board game? Use the <a href="/scrabble-word-finder">Scrabble word finder</a> for tile scores and bingo highlights. Stuck on a crossword? Try the <a href="/crossword-solver">crossword solver</a> with <code>?</code> for unknown squares.</p>
+    <p>Blank tiles are <code>?</code>. Filters keep words that start with, end with, or contain a pattern — useful for hooks, stems and grey Wordle letters (Exclude).</p>
+    <h2>Worked example: LISTEN</h2>
+    <p>Type LISTEN and ENABLE returns 92 words. The six anagrams that use every letter are <a href="/unscramble/listen">silent, listen, enlist, tinsel, inlets and elints</a>. Shorter plays include isle, tile, sent and the two-letter words in, is, it, el.</p>
+    <p>Other crawlable examples: <a href="/unscramble/aeinrst">AEINRST</a>, <a href="/unscramble/scrabble">SCRABBLE</a>, <a href="/unscramble/train">TRAIN</a>, <a href="/unscramble/earth">EARTH</a>, <a href="/unscramble/adobe">ADOBE</a>, <a href="/unscramble/race">RACE</a>, <a href="/unscramble/retina">RETINA</a>, <a href="/unscramble/orange">ORANGE</a>, <a href="/unscramble/stressed">STRESSED</a>, <a href="/unscramble/master">MASTER</a>, <a href="/unscramble/planet">PLANET</a>, <a href="/unscramble/credit">CREDIT</a>, <a href="/unscramble/friend">FRIEND</a>. Full index: <a href="/unscramble">unscramble examples</a>.</p>
+    <p>Updated <time datetime="2026-08-26">26 August 2026</time>.</p>
+    <h2>English Scrabble letter values</h2>
+    <p>Default scores on this site (board premiums are not applied because we cannot see your board):</p>
+    <p class="mini">1 — A E I O U L N R S T · 2 — D G · 3 — B C M P · 4 — F H V W Y · 5 — K · 8 — J X · 10 — Q Z. Blank is 0. Words With Friends uses a different table — switch Score to WWF.</p>
+    <p>We use the public-domain ENABLE list (~168,000 words), not the copyrighted NASPA TWL or Collins CSW lists. Tournament play may differ by a few words (QI and ZA are in ENABLE).</p>
+  </section>
+  <section class="prose faq" id="faq">
+    <h2>FAQ</h2>
+    <details open>
+      <summary>What is a word unscrambler?</summary>
+      <p>A word unscrambler takes a set of letters and lists every valid English word you can form from them, including shorter words. Use it for Scrabble, Words With Friends, Wordle, jumbles and crossword patterns. This site checks the ENABLE list (~168,000 words) in your browser and scores plays with Scrabble or Words With Friends points.</p>
+    </details>
+    <details>
+      <summary>Is this free?</summary>
+      <p>Yes. No account, no install. The solver stays free. Ads may be added later; they will never block results.</p>
+    </details>
+    <details>
+      <summary>Can I use it for Wordle?</summary>
+      <p>Yes. Switch to Wordle mode, type greens in the five boxes, put yellows in the letters field, and grey letters in the Grey letters box. You can also browse all <a href="/5-letter-words">5-letter words</a>.</p>
+    </details>
+    <details>
+      <summary>How do blank tiles work?</summary>
+      <p>Type <code>?</code> for each blank (max two), The solver tries every letter in that slot — the same as a Scrabble blank.</p>
+    </details>
+    <details>
+      <summary>How do I find the highest scoring word?</summary>
+      <p>Results sort by Scrabble points by default. Bingos (using every tile, 7+ letters) are marked. Switch Score to WWF if you play Words With Friends.</p>
+    </details>
+    <details>
+      <summary>Anagram vs unscrambler?</summary>
+      <p>Unscrambler lists every word you can make, including shorter ones. <a href="/anagram-solver">Anagrams</a> only keep words that use every letter — LISTEN → SILENT, ENLIST, TINSEL.</p>
+    </details>
+    <details>
+      <summary>Is my data collected?</summary>
+      <p>Queries stay on your device. See the <a href="/privacy">privacy policy</a> for hosting logs and future ads.</p>
+    </details>
+  </section>
+  <div class="related">
+    <a class="card" href="/scrabble-word-finder"><h3>Scrabble word finder</h3><p>Scores, bingos and two-letter hooks for a seven-tile rack.</p></a>
+    <a class="card" href="/anagram-solver"><h3>Anagram solver</h3><p>Use every letter. Find LISTEN → SILENT, ENLIST, TINSEL.</p></a>
+    <a class="card" href="/wordle-helper"><h3>Wordle helper</h3><p>Greens, yellows and greys without leaving the page.</p></a>
+    <a class="card" href="/2-letter-words"><h3>2-letter words</h3><p>The 124 two-letter ENABLE words that win endgames.</p></a>
+  </div>
+  </div>
+</main>
+<footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div>
+        <p class="footer-head">Tools</p>
+        <a href="/">Word unscrambler</a>
+        <a href="/anagram-solver">Anagram solver</a>
+        <a href="/scrabble-word-finder">Scrabble word finder</a>
+        <a href="/words-with-friends">Words With Friends</a>
+        <a href="/wordle-helper">Wordle helper</a>
+        <a href="/jumble-solver">Jumble solver</a>
+        <a href="/crossword-solver">Crossword solver</a>
+        <a href="/words-from-letters">Words from letters</a>
+      </div>
+      <div>
+        <p class="footer-head">Word lists</p>
+        <a href="/2-letter-words">2-letter words</a>
+        <a href="/3-letter-words">3-letter words</a>
+        <a href="/4-letter-words">4-letter words</a>
+        <a href="/5-letter-words">5-letter words</a>
+        <a href="/6-letter-words">6-letter words</a>
+        <a href="/7-letter-words">7-letter words</a>
+        <a href="/8-letter-words">8-letter words</a>
+        <a href="/q-without-u">Q without U</a>
+        <a href="/jqxz-words">J, Q, X and Z words</a>
+        <a href="/bingo-stems">Bingo stems</a>
+      </div>
+      <div>
+        <p class="footer-head">Site</p>
+        <a href="/how-it-works">How it works</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+      </div>
+    </div>
+    <div class="wrap legal-line">
+      <p>© 2026 Word Unscrambler. ENABLE dictionary. Not affiliated with Hasbro, Mattel, Zynga or The New York Times.</p>
+      <p>United Kingdom</p>
+    </div>
+  </footer>
+  <script>
+    (function(){
+      var KEY = "wu_consent";
+      function apply(v){
+        if (typeof gtag !== "function") return;
+        gtag("consent", "update", {
+          analytics_storage: v === "granted" ? "granted" : "denied",
+          ad_storage: "denied",
+          ad_user_data: "denied",
+          ad_personalization: "denied"
+        });
+        if (v === "granted") {
+          gtag("event", "page_view", { page_location: location.href, page_title: document.title });
+        }
+      }
+      try {
+        var saved = localStorage.getItem(KEY);
+        if (saved) { apply(saved); return; }
+      } catch (e) {}
+      var bar = document.createElement("div");
+      bar.className = "consent";
+      bar.setAttribute("role", "dialog");
+      bar.setAttribute("aria-label", "Cookie choices");
+      bar.innerHTML = '<p>We use optional analytics cookies (Google Analytics) to see which tools people use. Your letters stay in this browser. <a href="/privacy">Privacy</a></p><div class="consent-actions"><button type="button" data-c="granted">Accept</button><button type="button" class="ghost" data-c="denied">Reject</button></div>';
+      document.body.appendChild(bar);
+      bar.addEventListener("click", function(e){
+        var b = e.target.closest("button[data-c]");
+        if (!b) return;
+        var v = b.getAttribute("data-c");
+        try { localStorage.setItem(KEY, v); } catch (err) {}
+        apply(v);
+        bar.remove();
+      });
+    })();
+  </script>
+</body>
+</html>
