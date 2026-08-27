@@ -110,7 +110,7 @@
     gtag('js', new Date());
     gtag('config', 'G-VR1EE3K51N', { anonymize_ip: true });
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Word Unscrambler","url":"https://lettersunscrambler.com/","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"GBP"},"description":"Free online word unscrambler and anagram solver using the ENABLE English word list.","inLanguage":"en-GB"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lettersunscrambler.com/"},{"@type":"ListItem","position":2,"name":"Scrabble word finder","item":"https://lettersunscrambler.com/scrabble-word-finder"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does a bingo include the 50-point bonus?","acceptedAnswer":{"@type":"Answer","text":"The points shown are tile values only. If you use all seven tiles, add 50 on the board yourself."}},{"@type":"Question","name":"Are these words valid in tournament Scrabble?","acceptedAnswer":{"@type":"Answer","text":"Most are. ENABLE is not identical to Collins (CSW) or NASPA (TWL). When in doubt, check the official list for your club."}}]}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Word Unscrambler","url":"https://lettersunscrambler.com/","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"GBP"},"description":"Free online word unscrambler and anagram solver using the ENABLE English word list.","inLanguage":"en-GB"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lettersunscrambler.com/"},{"@type":"ListItem","position":2,"name":"Scrabble word finder","item":"https://lettersunscrambler.com/scrabble-word-finder"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does a bingo include the 50-point bonus?","acceptedAnswer":{"@type":"Answer","text":"The points shown are tile values only. If you use all seven tiles, add 50 on the board yourself."}},{"@type":"Question","name":"Are these words valid in tournament Scrabble?","acceptedAnswer":{"@type":"Answer","text":"Most are. ENABLE is not identical to Collins (CSW) or NASPA (TWL). When in doubt, check the official list for your club."}},{"@type":"Question","name":"How do blank tiles work?","acceptedAnswer":{"@type":"Answer","text":"Type a question mark for each blank, maximum two. Example: Q?AT."}}]}]}</script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -136,7 +136,7 @@
   <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <span>Scrabble word finder</span></nav>
   <section class="hero">
     <h1>Scrabble word finder</h1>
-    <p class="lede">Type your rack. Highest-scoring words first.</p>
+    <p class="lede">Type the seven tiles on your rack. Highest-scoring ENABLE words first. Blanks are ?. Board premiums are not added — we cannot see your board.</p>
   </section>
   <aside class="daily" id="daily" aria-label="Today’s scramble">
       <div>
@@ -230,8 +230,28 @@
       <a class="bento-card" href="/2-letter-words"><p class="try-label">Learn</p><h3>Two-letter words</h3><p>The list that wins close games.</p></a>
     </section>
   <section class="prose"><h2>How to use this as a Scrabble helper</h2>
-    <p>Enter the tiles on your rack, not the whole board. Use Starts / Ends for hooks onto a word already played. The 124 official-feeling <a href="/2-letter-words">two-letter words</a> are the difference between a stuck rack and a tight endgame. Q without a U has its own list: <a href="/q-without-u">Q without U</a>.</p>
-    <p>Words With Friends uses different tile values — tap WWF above the results, or open the dedicated <a href="/words-with-friends">WWF finder</a>. This is not Hasbro’s tournament dictionary (CSW / TWL); ENABLE is public-domain and very close for casual play.</p></section>
+    <p>Enter the tiles on your rack, not the whole board. Results sort by English Scrabble points. Bingos that use every tile (7+ letters) are marked; add the +50 bonus yourself on the board. Use Starts / Ends for hooks onto a word already played.</p>
+    <p>Worked example: the stem <a href="/scrabble-word-finder?q=AEINRST">AEINRST</a> (retains). Type it here and you should see RETAINS, RETINAS, RETSINA, ANESTRI, ANTSIER, NASTIER, RATINES and STEARIN among the seven-letter bingos, plus QI-class two-letter plays if you add a Q. Blanks: type <a href="/scrabble-word-finder?q=Q%3FAT">Q?AT</a> to dump a Q with one blank.</p>
+    <p>The 124 <a href="/2-letter-words">two-letter words</a> are the difference between a stuck rack and a tight endgame. Q without a U has its own list: <a href="/q-without-u">Q without U</a>.</p>
+    <p>Words With Friends uses different tile values — tap WWF above the results, or open the dedicated <a href="/words-with-friends">WWF finder</a>. This is not Hasbro’s tournament dictionary (CSW / TWL); ENABLE is public-domain and close for casual play.</p>
+    <h2>FAQ</h2>
+    <details open>
+      <summary>Does a bingo include the 50-point bonus?</summary>
+      <p>No. Points shown are tile values only. If you use all seven tiles, add 50 on the board yourself. Board premiums (double word, triple letter) are not applied because we cannot see the board.</p>
+    </details>
+    <details>
+      <summary>Are these words valid in tournament Scrabble?</summary>
+      <p>Most are. ENABLE is not identical to Collins (CSW) or NASPA (TWL). When in doubt, check the official list for your club.</p>
+    </details>
+    <details>
+      <summary>How do blank tiles work?</summary>
+      <p>Type <code>?</code> for each blank (maximum two). Example: <a href="/scrabble-word-finder?q=Q%3FAT">Q?AT</a>.</p>
+    </details>
+    <details>
+      <summary>Where are the two-letter hooks?</summary>
+      <p>Tap length <strong>2</strong> after you enter the rack, or open the full <a href="/2-letter-words">2-letter word list</a>.</p>
+    </details>
+  </section>
 </main>
 <footer class="site-footer">
     <div class="wrap footer-grid">
