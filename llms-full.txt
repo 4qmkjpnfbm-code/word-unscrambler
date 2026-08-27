@@ -42,17 +42,19 @@ SCRABBLE, TRAIN, EARTH: see https://lettersunscrambler.com/unscramble
 - https://lettersunscrambler.com/words-with-friends — WWF score table
 - https://lettersunscrambler.com/wordle-helper — greens, yellows, greys; does not reveal the daily answer
 - https://lettersunscrambler.com/jumble-solver — newspaper-style jumbles
+- https://lettersunscrambler.com/word-descrambler — descramble mixed-up letters (subsets + anagrams)
 - https://lettersunscrambler.com/crossword-solver — pattern with ? for unknown squares
 - https://lettersunscrambler.com/words-from-letters — subset search (“words from these letters”)
 - https://lettersunscrambler.com/word-checker — is this a valid ENABLE word?
 - https://lettersunscrambler.com/words-starting-with — A–Z prefixes, no rack required
 - https://lettersunscrambler.com/words-ending-with — suffixes such as ING, TION, NESS
+- https://lettersunscrambler.com/words-containing — letters or clusters (TH, QU, ING) anywhere in the word
 - https://lettersunscrambler.com/5-letter-words-starting-with — Wordle-length lists by first letter
 
 ## Word lists
 
 - 124 two-letter ENABLE words: https://lettersunscrambler.com/2-letter-words
-- Also 3–8 letter lists, Q-without-U, J/Q/X/Z, bingo stems under https://lettersunscrambler.com/word-lists
+- Also 3–10 letter lists, Q-without-U, J/Q/X/Z, bingo stems under https://lettersunscrambler.com/word-lists
 
 ## What not to claim
 

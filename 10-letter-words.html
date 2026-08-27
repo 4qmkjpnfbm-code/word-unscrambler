@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("wu_theme");
+        if (!t) t = (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+        document.documentElement.setAttribute("data-theme", t === "dark" ? "dark" : "light");
+      } catch (e) {}
+      function sync(btn) {
+        var dark = document.documentElement.getAttribute("data-theme") === "dark";
+        if (!btn) return;
+        btn.setAttribute("aria-pressed", dark ? "true" : "false");
+        btn.setAttribute("aria-label", dark ? "Switch to light theme" : "Switch to dark theme");
+        btn.textContent = dark ? "Light" : "Dark";
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute("content", dark ? "#13110f" : "#1f4a38");
+      }
+      function bind() {
+        var btn = document.getElementById("themeBtn");
+        sync(btn);
+        if (btn && !btn.dataset.bound) {
+          btn.dataset.bound = "1";
+          btn.addEventListener("click", function () {
+            var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+            document.documentElement.setAttribute("data-theme", next);
+            try { localStorage.setItem("wu_theme", next); } catch (e) {}
+            sync(btn);
+          });
+        }
+        var menu = document.querySelector("[data-nav]");
+        var nav = document.getElementById("site-nav");
+        if (menu && nav && !menu.dataset.bound) {
+          menu.dataset.bound = "1";
+          function setOpen(open) {
+            nav.classList.toggle("is-open", open);
+            menu.setAttribute("aria-expanded", open ? "true" : "false");
+            menu.textContent = open ? "Close" : "Menu";
+          }
+          menu.addEventListener("click", function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            setOpen(!nav.classList.contains("is-open"));
+          });
+          document.addEventListener("click", function (e) {
+            if (!nav.classList.contains("is-open")) return;
+            if (nav.contains(e.target) || menu.contains(e.target)) return;
+            setOpen(false);
+          });
+          nav.querySelectorAll("a").forEach(function (a) {
+            a.addEventListener("click", function () { setOpen(false); });
+          });
+          document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") setOpen(false);
+          });
+        }
+      }
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", bind);
+      else bind();
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>10 Letter Words – Unscrambler and High-Scoring List</title>
+  <meta name="description" content="10 letter word unscrambler and list. 20,302 ENABLE 10-letter words. Highest-scoring samples for long jumbles and novelty racks." />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta name="google-adsense-account" content="ca-pub-2666058844257008" />
+  <meta name="author" content="Word Unscrambler" />
+  <link rel="canonical" href="https://lettersunscrambler.com/10-letter-words" />
+  <meta property="og:site_name" content="Word Unscrambler" />
+  <meta property="og:title" content="10 Letter Words – Unscrambler and High-Scoring List" />
+  <meta property="og:description" content="10 letter word unscrambler and list. 20,302 ENABLE 10-letter words. Highest-scoring samples for long jumbles and novelty racks." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://lettersunscrambler.com/10-letter-words" />
+  <meta property="og:image" content="https://lettersunscrambler.com/og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_GB" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="10 Letter Words – Unscrambler and High-Scoring List" />
+  <meta name="twitter:description" content="10 letter word unscrambler and list. 20,302 ENABLE 10-letter words. Highest-scoring samples for long jumbles and novelty racks." />
+  <meta name="twitter:image" content="https://lettersunscrambler.com/og.jpg" />
+  <meta name="theme-color" content="#1f4a38" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/og.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,640&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css?v=31" />
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VR1EE3K51N"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2666058844257008" crossorigin="anonymous"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    var _c = 'denied';
+    try { if (localStorage.getItem('wu_consent') === 'granted') _c = 'granted'; } catch (e) {}
+    gtag('consent', 'default', {
+      analytics_storage: _c,
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied'
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-VR1EE3K51N', { anonymize_ip: true });
+  </script>
+  
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","name":"Word Unscrambler","legalName":"HDK Distribution Ltd","url":"https://lettersunscrambler.com/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lettersunscrambler.com/"},{"@type":"ListItem","position":2,"name":"Word lists","item":"https://lettersunscrambler.com/word-lists"},{"@type":"ListItem","position":3,"name":"10-letter words","item":"https://lettersunscrambler.com/10-letter-words"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How many 10-letter words are there?","acceptedAnswer":{"@type":"Answer","text":"ENABLE has 20,302 10-letter words. This page lists the 300 highest Scrabble-value ones. For a live 10 letter word unscrambler, type your rack on the homepage and set Exact length to 10."}},{"@type":"Question","name":"What is a 10 letter word unscrambler?","acceptedAnswer":{"@type":"Answer","text":"Type the letters you hold, then keep only 10-letter results. Useful for longer jumbles and nine- or ten-tile novelty racks. Blanks: type ? (max two)."}},{"@type":"Question","name":"Are these tournament-legal?","acceptedAnswer":{"@type":"Answer","text":"ENABLE is public-domain and close to casual play. NASPA TWL and Collins CSW are the copyrighted club lists and differ by a few entries."}}]}]}</script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="/">
+        <span class="mark" aria-hidden="true">W<small>4</small></span>
+        <span class="brand-name">Word Unscrambler<span>Find words from letters</span></span>
+      </a>
+      <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch colour theme">Theme</button>
+      <button class="menu-btn" type="button" data-nav aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="nav" id="site-nav" aria-label="Primary">
+        <a href="/">Unscrambler</a>
+        <a href="/scrabble-word-finder">Scrabble</a>
+        <a href="/anagram-solver">Anagrams</a>
+        <a href="/wordle-helper">Wordle</a>
+        <a href="/crossword-solver">Crossword</a>
+        <a href="/word-lists" aria-current="page">Lists</a>
+      </nav>
+    </div>
+  </header>
+<main class="wrap page" id="main">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/word-lists">Word lists</a> / <span>10-letter words</span></nav>
+  <p class="kicker">Word list</p>
+  <h1>10-letter words</h1>
+  <p>ENABLE has <strong>20,302 10-letter words</strong>. To run a <strong>10 letter word unscrambler</strong>, type your rack on the <a href="/">homepage</a> and set length to 10. Below are the 300 highest-scoring 10-letter ENABLE words.</p>
+  <div class="word-cloud"><a href="/?q=RAZZMATAZZ">razzmatazz 48</a><a href="/?q=WHIZZBANGS">whizzbangs 37</a><a href="/?q=DIZZYINGLY">dizzyingly 36</a><a href="/?q=SHOWBIZZES">showbizzes 36</a><a href="/?q=BLIZZARDLY">blizzardly 34</a><a href="/?q=KOLKHOZNIK">kolkhoznik 34</a><a href="/?q=PUZZLINGLY">puzzlingly 34</a><a href="/?q=BEMUZZLING">bemuzzling 33</a><a href="/?q=DAZZLINGLY">dazzlingly 33</a><a href="/?q=EMBEZZLING">embezzling 33</a><a href="/?q=SCHIZZIEST">schizziest 33</a><a href="/?q=SCHNOZZLES">schnozzles 33</a><a href="/?q=ZYGOMORPHY">zygomorphy 33</a><a href="/?q=BEDAZZLING">bedazzling 32</a><a href="/?q=CHIFFCHAFF">chiffchaff 32</a><a href="/?q=EMBEZZLERS">embezzlers 32</a><a href="/?q=MIZZENMAST">mizzenmast 32</a><a href="/?q=PODZOLIZED">podzolized 32</a><a href="/?q=POZZOLANIC">pozzolanic 32</a><a href="/?q=PUZZLEMENT">puzzlement 32</a><a href="/?q=ZIGZAGGING">zigzagging 32</a><a href="/?q=BLACKJACKS">blackjacks 31</a><a href="/?q=CRACKAJACK">crackajack 31</a><a href="/?q=EQUIVOQUES">equivoques 31</a><a href="/?q=EXCHEQUERS">exchequers 31</a><a href="/?q=EXOENZYMES">exoenzymes 31</a><a href="/?q=FRIZZINESS">frizziness 31</a><a href="/?q=FRIZZLIEST">frizzliest 31</a><a href="/?q=HIGHJACKED">highjacked 31</a><a href="/?q=JACKKNIFED">jackknifed 31</a><a href="/?q=KIBBUTZNIK">kibbutznik 31</a><a href="/?q=MAXIMIZING">maximizing 31</a><a href="/?q=PODZOLIZES">podzolizes 31</a><a href="/?q=RHYTHMIZED">rhythmized 31</a><a href="/?q=SKYJACKING">skyjacking 31</a><a href="/?q=UNMUZZLING">unmuzzling 31</a><a href="/?q=UNPUZZLING">unpuzzling 31</a><a href="/?q=CHEAPJACKS">cheapjacks 30</a><a href="/?q=CHICKENPOX">chickenpox 30</a><a href="/?q=DIAZOTIZED">diazotized 30</a><a href="/?q=EPOXIDIZED">epoxidized 30</a><a href="/?q=HYDROLYZED">hydrolyzed 30</a><a href="/?q=INTERMEZZI">intermezzi 30</a><a href="/?q=INTERMEZZO">intermezzo 30</a><a href="/?q=JACKHAMMER">jackhammer 30</a><a href="/?q=JACKKNIFES">jackknifes 30</a><a href="/?q=JACKKNIVES">jackknives 30</a><a href="/?q=JAROVIZING">jarovizing 30</a><a href="/?q=JAYHAWKERS">jayhawkers 30</a><a href="/?q=KICKBOXING">kickboxing 30</a><a href="/?q=KNICKKNACK">knickknack 30</a><a href="/?q=LIQUIDIZED">liquidized 30</a><a href="/?q=MAXIMIZERS">maximizers 30</a><a href="/?q=MEZZANINES">mezzanines 30</a><a href="/?q=MEZZOTINTS">mezzotints 30</a><a href="/?q=MOZZARELLA">mozzarella 30</a><a href="/?q=MYTHICIZED">mythicized 30</a><a href="/?q=OUTDAZZLED">outdazzled 30</a><a href="/?q=POZZOLANAS">pozzolanas 30</a><a href="/?q=QUARTZITIC">quartzitic 30</a><a href="/?q=QUIZMASTER">quizmaster 30</a><a href="/?q=RHYTHMIZES">rhythmizes 30</a><a href="/?q=SKYJACKERS">skyjackers 30</a><a href="/?q=SQUEEZABLE">squeezable 30</a><a href="/?q=ZINKIFYING">zinkifying 30</a><a href="/?q=ZOMBIFYING">zombifying 30</a><a href="/?q=COMPLEXIFY">complexify 29</a><a href="/?q=CZAREVITCH">czarevitch 29</a><a href="/?q=DEOXIDIZED">deoxidized 29</a><a href="/?q=DIAZOTIZES">diazotizes 29</a><a href="/?q=DRIZZLIEST">drizzliest 29</a><a href="/?q=EPOXIDIZES">epoxidizes 29</a><a href="/?q=EQUALIZING">equalizing 29</a><a href="/?q=EXORCIZING">exorcizing 29</a><a href="/?q=EXPERTIZED">expertized 29</a><a href="/?q=GRIZZLIEST">grizzliest 29</a><a href="/?q=HOKEYPOKEY">hokeypokey 29</a><a href="/?q=HYBRIDIZED">hybridized 29</a><a href="/?q=HYDROLYZES">hydrolyzes 29</a><a href="/?q=HYDROXYLIC">hydroxylic 29</a><a href="/?q=JACKFISHES">jackfishes 29</a><a href="/?q=JAPANIZING">japanizing 29</a><a href="/?q=JEOPARDIZE">jeopardize 29</a><a href="/?q=JOHNNYCAKE">johnnycake 29</a><a href="/?q=KICKBOXERS">kickboxers 29</a><a href="/?q=LIQUIDIZES">liquidizes 29</a><a href="/?q=MYCORRHIZA">mycorrhiza 29</a><a href="/?q=MYTHICIZER">mythicizer 29</a><a href="/?q=MYTHICIZES">mythicizes 29</a><a href="/?q=MYXOMYCETE">myxomycete 29</a><a href="/?q=OUTDAZZLES">outdazzles 29</a><a href="/?q=OXIDIZABLE">oxidizable 29</a><a href="/?q=QUADPLEXES">quadplexes 29</a><a href="/?q=QUANTIZING">quantizing 29</a><a href="/?q=SCYPHOZOAN">scyphozoan 29</a><a href="/?q=SMOKEJACKS">smokejacks 29</a><a href="/?q=SYMPATHIZE">sympathize 29</a><a href="/?q=XYLOGRAPHY">xylography 29</a><a href="/?q=YOUTHQUAKE">youthquake 29</a><a href="/?q=ZYGODACTYL">zygodactyl 29</a><a href="/?q=AXIOMATIZE">axiomatize 28</a><a href="/?q=CHIMPANZEE">chimpanzee 28</a><a href="/?q=CRAZYWEEDS">crazyweeds 28</a><a href="/?q=DEOXIDIZER">deoxidizer 28</a><a href="/?q=DEOXIDIZES">deoxidizes 28</a><a href="/?q=ENZYMOLOGY">enzymology 28</a><a href="/?q=EQUALIZERS">equalizers 28</a><a href="/?q=EXPERTIZES">expertizes 28</a><a href="/?q=GADZOOKERY">gadzookery 28</a><a href="/?q=HAPHAZARDS">haphazards 28</a><a href="/?q=HEMIZYGOUS">hemizygous 28</a><a href="/?q=HEMOLYZING">hemolyzing 28</a><a href="/?q=HOMOZYGOTE">homozygote 28</a><a href="/?q=HOMOZYGOUS">homozygous 28</a><a href="/?q=HYBRIDIZER">hybridizer 28</a><a href="/?q=HYBRIDIZES">hybridizes 28</a><a href="/?q=HYPNOTIZED">hypnotized 28</a><a href="/?q=JACKSCREWS">jackscrews 28</a><a href="/?q=JACQUERIES">jacqueries 28</a><a href="/?q=JARGONIZED">jargonized 28</a><a href="/?q=JAYWALKING">jaywalking 28</a><a href="/?q=KIBBITZING">kibbitzing 28</a><a href="/?q=KYMOGRAPHY">kymography 28</a><a href="/?q=LEXICALIZE">lexicalize 28</a><a href="/?q=PHOTOLYZED">photolyzed 28</a><a href="/?q=PHYLLOTAXY">phyllotaxy 28</a><a href="/?q=PRIZEFIGHT">prizefight 28</a><a href="/?q=PYROLYZING">pyrolyzing 28</a><a href="/?q=QUANTIZERS">quantizers 28</a><a href="/?q=QUARTZITES">quartzites 28</a><a href="/?q=QUINCUNXES">quincunxes 28</a><a href="/?q=QUIXOTICAL">quixotical 28</a><a href="/?q=QUIXOTISMS">quixotisms 28</a><a href="/?q=REOXIDIZED">reoxidized 28</a><a href="/?q=SCHIZOCARP">schizocarp 28</a><a href="/?q=SCHIZOGONY">schizogony 28</a><a href="/?q=TETRAZZINI">tetrazzini 28</a><a href="/?q=ZINCIFYING">zincifying 28</a><a href="/?q=ZOOMORPHIC">zoomorphic 28</a><a href="/?q=ALCHEMIZED">alchemized 27</a><a href="/?q=AMBERJACKS">amberjacks 27</a><a href="/?q=APPLEJACKS">applejacks 27</a><a href="/?q=BACKPACKED">backpacked 27</a><a href="/?q=BODYCHECKS">bodychecks 27</a><a href="/?q=BOLSHEVIZE">bolshevize 27</a><a href="/?q=BREEZEWAYS">breezeways 27</a><a href="/?q=BUSHWHACKS">bushwhacks 27</a><a href="/?q=CATECHIZED">catechized 27</a><a href="/?q=CHECKBOOKS">checkbooks 27</a><a href="/?q=CHECKMARKS">checkmarks 27</a><a href="/?q=CHROMIZING">chromizing 27</a><a href="/?q=CLIQUISHLY">cliquishly 27</a><a href="/?q=COADJUTRIX">coadjutrix 27</a><a href="/?q=COGNIZABLY">cognizably 27</a><a href="/?q=DEZINCKING">dezincking 27</a><a href="/?q=EMPATHIZED">empathized 27</a><a href="/?q=EMPHASIZED">emphasized 27</a><a href="/?q=EUPHEMIZED">euphemized 27</a><a href="/?q=HACKMATACK">hackmatack 27</a><a href="/?q=HIJACKINGS">hijackings 27</a><a href="/?q=HOLOENZYME">holoenzyme 27</a><a href="/?q=HUCKABACKS">huckabacks 27</a><a href="/?q=HYDRAZIDES">hydrazides 27</a><a href="/?q=HYLOZOISMS">hylozoisms 27</a><a href="/?q=HYPNOTIZES">hypnotizes 27</a><a href="/?q=HYPOXEMIAS">hypoxemias 27</a><a href="/?q=JACKLIGHTS">jacklights 27</a><a href="/?q=JACKRABBIT">jackrabbit 27</a><a href="/?q=JARGONIZES">jargonizes 27</a><a href="/?q=JAYWALKERS">jaywalkers 27</a><a href="/?q=JOYPOPPING">joypopping 27</a><a href="/?q=JUXTAPOSED">juxtaposed 27</a><a href="/?q=KARYOLYMPH">karyolymph 27</a><a href="/?q=KAZATSKIES">kazatskies 27</a><a href="/?q=KIBBITZERS">kibbitzers 27</a><a href="/?q=LUMBERJACK">lumberjack 27</a><a href="/?q=LYOPHILIZE">lyophilize 27</a><a href="/?q=MECHANIZED">mechanized 27</a><a href="/?q=MICROQUAKE">microquake 27</a><a href="/?q=PHOTOLYZES">photolyzes 27</a><a href="/?q=PHYTOTOXIC">phytotoxic 27</a><a href="/?q=PIPSQUEAKS">pipsqueaks 27</a><a href="/?q=POLYGAMIZE">polygamize 27</a><a href="/?q=POLYMYXINS">polymyxins 27</a><a href="/?q=POPPYCOCKS">poppycocks 27</a><a href="/?q=PREQUALIFY">prequalify 27</a><a href="/?q=PYROLYZATE">pyrolyzate 27</a><a href="/?q=PYROLYZERS">pyrolyzers 27</a><a href="/?q=QUALMISHLY">qualmishly 27</a><a href="/?q=QUICKLIMES">quicklimes 27</a><a href="/?q=QUICKSTEPS">quicksteps 27</a><a href="/?q=QUILLBACKS">quillbacks 27</a><a href="/?q=RAZORBACKS">razorbacks 27</a><a href="/?q=REOXIDIZES">reoxidizes 27</a><a href="/?q=SCHMOOZING">schmoozing 27</a><a href="/?q=SEXUALIZED">sexualized 27</a><a href="/?q=SQUIRARCHY">squirarchy 27</a><a href="/?q=SUPPLEJACK">supplejack 27</a><a href="/?q=SYMBOLIZED">symbolized 27</a><a href="/?q=SYNONYMIZE">synonymize 27</a><a href="/?q=TEXTURIZED">texturized 27</a><a href="/?q=TRIHYDROXY">trihydroxy 27</a><a href="/?q=VICTIMIZED">victimized 27</a><a href="/?q=VIZIERSHIP">viziership 27</a><a href="/?q=XEROPHYTIC">xerophytic 27</a><a href="/?q=ZOMBIELIKE">zombielike 27</a><a href="/?q=ALCHEMIZES">alchemizes 26</a><a href="/?q=AMPHIMIXES">amphimixes 26</a><a href="/?q=AMPHIMIXIS">amphimixis 26</a><a href="/?q=ANTIHIJACK">antihijack 26</a><a href="/?q=APOENZYMES">apoenzymes 26</a><a href="/?q=BACKBLOCKS">backblocks 26</a><a href="/?q=BACKPACKER">backpacker 26</a><a href="/?q=BALKANIZED">balkanized 26</a><a href="/?q=BAMBOOZLED">bamboozled 26</a><a href="/?q=BLACKCOCKS">blackcocks 26</a><a href="/?q=BLITZKRIEG">blitzkrieg 26</a><a href="/?q=CARBOXYLIC">carboxylic 26</a><a href="/?q=CARJACKING">carjacking 26</a><a href="/?q=CATECHIZER">catechizer 26</a><a href="/?q=CATECHIZES">catechizes 26</a><a href="/?q=CHERNOZEMS">chernozems 26</a><a href="/?q=CHIBOUQUES">chibouques 26</a><a href="/?q=CHINQUAPIN">chinquapin 26</a><a href="/?q=CIRCUMFLEX">circumflex 26</a><a href="/?q=COCKCHAFER">cockchafer 26</a><a href="/?q=COMMUNIZED">communized 26</a><a href="/?q=COMPLEXITY">complexity 26</a><a href="/?q=COMPRIZING">comprizing 26</a><a href="/?q=CRACKBACKS">crackbacks 26</a><a href="/?q=DISQUALIFY">disqualify 26</a><a href="/?q=EARTHQUAKE">earthquake 26</a><a href="/?q=EMBLAZONRY">emblazonry 26</a><a href="/?q=EMPATHIZES">empathizes 26</a><a href="/?q=EMPHASIZES">emphasizes 26</a><a href="/?q=EUPHEMIZER">euphemizer 26</a><a href="/?q=EUPHEMIZES">euphemizes 26</a><a href="/?q=EXPECTABLY">expectably 26</a><a href="/?q=EXPECTANCY">expectancy 26</a><a href="/?q=EXPLICABLY">explicably 26</a><a href="/?q=EXQUISITES">exquisites 26</a><a href="/?q=FREEZINGLY">freezingly 26</a><a href="/?q=FRENZIEDLY">frenziedly 26</a><a href="/?q=FRIEZELIKE">friezelike 26</a><a href="/?q=GOTHICIZED">gothicized 26</a><a href="/?q=HATCHBACKS">hatchbacks 26</a><a href="/?q=HEXACHORDS">hexachords 26</a><a href="/?q=HEXAPLOIDY">hexaploidy 26</a><a href="/?q=HITCHHIKED">hitchhiked 26</a><a href="/?q=HOKYPOKIES">hokypokies 26</a><a href="/?q=HUMPBACKED">humpbacked 26</a><a href="/?q=HUNCHBACKS">hunchbacks 26</a><a href="/?q=HYDRAZINES">hydrazines 26</a><a href="/?q=HYDROZOANS">hydrozoans 26</a><a href="/?q=HYPOPHYSES">hypophyses 26</a><a href="/?q=HYPOPHYSIS">hypophysis 26</a><a href="/?q=ISOENZYMIC">isoenzymic 26</a><a href="/?q=JACKASSERY">jackassery 26</a><a href="/?q=JACKBOOTED">jackbooted 26</a><a href="/?q=JACKFRUITS">jackfruits 26</a><a href="/?q=JACKSTRAWS">jackstraws 26</a><a href="/?q=JANIZARIES">janizaries 26</a><a href="/?q=JAWBREAKER">jawbreaker 26</a><a href="/?q=JINRICKSHA">jinricksha 26</a><a href="/?q=JOURNALIZE">journalize 26</a><a href="/?q=JOYPOPPERS">joypoppers 26</a><a href="/?q=JUXTAPOSES">juxtaposes 26</a><a href="/?q=LIQUEFYING">liquefying 26</a><a href="/?q=LIQUIFYING">liquifying 26</a><a href="/?q=MACADAMIZE">macadamize 26</a><a href="/?q=MATCHBOXES">matchboxes 26</a><a href="/?q=MECHANIZER">mechanizer 26</a><a href="/?q=MECHANIZES">mechanizes 26</a><a href="/?q=METHODIZED">methodized 26</a><a href="/?q=MUCKAMUCKS">muckamucks 26</a><a href="/?q=MYCETOZOAN">mycetozoan 26</a><a href="/?q=NONENZYMIC">nonenzymic 26</a><a href="/?q=PICKABACKS">pickabacks 26</a><a href="/?q=PICKPOCKET">pickpocket 26</a><a href="/?q=PLASMOLYZE">plasmolyze 26</a><a href="/?q=POLYMERIZE">polymerize 26</a><a href="/?q=POLYRHYTHM">polyrhythm 26</a><a href="/?q=PROENZYMES">proenzymes 26</a><a href="/?q=PUBLICIZED">publicized 26</a><a href="/?q=QUALIFYING">qualifying 26</a><a href="/?q=QUEBRACHOS">quebrachos 26</a><a href="/?q=QUENCHABLE">quenchable 26</a><a href="/?q=QUICKENING">quickening 26</a><a href="/?q=QUICKSANDS">quicksands 26</a><a href="/?q=QUILLWORKS">quillworks 26</a><a href="/?q=QUIXOTRIES">quixotries 26</a><a href="/?q=SCHEMATIZE">schematize 26</a><a href="/?q=SCHMALTZES">schmaltzes 26</a><a href="/?q=SCHMALZIER">schmalzier 26</a><a href="/?q=SEXUALIZES">sexualizes 26</a><a href="/?q=SJAMBOKING">sjamboking 26</a><a href="/?q=SPHINXLIKE">sphinxlike 26</a><a href="/?q=SUBJACENCY">subjacency 26</a><a href="/?q=SWITCHBACK">switchback 26</a><a href="/?q=SYMBOLIZER">symbolizer 26</a></div>
+  <p>Related: <a href="/8-letter-words">8-letter words</a>, <a href="/7-letter-words">7-letter bingos</a>, <a href="/word-descrambler">word descrambler</a> and the live <a href="/">10 letter word unscrambler</a>.</p>
+  <section class="prose faq" id="faq">
+    <h2>FAQ</h2>
+    <details open>
+      <summary>How many 10-letter words are there?</summary>
+      <p>ENABLE has 20,302 10-letter words. This page lists the 300 highest Scrabble-value ones. For a live 10 letter word unscrambler, type your rack on the <a href="/">homepage</a> and set Exact length to 10.</p>
+    </details>
+    <details>
+      <summary>What is a 10 letter word unscrambler?</summary>
+      <p>Type the letters you hold, then keep only 10-letter results. Useful for longer jumbles and nine- or ten-tile novelty racks. Blanks: type ? (max two).</p>
+    </details>
+    <details>
+      <summary>Are these tournament-legal?</summary>
+      <p>ENABLE is public-domain and close to casual play. NASPA TWL and Collins CSW are the copyrighted club lists and differ by a few entries.</p>
+    </details>
+  </section>
+  <div class="related">
+    <a class="card" href="/"><h3>Word unscrambler</h3><p>Make every word from a rack, including shorter plays.</p></a>
+    <a class="card" href="/word-checker"><h3>Word checker</h3><p>Is this a valid ENABLE word? Scores and hooks.</p></a>
+    <a class="card" href="/words-starting-with"><h3>Words starting with</h3><p>A–Z prefixes. No rack required.</p></a>
+    <a class="card" href="/words-ending-with"><h3>Words ending with</h3><p>Suffixes such as ING, TION, NESS.</p></a>
+    <a class="card" href="/words-containing"><h3>Words containing</h3><p>TH, QU, ING and A–Z letter lists.</p></a>
+    <a class="card" href="/word-descrambler"><h3>Word descrambler</h3><p>Descramble mixed-up letters into words.</p></a>
+    <a class="card" href="/5-letter-words-starting-with"><h3>5-letter starting with</h3><p>Wordle-length lists by first letter.</p></a>
+    <a class="card" href="/word-lists"><h3>All word lists</h3><p>2–8 letters, Q without U, bingo stems.</p></a>
+  </div>
+      <aside class="ad-region" aria-label="Advertisement">
+      <p class="ad-label">Advertisement</p>
+      <div class="ad-box">
+        <ins class="adsbygoogle"
+             style="display:block;min-height:280px"
+             data-ad-client="ca-pub-2666058844257008"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+      </div>
+    </aside>
+</main>
+<footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div>
+        <p class="footer-head">Tools</p>
+        <a href="/">Word unscrambler</a>
+        <a href="/anagram-solver">Anagram solver</a>
+        <a href="/scrabble-word-finder">Scrabble word finder</a>
+        <a href="/words-with-friends">Words With Friends</a>
+        <a href="/wordle-helper">Wordle helper</a>
+        <a href="/jumble-solver">Jumble solver</a>
+        <a href="/crossword-solver">Crossword solver</a>
+        <a href="/words-from-letters">Words from letters</a>
+        <a href="/word-checker">Word checker</a>
+        <a href="/word-descrambler">Word descrambler</a>
+      </div>
+      <div>
+        <p class="footer-head">Word lists</p>
+        <a href="/2-letter-words">2-letter words</a>
+        <a href="/3-letter-words">3-letter words</a>
+        <a href="/4-letter-words">4-letter words</a>
+        <a href="/5-letter-words">5-letter words</a>
+        <a href="/5-letter-words-starting-with">5-letter starting with</a>
+        <a href="/6-letter-words">6-letter words</a>
+        <a href="/7-letter-words">7-letter words</a>
+        <a href="/8-letter-words">8-letter words</a>
+        <a href="/9-letter-words">9-letter words</a>
+        <a href="/10-letter-words">10-letter words</a>
+        <a href="/words-starting-with">Words starting with</a>
+        <a href="/words-ending-with">Words ending with</a>
+        <a href="/words-containing">Words containing</a>
+        <a href="/q-without-u">Q without U</a>
+        <a href="/jqxz-words">J, Q, X and Z words</a>
+        <a href="/bingo-stems">Bingo stems</a>
+      </div>
+      <div>
+        <p class="footer-head">Site</p>
+        <a href="/how-it-works">How it works</a>
+        <a href="/about">About</a>
+        <a href="/feedback">Feedback</a>
+        <a href="/contact">Contact</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+      </div>
+    </div>
+    <div class="wrap legal-line">
+      <p>© 2026 Word Unscrambler. ENABLE dictionary. Not affiliated with Hasbro, Mattel, Zynga or The New York Times.</p>
+      <p>United Kingdom</p>
+    </div>
+  </footer>
+  <script>
+    (function(){
+      var KEY = "wu_consent";
+      function apply(v){
+        if (typeof gtag !== "function") return;
+        gtag("consent", "update", {
+          analytics_storage: v === "granted" ? "granted" : "denied",
+          ad_storage: "denied",
+          ad_user_data: "denied",
+          ad_personalization: "denied"
+        });
+        if (v === "granted") {
+          gtag("event", "page_view", { page_location: location.href, page_title: document.title });
+        }
+      }
+      try {
+        var saved = localStorage.getItem(KEY);
+        if (saved) { apply(saved); return; }
+      } catch (e) {}
+      var bar = document.createElement("div");
+      bar.className = "consent";
+      bar.setAttribute("role", "dialog");
+      bar.setAttribute("aria-label", "Cookie choices");
+      bar.innerHTML = '<p>We use optional analytics cookies (Google Analytics) to see which tools people use. Your letters stay in this browser. <a href="/privacy">Privacy</a></p><div class="consent-actions"><button type="button" data-c="granted">Accept</button><button type="button" class="ghost" data-c="denied">Reject</button></div>';
+      document.body.appendChild(bar);
+      bar.addEventListener("click", function(e){
+        var b = e.target.closest("button[data-c]");
+        if (!b) return;
+        var v = b.getAttribute("data-c");
+        try { localStorage.setItem(KEY, v); } catch (err) {}
+        apply(v);
+        bar.remove();
+      });
+    })();
+  </script>
+</body>
+</html>

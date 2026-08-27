@@ -23,6 +23,8 @@ const ROUTES = {
   "/words-ending-with": "words-ending-with.html",
   "/5-letter-words-starting-with": "5-letter-words-starting-with.html",
   "/word-checker": "word-checker.html",
+  "/word-descrambler": "word-descrambler.html",
+  "/words-containing": "words-containing.html",
   "/2-letter-words": "2-letter-words.html",
   "/3-letter-words": "3-letter-words.html",
   "/4-letter-words": "4-letter-words.html",
@@ -30,6 +32,8 @@ const ROUTES = {
   "/6-letter-words": "6-letter-words.html",
   "/7-letter-words": "7-letter-words.html",
   "/8-letter-words": "8-letter-words.html",
+  "/9-letter-words": "9-letter-words.html",
+  "/10-letter-words": "10-letter-words.html",
   "/q-without-u": "q-without-u.html",
   "/jqxz-words": "jqxz-words.html",
   "/bingo-stems": "bingo-stems.html",
@@ -199,7 +203,7 @@ async function pull(name) {
   const fromMain = name === "profit-v1.js" || name === "modern-v39.css";
   const srcs = fromMain
     ? ["https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/main/" + name + "?v=39"]
-    : [GH_MAIN + name + "?v=start1", GH + name];
+    : [GH_MAIN + name + "?v=contain1", GH + name];
   for (let s = 0; s < srcs.length; s++) {
     for (let i = 0; i < 2; i++) {
       try {
@@ -236,10 +240,16 @@ function injectModern(htmlBuf) {
     out = out.replace('<a href="/contact">Contact</a>', '<a href="/feedback">Feedback</a>\n        <a href="/contact">Contact</a>');
   }
   if (out.indexOf('href="/word-checker"') === -1 && out.indexOf('href="/words-from-letters">Words from letters</a>') !== -1) {
-    out = out.replace('<a href="/words-from-letters">Words from letters</a>', '<a href="/words-from-letters">Words from letters</a>\n        <a href="/word-checker">Word checker</a>');
+    out = out.replace('<a href="/words-from-letters">Words from letters</a>', '<a href="/words-from-letters">Words from letters</a>\n        <a href="/word-checker">Word checker</a>\n        <a href="/word-descrambler">Word descrambler</a>');
+  }
+  if (out.indexOf('href="/word-descrambler"') === -1 && out.indexOf('href="/word-checker">Word checker</a>') !== -1) {
+    out = out.replace('<a href="/word-checker">Word checker</a>', '<a href="/word-checker">Word checker</a>\n        <a href="/word-descrambler">Word descrambler</a>');
   }
   if (out.indexOf('href="/words-starting-with"') === -1 && out.indexOf('href="/bingo-stems">Bingo stems</a>') !== -1) {
-    out = out.replace('<a href="/bingo-stems">Bingo stems</a>', '<a href="/bingo-stems">Bingo stems</a>\n        <a href="/words-starting-with">Words starting with</a>\n        <a href="/words-ending-with">Words ending with</a>\n        <a href="/5-letter-words-starting-with">5-letter starting with</a>');
+    out = out.replace('<a href="/bingo-stems">Bingo stems</a>', '<a href="/bingo-stems">Bingo stems</a>\n        <a href="/words-starting-with">Words starting with</a>\n        <a href="/words-ending-with">Words ending with</a>\n        <a href="/words-containing">Words containing</a>\n        <a href="/5-letter-words-starting-with">5-letter starting with</a>\n        <a href="/9-letter-words">9-letter words</a>\n        <a href="/10-letter-words">10-letter words</a>');
+  }
+  if (out.indexOf('href="/words-containing"') === -1 && out.indexOf('href="/words-ending-with">Words ending with</a>') !== -1) {
+    out = out.replace('<a href="/words-ending-with">Words ending with</a>', '<a href="/words-ending-with">Words ending with</a>\n        <a href="/words-containing">Words containing</a>');
   }
   if (out.indexOf('id="adAfterResults"') === -1 && out.indexOf('id="results"') !== -1) {
     const ad = '<aside class="ad-region ad-after-results" id="adAfterResults" hidden aria-label="Advertisement"><p class="ad-label">Advertisement</p><div class="ad-box ad-box-slim"><ins class="adsbygoogle" style="display:block;min-height:90px" data-ad-client="ca-pub-2666058844257008" data-ad-format="horizontal" data-full-width-responsive="true"></ins></div></aside>';

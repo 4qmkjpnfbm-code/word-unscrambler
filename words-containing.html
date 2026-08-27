@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("wu_theme");
+        if (!t) t = (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+        document.documentElement.setAttribute("data-theme", t === "dark" ? "dark" : "light");
+      } catch (e) {}
+      function sync(btn) {
+        var dark = document.documentElement.getAttribute("data-theme") === "dark";
+        if (!btn) return;
+        btn.setAttribute("aria-pressed", dark ? "true" : "false");
+        btn.setAttribute("aria-label", dark ? "Switch to light theme" : "Switch to dark theme");
+        btn.textContent = dark ? "Light" : "Dark";
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute("content", dark ? "#13110f" : "#1f4a38");
+      }
+      function bind() {
+        var btn = document.getElementById("themeBtn");
+        sync(btn);
+        if (btn && !btn.dataset.bound) {
+          btn.dataset.bound = "1";
+          btn.addEventListener("click", function () {
+            var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+            document.documentElement.setAttribute("data-theme", next);
+            try { localStorage.setItem("wu_theme", next); } catch (e) {}
+            sync(btn);
+          });
+        }
+        var menu = document.querySelector("[data-nav]");
+        var nav = document.getElementById("site-nav");
+        if (menu && nav && !menu.dataset.bound) {
+          menu.dataset.bound = "1";
+          function setOpen(open) {
+            nav.classList.toggle("is-open", open);
+            menu.setAttribute("aria-expanded", open ? "true" : "false");
+            menu.textContent = open ? "Close" : "Menu";
+          }
+          menu.addEventListener("click", function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            setOpen(!nav.classList.contains("is-open"));
+          });
+          document.addEventListener("click", function (e) {
+            if (!nav.classList.contains("is-open")) return;
+            if (nav.contains(e.target) || menu.contains(e.target)) return;
+            setOpen(false);
+          });
+          nav.querySelectorAll("a").forEach(function (a) {
+            a.addEventListener("click", function () { setOpen(false); });
+          });
+          document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") setOpen(false);
+          });
+        }
+      }
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", bind);
+      else bind();
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Words Containing – Letters, Clusters & Live Filter</title>
+  <meta name="description" content="Find words containing any letter or cluster. TH, QU, ING, TION and A–Z ENABLE lists, plus a live filter that needs no rack." />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta name="google-adsense-account" content="ca-pub-2666058844257008" />
+  <meta name="author" content="Word Unscrambler" />
+  <link rel="canonical" href="https://lettersunscrambler.com/words-containing" />
+  <meta property="og:site_name" content="Word Unscrambler" />
+  <meta property="og:title" content="Words Containing – Letters, Clusters & Live Filter" />
+  <meta property="og:description" content="Find words containing any letter or cluster. TH, QU, ING, TION and A–Z ENABLE lists, plus a live filter that needs no rack." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://lettersunscrambler.com/words-containing" />
+  <meta property="og:image" content="https://lettersunscrambler.com/og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_GB" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Words Containing – Letters, Clusters & Live Filter" />
+  <meta name="twitter:description" content="Find words containing any letter or cluster. TH, QU, ING, TION and A–Z ENABLE lists, plus a live filter that needs no rack." />
+  <meta name="twitter:image" content="https://lettersunscrambler.com/og.jpg" />
+  <meta name="theme-color" content="#1f4a38" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/og.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,640&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css?v=31" />
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VR1EE3K51N"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2666058844257008" crossorigin="anonymous"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    var _c = 'denied';
+    try { if (localStorage.getItem('wu_consent') === 'granted') _c = 'granted'; } catch (e) {}
+    gtag('consent', 'default', {
+      analytics_storage: _c,
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied'
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-VR1EE3K51N', { anonymize_ip: true });
+  </script>
+  
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","name":"Word Unscrambler","legalName":"HDK Distribution Ltd","url":"https://lettersunscrambler.com/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lettersunscrambler.com/"},{"@type":"ListItem","position":2,"name":"Word lists","item":"https://lettersunscrambler.com/word-lists"},{"@type":"ListItem","position":3,"name":"Words containing","item":"https://lettersunscrambler.com/words-containing"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What does “words containing” mean?","acceptedAnswer":{"@type":"Answer","text":"A word that has those letters in a row, anywhere inside it. FINGER contains ING; OTHER contains TH. It is not the same as “must include these tiles in any order” on the unscrambler — this hub matches the cluster as a substring."}},{"@type":"Question","name":"How many English words contain Q?","acceptedAnswer":{"@type":"Answer","text":"2,473 ENABLE words contain Q. Most of them also have a U. The dump list is on Q without U."}},{"@type":"Question","name":"How is this different from words starting or ending with?","acceptedAnswer":{"@type":"Answer","text":"Starting with is a prefix. Ending with is a suffix. Containing finds the letters in the middle too — useful for crossword fragments and Wordle yellows that sit together."}},{"@type":"Question","name":"Can I search without a rack?","acceptedAnswer":{"@type":"Answer","text":"Yes. Leave Letters empty and type a letter or cluster (TH, QU, ING) in Must include. Pick a length if the list is huge."}}]}]}</script>
+</head>
+<body data-tool="subset" data-hub="contains">
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="/">
+        <span class="mark" aria-hidden="true">W<small>4</small></span>
+        <span class="brand-name">Word Unscrambler<span>Find words from letters</span></span>
+      </a>
+      <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch colour theme">Theme</button>
+      <button class="menu-btn" type="button" data-nav aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="nav" id="site-nav" aria-label="Primary">
+        <a href="/">Unscrambler</a>
+        <a href="/scrabble-word-finder">Scrabble</a>
+        <a href="/anagram-solver">Anagrams</a>
+        <a href="/wordle-helper">Wordle</a>
+        <a href="/crossword-solver">Crossword</a>
+        <a href="/word-lists" aria-current="page">Lists</a>
+      </nav>
+    </div>
+  </header>
+<main class="wrap page" id="main">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/word-lists">Word lists</a> / <span>Words containing</span></nav>
+  <p class="kicker">Word list · live filter</p>
+  <h1>Words containing</h1>
+  <p>Type a letter or a cluster — no rack required. This is the page for “words with the letter” and “words containing TH / QU / ING”. Prefixes live on <a href="/words-starting-with">words starting with</a>; suffixes on <a href="/words-ending-with">words ending with</a>.</p>
+    <section class="panel" aria-labelledby="letters-label">
+      <label class="field-label" id="letters-label" for="letters">Optional rack</label>
+      <div class="input-row">
+        <input id="letters" type="text" maxlength="16" autocomplete="off" spellcheck="false" inputmode="text" placeholder="optional rack" aria-describedby="coach" />
+        <button class="primary" id="go" type="button">Find words</button>
+      </div>
+      <p class="coach" id="coach">Words appear as you type.</p>
+      <div class="status">
+      <h2 id="resultsHeading">Words <span id="resultMeta"></span></h2>
+      <div class="toolbar">
+        <button class="ghost" id="share" type="button" hidden>Share</button>
+        <button class="ghost" id="copy" type="button" hidden>Copy all</button>
+      </div>
+    </div>
+    <div id="results" class="empty">Your words will show here.</div>
+      <div class="tiles" id="tiles" aria-hidden="true"></div>
+      <p class="try-label">Length</p>
+      <div class="len-row" role="group" aria-label="Word length"><button type="button" class="len" data-len="" aria-pressed="true">Any</button><button type="button" class="len" data-len="2" aria-pressed="false">2</button><button type="button" class="len" data-len="3" aria-pressed="false">3</button><button type="button" class="len" data-len="4" aria-pressed="false">4</button><button type="button" class="len" data-len="5" aria-pressed="false">5</button><button type="button" class="len" data-len="6" aria-pressed="false">6</button><button type="button" class="len" data-len="7" aria-pressed="false">7</button><button type="button" class="len" data-len="8" aria-pressed="false">8</button><button type="button" class="len" data-len="9+" aria-pressed="false">9+</button></div>
+      <div class="filters quick-filters" aria-label="Letter filters">
+        <div><label for="starts">Starts with</label><input id="starts" type="text" maxlength="5" autocomplete="off" placeholder="TH" /></div>
+        <div><label for="ends">Ends with</label><input id="ends" type="text" maxlength="5" autocomplete="off" placeholder="ING" /></div>
+        <div><label for="contains">Must include</label><input id="contains" type="text" maxlength="8" autocomplete="off" placeholder="Q" /></div>
+      </div>
+      <div class="examples" aria-label="Try an example"><button class="chip" type="button" data-contains="TH">TH</button><button class="chip" type="button" data-contains="QU">QU</button><button class="chip" type="button" data-contains="ING">ING</button></div>
+      <details class="more">
+        <summary>More options</summary>
+        <div class="filters">
+          <div><label for="length">Exact length</label><input id="length" type="number" min="2" max="15" inputmode="numeric" value="" /></div>
+          <div><label for="exclude">Exclude letters</label><input id="exclude" type="text" maxlength="16" autocomplete="off" placeholder="grey tiles" /></div>
+        </div>
+        <p class="hint">Dictionary: ENABLE, <span id="dictCount">loading</span> words. A rack is optional when a filter is set.</p>
+      </details>
+    </section>
+    <script src="/app.js?v=22" defer></script>
+  <h2>Common clusters</h2>
+  <p>TH, QU and ING are the fragments crossword clues and Wordle yellows actually give you. Counts are every ENABLE word with that substring.</p>
+  <section class="letter-block" id="cluster-th">
+      <h2>Words containing TH</h2>
+      <p>5,641 ENABLE words contain TH in a row. Leave the rack empty and type TH in Must include.</p>
+      <div class="word-cloud"><a href="/?q=AIRTH">airth</a><a href="/?q=ALTHO">altho</a><a href="/?q=AZOTH">azoth</a><a href="/?q=BAITH">baith</a><a href="/?q=BATHE">bathe</a><a href="/?q=BATHS">baths</a><a href="/?q=BERTH">berth</a><a href="/?q=BETHS">beths</a><a href="/?q=BIRTH">birth</a><a href="/?q=BOOTH">booth</a><a href="/?q=BOTHY">bothy</a><a href="/?q=BROTH">broth</a><a href="/?q=ETH">eth</a><a href="/?q=NTH">nth</a><a href="/?q=THE">the</a><a href="/?q=THO">tho</a><a href="/?q=THY">thy</a><a href="/?q=BATH">bath</a><a href="/?q=BETH">beth</a><a href="/?q=BOTH">both</a><a href="/?q=DOTH">doth</a><a href="/?q=EATH">eath</a><a href="/?q=ETHS">eths</a><a href="/?q=HATH">hath</a><a href="/?q=HETH">heth</a><a href="/?q=KITH">kith</a><a href="/?q=LATH">lath</a><a href="/?q=LOTH">loth</a></div>
+    </section>
+    <section class="letter-block" id="cluster-ch">
+      <h2>Words containing CH</h2>
+      <p>7,356 ENABLE words contain CH in a row. Leave the rack empty and type CH in Must include.</p>
+      <div class="word-cloud"><a href="/?q=ACHED">ached</a><a href="/?q=ACHES">aches</a><a href="/?q=ACHOO">achoo</a><a href="/?q=AITCH">aitch</a><a href="/?q=BATCH">batch</a><a href="/?q=BEACH">beach</a><a href="/?q=BEECH">beech</a><a href="/?q=BELCH">belch</a><a href="/?q=BENCH">bench</a><a href="/?q=BIRCH">birch</a><a href="/?q=BITCH">bitch</a><a href="/?q=BOCHE">boche</a><a href="/?q=CH">ch</a><a href="/?q=CHI">chi</a><a href="/?q=ICH">ich</a><a href="/?q=ACHE">ache</a><a href="/?q=ACHY">achy</a><a href="/?q=ARCH">arch</a><a href="/?q=BACH">bach</a><a href="/?q=CHAD">chad</a><a href="/?q=CHAM">cham</a><a href="/?q=CHAO">chao</a><a href="/?q=CHAP">chap</a><a href="/?q=CHAR">char</a><a href="/?q=CHAT">chat</a><a href="/?q=CHAW">chaw</a><a href="/?q=CHAY">chay</a><a href="/?q=CHEF">chef</a></div>
+    </section>
+    <section class="letter-block" id="cluster-sh">
+      <h2>Words containing SH</h2>
+      <p>5,383 ENABLE words contain SH in a row. Leave the rack empty and type SH in Must include.</p>
+      <div class="word-cloud"><a href="/?q=ABASH">abash</a><a href="/?q=APISH">apish</a><a href="/?q=ASHED">ashed</a><a href="/?q=ASHEN">ashen</a><a href="/?q=ASHES">ashes</a><a href="/?q=AWASH">awash</a><a href="/?q=BLUSH">blush</a><a href="/?q=BRASH">brash</a><a href="/?q=BRUSH">brush</a><a href="/?q=BUSHY">bushy</a><a href="/?q=CLASH">clash</a><a href="/?q=CRASH">crash</a><a href="/?q=SH">sh</a><a href="/?q=ASH">ash</a><a href="/?q=SHA">sha</a><a href="/?q=SHE">she</a><a href="/?q=SHH">shh</a><a href="/?q=SHY">shy</a><a href="/?q=ASHY">ashy</a><a href="/?q=BASH">bash</a><a href="/?q=BOSH">bosh</a><a href="/?q=BUSH">bush</a><a href="/?q=CASH">cash</a><a href="/?q=COSH">cosh</a><a href="/?q=DASH">dash</a><a href="/?q=DISH">dish</a><a href="/?q=FASH">fash</a><a href="/?q=FISH">fish</a></div>
+    </section>
+    <section class="letter-block" id="cluster-wh">
+      <h2>Words containing WH</h2>
+      <p>756 ENABLE words contain WH in a row. Leave the rack empty and type WH in Must include.</p>
+      <div class="word-cloud"><a href="/?q=WHACK">whack</a><a href="/?q=WHALE">whale</a><a href="/?q=WHAMO">whamo</a><a href="/?q=WHAMS">whams</a><a href="/?q=WHANG">whang</a><a href="/?q=WHAPS">whaps</a><a href="/?q=WHARF">wharf</a><a href="/?q=WHATS">whats</a><a href="/?q=WHAUP">whaup</a><a href="/?q=WHEAL">wheal</a><a href="/?q=WHEAT">wheat</a><a href="/?q=WHEEL">wheel</a><a href="/?q=WHA">wha</a><a href="/?q=WHO">who</a><a href="/?q=WHY">why</a><a href="/?q=WHAM">wham</a><a href="/?q=WHAP">whap</a><a href="/?q=WHAT">what</a><a href="/?q=WHEE">whee</a><a href="/?q=WHEN">when</a><a href="/?q=WHET">whet</a><a href="/?q=WHEW">whew</a><a href="/?q=WHEY">whey</a><a href="/?q=WHID">whid</a><a href="/?q=WHIG">whig</a><a href="/?q=WHIM">whim</a><a href="/?q=WHIN">whin</a><a href="/?q=WHIP">whip</a></div>
+    </section>
+    <section class="letter-block" id="cluster-ph">
+      <h2>Words containing PH</h2>
+      <p>4,135 ENABLE words contain PH in a row. Leave the rack empty and type PH in Must include.</p>
+      <div class="word-cloud"><a href="/?q=ALEPH">aleph</a><a href="/?q=ALPHA">alpha</a><a href="/?q=APHID">aphid</a><a href="/?q=APHIS">aphis</a><a href="/?q=BUMPH">bumph</a><a href="/?q=CAPHS">caphs</a><a href="/?q=EPHAH">ephah</a><a href="/?q=EPHAS">ephas</a><a href="/?q=EPHOD">ephod</a><a href="/?q=EPHOR">ephor</a><a href="/?q=GLYPH">glyph</a><a href="/?q=GRAPH">graph</a><a href="/?q=PHI">phi</a><a href="/?q=PHT">pht</a><a href="/?q=CAPH">caph</a><a href="/?q=EPHA">epha</a><a href="/?q=KAPH">kaph</a><a href="/?q=KOPH">koph</a><a href="/?q=OUPH">ouph</a><a href="/?q=PHAT">phat</a><a href="/?q=PHEW">phew</a><a href="/?q=PHIS">phis</a><a href="/?q=PHIZ">phiz</a><a href="/?q=PHON">phon</a><a href="/?q=PHOT">phot</a><a href="/?q=PHUT">phut</a><a href="/?q=QOPH">qoph</a><a href="/?q=SOPH">soph</a></div>
+    </section>
+    <section class="letter-block" id="cluster-gh">
+      <h2>Words containing GH</h2>
+      <p>1,515 ENABLE words contain GH in a row. Leave the rack empty and type GH in Must include.</p>
+      <div class="word-cloud"><a href="/?q=AARGH">aargh</a><a href="/?q=AGHAS">aghas</a><a href="/?q=AUGHT">aught</a><a href="/?q=BIGHT">bight</a><a href="/?q=BOUGH">bough</a><a href="/?q=BRUGH">brugh</a><a href="/?q=BURGH">burgh</a><a href="/?q=COUGH">cough</a><a href="/?q=DIGHT">dight</a><a href="/?q=DOUGH">dough</a><a href="/?q=EIGHT">eight</a><a href="/?q=FAUGH">faugh</a><a href="/?q=GHI">ghi</a><a href="/?q=UGH">ugh</a><a href="/?q=AGHA">agha</a><a href="/?q=GHAT">ghat</a><a href="/?q=GHEE">ghee</a><a href="/?q=GHIS">ghis</a><a href="/?q=HIGH">high</a><a href="/?q=NIGH">nigh</a><a href="/?q=PUGH">pugh</a><a href="/?q=SIGH">sigh</a><a href="/?q=SUGH">sugh</a><a href="/?q=UGHS">ughs</a><a href="/?q=VUGH">vugh</a><a href="/?q=YOGH">yogh</a><a href="/?q=AARRGH">aarrgh</a><a href="/?q=AFGHAN">afghan</a></div>
+    </section>
+    <section class="letter-block" id="cluster-qu">
+      <h2>Words containing QU</h2>
+      <p>2,442 ENABLE words contain QU in a row. Leave the rack empty and type QU in Must include.</p>
+      <div class="word-cloud"><a href="/?q=AQUAE">aquae</a><a href="/?q=AQUAS">aquas</a><a href="/?q=EQUAL">equal</a><a href="/?q=EQUID">equid</a><a href="/?q=EQUIP">equip</a><a href="/?q=FIQUE">fique</a><a href="/?q=MAQUI">maqui</a><a href="/?q=PIQUE">pique</a><a href="/?q=QUACK">quack</a><a href="/?q=QUADS">quads</a><a href="/?q=QUAFF">quaff</a><a href="/?q=QUAGS">quags</a><a href="/?q=QUA">qua</a><a href="/?q=AQUA">aqua</a><a href="/?q=QUAD">quad</a><a href="/?q=QUAG">quag</a><a href="/?q=QUAI">quai</a><a href="/?q=QUAY">quay</a><a href="/?q=QUEY">quey</a><a href="/?q=QUID">quid</a><a href="/?q=QUIN">quin</a><a href="/?q=QUIP">quip</a><a href="/?q=QUIT">quit</a><a href="/?q=QUIZ">quiz</a><a href="/?q=QUOD">quod</a><a href="/?q=ACQUIT">acquit</a><a href="/?q=BARQUE">barque</a><a href="/?q=BASQUE">basque</a></div>
+    </section>
+    <section class="letter-block" id="cluster-ck">
+      <h2>Words containing CK</h2>
+      <p>3,818 ENABLE words contain CK in a row. Leave the rack empty and type CK in Must include.</p>
+      <div class="word-cloud"><a href="/?q=ABACK">aback</a><a href="/?q=ACKEE">ackee</a><a href="/?q=ACOCK">acock</a><a href="/?q=ALACK">alack</a><a href="/?q=AMUCK">amuck</a><a href="/?q=BACKS">backs</a><a href="/?q=BECKS">becks</a><a href="/?q=BLACK">black</a><a href="/?q=BLOCK">block</a><a href="/?q=BOCKS">bocks</a><a href="/?q=BRICK">brick</a><a href="/?q=BROCK">brock</a><a href="/?q=ICK">ick</a><a href="/?q=BACK">back</a><a href="/?q=BECK">beck</a><a href="/?q=BOCK">bock</a><a href="/?q=BUCK">buck</a><a href="/?q=COCK">cock</a><a href="/?q=DECK">deck</a><a href="/?q=DICK">dick</a><a href="/?q=DOCK">dock</a><a href="/?q=DUCK">duck</a><a href="/?q=FECK">feck</a><a href="/?q=FUCK">fuck</a><a href="/?q=GECK">geck</a><a href="/?q=GUCK">guck</a><a href="/?q=HACK">hack</a><a href="/?q=HECK">heck</a></div>
+    </section>
+    <section class="letter-block" id="cluster-ing">
+      <h2>Words containing ING</h2>
+      <p>15,044 ENABLE words contain ING in a row. Leave the rack empty and type ING in Must include.</p>
+      <div class="word-cloud"><a href="/?q=ACING">acing</a><a href="/?q=AGING">aging</a><a href="/?q=APING">aping</a><a href="/?q=AWING">awing</a><a href="/?q=AXING">axing</a><a href="/?q=BEING">being</a><a href="/?q=BINGE">binge</a><a href="/?q=BINGO">bingo</a><a href="/?q=BOING">boing</a><a href="/?q=BRING">bring</a><a href="/?q=CLING">cling</a><a href="/?q=CUING">cuing</a><a href="/?q=DING">ding</a><a href="/?q=KING">king</a><a href="/?q=LING">ling</a><a href="/?q=PING">ping</a><a href="/?q=RING">ring</a><a href="/?q=SING">sing</a><a href="/?q=TING">ting</a><a href="/?q=WING">wing</a><a href="/?q=ZING">zing</a><a href="/?q=AAHING">aahing</a><a href="/?q=ABYING">abying</a><a href="/?q=ACHING">aching</a><a href="/?q=ACTING">acting</a><a href="/?q=ADDING">adding</a><a href="/?q=AGEING">ageing</a><a href="/?q=AGINGS">agings</a></div>
+    </section>
+    <section class="letter-block" id="cluster-tion">
+      <h2>Words containing TION</h2>
+      <p>5,414 ENABLE words contain TION in a row. Leave the rack empty and type TION in Must include.</p>
+      <div class="word-cloud"><a href="/?q=ACTION">action</a><a href="/?q=CATION">cation</a><a href="/?q=KATION">kation</a><a href="/?q=LOTION">lotion</a><a href="/?q=MOTION">motion</a><a href="/?q=NATION">nation</a><a href="/?q=NOTION">notion</a><a href="/?q=OPTION">option</a><a href="/?q=POTION">potion</a><a href="/?q=RATION">ration</a><a href="/?q=ACTIONS">actions</a><a href="/?q=ALATION">alation</a><a href="/?q=AMOTION">amotion</a><a href="/?q=AUCTION">auction</a><a href="/?q=BASTION">bastion</a><a href="/?q=CAPTION">caption</a></div>
+    </section>
+    <section class="letter-block" id="cluster-ght">
+      <h2>Words containing GHT</h2>
+      <p>921 ENABLE words contain GHT in a row. Leave the rack empty and type GHT in Must include.</p>
+      <div class="word-cloud"><a href="/?q=AUGHT">aught</a><a href="/?q=BIGHT">bight</a><a href="/?q=DIGHT">dight</a><a href="/?q=EIGHT">eight</a><a href="/?q=FIGHT">fight</a><a href="/?q=HIGHT">hight</a><a href="/?q=LIGHT">light</a><a href="/?q=MIGHT">might</a><a href="/?q=NIGHT">night</a><a href="/?q=OUGHT">ought</a><a href="/?q=RIGHT">right</a><a href="/?q=SIGHT">sight</a><a href="/?q=ALIGHT">alight</a><a href="/?q=ARIGHT">aright</a><a href="/?q=AUGHTS">aughts</a><a href="/?q=BIGHTS">bights</a><a href="/?q=BLIGHT">blight</a><a href="/?q=BOUGHT">bought</a><a href="/?q=BRIGHT">bright</a><a href="/?q=CAUGHT">caught</a><a href="/?q=DIGHTS">dights</a><a href="/?q=DOUGHT">dought</a><a href="/?q=EIGHTH">eighth</a><a href="/?q=EIGHTS">eights</a><a href="/?q=EIGHTY">eighty</a><a href="/?q=FIGHTS">fights</a><a href="/?q=FLIGHT">flight</a><a href="/?q=FOUGHT">fought</a></div>
+    </section>
+    <section class="letter-block" id="cluster-str">
+      <h2>Words containing STR</h2>
+      <p>1,974 ENABLE words contain STR in a row. Leave the rack empty and type STR in Must include.</p>
+      <div class="word-cloud"><a href="/?q=STRAP">strap</a><a href="/?q=STRAW">straw</a><a href="/?q=STRAY">stray</a><a href="/?q=STREP">strep</a><a href="/?q=STREW">strew</a><a href="/?q=STRIA">stria</a><a href="/?q=STRIP">strip</a><a href="/?q=STROP">strop</a><a href="/?q=STROW">strow</a><a href="/?q=STROY">stroy</a><a href="/?q=STRUM">strum</a><a href="/?q=STRUT">strut</a><a href="/?q=ASTRAL">astral</a><a href="/?q=ASTRAY">astray</a><a href="/?q=BISTRE">bistre</a><a href="/?q=BISTRO">bistro</a><a href="/?q=ESTRAL">estral</a><a href="/?q=ESTRAY">estray</a><a href="/?q=ESTRIN">estrin</a><a href="/?q=ESTRUM">estrum</a><a href="/?q=ESTRUS">estrus</a><a href="/?q=LUSTRA">lustra</a><a href="/?q=LUSTRE">lustre</a><a href="/?q=PASTRY">pastry</a><a href="/?q=ROSTRA">rostra</a><a href="/?q=SISTRA">sistra</a><a href="/?q=STRAFE">strafe</a><a href="/?q=STRAIN">strain</a></div>
+    </section>
+    <section class="letter-block" id="cluster-ough">
+      <h2>Words containing OUGH</h2>
+      <p>232 ENABLE words contain OUGH in a row. Leave the rack empty and type OUGH in Must include.</p>
+      <div class="word-cloud"><a href="/?q=BOUGH">bough</a><a href="/?q=COUGH">cough</a><a href="/?q=DOUGH">dough</a><a href="/?q=LOUGH">lough</a><a href="/?q=OUGHT">ought</a><a href="/?q=ROUGH">rough</a><a href="/?q=SOUGH">sough</a><a href="/?q=TOUGH">tough</a><a href="/?q=BOUGHS">boughs</a><a href="/?q=BOUGHT">bought</a><a href="/?q=CHOUGH">chough</a><a href="/?q=CLOUGH">clough</a><a href="/?q=COUGHS">coughs</a><a href="/?q=DOUGHS">doughs</a><a href="/?q=DOUGHT">dought</a><a href="/?q=DOUGHY">doughy</a><a href="/?q=ENOUGH">enough</a><a href="/?q=FOUGHT">fought</a><a href="/?q=LOUGHS">loughs</a><a href="/?q=NOUGHT">nought</a><a href="/?q=OUGHTS">oughts</a><a href="/?q=PLOUGH">plough</a><a href="/?q=ROUGHS">roughs</a><a href="/?q=SLOUGH">slough</a></div>
+    </section>
+  <h2>A–Z letters inside the word</h2>
+  <nav class="az-grid" aria-label="Letters A to Z"><a href="#has-a"><b>A</b><span>90,556</span></a><a href="#has-b"><b>B</b><span>25,760</span></a><a href="#has-c"><b>C</b><span>52,679</span></a><a href="#has-d"><b>D</b><span>45,871</span></a><a href="#has-e"><b>E</b><span>117,357</span></a><a href="#has-f"><b>F</b><span>16,831</span></a><a href="#has-g"><b>G</b><span>37,019</span></a><a href="#has-h"><b>H</b><span>32,086</span></a><a href="#has-i"><b>I</b><span>98,190</span></a><a href="#has-j"><b>J</b><span>2,429</span></a><a href="#has-k"><b>K</b><span>12,605</span></a><a href="#has-l"><b>L</b><span>65,889</span></a><a href="#has-m"><b>M</b><span>38,050</span></a><a href="#has-n"><b>N</b><span>80,728</span></a><a href="#has-o"><b>O</b><span>76,036</span></a><a href="#has-p"><b>P</b><span>38,728</span></a><a href="#has-q"><b>Q</b><span>2,473</span></a><a href="#has-r"><b>R</b><span>87,518</span></a><a href="#has-s"><b>S</b><span>100,424</span></a><a href="#has-t"><b>T</b><span>79,769</span></a><a href="#has-u"><b>U</b><span>44,851</span></a><a href="#has-v"><b>V</b><span>14,191</span></a><a href="#has-w"><b>W</b><span>11,177</span></a><a href="#has-x"><b>X</b><span>4,452</span></a><a href="#has-y"><b>Y</b><span>23,440</span></a><a href="#has-z"><b>Z</b><span>6,628</span></a></nav>
+  <section class="letter-block" id="has-a">
+      <h2>Words containing A</h2>
+      <p>90,556 ENABLE words include A. 30 two-letter. Type A in Must include to list every match.</p>
+      <p class="try-label">2-letter</p><div class="word-cloud"><a href="/?q=AA">aa</a><a href="/?q=AB">ab</a><a href="/?q=AD">ad</a><a href="/?q=AE">ae</a><a href="/?q=AG">ag</a><a href="/?q=AH">ah</a><a href="/?q=AI">ai</a><a href="/?q=AL">al</a><a href="/?q=AM">am</a><a href="/?q=AN">an</a><a href="/?q=AR">ar</a><a href="/?q=AS">as</a><a href="/?q=AT">at</a><a href="/?q=AW">aw</a><a href="/?q=AX">ax</a><a href="/?q=AY">ay</a><a href="/?q=BA">ba</a><a href="/?q=DA">da</a><a href="/?q=EA">ea</a><a href="/?q=FA">fa</a><a href="/?q=HA">ha</a><a href="/?q=JA">ja</a><a href="/?q=KA">ka</a><a href="/?q=LA">la</a><a href="/?q=MA">ma</a><a href="/?q=NA">na</a><a href="/?q=PA">pa</a><a href="/?q=TA">ta</a><a href="/?q=YA">ya</a><a href="/?q=ZA">za</a></div>
+      <p class="try-label">5-letter sample</p><div class="word-cloud"><a href="/?q=AAHED">aahed</a><a href="/?q=AALII">aalii</a><a href="/?q=AARGH">aargh</a><a href="/?q=ABACA">abaca</a><a href="/?q=ABACI">abaci</a><a href="/?q=ABACK">aback</a><a href="/?q=ABAFT">abaft</a><a href="/?q=ABAKA">abaka</a><a href="/?q=ABAMP">abamp</a><a href="/?q=ABASE">abase</a><a href="/?q=ABASH">abash</a><a href="/?q=ABATE">abate</a><a href="/?q=ABBAS">abbas</a><a href="/?q=ABBES">abbes</a><a href="/?q=ABBEY">abbey</a><a href="/?q=ABBOT">abbot</a></div>
+    </section>
+    <section class="letter-block" id="has-b">
+      <h2>Words containing B</h2>
+      <p>25,760 ENABLE words include B. 7 two-letter. Type B in Must include to list every match.</p>
+      <p class="try-label">2-letter</p><div class="word-cloud"><a href="/?q=AB">ab</a><a href="/?q=BA">ba</a><a href="/?q=BE">be</a><a href="/?q=BI">bi</a><a href="/?q=BO">bo</a><a href="/?q=BY">by</a><a href="/?q=OB">ob</a></div>
+      <p class="try-label">5-letter sample</p><div class="word-cloud"><a href="/?q=ABACA">abaca</a><a href="/?q=ABACI">abaci</a><a href="/?q=ABACK">aback</a><a href="/?q=ABAFT">abaft</a><a href="/?q=ABAKA">abaka</a><a href="/?q=ABAMP">abamp</a><a href="/?q=ABASE">abase</a><a href="/?q=ABASH">abash</a><a href="/?q=ABATE">abate</a><a href="/?q=ABBAS">abbas</a><a href="/?q=ABBES">abbes</a><a href="/?q=ABBEY">abbey</a><a href="/?q=ABBOT">abbot</a><a href="/?q=ABEAM">abeam</a><a href="/?q=ABELE">abele</a><a href="/?q=ABETS">abets</a></div>
+    </section>
+    <section class="letter-block" id="has-c">
+      <h2>Words containing C</h2>
+      <p>52,679 ENABLE words include C. 1 two-letter. Type C in Must include to list every match.</p>
+      <p class="try-label">2-letter</p><div class="word-cloud"><a href="/?q=CH">ch</a></div>
+      <p class="try-label">5-letter sample</p><div class="word-cloud"><a href="/?q=ABACA">abaca</a><a href="/?q=ABACI">abaci</a><a href="/?q=ABACK">aback</a><a href="/?q=ACARI">acari</a><a href="/?q=ACERB">acerb</a><a href="/?q=ACETA">aceta</a><a href="/?q=ACHED">ached</a><a href="/?q=ACHES">aches</a><a href="/?q=ACHOO">achoo</a><a href="/?q=ACIDS">acids</a><a href="/?q=ACIDY">acidy</a><a href="/?q=ACING">acing</a><a href="/?q=ACINI">acini</a><a href="/?q=ACKEE">ackee</a><a href="/?q=ACMES">acmes</a><a href="/?q=ACMIC">acmic</a></div>
+    </section>
+    <section class="letter-block" id="has-d">
+      <h2>Words containing D</h2>
+      <p>45,871 ENABLE words include D. 8 two-letter. Type D in Must include to list every match.</p>
+      <p class="try-label">2-letter</p><div class="word-cloud"><a href="/?q=AD">ad</a><a href="/?q=DA">da</a><a href="/?q=DE">de</a><a href="/?q=DI">di</a><a href="/?q=DO">do</a><a href="/?q=ED">ed</a><a href="/?q=ID">id</a><a href="/?q=OD">od</a></div>
+      <p class="try-label">5-letter sample</p><div class="word-cloud"><a href="/?q=AAHED">aahed</a><a href="/?q=ABIDE">abide</a><a href="/?q=ABODE">abode</a><a href="/?q=ACHED">ached</a><a href="/?q=ACIDS">acids</a><a href="/?q=ACIDY">acidy</a><a href="/?q=ACNED">acned</a><a href="/?q=ACOLD">acold</a><a href="/?q=ACRED">acred</a><a href="/?q=ACRID">acrid</a><a href="/?q=ACTED">acted</a><a href="/?q=ADAGE">adage</a><a href="/?q=ADAPT">adapt</a><a href="/?q=ADDAX">addax</a><a href="/?q=ADDED">added</a><a href="/?q=ADDER">adder</a></div>
+    </section>
+    <section class="letter-block" id="has-e">
+      <h2>Words containing E</h2>
+      <p>117,357 ENABLE words include E. 25 two-letter. Type E in Must include to list every match.</p>
+      <p class="try-label">2-letter</p><div class="word-cloud"><a href="/?q=AE">ae</a><a href="/?q=BE">be</a><a href="/?q=DE">de</a><a href="/?q=EA">ea</a><a href="/?q=ED">ed</a><a href="/?q=EE">ee</a><a href="/?q=EF">ef</a><a href="/?q=EH">eh</a><a href="/?q=EL">el</a><a href="/?q=EM">em</a><a href="/?q=EN">en</a><a href="/?q=ER">er</a><a href="/?q=ES">es</a><a href="/?q=ET">et</a><a href="/?q=EX">ex</a><a href="/?q=FE">fe</a><a href="/?q=HE">he</a><a href="/?q=ME">me</a><a href="/?q=NE">ne</a><a href="/?q=OE">oe</a><a href="/?q=PE">pe</a><a href="/?q=RE">re</a><a href="/?q=TE">te</a><a href="/?q=WE">we</a><a href="/?q=YE">ye</a></div>
+      <p class="try-label">5-letter sample</p><div class="word-cloud"><a href="/?q=AAHED">aahed</a><a href="/?q=ABASE">abase</a><a href="/?q=ABATE">abate</a><a href="/?q=ABBES">abbes</a><a href="/?q=ABBEY">abbey</a><a href="/?q=ABEAM">abeam</a><a href="/?q=ABELE">abele</a><a href="/?q=ABETS">abets</a><a href="/?q=ABIDE">abide</a><a href="/?q=ABLER">abler</a><a href="/?q=ABLES">ables</a><a href="/?q=ABODE">abode</a><a href="/?q=ABOVE">above</a><a href="/?q=ABUSE">abuse</a><a href="/?q=ABYES">abyes</a><a href="/?q=ACERB">acerb</a></div>
+    </section>
+    <section class="letter-block" id="has-f">
+      <h2>Words containing F</h2>
+      <p>16,831 ENABLE words include F. 6 two-letter. Type F in Must include to list every match.</p>
+      <p class="try-label">2-letter</p><div class="word-cloud"><a href="/?q=EF">ef</a><a href="/?q=FA">fa</a><a href="/?q=FE">fe</a><a href="/?q=FY">fy</a><a href="/?q=IF">if</a><a href="/?q=OF">of</a></div>
+      <p class="try-label">5-letter sample</p><div class="word-cloud"><a href="/?q=ABAFT">abaft</a><a href="/?q=AFARS">afars</a><a href="/?q=AFFIX">affix</a><a href="/?q=AFIRE">afire</a><a href="/?q=AFOOT">afoot</a><a href="/?q=AFORE">afore</a><a href="/?q=AFOUL">afoul</a><a href="/?q=AFRIT">afrit</a><a href="/?q=AFTER">after</a><a href="/?q=ALEFS">alefs</a><a href="/?q=ALFAS">alfas</a><a href="/?q=ALIFS">alifs</a><a href="/?q=ALOFT">aloft</a><a href="/?q=ALOOF">aloof</a><a href="/?q=AWFUL">awful</a><a href="/?q=BAFFS">baffs</a></div>
+    </section>
+    <section class="letter-block" id="has-g">
+      <h2>Words containing G</h2>
+      <p>37,019 ENABLE words include G. 5 two-letter. Type G in Must include to list every match.</p>
+      <p class="try-label">2-letter</p><div class="word-cloud"><a href="/?q=AG">ag</a><a href="/?q=GI">gi</a><a href="/?q=GO">go</a><a href="/?q=GU">gu</a><a href="/?q=UG">ug</a></div>
+      <p class="try-label">5-letter sample</p><div class="word-cloud"><a href="/?q=AARGH">aargh</a><a href="/?q=ACING">acing</a><a href="/?q=ADAGE">adage</a><a href="/?q=AEGIS">aegis</a><a href="/?q=AGAIN">again</a><a href="/?q=AGAMA">agama</a><a href="/?q=AGAPE">agape</a><a href="/?q=AGARS">agars</a><a href="/?q=AGATE">agate</a><a href="/?q=AGAVE">agave</a><a href="/?q=AGAZE">agaze</a><a href="/?q=AGENE">agene</a><a href="/?q=AGENT">agent</a><a href="/?q=AGERS">agers</a><a href="/?q=AGGER">agger</a><a href="/?q=AGGIE">aggie</a></div>
+    </section>
+    <section class="letter-block" id="has-h">
+      <h2>Words containing H</h2>
+      <p>32,086 ENABLE words include H. 11 two-letter. Type H in Must include to list every match.</p>
+      <p class="try-label">2-letter</p><div class="word-cloud"><a href="/?q=AH">ah</a><a href="/?q=CH">ch</a><a href="/?q=EH">eh</a><a href="/?q=HA">ha</a><a href="/?q=HE">he</a><a href="/?q=HI">hi</a><a href="/?q=HM">hm</a><a href="/?q=HO">ho</a><a href="/?q=OH">oh</a><a href="/?q=SH">sh</a><a href="/?q=UH">uh</a></div>
+      <p class="try-label">5-letter sample</p><div class="word-cloud"><a href="/?q=AAHED">aahed</a><a href="/?q=AARGH">aargh</a><a href="/?q=ABASH">abash</a><a href="/?q=ABHOR">abhor</a><a href="/?q=ABMHO">abmho</a><a href="/?q=ABOHM">abohm</a><a href="/?q=ACHED">ached</a><a href="/?q=ACHES">aches</a><a href="/?q=ACHOO">achoo</a><a href="/?q=AGHAS">aghas</a><a href="/?q=AHEAD">ahead</a><a href="/?q=AHOLD">ahold</a><a href="/?q=AHULL">ahull</a><a href="/?q=AIRTH">airth</a><a href="/?q=AITCH">aitch</a><a href="/?q=ALEPH">aleph</a></div>
+    </section>
+    <section class="letter-block" id="has-i">
+      <h2>Words containing I</h2>
+      <p>98,190 ENABLE words include I. 20 two-letter. Type I in Must include to list every match.</p>
+      <p class="try-label">2-letter</p><div class="word-cloud"><a href="/?q=AI">ai</a><a href="/?q=BI">bi</a><a href="/?q=DI">di</a><a href="/?q=GI">gi</a><a href="/?q=HI">hi</a><a href="/?q=ID">id</a><a href="/?q=IF">if</a><a href="/?q=IN">in</a><a href="/?q=IO">io</a><a href="/?q=IS">is</a><a href="/?q=IT">it</a><a href="/?q=KI">ki</a><a href="/?q=LI">li</a><a href="/?q=MI">mi</a><a href="/?q=OI">oi</a><a href="/?q=PI">pi</a><a href="/?q=QI">qi</a><a href="/?q=SI">si</a><a href="/?q=TI">ti</a><a href="/?q=XI">xi</a></div>
+      <p class="try-label">5-letter sample</p><div class="word-cloud"><a href="/?q=AALII">aalii</a><a href="/?q=ABACI">abaci</a><a href="/?q=ABIDE">abide</a><a href="/?q=ABOIL">aboil</a><a href="/?q=ABRIS">abris</a><a href="/?q=ACARI">acari</a><a href="/?q=ACIDS">acids</a><a href="/?q=ACIDY">acidy</a><a href="/?q=ACING">acing</a><a href="/?q=ACINI">acini</a><a href="/?q=ACMIC">acmic</a><a href="/?q=ACRID">acrid</a><a href="/?q=ACTIN">actin</a><a href="/?q=ADIEU">adieu</a><a href="/?q=ADIOS">adios</a><a href="/?q=ADITS">adits</a></div>
+    </section>
+    <section class="letter-block" id="has-j">
+      <h2>Words containing J</h2>
+      <p>2,429 ENABLE words include J. 2 two-letter. Type J in Must include to list every match.</p>
+      <p class="try-label">2-letter</p><div class="word-cloud"><a href="/?q=JA">ja</a><a href="/?q=JO">jo</a></div>
+      <p class="try-label">5-letter sample</p><div class="word-cloud"><a href="/?q=AJIVA">ajiva</a><a href="/?q=AJUGA">ajuga</a><a href="/?q=BANJO">banjo</a><a href="/?q=BIJOU">bijou</a><a href="/?q=CAJON">cajon</a><a href="/?q=DJINN">djinn</a><a href="/?q=DJINS">djins</a><a href="/?q=DOJOS">dojos</a><a href="/?q=EJECT">eject</a><a href="/?q=ENJOY">enjoy</a><a href="/?q=FJELD">fjeld</a><a href="/?q=FJORD">fjord</a><a href="/?q=FUJIS">fujis</a><a href="/?q=GANJA">ganja</a><a href="/?q=HADJI">hadji</a><a href="/?q=HAJES">hajes</a></div>
+    </section>
+    <section class="letter-block" id="has-k">
+      <h2>Words containing K</h2>
+      <p>12,605 ENABLE words include K. 5 two-letter. Type K in Must include to list every match.</p>
+      <p class="try-label">2-letter</p><div class="word-cloud"><a href="/?q=KA">ka</a><a href="/?q=KI">ki</a><a href="/?q=KO">ko</a><a href="/?q=KY">ky</a><a href="/?q=OK">ok</a></div>
+      <p class="try-label">5-letter sample</p><div class="word-cloud"><a href="/?q=ABACK">aback</a><a href="/?q=ABAKA">abaka</a><a href="/?q=ACKEE">ackee</a><a href="/?q=ACOCK">acock</a><a href="/?q=AKEES">akees</a><a href="/?q=AKELA">akela</a><a href="/?q=AKENE">akene</a><a href="/?q=ALACK">alack</a><a href="/?q=ALIKE">alike</a><a href="/?q=ALKYD">alkyd</a><a href="/?q=ALKYL">alkyl</a><a href="/?q=AMOKS">amoks</a><a href="/?q=AMUCK">amuck</a><a href="/?q=ANKHS">ankhs</a><a href="/?q=ANKLE">ankle</a><a href="/?q=ANKUS">ankus</a></div>
+    </section>
+    <section class="letter-block" id="has-l">
+      <h2>Words containing L</h2>
+      <p>65,889 ENABLE words include L. 5 two-letter. Type L in Must include to list every match.</p>
+      <p class="try-label">2-letter</p><div class="word-cloud"><a href="/?q=AL">al</a><a href="/?q=EL">el</a><a href="/?q=LA">la</a><a href="/?q=LI">li</a><a href="/?q=LO">lo</a></div>
+      <p class="try-label">5-letter sample</p><div class="word-cloud"><a href="/?q=AALII">aalii</a><a href="/?q=ABELE">abele</a><a href="/?q=ABLER">abler</a><a href="/?q=ABLES">ables</a><a href="/?q=ABOIL">aboil</a><a href="/?q=ACOLD">acold</a><a href="/?q=ACYLS">acyls</a><a href="/?q=ADDLE">addle</a><a href="/?q=ADULT">adult</a><a href="/?q=AFOUL">afoul</a><a href="/?q=AGILE">agile</a><a href="/?q=AGLEE">aglee</a><a href="/?q=AGLET">aglet</a><a href="/?q=AGLEY">agley</a><a href="/?q=AGLOW">aglow</a><a href="/?q=AHOLD">ahold</a></div>
+    </section>
+    <section class="letter-block" id="has-m">
+      <h2>Words containing M</h2>
+      <p>38,050 ENABLE words include M. 12 two-letter. Type M in Must include to list every match.</p>
+      <p class="try-label">2-letter</p><div class="word-cloud"><a href="/?q=AM">am</a><a href="/?q=EM">em</a><a href="/?q=HM">hm</a><a href="/?q=MA">ma</a><a href="/?q=ME">me</a><a href="/?q=MI">mi</a><a href="/?q=MM">mm</a><a href="/?q=MO">mo</a><a href="/?q=MU">mu</a><a href="/?q=MY">my</a><a href="/?q=OM">om</a><a href="/?q=UM">um</a></div>
+      <p class="try-label">5-letter sample</p><div class="word-cloud"><a href="/?q=ABAMP">abamp</a><a href="/?q=ABEAM">abeam</a><a href="/?q=ABMHO">abmho</a><a href="/?q=ABOHM">abohm</a><a href="/?q=ABOMA">aboma</a><a href="/?q=ABYSM">abysm</a><a href="/?q=ACMES">acmes</a><a href="/?q=ACMIC">acmic</a><a href="/?q=ADEEM">adeem</a><a href="/?q=ADMAN">adman</a><a href="/?q=ADMEN">admen</a><a href="/?q=ADMIT">admit</a><a href="/?q=ADMIX">admix</a><a href="/?q=AGAMA">agama</a><a href="/?q=AGISM">agism</a><a href="/?q=AGMAS">agmas</a></div>
+    </section>
+    <section class="letter-block" id="has-n">
+      <h2>Words containing N</h2>
+      <p>80,728 ENABLE words include N. 10 two-letter. Type N in Must include to list every match.</p>
+      <p class="try-label">2-letter</p><div class="word-cloud"><a href="/?q=AN">an</a><a href="/?q=EN">en</a><a href="/?q=IN">in</a><a href="/?q=NA">na</a><a href="/?q=NE">ne</a><a href="/?q=NO">no</a><a href="/?q=NU">nu</a><a href="/?q=NY">ny</a><a href="/?q=ON">on</a><a href="/?q=UN">un</a></div>
+      <p class="try-label">5-letter sample</p><div class="word-cloud"><a href="/?q=ABOON">aboon</a><a href="/?q=ACING">acing</a><a href="/?q=ACINI">acini</a><a href="/?q=ACNED">acned</a><a href="/?q=ACNES">acnes</a><a href="/?q=ACORN">acorn</a><a href="/?q=ACTIN">actin</a><a href="/?q=ADMAN">adman</a><a href="/?q=ADMEN">admen</a><a href="/?q=ADORN">adorn</a><a href="/?q=ADOWN">adown</a><a href="/?q=ADUNC">adunc</a><a href="/?q=AEONS">aeons</a><a href="/?q=AGAIN">again</a><a href="/?q=AGENE">agene</a><a href="/?q=AGENT">agent</a></div>
+    </section>
+    <section class="letter-block" id="has-o">
+      <h2>Words containing O</h2>
+      <p>76,036 ENABLE words include O. 32 two-letter. Type O in Must include to list every match.</p>
+      <p class="try-label">2-letter</p><div class="word-cloud"><a href="/?q=BO">bo</a><a href="/?q=DO">do</a><a href="/?q=GO">go</a><a href="/?q=HO">ho</a><a href="/?q=IO">io</a><a href="/?q=JO">jo</a><a href="/?q=KO">ko</a><a href="/?q=LO">lo</a><a href="/?q=MO">mo</a><a href="/?q=NO">no</a><a href="/?q=OB">ob</a><a href="/?q=OD">od</a><a href="/?q=OE">oe</a><a href="/?q=OF">of</a><a href="/?q=OH">oh</a><a href="/?q=OI">oi</a><a href="/?q=OK">ok</a><a href="/?q=OM">om</a><a href="/?q=ON">on</a><a href="/?q=OO">oo</a><a href="/?q=OP">op</a><a href="/?q=OR">or</a><a href="/?q=OS">os</a><a href="/?q=OU">ou</a><a href="/?q=OW">ow</a><a href="/?q=OX">ox</a><a href="/?q=OY">oy</a><a href="/?q=PO">po</a><a href="/?q=SO">so</a><a href="/?q=TO">to</a><a href="/?q=WO">wo</a><a href="/?q=YO">yo</a></div>
+      <p class="try-label">5-letter sample</p><div class="word-cloud"><a href="/?q=ABBOT">abbot</a><a href="/?q=ABHOR">abhor</a><a href="/?q=ABMHO">abmho</a><a href="/?q=ABODE">abode</a><a href="/?q=ABOHM">abohm</a><a href="/?q=ABOIL">aboil</a><a href="/?q=ABOMA">aboma</a><a href="/?q=ABOON">aboon</a><a href="/?q=ABORT">abort</a><a href="/?q=ABOUT">about</a><a href="/?q=ABOVE">above</a><a href="/?q=ACHOO">achoo</a><a href="/?q=ACOCK">acock</a><a href="/?q=ACOLD">acold</a><a href="/?q=ACORN">acorn</a><a href="/?q=ACTOR">actor</a></div>
+    </section>
+    <section class="letter-block" id="has-p">
+      <h2>Words containing P</h2>
+      <p>38,728 ENABLE words include P. 6 two-letter. Type P in Must include to list every match.</p>
+      <p class="try-label">2-letter</p><div class="word-cloud"><a href="/?q=OP">op</a><a href="/?q=PA">pa</a><a href="/?q=PE">pe</a><a href="/?q=PI">pi</a><a href="/?q=PO">po</a><a href="/?q=UP">up</a></div>
+      <p class="try-label">5-letter sample</p><div class="word-cloud"><a href="/?q=ABAMP">abamp</a><a href="/?q=ADAPT">adapt</a><a href="/?q=ADEPT">adept</a><a href="/?q=ADOPT">adopt</a><a href="/?q=AGAPE">agape</a><a href="/?q=ALEPH">aleph</a><a href="/?q=ALPHA">alpha</a><a href="/?q=AMPLE">ample</a><a href="/?q=AMPLY">amply</a><a href="/?q=AMPUL">ampul</a><a href="/?q=APACE">apace</a><a href="/?q=APART">apart</a><a href="/?q=APEAK">apeak</a><a href="/?q=APEEK">apeek</a><a href="/?q=APERS">apers</a><a href="/?q=APERY">apery</a></div>
+    </section>
+    <section class="letter-block" id="has-q">
+      <h2>Words containing Q</h2>
+      <p>2,473 ENABLE words include Q. 1 two-letter. Type Q in Must include to list every match.</p>
+      <p class="try-label">2-letter</p><div class="word-cloud"><a href="/?q=QI">qi</a></div>
+      <p class="try-label">5-letter sample</p><div class="word-cloud"><a href="/?q=AQUAE">aquae</a><a href="/?q=AQUAS">aquas</a><a href="/?q=EQUAL">equal</a><a href="/?q=EQUID">equid</a><a href="/?q=EQUIP">equip</a><a href="/?q=FAQIR">faqir</a><a href="/?q=FIQUE">fique</a><a href="/?q=MAQUI">maqui</a><a href="/?q=PIQUE">pique</a><a href="/?q=QAIDS">qaids</a><a href="/?q=QANAT">qanat</a><a href="/?q=QOPHS">qophs</a><a href="/?q=QUACK">quack</a><a href="/?q=QUADS">quads</a><a href="/?q=QUAFF">quaff</a><a href="/?q=QUAGS">quags</a></div>
+    </section>
+    <section class="letter-block" id="has-r">
+      <h2>Words containing R</h2>
+      <p>87,518 ENABLE words include R. 5 two-letter. Type R in Must include to list every match.</p>
+      <p class="try-label">2-letter</p><div class="word-cloud"><a href="/?q=AR">ar</a><a href="/?q=ER">er</a><a href="/?q=OR">or</a><a href="/?q=RE">re</a><a href="/?q=UR">ur</a></div>
+      <p class="try-label">5-letter sample</p><div class="word-cloud"><a href="/?q=AARGH">aargh</a><a href="/?q=ABHOR">abhor</a><a href="/?q=ABLER">abler</a><a href="/?q=ABORT">abort</a><a href="/?q=ABRIS">abris</a><a href="/?q=ACARI">acari</a><a href="/?q=ACERB">acerb</a><a href="/?q=ACORN">acorn</a><a href="/?q=ACRED">acred</a><a href="/?q=ACRES">acres</a><a href="/?q=ACRID">acrid</a><a href="/?q=ACTOR">actor</a><a href="/?q=ADDER">adder</a><a href="/?q=ADORE">adore</a><a href="/?q=ADORN">adorn</a><a href="/?q=AERIE">aerie</a></div>
+    </section>
+    <section class="letter-block" id="has-s">
+      <h2>Words containing S</h2>
+      <p>100,424 ENABLE words include S. 9 two-letter. Type S in Must include to list every match.</p>
+      <p class="try-label">2-letter</p><div class="word-cloud"><a href="/?q=AS">as</a><a href="/?q=ES">es</a><a href="/?q=IS">is</a><a href="/?q=OS">os</a><a href="/?q=SH">sh</a><a href="/?q=SI">si</a><a href="/?q=SO">so</a><a href="/?q=ST">st</a><a href="/?q=US">us</a></div>
+      <p class="try-label">5-letter sample</p><div class="word-cloud"><a href="/?q=ABASE">abase</a><a href="/?q=ABASH">abash</a><a href="/?q=ABBAS">abbas</a><a href="/?q=ABBES">abbes</a><a href="/?q=ABETS">abets</a><a href="/?q=ABLES">ables</a><a href="/?q=ABRIS">abris</a><a href="/?q=ABUSE">abuse</a><a href="/?q=ABUTS">abuts</a><a href="/?q=ABYES">abyes</a><a href="/?q=ABYSM">abysm</a><a href="/?q=ABYSS">abyss</a><a href="/?q=ACHES">aches</a><a href="/?q=ACIDS">acids</a><a href="/?q=ACMES">acmes</a><a href="/?q=ACNES">acnes</a></div>
+    </section>
+    <section class="letter-block" id="has-t">
+      <h2>Words containing T</h2>
+      <p>79,769 ENABLE words include T. 9 two-letter. Type T in Must include to list every match.</p>
+      <p class="try-label">2-letter</p><div class="word-cloud"><a href="/?q=AT">at</a><a href="/?q=ET">et</a><a href="/?q=IT">it</a><a href="/?q=ST">st</a><a href="/?q=TA">ta</a><a href="/?q=TE">te</a><a href="/?q=TI">ti</a><a href="/?q=TO">to</a><a href="/?q=UT">ut</a></div>
+      <p class="try-label">5-letter sample</p><div class="word-cloud"><a href="/?q=ABAFT">abaft</a><a href="/?q=ABATE">abate</a><a href="/?q=ABBOT">abbot</a><a href="/?q=ABETS">abets</a><a href="/?q=ABORT">abort</a><a href="/?q=ABOUT">about</a><a href="/?q=ABUTS">abuts</a><a href="/?q=ACETA">aceta</a><a href="/?q=ACTED">acted</a><a href="/?q=ACTIN">actin</a><a href="/?q=ACTOR">actor</a><a href="/?q=ACUTE">acute</a><a href="/?q=ADAPT">adapt</a><a href="/?q=ADEPT">adept</a><a href="/?q=ADITS">adits</a><a href="/?q=ADMIT">admit</a></div>
+    </section>
+    <section class="letter-block" id="has-u">
+      <h2>Words containing U</h2>
+      <p>44,851 ENABLE words include U. 14 two-letter. Type U in Must include to list every match.</p>
+      <p class="try-label">2-letter</p><div class="word-cloud"><a href="/?q=GU">gu</a><a href="/?q=MU">mu</a><a href="/?q=NU">nu</a><a href="/?q=OU">ou</a><a href="/?q=UG">ug</a><a href="/?q=UH">uh</a><a href="/?q=UM">um</a><a href="/?q=UN">un</a><a href="/?q=UP">up</a><a href="/?q=UR">ur</a><a href="/?q=US">us</a><a href="/?q=UT">ut</a><a href="/?q=XU">xu</a><a href="/?q=YU">yu</a></div>
+      <p class="try-label">5-letter sample</p><div class="word-cloud"><a href="/?q=ABOUT">about</a><a href="/?q=ABUSE">abuse</a><a href="/?q=ABUTS">abuts</a><a href="/?q=ABUZZ">abuzz</a><a href="/?q=ACUTE">acute</a><a href="/?q=ADIEU">adieu</a><a href="/?q=ADULT">adult</a><a href="/?q=ADUNC">adunc</a><a href="/?q=ADUST">adust</a><a href="/?q=AFOUL">afoul</a><a href="/?q=AGUES">agues</a><a href="/?q=AHULL">ahull</a><a href="/?q=AJUGA">ajuga</a><a href="/?q=ALBUM">album</a><a href="/?q=ALGUM">algum</a><a href="/?q=ALMUD">almud</a></div>
+    </section>
+    <section class="letter-block" id="has-v">
+      <h2>Words containing V</h2>
+      <p>14,191 ENABLE words include V. No two-letter words. Type V in Must include to list every match.</p>
+      
+      <p class="try-label">5-letter sample</p><div class="word-cloud"><a href="/?q=ABOVE">above</a><a href="/?q=AGAVE">agave</a><a href="/?q=AIVER">aiver</a><a href="/?q=AJIVA">ajiva</a><a href="/?q=ALIVE">alive</a><a href="/?q=ANVIL">anvil</a><a href="/?q=ARVAL">arval</a><a href="/?q=ARVOS">arvos</a><a href="/?q=AVAIL">avail</a><a href="/?q=AVANT">avant</a><a href="/?q=AVAST">avast</a><a href="/?q=AVENS">avens</a><a href="/?q=AVERS">avers</a><a href="/?q=AVERT">avert</a><a href="/?q=AVGAS">avgas</a><a href="/?q=AVIAN">avian</a></div>
+    </section>
+    <section class="letter-block" id="has-w">
+      <h2>Words containing W</h2>
+      <p>11,177 ENABLE words include W. 4 two-letter. Type W in Must include to list every match.</p>
+      <p class="try-label">2-letter</p><div class="word-cloud"><a href="/?q=AW">aw</a><a href="/?q=OW">ow</a><a href="/?q=WE">we</a><a href="/?q=WO">wo</a></div>
+      <p class="try-label">5-letter sample</p><div class="word-cloud"><a href="/?q=ADOWN">adown</a><a href="/?q=AGLOW">aglow</a><a href="/?q=ALLOW">allow</a><a href="/?q=ALWAY">alway</a><a href="/?q=ARROW">arrow</a><a href="/?q=ASKEW">askew</a><a href="/?q=AVOWS">avows</a><a href="/?q=AWAIT">await</a><a href="/?q=AWAKE">awake</a><a href="/?q=AWARD">award</a><a href="/?q=AWARE">aware</a><a href="/?q=AWASH">awash</a><a href="/?q=AWFUL">awful</a><a href="/?q=AWING">awing</a><a href="/?q=AWNED">awned</a><a href="/?q=AWOKE">awoke</a></div>
+    </section>
+    <section class="letter-block" id="has-x">
+      <h2>Words containing X</h2>
+      <p>4,452 ENABLE words include X. 5 two-letter. Type X in Must include to list every match.</p>
+      <p class="try-label">2-letter</p><div class="word-cloud"><a href="/?q=AX">ax</a><a href="/?q=EX">ex</a><a href="/?q=OX">ox</a><a href="/?q=XI">xi</a><a href="/?q=XU">xu</a></div>
+      <p class="try-label">5-letter sample</p><div class="word-cloud"><a href="/?q=ADDAX">addax</a><a href="/?q=ADMIX">admix</a><a href="/?q=AFFIX">affix</a><a href="/?q=ANNEX">annex</a><a href="/?q=ATAXY">ataxy</a><a href="/?q=AUXIN">auxin</a><a href="/?q=AXELS">axels</a><a href="/?q=AXIAL">axial</a><a href="/?q=AXILE">axile</a><a href="/?q=AXILS">axils</a><a href="/?q=AXING">axing</a><a href="/?q=AXIOM">axiom</a><a href="/?q=AXION">axion</a><a href="/?q=AXITE">axite</a><a href="/?q=AXLED">axled</a><a href="/?q=AXLES">axles</a></div>
+    </section>
+    <section class="letter-block" id="has-y">
+      <h2>Words containing Y</h2>
+      <p>23,440 ENABLE words include Y. 11 two-letter. Type Y in Must include to list every match.</p>
+      <p class="try-label">2-letter</p><div class="word-cloud"><a href="/?q=AY">ay</a><a href="/?q=BY">by</a><a href="/?q=FY">fy</a><a href="/?q=KY">ky</a><a href="/?q=MY">my</a><a href="/?q=NY">ny</a><a href="/?q=OY">oy</a><a href="/?q=YA">ya</a><a href="/?q=YE">ye</a><a href="/?q=YO">yo</a><a href="/?q=YU">yu</a></div>
+      <p class="try-label">5-letter sample</p><div class="word-cloud"><a href="/?q=ABBEY">abbey</a><a href="/?q=ABYES">abyes</a><a href="/?q=ABYSM">abysm</a><a href="/?q=ABYSS">abyss</a><a href="/?q=ACIDY">acidy</a><a href="/?q=ACYLS">acyls</a><a href="/?q=ADYTA">adyta</a><a href="/?q=AGLEY">agley</a><a href="/?q=AGONY">agony</a><a href="/?q=ALARY">alary</a><a href="/?q=ALIYA">aliya</a><a href="/?q=ALKYD">alkyd</a><a href="/?q=ALKYL">alkyl</a><a href="/?q=ALLAY">allay</a><a href="/?q=ALLEY">alley</a><a href="/?q=ALLOY">alloy</a></div>
+    </section>
+    <section class="letter-block" id="has-z">
+      <h2>Words containing Z</h2>
+      <p>6,628 ENABLE words include Z. 1 two-letter. Type Z in Must include to list every match.</p>
+      <p class="try-label">2-letter</p><div class="word-cloud"><a href="/?q=ZA">za</a></div>
+      <p class="try-label">5-letter sample</p><div class="word-cloud"><a href="/?q=ABUZZ">abuzz</a><a href="/?q=ADOZE">adoze</a><a href="/?q=ADZES">adzes</a><a href="/?q=AGAZE">agaze</a><a href="/?q=AMAZE">amaze</a><a href="/?q=AZANS">azans</a><a href="/?q=AZIDE">azide</a><a href="/?q=AZIDO">azido</a><a href="/?q=AZINE">azine</a><a href="/?q=AZLON">azlon</a><a href="/?q=AZOIC">azoic</a><a href="/?q=AZOLE">azole</a><a href="/?q=AZONS">azons</a><a href="/?q=AZOTE">azote</a><a href="/?q=AZOTH">azoth</a><a href="/?q=AZURE">azure</a></div>
+    </section>
+  <section class="prose faq" id="faq">
+    <h2>FAQ</h2>
+    <details open>
+      <summary>What does “words containing” mean?</summary>
+      <p>A word that has those letters in a row, anywhere inside it. FINGER contains ING; OTHER contains TH. It is not the same as “must include these tiles in any order” on the unscrambler — this hub matches the cluster as a substring.</p>
+    </details>
+    <details>
+      <summary>How many English words contain Q?</summary>
+      <p>2,473 ENABLE words contain Q. Most of them also have a U. The dump list is on <a href="/q-without-u">Q without U</a>.</p>
+    </details>
+    <details>
+      <summary>How is this different from words starting or ending with?</summary>
+      <p><a href="/words-starting-with">Starting with</a> is a prefix. <a href="/words-ending-with">Ending with</a> is a suffix. Containing finds the letters in the middle too — useful for crossword fragments and Wordle yellows that sit together.</p>
+    </details>
+    <details>
+      <summary>Can I search without a rack?</summary>
+      <p>Yes. Leave Letters empty and type a letter or cluster (TH, QU, ING) in Must include. Pick a length if the list is huge.</p>
+    </details>
+  </section>
+  <div class="related">
+    <a class="card" href="/"><h3>Word unscrambler</h3><p>Make every word from a rack, including shorter plays.</p></a>
+    <a class="card" href="/word-checker"><h3>Word checker</h3><p>Is this a valid ENABLE word? Scores and hooks.</p></a>
+    <a class="card" href="/words-starting-with"><h3>Words starting with</h3><p>A–Z prefixes. No rack required.</p></a>
+    <a class="card" href="/words-ending-with"><h3>Words ending with</h3><p>Suffixes such as ING, TION, NESS.</p></a>
+    <a class="card" href="/words-containing"><h3>Words containing</h3><p>TH, QU, ING and A–Z letter lists.</p></a>
+    <a class="card" href="/word-descrambler"><h3>Word descrambler</h3><p>Descramble mixed-up letters into words.</p></a>
+    <a class="card" href="/5-letter-words-starting-with"><h3>5-letter starting with</h3><p>Wordle-length lists by first letter.</p></a>
+    <a class="card" href="/word-lists"><h3>All word lists</h3><p>2–8 letters, Q without U, bingo stems.</p></a>
+  </div>
+      <aside class="ad-region" aria-label="Advertisement">
+      <p class="ad-label">Advertisement</p>
+      <div class="ad-box">
+        <ins class="adsbygoogle"
+             style="display:block;min-height:280px"
+             data-ad-client="ca-pub-2666058844257008"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+      </div>
+    </aside>
+</main>
+<footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div>
+        <p class="footer-head">Tools</p>
+        <a href="/">Word unscrambler</a>
+        <a href="/anagram-solver">Anagram solver</a>
+        <a href="/scrabble-word-finder">Scrabble word finder</a>
+        <a href="/words-with-friends">Words With Friends</a>
+        <a href="/wordle-helper">Wordle helper</a>
+        <a href="/jumble-solver">Jumble solver</a>
+        <a href="/crossword-solver">Crossword solver</a>
+        <a href="/words-from-letters">Words from letters</a>
+        <a href="/word-checker">Word checker</a>
+        <a href="/word-descrambler">Word descrambler</a>
+      </div>
+      <div>
+        <p class="footer-head">Word lists</p>
+        <a href="/2-letter-words">2-letter words</a>
+        <a href="/3-letter-words">3-letter words</a>
+        <a href="/4-letter-words">4-letter words</a>
+        <a href="/5-letter-words">5-letter words</a>
+        <a href="/5-letter-words-starting-with">5-letter starting with</a>
+        <a href="/6-letter-words">6-letter words</a>
+        <a href="/7-letter-words">7-letter words</a>
+        <a href="/8-letter-words">8-letter words</a>
+        <a href="/9-letter-words">9-letter words</a>
+        <a href="/10-letter-words">10-letter words</a>
+        <a href="/words-starting-with">Words starting with</a>
+        <a href="/words-ending-with">Words ending with</a>
+        <a href="/words-containing">Words containing</a>
+        <a href="/q-without-u">Q without U</a>
+        <a href="/jqxz-words">J, Q, X and Z words</a>
+        <a href="/bingo-stems">Bingo stems</a>
+      </div>
+      <div>
+        <p class="footer-head">Site</p>
+        <a href="/how-it-works">How it works</a>
+        <a href="/about">About</a>
+        <a href="/feedback">Feedback</a>
+        <a href="/contact">Contact</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+      </div>
+    </div>
+    <div class="wrap legal-line">
+      <p>© 2026 Word Unscrambler. ENABLE dictionary. Not affiliated with Hasbro, Mattel, Zynga or The New York Times.</p>
+      <p>United Kingdom</p>
+    </div>
+  </footer>
+  <script>
+    (function(){
+      var KEY = "wu_consent";
+      function apply(v){
+        if (typeof gtag !== "function") return;
+        gtag("consent", "update", {
+          analytics_storage: v === "granted" ? "granted" : "denied",
+          ad_storage: "denied",
+          ad_user_data: "denied",
+          ad_personalization: "denied"
+        });
+        if (v === "granted") {
+          gtag("event", "page_view", { page_location: location.href, page_title: document.title });
+        }
+      }
+      try {
+        var saved = localStorage.getItem(KEY);
+        if (saved) { apply(saved); return; }
+      } catch (e) {}
+      var bar = document.createElement("div");
+      bar.className = "consent";
+      bar.setAttribute("role", "dialog");
+      bar.setAttribute("aria-label", "Cookie choices");
+      bar.innerHTML = '<p>We use optional analytics cookies (Google Analytics) to see which tools people use. Your letters stay in this browser. <a href="/privacy">Privacy</a></p><div class="consent-actions"><button type="button" data-c="granted">Accept</button><button type="button" class="ghost" data-c="denied">Reject</button></div>';
+      document.body.appendChild(bar);
+      bar.addEventListener("click", function(e){
+        var b = e.target.closest("button[data-c]");
+        if (!b) return;
+        var v = b.getAttribute("data-c");
+        try { localStorage.setItem(KEY, v); } catch (err) {}
+        apply(v);
+        bar.remove();
+      });
+    })();
+  </script>
+</body>
+</html>

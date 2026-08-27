@@ -123,6 +123,12 @@
     return Boolean(lettersEl.value.trim() || mode === "wordle" || mode === "check" || hasFilters(filterValues()));
   }
 
+  function matchesContains(word, contains) {
+    if (!contains) return true;
+    if (document.body.dataset.hub === "contains") return word.includes(contains);
+    return [...contains].every((c) => word.includes(c));
+  }
+
   function filterLabel(f) {
     const bits = [];
     if (f.starts) bits.push("starting with " + f.starts.toUpperCase());
@@ -307,7 +313,7 @@
         if (!matchesPattern(word, pat)) continue;
         if (starts && !word.startsWith(starts)) continue;
         if (ends && !word.endsWith(ends)) continue;
-        if (contains && ![...contains].every((c) => word.includes(c))) continue;
+        if (contains && !matchesContains(word, contains)) continue;
         if (exclude && [...exclude].some((c) => word.includes(c))) continue;
           matches.push({ word, len: word.length, score: scoreWord(word) });
       }
@@ -317,7 +323,7 @@
       for (const word of list) {
         if (starts && !word.startsWith(starts)) continue;
         if (ends && !word.endsWith(ends)) continue;
-        if (contains && ![...contains].every((c) => word.includes(c))) continue;
+        if (contains && !matchesContains(word, contains)) continue;
         if (exclude && [...exclude].some((c) => word.includes(c))) continue;
         matches.push({ word, len: word.length, score: scoreWord(word) });
       }
@@ -333,7 +339,7 @@
           if (word.length !== len) continue;
           if (starts && !word.startsWith(starts)) continue;
           if (ends && !word.endsWith(ends)) continue;
-          if (contains && ![...contains].every((c) => word.includes(c))) continue;
+          if (contains && !matchesContains(word, contains)) continue;
           if (exclude && [...exclude].some((c) => word.includes(c))) continue;
           if (mode === "wordle") {
             if (pattern && !matchesPattern(word, pattern)) continue;
@@ -735,14 +741,16 @@
       add("/7-letter-words", "All 7-letter words");
     }
     if (n === 2) add("/2-letter-words", "Two-letter words");
-    if (n >= 2 && n <= 8 && n !== 5 && n !== 7) add("/" + n + "-letter-words", n + "-letter list");
+    if (n >= 2 && n <= 10 && n !== 5 && n !== 7) add("/" + n + "-letter-words", n + "-letter list");
     if (mode !== "anagram" && n >= 3) add("/anagram-solver?q=" + encodeURIComponent(raw), "Anagrams only");
     add("/jumble-solver", "Jumble solver");
+    add("/word-descrambler", "Word descrambler");
     add("/crossword-solver", "Crossword solver");
     add("/word-checker", "Check a word");
     if (n === 5) add("/5-letter-words-starting-with", "5-letter starting with");
     else add("/words-starting-with", "Words starting with");
     add("/words-ending-with", "Words ending with");
+    add("/words-containing", "Words containing");
     nav.hidden = false;
     nav.replaceChildren();
     nav.appendChild(el("p", "try-label", "Play these next"));
@@ -941,13 +949,15 @@
       }
     });
   });
-  document.querySelectorAll("[data-ex], [data-starts], [data-ends]").forEach((btn) => {
+  document.querySelectorAll("[data-ex], [data-starts], [data-ends], [data-contains]").forEach((btn) => {
     btn.addEventListener("click", () => {
       if (btn.dataset.ex != null) lettersEl.value = btn.dataset.ex;
       if (btn.dataset.starts != null && $("starts")) $("starts").value = btn.dataset.starts;
       if (btn.dataset.ends != null && $("ends")) $("ends").value = btn.dataset.ends;
+      if (btn.dataset.contains != null && $("contains")) $("contains").value = btn.dataset.contains;
       collect();
-      (document.body.dataset.hub === "starts" ? $("starts") : document.body.dataset.hub === "ends" ? $("ends") : lettersEl)?.focus();
+      const hub = document.body.dataset.hub;
+      (hub === "starts" ? $("starts") : hub === "ends" ? $("ends") : hub === "contains" ? $("contains") : lettersEl)?.focus();
     });
   });
   document.querySelectorAll("[data-mode]").forEach((btn) => {
@@ -1156,9 +1166,11 @@
   const hub = document.body.dataset.hub;
   if (hub === "starts" && $("starts") && !qIn) $("starts").focus();
   else if (hub === "ends" && $("ends") && !qIn) $("ends").focus();
+  else if (hub === "contains" && $("contains") && !qIn) $("contains").focus();
   else if (!qIn) lettersEl.focus();
   if (hub === "starts" && $("coach") && !qIn) $("coach").textContent = "Type a prefix in Starts with. A rack is optional.";
   if (hub === "ends" && $("coach") && !qIn) $("coach").textContent = "Type a suffix in Ends with. A rack is optional.";
+  if (hub === "contains" && $("coach") && !qIn) $("coach").textContent = "Type a letter or cluster (TH, ING, QU). A rack is optional.";
   if (hub === "five-start" && $("coach") && !qIn) $("coach").textContent = "Type a starting letter. Length is locked to 5 for Wordle lists.";
   loadDict();
 
