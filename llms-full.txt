@@ -4,30 +4,6 @@ Site: https://lettersunscrambler.com/
 Dictionary: ENABLE, public domain, about 168,000 English words.
 Scoring: English Scrabble tile values by default; optional Words With Friends table.
 Blanks: ? (maximum two). Queries never leave the browser.
-Operator: HDK Distribution Ltd, United Kingdom. Updated 2026-08-26.
-
-## Agent contract
-
-No account. No API key. Prefer static HTML for published racks. Use the query string for a new rack.
-
-unscramble
-  https://lettersunscrambler.com/?q={LETTERS}
-  Optional: &mode=subset|anagram|pattern|wordle
-  Letters: A–Z and ? (max two blanks), max 16 characters.
-  Example: https://lettersunscrambler.com/?q=LISTEN
-  Anagrams only: https://lettersunscrambler.com/?q=LISTEN&mode=anagram
-  Pattern: https://lettersunscrambler.com/?q=C?O??&mode=pattern
-  URLs with q or mode send x-robots-tag: noindex, follow so they do not replace the static pages.
-
-known_example
-  https://lettersunscrambler.com/unscramble/listen (and other slugs under /unscramble/)
-  HTML, crawlable, works with JavaScript off.
-
-word_list
-  https://lettersunscrambler.com/2-letter-words
-  https://lettersunscrambler.com/word-lists
-
-Short file: https://lettersunscrambler.com/llms.txt
 
 ## Definition
 
@@ -38,19 +14,26 @@ A word unscrambler takes a jumble of letters and returns every valid English wor
 LISTEN (92 ENABLE words). Six-letter anagrams: silent, listen, enlist, tinsel, inlets, elints.
 https://lettersunscrambler.com/unscramble/listen
 
+EAGLE (25) — eagle, aglee: https://lettersunscrambler.com/unscramble/eagle
+AIRBAG (35) — no six-letter anagram; agria, brag, grab: https://lettersunscrambler.com/unscramble/airbag
+PALLET (62) — plate, petal, pleat: https://lettersunscrambler.com/unscramble/pallet
 STRESSED → desserts: https://lettersunscrambler.com/unscramble/stressed
 ORANGE → onager: https://lettersunscrambler.com/unscramble/orange
 MASTER → stream: https://lettersunscrambler.com/unscramble/master
 PLANET → platen: https://lettersunscrambler.com/unscramble/planet
-CREDIT → direct: https://lettersunscrambler.com/unscramble/credit
-FRIEND → finder: https://lettersunscrambler.com/unscramble/friend
+CREDIT → direct, triced: https://lettersunscrambler.com/unscramble/credit
+FRIEND → finder, refind, redfin: https://lettersunscrambler.com/unscramble/friend
+RETINA (88) — retain, ratine, bingo stem: https://lettersunscrambler.com/unscramble/retina
+ADOBE → abode: https://lettersunscrambler.com/unscramble/adobe
+RACE → acre, care: https://lettersunscrambler.com/unscramble/race
 
 AEINRST (bingo stem). Famous seven-letter anagrams include retains, nastier, stainer, retinas.
 https://lettersunscrambler.com/unscramble/aeinrst
+Bingo-stem study list: https://lettersunscrambler.com/bingo-stems
 
 How to unscramble letters (3 steps): https://lettersunscrambler.com/how-it-works
 
-SCRABBLE, TRAIN, EARTH, ADOBE, RACE, RETINA: see https://lettersunscrambler.com/unscramble
+SCRABBLE, TRAIN, EARTH: see https://lettersunscrambler.com/unscramble
 
 ## Tools
 
@@ -60,6 +43,7 @@ SCRABBLE, TRAIN, EARTH, ADOBE, RACE, RETINA: see https://lettersunscrambler.com/
 - https://lettersunscrambler.com/wordle-helper — greens, yellows, greys; does not reveal the daily answer
 - https://lettersunscrambler.com/jumble-solver — newspaper-style jumbles
 - https://lettersunscrambler.com/crossword-solver — pattern with ? for unknown squares
+- https://lettersunscrambler.com/words-from-letters — subset search (“words from these letters”)
 
 ## Word lists
 
@@ -69,3 +53,5 @@ SCRABBLE, TRAIN, EARTH, ADOBE, RACE, RETINA: see https://lettersunscrambler.com/
 ## What not to claim
 
 This is not the NASPA TWL or Collins CSW tournament list. Tournament words may differ. Board premiums are not applied because the site cannot see a physical board. The site does not reveal today’s Wordle.
+
+Operator: HDK Distribution Ltd, United Kingdom. Updated 2026-08-27.

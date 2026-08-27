@@ -110,7 +110,7 @@
     gtag('js', new Date());
     gtag('config', 'G-VR1EE3K51N', { anonymize_ip: true });
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Word Unscrambler","url":"https://lettersunscrambler.com/","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"GBP"},"description":"Free online word unscrambler and anagram solver using the ENABLE English word list.","inLanguage":"en-GB"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lettersunscrambler.com/"},{"@type":"ListItem","position":2,"name":"Crossword solver","item":"https://lettersunscrambler.com/crossword-solver"}]}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Word Unscrambler","url":"https://lettersunscrambler.com/","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"GBP"},"description":"Free online word unscrambler and anagram solver using the ENABLE English word list.","inLanguage":"en-GB","dateModified":"2026-08-27"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lettersunscrambler.com/"},{"@type":"ListItem","position":2,"name":"Crossword solver","item":"https://lettersunscrambler.com/crossword-solver"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I enter a crossword pattern?","acceptedAnswer":{"@type":"Answer","text":"Type known letters and a question mark for each unknown square, for example C?O?? or P?T."}},{"@type":"Question","name":"Does this solve today’s crossword?","acceptedAnswer":{"@type":"Answer","text":"No. It only matches the pattern you type against ENABLE. It does not fetch a published grid."}},{"@type":"Question","name":"Pattern mode or Wordle mode?","acceptedAnswer":{"@type":"Answer","text":"Pattern is a mask: known letters stay put. Wordle uses greens, yellows and greys. Open Wordle helper if you have those clues."}}]}]}</script>
 </head>
 <body data-tool="pattern">
   <a class="skip" href="#main">Skip to content</a>
@@ -232,6 +232,22 @@
   <section class="prose"><h2>Fill a crossword slot</h2>
     <p>Unlike the unscrambler, this page treats your input as a mask, not a rack. <code>P?T</code> finds PAT, PET, PIT, POT, PUT. Combine with Starts / Ends / Contains if a crossing has already given you extra letters.</p>
     <p>For a full anagram of leftover letters, switch to the <a href="/anagram-solver">anagram solver</a>.</p></section>
+    <section class="faq" id="faq">
+      <h2>FAQ</h2>
+    <details open>
+      <summary>How do I enter a crossword pattern?</summary>
+      <p>Type known letters and a question mark for each unknown square, for example <code>C?O??</code> or <code>P?T</code>.</p>
+    </details>
+    <details>
+      <summary>Does this solve today’s crossword?</summary>
+      <p>No. It only matches the pattern you type against ENABLE. It does not fetch a published grid.</p>
+    </details>
+    <details>
+      <summary>Pattern mode or Wordle mode?</summary>
+      <p>Pattern is a mask: known letters stay put. Wordle uses greens, yellows and greys. Open Wordle helper if you have those clues.</p>
+    </details>
+  </section>
+
 </main>
 <footer class="site-footer">
     <div class="wrap footer-grid">
@@ -263,6 +279,7 @@
         <p class="footer-head">Site</p>
         <a href="/how-it-works">How it works</a>
         <a href="/about">About</a>
+        <a href="/feedback">Feedback</a>
         <a href="/contact">Contact</a>
         <a href="/privacy">Privacy</a>
         <a href="/terms">Terms</a>
