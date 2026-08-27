@@ -15,7 +15,10 @@
     subset: "Type the letters on your rack. Every word you can make appears below — including shorter ones.",
     anagram: "Type all the letters. Only words that use every letter are shown.",
     wordle: "Green boxes = right letter, right place. Letters box = yellows. Exclude = greys.",
-    check: "Type a word. ENABLE is checked in this browser — nothing is sent to a server."
+    check: "Type a word. ENABLE is checked in this browser — nothing is sent to a server.",
+    bee: "Type the 7 hive letters. Set the center letter. Words of 4+ letters, using only the hive, must include the center.",
+    multi: "Type several scrambled words separated by spaces. Each is unjumbled on its own.",
+    scramble: "Type a real word to shuffle a puzzle, or paste a scramble to solve it. Reshuffle until it looks hard."
   };
 
   const $ = (id) => document.getElementById(id);
@@ -229,6 +232,178 @@
     return [{ word: w, len: w.length, score: scoreWord(w) }];
   }
 
+  let scrambleSrc = "";
+  let scrambleOut = "";
+  function ensureScramble(word, force) {
+    const src = (word || "").toUpperCase();
+    if (!force && scrambleSrc === src && scrambleOut) return scrambleOut;
+    scrambleSrc = src;
+    scrambleOut = scramble(src, (Date.now() % 90000) + src.length + 3);
+    if (scrambleOut === src) scrambleOut = src.slice(1) + src[0];
+    return scrambleOut;
+  }
+
+  function renderScramble(raw) {
+    const box = $("results");
+    const meta = $("resultMeta");
+    const copy = $("copy");
+    hideDefine();
+    hideJumps();
+    if ($("share")) $("share").hidden = true;
+    if (!box) return [];
+    box.replaceChildren();
+    const word = (raw || "").toLowerCase().replace(/[^a-z]/g, "");
+    if (!word) {
+      box.className = "empty";
+      box.appendChild(el("p", "", ready ? "Type a word to scramble into a puzzle, or paste a scramble to list its anagrams." : "Loading 168,000 words…"));
+      hideBest();
+      hideNextPlay();
+      if (copy) copy.hidden = true;
+      setResultsHeading("Word scrambler ");
+      if (meta) meta.textContent = "";
+      syncShare("");
+      return [];
+    }
+    if (!ready) {
+      box.className = "empty";
+      box.textContent = "Dictionary still loading. Try again in a moment.";
+      return [];
+    }
+    const mixed = ensureScramble(word);
+    const list = (bySig[sig(word)] || []).slice().sort((a, b) => scoreWord(b) - scoreWord(a) || a.localeCompare(b));
+    const unique = list.length <= 1;
+    box.className = "";
+    const card = el("aside", "best-play");
+    card.appendChild(el("p", "try-label", "Scrambled puzzle"));
+    card.appendChild(el("p", "best-word", mixed));
+    card.appendChild(el("p", "best-meta", unique
+      ? "One ENABLE solution — a fair puzzle."
+      : list.length + " ENABLE anagrams — pick a harder shuffle or a rarer word."));
+    const row = el("div", "examples");
+    const again = el("button", "chip", "Reshuffle");
+    again.type = "button";
+    again.addEventListener("click", () => { ensureScramble(word, true); collect(); });
+    row.appendChild(again);
+    const copyMix = el("button", "chip", "Copy scramble");
+    copyMix.type = "button";
+    copyMix.addEventListener("click", () => {
+      navigator.clipboard.writeText(mixed).then(() => toast("Copied " + mixed)).catch(() => {});
+    });
+    row.appendChild(copyMix);
+    card.appendChild(row);
+    box.appendChild(card);
+    if (list.length) {
+      const group = el("div", "group");
+      const title = el("div", "group-title");
+      title.appendChild(el("span", "", "Anagrams of " + word.toUpperCase()));
+      title.appendChild(el("span", "", String(list.length)));
+      const grid = el("div", "grid");
+      const matches = [];
+      list.forEach((w) => {
+        const m = { word: w, len: w.length, score: scoreWord(w) };
+        matches.push(m);
+        const btn = el("button", "word", null);
+        btn.type = "button";
+        btn.dataset.word = w;
+        btn.appendChild(el("b", "", w));
+        btn.appendChild(el("span", "pts", m.score + " pts"));
+        btn.addEventListener("click", () => pickWord(m, btn, w.length));
+        grid.appendChild(btn);
+      });
+      group.appendChild(title);
+      group.appendChild(grid);
+      box.appendChild(group);
+      if (copy) {
+        copy.hidden = false;
+        copy.dataset.words = mixed + " → " + list.join(", ");
+      }
+      renderBest(matches, word, word.length);
+    } else {
+      box.appendChild(el("p", "mini", "Not an ENABLE word. Shuffle still works for classroom puzzles; there is no listed solution."));
+      hideBest();
+      if (copy) copy.hidden = true;
+    }
+    setResultsHeading("Scramble of " + word.toUpperCase() + " ");
+    if (meta) meta.textContent = "· " + mixed;
+    if ($("share")) $("share").hidden = false;
+    syncShare(raw.trim());
+    syncTitle(raw.trim());
+    renderNextPlay(word);
+    renderTiles(mixed);
+    return list.map((w) => ({ word: w, len: w.length, score: scoreWord(w) }));
+  }
+
+  function renderMulti(raw) {
+    const box = $("results");
+    const meta = $("resultMeta");
+    const copy = $("copy");
+    hideDefine();
+    hideBest();
+    hideJumps();
+    if ($("share")) $("share").hidden = true;
+    if (!box) return [];
+    box.replaceChildren();
+    const tokens = (raw || "").toUpperCase().split(/[\s,]+/).map((t) => t.replace(/[^A-Z?]/g, "")).filter((t) => t.length >= 2).slice(0, 8);
+    if (!tokens.length) {
+      box.className = "empty";
+      const p = el("p", "", ready ? "Type two or more scrambled words, separated by spaces. Example: LEMON TRAIN." : "Loading 168,000 words…");
+      box.appendChild(p);
+      if (copy) copy.hidden = true;
+      setResultsHeading("Multiple-word unscrambler ");
+      if (meta) meta.textContent = "";
+      hideNextPlay();
+      syncShare("");
+      return [];
+    }
+    if (!ready) {
+      box.className = "empty";
+      box.textContent = "Dictionary still loading. Try again in a moment.";
+      return [];
+    }
+    box.className = "";
+    const all = [];
+    const lines = [];
+    tokens.forEach((tok) => {
+      const clean = tok.toLowerCase().replace(/[^a-z]/g, "");
+      const list = (bySig[sig(clean)] || []).slice().sort((a, b) => scoreWord(b) - scoreWord(a) || a.localeCompare(b));
+      const group = el("div", "group");
+      const title = el("div", "group-title");
+      title.appendChild(el("span", "", tok));
+      title.appendChild(el("span", "", list.length ? (list.length + (list.length === 1 ? " anagram" : " anagrams")) : "no exact anagram"));
+      const grid = el("div", "grid");
+      if (!list.length) {
+        grid.appendChild(el("p", "mini", "No ENABLE word uses every letter of " + tok + ". Open it in the word unscrambler for leftovers."));
+      }
+      list.forEach((w) => {
+        const m = { word: w, len: w.length, score: scoreWord(w) };
+        all.push(m);
+        const btn = el("button", "word", null);
+        btn.type = "button";
+        btn.dataset.word = w;
+        btn.appendChild(el("b", "", w));
+        btn.appendChild(el("span", "pts", m.score + " pts"));
+        btn.addEventListener("click", () => pickWord(m, btn, w.length));
+        grid.appendChild(btn);
+      });
+      group.appendChild(title);
+      group.appendChild(grid);
+      box.appendChild(group);
+      lines.push(tok + ": " + (list.join(", ") || "(none)"));
+    });
+    setResultsHeading(tokens.length + " scrambled words ");
+    if (meta) meta.textContent = all.length ? "· " + all.length + " answers" : "";
+    if (copy) {
+      copy.hidden = false;
+      copy.dataset.words = lines.join("\n");
+    }
+    if ($("share")) $("share").hidden = false;
+    syncShare(raw.trim());
+    syncTitle(tokens.join(" "));
+    renderNextPlay(tokens[0] || "");
+    renderTiles(tokens.join("").slice(0, 16));
+    return all;
+  }
+
   function collect() {
     const input = lettersEl.value.trim();
     const box = $("results");
@@ -239,6 +414,8 @@
     renderTiles(input);
 
     if (mode === "check") return renderCheck(input);
+    if (mode === "multi") return renderMulti(input);
+    if (mode === "scramble") return renderScramble(input);
 
     const f = filterValues();
     const filterOnly = !input && hasFilters(f);
@@ -246,7 +423,11 @@
     if (!input && mode !== "wordle" && !filterOnly) {
       box.className = "empty";
       box.replaceChildren();
-      const p = el("p", "", ready ? "Type a rack, or a start / end / contains filter — no letters required." : "Loading 168,000 words…");
+      const p = el("p", "", ready
+        ? (mode === "bee"
+          ? "Type the 7 hive letters and a center letter. Words of 4 letters or more appear below."
+          : "Type a rack, or a start / end / contains filter — no letters required.")
+        : "Loading 168,000 words…");
       box.appendChild(p);
       if (ready && !document.body.dataset.hub) {
         const row = el("div", "examples");
@@ -277,7 +458,7 @@
     }
 
     const wilds = (input.match(/[?*]/g) || []).length;
-    if (wilds > 2) {
+    if (wilds > 2 && mode !== "pattern" && mode !== "bee" && mode !== "scramble" && mode !== "multi") {
       box.className = "empty";
       box.textContent = "Use at most two blank tiles (?). More than that explodes the search.";
       if (meta) meta.textContent = "";
@@ -304,7 +485,42 @@
     const minLen = 2;
     const matches = [];
 
-    if (mode === "pattern" && input) {
+    if (mode === "bee") {
+      const hive = [...new Set(input.toLowerCase().replace(/[^a-z]/g, "").split(""))];
+      const center = (($("center")?.value || hive[0] || "") + "").toLowerCase().replace(/[^a-z]/g, "").slice(0, 1);
+      if (hive.length < 4 || hive.length > 7 || !center) {
+        box.className = "empty";
+        box.textContent = hive.length > 7
+          ? "A hive has at most 7 unique letters."
+          : "Need 4–7 unique hive letters and a center letter.";
+        if (meta) meta.textContent = "";
+        if (copy) copy.hidden = true;
+        hideDefine();
+        hideNextPlay();
+        hideBest();
+        hideJumps();
+        if ($("share")) $("share").hidden = true;
+        return [];
+      }
+      if (!hive.includes(center)) hive.push(center);
+      const hiveSet = new Set(hive);
+      const from = exact || (minNine ? 9 : 4);
+      const to = exact || 15;
+      for (let len = Math.min(to, 15); len >= Math.max(from, 4); len--) {
+        const list = byLen[len] || [];
+        for (const word of list) {
+          if (![...word].every((c) => hiveSet.has(c))) continue;
+          if (!word.includes(center)) continue;
+          if (starts && !word.startsWith(starts)) continue;
+          if (ends && !word.endsWith(ends)) continue;
+          if (contains && !matchesContains(word, contains)) continue;
+          if (exclude && [...exclude].some((c) => word.includes(c))) continue;
+          const pangram = hive.every((c) => word.includes(c));
+          const beeScore = (word.length === 4 ? 1 : word.length) + (pangram ? 7 : 0);
+          matches.push({ word, len: word.length, score: beeScore, pangram });
+        }
+      }
+    } else if (mode === "pattern" && input) {
       const raw = input.toLowerCase().replace(/[^a-z?.*]/g, "");
       const len = raw.length;
       const list = byLen[len] || [];
@@ -364,6 +580,8 @@
         ? "No exact anagrams for these letters. Shorter words still exist in All words."
         : mode === "wordle"
           ? "No 5-letter matches. Check greens, or take a letter out of yellows/greys."
+          : mode === "bee"
+            ? "No ENABLE words of 4+ letters use only that hive and the center letter. Try a different center."
           : filterOnly
             ? "No ENABLE words match that start / end / contains filter. Try a shorter prefix."
             : "No words match yet. Type ? for a blank, or switch mode.");
@@ -405,12 +623,12 @@
       title.appendChild(el("span", "", words.length.toLocaleString("en-GB") + (shown.length < words.length ? " · showing " + shown.length : "")));
       const grid = el("div", "grid");
       shown.forEach((m) => {
-        const card = el("button", m.len >= 7 && m.len === maxLen ? "word bingo" : "word", null);
+        const card = el("button", (m.pangram || (mode !== "bee" && m.len >= 7 && m.len === maxLen)) ? "word bingo" : "word", null);
         card.type = "button";
         if (typeof dailyAnswer === "string" && m.word === dailyAnswer.toLowerCase()) card.classList.add("daily-hit");
         card.dataset.word = m.word;
         card.appendChild(el("b", "", m.word));
-        card.appendChild(el("span", "pts", m.score + " pts"));
+        card.appendChild(el("span", "pts", (m.pangram ? "pangram · " : "") + m.score + " pts"));
         card.title = "Tap to copy, leftover tiles, and meaning — " + m.word;
         card.addEventListener("click", () => pickWord(m, card, maxLen));
         grid.appendChild(card);
@@ -422,10 +640,12 @@
     box.appendChild(frag);
     lastRack = input;
     lastMatches = matches;
-    const bingoNote = mode !== "wordle" && input && matches.some((m) => m.len >= 7 && m.len === maxLen);
-    const label = filterOnly ? filterLabel(f) : "from your letters";
+    const bingoNote = mode === "bee"
+      ? matches.some((m) => m.pangram)
+      : (mode !== "wordle" && input && matches.some((m) => m.len >= 7 && m.len === maxLen));
+    const label = mode === "bee" ? "from this hive" : (filterOnly ? filterLabel(f) : "from your letters");
     setResultsHeading(totalFound.toLocaleString("en-GB") + " words " + label + " ");
-    if (meta) meta.textContent = truncated ? "· add a letter or pick a length to see the rest" : (bingoNote ? "· bingos marked" : "");
+    if (meta) meta.textContent = truncated ? "· add a letter or pick a length to see the rest" : (bingoNote ? (mode === "bee" ? "· pangrams marked" : "· bingos marked") : "");
     const all = matches.map((m) => m.word).join(", ");
     if (copy) {
       copy.hidden = false;
@@ -475,6 +695,9 @@
       else u.searchParams.delete("ends");
       if (f.contains) u.searchParams.set("contains", f.contains.toUpperCase());
       else u.searchParams.delete("contains");
+      const center = ($("center")?.value || "").toUpperCase().replace(/[^A-Z]/g, "").slice(0, 1);
+      if (mode === "bee" && center) u.searchParams.set("center", center);
+      else u.searchParams.delete("center");
       history.replaceState(null, "", u.pathname + u.search + u.hash);
     } catch {}
   }
@@ -484,6 +707,14 @@
     const v = (q || "").toUpperCase().replace(/[^A-Z?]/g, "");
     if (mode === "check") {
       document.title = v ? ("Is " + v + " a word? – Word checker") : BASE_TITLE;
+      return;
+    }
+    if (mode === "bee") {
+      document.title = v ? ("Spelling Bee helper – " + v) : BASE_TITLE;
+      return;
+    }
+    if (mode === "scramble") {
+      document.title = v ? ("Scramble " + v + " – Word scrambler") : BASE_TITLE;
       return;
     }
     document.title = v ? ("Unscramble " + v + " – Word Unscrambler") : BASE_TITLE;
@@ -550,11 +781,11 @@
       return;
     }
     const best = matches.reduce((a, b) => (a.score > b.score || (a.score === b.score && a.len > b.len) ? a : b));
-    const bingo = best.len >= 7 && best.len === maxLen;
+    const bingo = best.pangram || (best.len >= 7 && best.len === maxLen);
     const left = leftoverOf(rack, best.word);
     card.hidden = false;
     card.replaceChildren();
-    card.appendChild(el("p", "try-label", bingo ? "Bingo" : "Best play"));
+    card.appendChild(el("p", "try-label", best.pangram ? "Pangram" : (bingo ? "Bingo" : "Best play")));
     const wordBtn = el("button", "best-word", best.word);
     wordBtn.type = "button";
     wordBtn.addEventListener("click", () => {
@@ -745,6 +976,11 @@
     if (mode !== "anagram" && n >= 3) add("/anagram-solver?q=" + encodeURIComponent(raw), "Anagrams only");
     add("/jumble-solver", "Jumble solver");
     add("/word-descrambler", "Word descrambler");
+    add("/letter-unscrambler", "Letter unscrambler");
+    add("/word-maker", "Word maker");
+    add("/unjumble", "Unjumble");
+    add("/word-scrambler", "Word scrambler");
+    add("/spelling-bee", "Spelling Bee helper");
     add("/crossword-solver", "Crossword solver");
     add("/word-checker", "Check a word");
     if (n === 5) add("/5-letter-words-starting-with", "5-letter starting with");
@@ -808,6 +1044,8 @@
     });
     const wordle = $("wordleFields");
     if (wordle) wordle.hidden = mode !== "wordle";
+    const bee = $("beeFields");
+    if (bee) bee.hidden = mode !== "bee";
     if (mode === "wordle" && $("length") && !$("length").value) $("length").value = "5";
     const coach = $("coach");
     if (coach && COACH[mode]) coach.textContent = COACH[mode];
@@ -829,7 +1067,17 @@
     if (matchMedia("(max-width: 720px)").matches) $("results")?.scrollIntoView({ behavior: "smooth", block: "start" });
   });
   lettersEl.addEventListener("input", () => {
-    const clean = lettersEl.value.toUpperCase().replace(/[^A-Z?*]/g, "").slice(0, 16);
+    const tool = document.body.dataset.tool || mode;
+    let clean;
+    if (tool === "multi" || mode === "multi") {
+      clean = lettersEl.value.toUpperCase().replace(/[^A-Z?*,\s]/g, "").replace(/\s+/g, " ").slice(0, 80);
+    } else if (tool === "scramble" || mode === "scramble") {
+      clean = lettersEl.value.toUpperCase().replace(/[^A-Z]/g, "").slice(0, 20);
+    } else if (tool === "bee" || mode === "bee") {
+      clean = lettersEl.value.toUpperCase().replace(/[^A-Z]/g, "").slice(0, 7);
+    } else {
+      clean = lettersEl.value.toUpperCase().replace(/[^A-Z?*]/g, "").slice(0, 16);
+    }
     if (clean !== lettersEl.value) lettersEl.value = clean;
     const c = $("clear");
     if (c) c.hidden = !lettersEl.value;
@@ -926,11 +1174,12 @@
     if (coach) coach.after(box);
     else lettersEl.parentNode.after(box);
   })();
-  ["starts", "ends", "contains", "exclude", "greys"].forEach((id) => {
+  ["starts", "ends", "contains", "exclude", "greys", "center"].forEach((id) => {
     $(id)?.addEventListener("input", (e) => {
-      const clean = e.target.value.toUpperCase().replace(/[^A-Z]/g, "");
+      const max = id === "center" ? 1 : 99;
+      const clean = e.target.value.toUpperCase().replace(/[^A-Z]/g, "").slice(0, max);
       if (clean !== e.target.value) e.target.value = clean;
-      if (hasQuery()) schedule();
+      if (hasQuery() || (id === "center" && clean)) schedule();
     });
   });
   $("length")?.addEventListener("input", () => { if (hasQuery()) schedule(); });
@@ -949,12 +1198,13 @@
       }
     });
   });
-  document.querySelectorAll("[data-ex], [data-starts], [data-ends], [data-contains]").forEach((btn) => {
+  document.querySelectorAll("[data-ex], [data-starts], [data-ends], [data-contains], [data-center]").forEach((btn) => {
     btn.addEventListener("click", () => {
       if (btn.dataset.ex != null) lettersEl.value = btn.dataset.ex;
       if (btn.dataset.starts != null && $("starts")) $("starts").value = btn.dataset.starts;
       if (btn.dataset.ends != null && $("ends")) $("ends").value = btn.dataset.ends;
       if (btn.dataset.contains != null && $("contains")) $("contains").value = btn.dataset.contains;
+      if (btn.dataset.center != null && $("center")) $("center").value = btn.dataset.center;
       collect();
       const hub = document.body.dataset.hub;
       (hub === "starts" ? $("starts") : hub === "ends" ? $("ends") : hub === "contains" ? $("contains") : lettersEl)?.focus();
@@ -1145,10 +1395,23 @@
   })();
 
   const params = new URLSearchParams(location.search);
-  const qIn = (params.get("q") || "").toUpperCase().replace(/[^A-Z?*]/g, "").slice(0, 16);
-  if (qIn) lettersEl.value = qIn;
-  const allowedMode = { subset: 1, anagram: 1, wordle: 1, pattern: 1, check: 1 };
+  const tool = document.body.dataset.tool || "subset";
+  const allowedMode = { subset: 1, anagram: 1, wordle: 1, pattern: 1, check: 1, bee: 1, multi: 1, scramble: 1 };
   if (allowedMode[params.get("mode")]) mode = params.get("mode");
+  const qRaw = params.get("q") || "";
+  let qIn;
+  if (tool === "multi" || mode === "multi") {
+    qIn = qRaw.toUpperCase().replace(/[^A-Z?*,\s]/g, "").replace(/\s+/g, " ").trim().slice(0, 80);
+  } else if (tool === "scramble" || mode === "scramble") {
+    qIn = qRaw.toUpperCase().replace(/[^A-Z]/g, "").slice(0, 20);
+  } else if (tool === "bee" || mode === "bee") {
+    qIn = qRaw.toUpperCase().replace(/[^A-Z]/g, "").slice(0, 7);
+  } else {
+    qIn = qRaw.toUpperCase().replace(/[^A-Z?*]/g, "").slice(0, 16);
+  }
+  if (qIn) lettersEl.value = qIn;
+  const centerIn = (params.get("center") || "").toUpperCase().replace(/[^A-Z]/g, "").slice(0, 1);
+  if (centerIn && $("center")) $("center").value = centerIn;
   const startsIn = (params.get("starts") || "").toUpperCase().replace(/[^A-Z]/g, "").slice(0, 5);
   const endsIn = (params.get("ends") || "").toUpperCase().replace(/[^A-Z]/g, "").slice(0, 5);
   const containsIn = (params.get("contains") || "").toUpperCase().replace(/[^A-Z]/g, "").slice(0, 8);
@@ -1172,6 +1435,7 @@
   if (hub === "ends" && $("coach") && !qIn) $("coach").textContent = "Type a suffix in Ends with. A rack is optional.";
   if (hub === "contains" && $("coach") && !qIn) $("coach").textContent = "Type a letter or cluster (TH, ING, QU). A rack is optional.";
   if (hub === "five-start" && $("coach") && !qIn) $("coach").textContent = "Type a starting letter. Length is locked to 5 for Wordle lists.";
+  if ((tool === "bee" || mode === "bee") && $("coach") && !qIn) $("coach").textContent = COACH.bee;
   loadDict();
 
   (function initAds() {

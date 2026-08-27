@@ -25,6 +25,13 @@ const ROUTES = {
   "/word-checker": "word-checker.html",
   "/word-descrambler": "word-descrambler.html",
   "/words-containing": "words-containing.html",
+  "/letter-unscrambler": "letter-unscrambler.html",
+  "/word-maker": "word-maker.html",
+  "/unjumble": "unjumble.html",
+  "/word-solver": "word-solver.html",
+  "/word-scrambler": "word-scrambler.html",
+  "/spelling-bee": "spelling-bee.html",
+  "/multiple-word-unscrambler": "multiple-word-unscrambler.html",
   "/2-letter-words": "2-letter-words.html",
   "/3-letter-words": "3-letter-words.html",
   "/4-letter-words": "4-letter-words.html",
@@ -203,7 +210,7 @@ async function pull(name) {
   const fromMain = name === "profit-v1.js" || name === "modern-v39.css";
   const srcs = fromMain
     ? ["https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/main/" + name + "?v=39"]
-    : [GH_MAIN + name + "?v=contain1", GH + name];
+    : [GH_MAIN + name + "?v=rival1", GH + name];
   for (let s = 0; s < srcs.length; s++) {
     for (let i = 0; i < 2; i++) {
       try {
@@ -250,6 +257,12 @@ function injectModern(htmlBuf) {
   }
   if (out.indexOf('href="/words-containing"') === -1 && out.indexOf('href="/words-ending-with">Words ending with</a>') !== -1) {
     out = out.replace('<a href="/words-ending-with">Words ending with</a>', '<a href="/words-ending-with">Words ending with</a>\n        <a href="/words-containing">Words containing</a>');
+  }
+  if (out.indexOf('href="/letter-unscrambler"') === -1 && out.indexOf('href="/word-descrambler">Word descrambler</a>') !== -1) {
+    out = out.replace('<a href="/word-descrambler">Word descrambler</a>', '<a href="/word-descrambler">Word descrambler</a>\n        <a href="/letter-unscrambler">Letter unscrambler</a>\n        <a href="/word-maker">Word maker</a>\n        <a href="/unjumble">Unjumble</a>\n        <a href="/word-scrambler">Word scrambler</a>\n        <a href="/spelling-bee">Spelling Bee helper</a>\n        <a href="/multiple-word-unscrambler">Multiple-word unscrambler</a>');
+  }
+  if (out.indexOf('href="/words-containing"') === -1 && out.indexOf('href="/bingo-stems">Bingo stems</a>') !== -1) {
+    out = out.replace('<a href="/bingo-stems">Bingo stems</a>', '<a href="/bingo-stems">Bingo stems</a>\n        <a href="/words-containing">Words containing</a>');
   }
   if (out.indexOf('id="adAfterResults"') === -1 && out.indexOf('id="results"') !== -1) {
     const ad = '<aside class="ad-region ad-after-results" id="adAfterResults" hidden aria-label="Advertisement"><p class="ad-label">Advertisement</p><div class="ad-box ad-box-slim"><ins class="adsbygoogle" style="display:block;min-height:90px" data-ad-client="ca-pub-2666058844257008" data-ad-format="horizontal" data-full-width-responsive="true"></ins></div></aside>';
