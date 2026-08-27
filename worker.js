@@ -49,6 +49,9 @@ const ROUTES = {
   "/unscramble/planet": "unscramble-planet.html",
   "/unscramble/credit": "unscramble-credit.html",
   "/unscramble/friend": "unscramble-friend.html",
+  "/unscramble/eagle": "unscramble-eagle.html",
+  "/unscramble/airbag": "unscramble-airbag.html",
+  "/unscramble/pallet": "unscramble-pallet.html",
   "/llms.txt": "llms.txt",
   "/llms-full.txt": "llms-full.txt",
   "/.well-known/llms.txt": "llms.txt",
@@ -192,7 +195,7 @@ async function pull(name) {
   const fromMain = name === "profit-v1.js" || name === "modern-v39.css";
   const srcs = fromMain
     ? ["https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/main/" + name + "?v=39"]
-    : [GH_MAIN + name + "?v=a3f1483", GH + name];
+    : [GH_MAIN + name + "?v=b27thu1", GH + name];
   for (let s = 0; s < srcs.length; s++) {
     for (let i = 0; i < 2; i++) {
       try {
