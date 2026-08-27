@@ -1,1 +1,265 @@
-PLACEHOLDER
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("wu_theme");
+        if (!t) t = (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+        document.documentElement.setAttribute("data-theme", t === "dark" ? "dark" : "light");
+      } catch (e) {}
+      function sync(btn) {
+        var dark = document.documentElement.getAttribute("data-theme") === "dark";
+        if (!btn) return;
+        btn.setAttribute("aria-pressed", dark ? "true" : "false");
+        btn.setAttribute("aria-label", dark ? "Switch to light theme" : "Switch to dark theme");
+        btn.textContent = dark ? "Light" : "Dark";
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute("content", dark ? "#13110f" : "#1f4a38");
+      }
+      function bind() {
+        var btn = document.getElementById("themeBtn");
+        sync(btn);
+        if (btn && !btn.dataset.bound) {
+          btn.dataset.bound = "1";
+          btn.addEventListener("click", function () {
+            var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+            document.documentElement.setAttribute("data-theme", next);
+            try { localStorage.setItem("wu_theme", next); } catch (e) {}
+            sync(btn);
+          });
+        }
+        var menu = document.querySelector("[data-nav]");
+        var nav = document.getElementById("site-nav");
+        if (menu && nav && !menu.dataset.bound) {
+          menu.dataset.bound = "1";
+          function setOpen(open) {
+            nav.classList.toggle("is-open", open);
+            menu.setAttribute("aria-expanded", open ? "true" : "false");
+            menu.textContent = open ? "Close" : "Menu";
+          }
+          menu.addEventListener("click", function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            setOpen(!nav.classList.contains("is-open"));
+          });
+          document.addEventListener("click", function (e) {
+            if (!nav.classList.contains("is-open")) return;
+            if (nav.contains(e.target) || menu.contains(e.target)) return;
+            setOpen(false);
+          });
+          nav.querySelectorAll("a").forEach(function (a) {
+            a.addEventListener("click", function () { setOpen(false); });
+          });
+          document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") setOpen(false);
+          });
+        }
+      }
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", bind);
+      else bind();
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>2 Letter Words for Scrabble – 124 ENABLE Words</title>
+  <meta name="description" content="All 124 two-letter Scrabble words in ENABLE. Learn QI and ZA first (11 points), then JO, XI and XU. Open any word in the free unscrambler." />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta name="google-adsense-account" content="ca-pub-2666058844257008" />
+  <meta name="author" content="Word Unscrambler" />
+  <link rel="canonical" href="https://lettersunscrambler.com/2-letter-words" />
+  <meta property="og:site_name" content="Word Unscrambler" />
+  <meta property="og:title" content="2-Letter Words – Complete ENABLE List" />
+  <meta property="og:description" content="All 124 two-letter words in the ENABLE dictionary. The short list that wins Scrabble endgames." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://lettersunscrambler.com/2-letter-words" />
+  <meta property="og:image" content="https://lettersunscrambler.com/og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_GB" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="2-Letter Words – Complete ENABLE List" />
+  <meta name="twitter:description" content="All 124 two-letter words in the ENABLE dictionary. The short list that wins Scrabble endgames." />
+  <meta name="twitter:image" content="https://lettersunscrambler.com/og.jpg" />
+  <meta name="twitter:image:alt" content="Word Unscrambler letter tiles" />
+  <meta name="theme-color" content="#1f4a38" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/og.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,640&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css?v=30" />
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VR1EE3K51N"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2666058844257008" crossorigin="anonymous"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    var _c = 'denied';
+    try { if (localStorage.getItem('wu_consent') === 'granted') _c = 'granted'; } catch (e) {}
+    gtag('consent', 'default', {
+      analytics_storage: _c,
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied'
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-VR1EE3K51N', { anonymize_ip: true });
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","name":"Word Unscrambler","legalName":"HDK Distribution Ltd","url":"https://lettersunscrambler.com/","address":{"@type":"PostalAddress","addressCountry":"GB"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lettersunscrambler.com/"},{"@type":"ListItem","position":2,"name":"Word lists","item":"https://lettersunscrambler.com/word-lists"},{"@type":"ListItem","position":3,"name":"2-Letter Words","item":"https://lettersunscrambler.com/2-letter-words"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How many 2-letter words are there in Scrabble?","acceptedAnswer":{"@type":"Answer","text":"ENABLE lists 124 two-letter words. Official TWL and CSW lists are close but not identical."}},{"@type":"Question","name":"Which two-letter words score the most?","acceptedAnswer":{"@type":"Answer","text":"QI and ZA are 11 points before board multipliers. JO is 9. XI and XU are 9."}},{"@type":"Question","name":"Is QI allowed in Scrabble?","acceptedAnswer":{"@type":"Answer","text":"Yes in ENABLE and in modern TWL and Collins lists. QI dumps the Q without a U."}}]}]}</script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="/">
+        <span class="mark" aria-hidden="true">W<small>4</small></span>
+        <span class="brand-name">Word Unscrambler<span>Find words from letters</span></span>
+      </a>
+      <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch colour theme">Theme</button>
+      <button class="menu-btn" type="button" data-nav aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="nav" id="site-nav" aria-label="Primary">
+        <a href="/">Unscrambler</a>
+        <a href="/scrabble-word-finder">Scrabble</a>
+        <a href="/anagram-solver">Anagrams</a>
+        <a href="/wordle-helper">Wordle</a>
+        <a href="/crossword-solver">Crossword</a>
+        <a href="/word-lists" aria-current="page">Lists</a>
+      </nav>
+    </div>
+  </header>
+<main class="wrap page" id="main"><nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/word-lists">Word lists</a> / <span>2-Letter Words</span></nav><p class="kicker">Word list</p>
+    <h1>2-letter words for Scrabble</h1>
+    <p>There are <strong>124 two-letter words</strong> in ENABLE. This is the list club players memorise first: parallel plays and tight endgames are built on these two-tile hooks. Tap a word to open it in the <a href="/">word unscrambler</a> with the rest of your rack.</p>
+    <p>Worked example: type <a href="/?q=QI">QI</a> on the homepage. That is the only two-letter Q word — 11 points before board premiums, no U required. <a href="/?q=ZA">ZA</a> does the same job for Z.</p>
+    <h2>Learn these five first</h2>
+    <div class="word-cloud">
+      <a href="/?q=QI">qi · 11</a>
+      <a href="/?q=ZA">za · 11</a>
+      <a href="/?q=JO">jo · 9</a>
+      <a href="/?q=XI">xi · 9</a>
+      <a href="/?q=XU">xu · 9</a>
+    </div>
+    <p>Then the vowel dumps: <a href="/?q=AA">aa</a>, <a href="/?q=AE">ae</a>, <a href="/?q=AI">ai</a>, <a href="/?q=OE">oe</a>, <a href="/?q=OI">oi</a>, <a href="/?q=OU">ou</a>. British and US casual play both use this ENABLE list; official TWL/CSW may differ by a handful of words.</p>
+    <h2>All 124 two-letter ENABLE words</h2>
+    <div class="word-cloud"><a href="/?q=AA">aa</a><a href="/?q=AB">ab</a><a href="/?q=AD">ad</a><a href="/?q=AE">ae</a><a href="/?q=AG">ag</a><a href="/?q=AH">ah</a><a href="/?q=AI">ai</a><a href="/?q=AL">al</a><a href="/?q=AM">am</a><a href="/?q=AN">an</a><a href="/?q=AR">ar</a><a href="/?q=AS">as</a><a href="/?q=AT">at</a><a href="/?q=AW">aw</a><a href="/?q=AX">ax</a><a href="/?q=AY">ay</a><a href="/?q=BA">ba</a><a href="/?q=BE">be</a><a href="/?q=BI">bi</a><a href="/?q=BO">bo</a><a href="/?q=BY">by</a><a href="/?q=CH">ch</a><a href="/?q=DA">da</a><a href="/?q=DE">de</a><a href="/?q=DI">di</a><a href="/?q=DO">do</a><a href="/?q=EA">ea</a><a href="/?q=ED">ed</a><a href="/?q=EE">ee</a><a href="/?q=EF">ef</a><a href="/?q=EH">eh</a><a href="/?q=EL">el</a><a href="/?q=EM">em</a><a href="/?q=EN">en</a><a href="/?q=ER">er</a><a href="/?q=ES">es</a><a href="/?q=ET">et</a><a href="/?q=EX">ex</a><a href="/?q=FA">fa</a><a href="/?q=FE">fe</a><a href="/?q=FY">fy</a><a href="/?q=GI">gi</a><a href="/?q=GO">go</a><a href="/?q=GU">gu</a><a href="/?q=HA">ha</a><a href="/?q=HE">he</a><a href="/?q=HI">hi</a><a href="/?q=HM">hm</a><a href="/?q=HO">ho</a><a href="/?q=ID">id</a><a href="/?q=IF">if</a><a href="/?q=IN">in</a><a href="/?q=IO">io</a><a href="/?q=IS">is</a><a href="/?q=IT">it</a><a href="/?q=JA">ja</a><a href="/?q=JO">jo</a><a href="/?q=KA">ka</a><a href="/?q=KI">ki</a><a href="/?q=KO">ko</a><a href="/?q=KY">ky</a><a href="/?q=LA">la</a><a href="/?q=LI">li</a><a href="/?q=LO">lo</a><a href="/?q=MA">ma</a><a href="/?q=ME">me</a><a href="/?q=MI">mi</a><a href="/?q=MM">mm</a><a href="/?q=MO">mo</a><a href="/?q=MU">mu</a><a href="/?q=MY">my</a><a href="/?q=NA">na</a><a href="/?q=NE">ne</a><a href="/?q=NO">no</a><a href="/?q=NU">nu</a><a href="/?q=NY">ny</a><a href="/?q=OB">ob</a><a href="/?q=OD">od</a><a href="/?q=OE">oe</a><a href="/?q=OF">of</a><a href="/?q=OH">oh</a><a href="/?q=OI">oi</a><a href="/?q=OK">ok</a><a href="/?q=OM">om</a><a href="/?q=ON">on</a><a href="/?q=OO">oo</a><a href="/?q=OP">op</a><a href="/?q=OR">or</a><a href="/?q=OS">os</a><a href="/?q=OU">ou</a><a href="/?q=OW">ow</a><a href="/?q=OX">ox</a><a href="/?q=OY">oy</a><a href="/?q=PA">pa</a><a href="/?q=PE">pe</a><a href="/?q=PI">pi</a><a href="/?q=PO">po</a><a href="/?q=QI">qi</a><a href="/?q=RE">re</a><a href="/?q=SH">sh</a><a href="/?q=SI">si</a><a href="/?q=SO">so</a><a href="/?q=ST">st</a><a href="/?q=TA">ta</a><a href="/?q=TE">te</a><a href="/?q=TI">ti</a><a href="/?q=TO">to</a><a href="/?q=UG">ug</a><a href="/?q=UH">uh</a><a href="/?q=UM">um</a><a href="/?q=UN">un</a><a href="/?q=UP">up</a><a href="/?q=UR">ur</a><a href="/?q=US">us</a><a href="/?q=UT">ut</a><a href="/?q=WE">we</a><a href="/?q=WO">wo</a><a href="/?q=XI">xi</a><a href="/?q=XU">xu</a><a href="/?q=YA">ya</a><a href="/?q=YE">ye</a><a href="/?q=YO">yo</a><a href="/?q=YU">yu</a><a href="/?q=ZA">za</a></div>
+    <p>Type any of them into the <a href="/scrabble-word-finder">Scrabble word finder</a> with extra tiles to see hooks. Related: <a href="/q-without-u">Q without U</a>, <a href="/jqxz-words">J Q X Z words</a> and <a href="/3-letter-words">3-letter words</a>.</p>
+    <section class="prose faq" id="faq">
+      <h2>How to memorise the list</h2>
+<p>Do not read 124 words in A–Z order. Group them the way they are played.</p>
+<h3>High-value dumps</h3>
+<p><strong>QI</strong> and <strong>ZA</strong> get the Q and Z off your rack without a U. <strong>JO</strong>, <strong>XI</strong> and <strong>XU</strong> do the same for J and X. If you only learn five two-letter words this week, learn those.</p>
+<h3>The vowel dump</h3>
+<p>AA, AE, AI, OE, OI and OU clear a rack of vowels. AA is a Hawaiian lava word; AE is Scots “one”. ENABLE keeps both. They look fake until you need them.</p>
+<h3>Hooks on a single tile</h3>
+<p>Most two-letter words are a one-letter hook onto A, E, I, O or U (BA, BE, BI, BO; FA, FE, FY). Learn by the vowel, not the alphabet. Then run the <a href="/q-without-u">Q-without-U list</a> and the <a href="/jqxz-words">J, Q, X and Z list</a> for the same job at three letters.</p>
+<p>Open any word in the <a href="/">live unscrambler</a> to add the rest of your rack.</p>
+<h2>FAQ</h2>
+      <details open>
+        <summary>How many 2-letter words are there in Scrabble?</summary>
+        <p>ENABLE lists 124. Official North American TWL and UK/world CSW lists are close, but not identical. Learn QI and ZA first — they dump the Q and Z.</p>
+      </details>
+      <details>
+        <summary>Which two-letter words score the most?</summary>
+        <p>QI and ZA are 11 points before board multipliers. JO is 9, XI and XU are 9. Vowels like AE, AI, OE are cheap but win endgames.</p>
+      </details>
+      <details>
+        <summary>Is QI allowed in Scrabble?</summary>
+        <p>Yes in ENABLE, and in modern TWL and Collins lists. QI is the most-played two-letter word in tournament Scrabble because it dumps the Q without a U. Open <a href="/?q=QI">QI in the unscrambler</a> or the <a href="/q-without-u">Q without U</a> list for the rest.</p>
+      </details>
+      <details>
+        <summary>How do I practise these with my rack?</summary>
+        <p>Open the <a href="/scrabble-word-finder">Scrabble word finder</a>, type your seven tiles, then tap length <strong>2</strong>. That shows only the two-letter plays hiding in that rack.</p>
+      </details>
+    </section>    <aside class="ad-region" aria-label="Advertisement">
+      <p class="ad-label">Advertisement</p>
+      <div class="ad-box">
+        <ins class="adsbygoogle"
+             style="display:block;min-height:280px"
+             data-ad-client="ca-pub-2666058844257008"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+      </div>
+    </aside>
+</main>
+<footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div>
+        <p class="footer-head">Tools</p>
+        <a href="/">Word unscrambler</a>
+        <a href="/anagram-solver">Anagram solver</a>
+        <a href="/scrabble-word-finder">Scrabble word finder</a>
+        <a href="/words-with-friends">Words With Friends</a>
+        <a href="/wordle-helper">Wordle helper</a>
+        <a href="/jumble-solver">Jumble solver</a>
+        <a href="/crossword-solver">Crossword solver</a>
+        <a href="/words-from-letters">Words from letters</a>
+      </div>
+      <div>
+        <p class="footer-head">Word lists</p>
+        <a href="/2-letter-words">2-letter words</a>
+        <a href="/3-letter-words">3-letter words</a>
+        <a href="/4-letter-words">4-letter words</a>
+        <a href="/5-letter-words">5-letter words</a>
+        <a href="/6-letter-words">6-letter words</a>
+        <a href="/7-letter-words">7-letter words</a>
+        <a href="/8-letter-words">8-letter words</a>
+        <a href="/q-without-u">Q without U</a>
+        <a href="/jqxz-words">J, Q, X and Z words</a>
+        <a href="/bingo-stems">Bingo stems</a>
+      </div>
+      <div>
+        <p class="footer-head">Site</p>
+        <a href="/how-it-works">How it works</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+      </div>
+    </div>
+    <div class="wrap legal-line">
+      <p>© 2026 Word Unscrambler. ENABLE dictionary. Not affiliated with Hasbro, Mattel, Zynga or The New York Times.</p>
+      <p>United Kingdom</p>
+    </div>
+  </footer>
+  <script>
+    (function(){
+      var KEY = "wu_consent";
+      function apply(v){
+        if (typeof gtag !== "function") return;
+        gtag("consent", "update", {
+          analytics_storage: v === "granted" ? "granted" : "denied",
+          ad_storage: "denied",
+          ad_user_data: "denied",
+          ad_personalization: "denied"
+        });
+        if (v === "granted") {
+          gtag("event", "page_view", { page_location: location.href, page_title: document.title });
+        }
+      }
+      try {
+        var saved = localStorage.getItem(KEY);
+        if (saved) { apply(saved); return; }
+      } catch (e) {}
+      var bar = document.createElement("div");
+      bar.className = "consent";
+      bar.setAttribute("role", "dialog");
+      bar.setAttribute("aria-label", "Cookie choices");
+      bar.innerHTML = '<p>We use optional analytics cookies (Google Analytics) to see which tools people use. Your letters stay in this browser. <a href="/privacy">Privacy</a></p><div class="consent-actions"><button type="button" data-c="granted">Accept</button><button type="button" class="ghost" data-c="denied">Reject</button></div>';
+      document.body.appendChild(bar);
+      bar.addEventListener("click", function(e){
+        var b = e.target.closest("button[data-c]");
+        if (!b) return;
+        var v = b.getAttribute("data-c");
+        try { localStorage.setItem(KEY, v); } catch (err) {}
+        apply(v);
+        bar.remove();
+      });
+    })();
+  </script>
+</body>
+</html>
