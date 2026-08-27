@@ -71,3 +71,12 @@ Operator: HDK Distribution Ltd, United Kingdom. Updated 2026-08-27.
 - https://lettersunscrambler.com/word-scrambler
 - https://lettersunscrambler.com/spelling-bee
 - https://lettersunscrambler.com/multiple-word-unscrambler
+
+
+## Extra tools (2026-08-27 b)
+- https://lettersunscrambler.com/7-letter-unscrambler
+- https://lettersunscrambler.com/word-generator
+- https://lettersunscrambler.com/letter-boxed
+- https://lettersunscrambler.com/text-twist-solver
+- https://lettersunscrambler.com/hangman-solver
+- https://lettersunscrambler.com/is-it-a-word

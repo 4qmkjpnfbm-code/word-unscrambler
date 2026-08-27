@@ -18,7 +18,9 @@
     check: "Type a word. ENABLE is checked in this browser — nothing is sent to a server.",
     bee: "Type the 7 hive letters. Set the center letter. Words of 4+ letters, using only the hive, must include the center.",
     multi: "Type several scrambled words separated by spaces. Each is unjumbled on its own.",
-    scramble: "Type a real word to shuffle a puzzle, or paste a scramble to solve it. Reshuffle until it looks hard."
+    scramble: "Type a real word to shuffle a puzzle, or paste a scramble to solve it. Reshuffle until it looks hard.",
+    gen: "Type the letters you are allowed to use. Letters may be reused. Unlike a rack, you are not limited to one copy of each tile.",
+    boxed: "Type 12 letters clockwise from the top side (3+3+3+3). Consecutive letters cannot share a side. Words are 3+ letters."
   };
 
   const $ = (id) => document.getElementById(id);
@@ -108,6 +110,67 @@
     }
     return true;
   }
+
+  function boxedSides(input) {
+    const fromFields = [0, 1, 2, 3].map((i) => (($("side" + i)?.value || "") + "").toLowerCase().replace(/[^a-z]/g, "").slice(0, 3));
+    if (fromFields.every((s) => s.length === 3)) return fromFields;
+    const raw = (input || "").toLowerCase().replace(/[^a-z]/g, "");
+    if (raw.length !== 12) return null;
+    return [raw.slice(0, 3), raw.slice(3, 6), raw.slice(6, 9), raw.slice(9, 12)];
+  }
+
+  function boxedSideOf(ch, sides) {
+    for (let i = 0; i < 4; i++) if (sides[i].indexOf(ch) !== -1) return i;
+    return -1;
+  }
+
+  function boxedOk(word, sides) {
+    if (word.length < 3) return false;
+    let prev = -1;
+    for (let i = 0; i < word.length; i++) {
+      const s = boxedSideOf(word[i], sides);
+      if (s < 0 || s === prev) return false;
+      prev = s;
+    }
+    return true;
+  }
+
+  function boxedChain(words, sides) {
+    const need = new Set(sides.join(""));
+    if (!words.length) return [];
+    const byStart = {};
+    for (let i = 0; i < words.length; i++) {
+      const w = words[i];
+      const k = w[0];
+      (byStart[k] || (byStart[k] = [])).push(w);
+    }
+    const scored = words.slice().sort((a, b) => {
+      const ua = new Set(a).size, ub = new Set(b).size;
+      return ub - ua || b.length - a.length;
+    });
+    const chain = [scored[0]];
+    const used = new Set(scored[0]);
+    for (let guard = 0; guard < 8; guard++) {
+      let missing = 0;
+      need.forEach((c) => { if (!used.has(c)) missing++; });
+      if (!missing) break;
+      const last = chain[chain.length - 1];
+      const nexts = byStart[last[last.length - 1]] || [];
+      let best = null, bestN = -1;
+      for (let i = 0; i < nexts.length; i++) {
+        const w = nexts[i];
+        if (chain.indexOf(w) !== -1) continue;
+        let n = 0;
+        for (let j = 0; j < w.length; j++) if (need.has(w[j]) && !used.has(w[j])) n++;
+        if (n > bestN) { bestN = n; best = w; }
+      }
+      if (!best || bestN <= 0) break;
+      chain.push(best);
+      for (let j = 0; j < best.length; j++) used.add(best[j]);
+    }
+    return chain;
+  }
+
 
   function filterValues() {
     return {
@@ -426,6 +489,10 @@
       const p = el("p", "", ready
         ? (mode === "bee"
           ? "Type the 7 hive letters and a center letter. Words of 4 letters or more appear below."
+          : mode === "gen"
+            ? "Type the letters you may use. They can be reused. Every ENABLE word that only uses those letters appears below."
+            : mode === "boxed"
+              ? "Type 12 unique letters, 3 per side, clockwise from the top. Words of 3+ letters must hop sides."
           : "Type a rack, or a start / end / contains filter — no letters required.")
         : "Loading 168,000 words…");
       box.appendChild(p);
@@ -458,7 +525,7 @@
     }
 
     const wilds = (input.match(/[?*]/g) || []).length;
-    if (wilds > 2 && mode !== "pattern" && mode !== "bee" && mode !== "scramble" && mode !== "multi") {
+    if (wilds > 2 && mode !== "pattern" && mode !== "bee" && mode !== "scramble" && mode !== "multi" && mode !== "gen" && mode !== "boxed") {
       box.className = "empty";
       box.textContent = "Use at most two blank tiles (?). More than that explodes the search.";
       if (meta) meta.textContent = "";
@@ -478,14 +545,76 @@
     const exclude = f.exclude;
     const chip = document.querySelector(".len[aria-pressed='true']");
     const lenKey = chip ? chip.dataset.len : "";
-    const exact = lenKey && lenKey !== "9+" ? parseInt(lenKey, 10) : ($("length")?.value ? parseInt($("length").value, 10) : null);
+    const bodyExact = parseInt(document.body.dataset.exact || "", 10);
+    const exact = lenKey && lenKey !== "9+" ? parseInt(lenKey, 10) : ($("length")?.value ? parseInt($("length").value, 10) : (bodyExact || null));
     const minNine = lenKey === "9+";
-    const pattern = mode === "wordle" ? wordlePattern() : mode === "pattern" ? input.toLowerCase().replace(/[^a-z?.*]/g, "") : "";
-    const maxLen = input ? input.replace(/[^a-zA-Z?*]/g, "").length : 15;
-    const minLen = 2;
+    const pattern = mode === "wordle" ? wordlePattern() : mode === "pattern" ? input.toLowerCase().replace(/[^a-z?.*_]/g, "").replace(/_/g, "?") : "";
+    const maxLen = input ? input.replace(/[^a-zA-Z?*_]/g, "").length : 15;
+    const minLen = parseInt(document.body.dataset.minlen || "", 10) || 2;
     const matches = [];
 
-    if (mode === "bee") {
+    if (mode === "boxed") {
+      const sides = boxedSides(input);
+      const letters12 = sides ? sides.join("") : "";
+      const unique = new Set(letters12);
+      if (!sides || unique.size !== 12) {
+        box.className = "empty";
+        box.textContent = !sides
+          ? "Need 12 letters: 3 on each side, clockwise from the top."
+          : "Letter Boxed needs 12 unique letters. Repeated letters cannot sit on the square.";
+        if (meta) meta.textContent = "";
+        if (copy) copy.hidden = true;
+        hideDefine();
+        hideNextPlay();
+        hideBest();
+        hideJumps();
+        if ($("share")) $("share").hidden = true;
+        return [];
+      }
+      const from = exact || (minNine ? 9 : 3);
+      const to = exact || 15;
+      for (let len = Math.min(to, 15); len >= Math.max(from, 3); len--) {
+        const list = byLen[len] || [];
+        for (const word of list) {
+          if (!boxedOk(word, sides)) continue;
+          if (starts && !word.startsWith(starts)) continue;
+          if (ends && !word.endsWith(ends)) continue;
+          if (contains && !matchesContains(word, contains)) continue;
+          if (exclude && [...exclude].some((c) => word.includes(c))) continue;
+          const cover = new Set(word).size;
+          matches.push({ word, len: word.length, score: word.length + cover, cover });
+        }
+      }
+    } else if (mode === "gen") {
+      const hive = [...new Set(input.toLowerCase().replace(/[^a-z]/g, "").split(""))];
+      if (hive.length < 2) {
+        box.className = "empty";
+        box.textContent = "Type at least two letters. They can be reused in every word.";
+        if (meta) meta.textContent = "";
+        if (copy) copy.hidden = true;
+        hideDefine();
+        hideNextPlay();
+        hideBest();
+        hideJumps();
+        if ($("share")) $("share").hidden = true;
+        return [];
+      }
+      const hiveSet = new Set(hive);
+      const from = exact || (minNine ? 9 : Math.max(minLen, 3));
+      const to = exact || 15;
+      for (let len = Math.min(to, 15); len >= from; len--) {
+        const list = byLen[len] || [];
+        for (const word of list) {
+          if (![...word].every((c) => hiveSet.has(c))) continue;
+          if (starts && !word.startsWith(starts)) continue;
+          if (ends && !word.endsWith(ends)) continue;
+          if (contains && !matchesContains(word, contains)) continue;
+          if (exclude && [...exclude].some((c) => word.includes(c))) continue;
+          const pangram = hive.every((c) => word.includes(c));
+          matches.push({ word, len: word.length, score: scoreWord(word), pangram });
+        }
+      }
+    } else if (mode === "bee") {
       const hive = [...new Set(input.toLowerCase().replace(/[^a-z]/g, "").split(""))];
       const center = (($("center")?.value || hive[0] || "") + "").toLowerCase().replace(/[^a-z]/g, "").slice(0, 1);
       if (hive.length < 4 || hive.length > 7 || !center) {
@@ -521,7 +650,7 @@
         }
       }
     } else if (mode === "pattern" && input) {
-      const raw = input.toLowerCase().replace(/[^a-z?.*]/g, "");
+      const raw = input.toLowerCase().replace(/[^a-z?.*_]/g, "").replace(/_/g, "?");
       const len = raw.length;
       const list = byLen[len] || [];
       const pat = raw.replace(/[?.*]/g, "_");
@@ -582,6 +711,10 @@
           ? "No 5-letter matches. Check greens, or take a letter out of yellows/greys."
           : mode === "bee"
             ? "No ENABLE words of 4+ letters use only that hive and the center letter. Try a different center."
+          : mode === "gen"
+            ? "No ENABLE words of 3+ letters use only those letters, even with reuse. Add a vowel."
+          : mode === "boxed"
+            ? "No ENABLE words hop around that square. Check that consecutive letters sit on different sides."
           : filterOnly
             ? "No ENABLE words match that start / end / contains filter. Try a shorter prefix."
             : "No words match yet. Type ? for a blank, or switch mode.");
@@ -610,6 +743,14 @@
     const lens = Object.keys(grouped).map(Number).sort((a, b) => b - a);
     let truncated = false;
     const frag = document.createDocumentFragment();
+    if (mode === "boxed") {
+      const sides = boxedSides(input);
+      const chain = sides ? boxedChain(matches.map((m) => m.word), sides) : [];
+      if (chain.length) {
+        const note = el("p", "mini", "Suggested chain: " + chain.join(" → ").toUpperCase());
+        frag.appendChild(note);
+      }
+    }
     lens.forEach((len) => {
       const group = el("div", "group");
       group.id = "len-" + len;
@@ -623,7 +764,7 @@
       title.appendChild(el("span", "", words.length.toLocaleString("en-GB") + (shown.length < words.length ? " · showing " + shown.length : "")));
       const grid = el("div", "grid");
       shown.forEach((m) => {
-        const card = el("button", (m.pangram || (mode !== "bee" && m.len >= 7 && m.len === maxLen)) ? "word bingo" : "word", null);
+        const card = el("button", (m.pangram || (mode !== "bee" && mode !== "gen" && mode !== "boxed" && m.len >= 7 && m.len === maxLen)) ? "word bingo" : "word", null);
         card.type = "button";
         if (typeof dailyAnswer === "string" && m.word === dailyAnswer.toLowerCase()) card.classList.add("daily-hit");
         card.dataset.word = m.word;
@@ -640,12 +781,15 @@
     box.appendChild(frag);
     lastRack = input;
     lastMatches = matches;
-    const bingoNote = mode === "bee"
+    const bingoNote = mode === "bee" || mode === "gen"
       ? matches.some((m) => m.pangram)
       : (mode !== "wordle" && input && matches.some((m) => m.len >= 7 && m.len === maxLen));
-    const label = mode === "bee" ? "from this hive" : (filterOnly ? filterLabel(f) : "from your letters");
+    const label = mode === "bee" ? "from this hive"
+      : mode === "gen" ? "using these letters (reuse allowed)"
+      : mode === "boxed" ? "that hop this square"
+      : (filterOnly ? filterLabel(f) : "from your letters");
     setResultsHeading(totalFound.toLocaleString("en-GB") + " words " + label + " ");
-    if (meta) meta.textContent = truncated ? "· add a letter or pick a length to see the rest" : (bingoNote ? (mode === "bee" ? "· pangrams marked" : "· bingos marked") : "");
+    if (meta) meta.textContent = truncated ? "· add a letter or pick a length to see the rest" : (bingoNote ? ((mode === "bee" || mode === "gen") ? "· pangrams marked" : "· bingos marked") : "");
     const all = matches.map((m) => m.word).join(", ");
     if (copy) {
       copy.hidden = false;
@@ -711,6 +855,14 @@
     }
     if (mode === "bee") {
       document.title = v ? ("Spelling Bee helper – " + v) : BASE_TITLE;
+      return;
+    }
+    if (mode === "gen") {
+      document.title = v ? ("Words from " + v + " – Word generator") : BASE_TITLE;
+      return;
+    }
+    if (mode === "boxed") {
+      document.title = v ? ("Letter Boxed – " + v) : BASE_TITLE;
       return;
     }
     if (mode === "scramble") {
@@ -980,8 +1132,12 @@
     add("/word-maker", "Word maker");
     add("/unjumble", "Unjumble");
     add("/word-scrambler", "Word scrambler");
+    add("/word-generator", "Word generator");
     add("/spelling-bee", "Spelling Bee helper");
+    add("/letter-boxed", "Letter Boxed");
+    add("/text-twist-solver", "Text Twist");
     add("/crossword-solver", "Crossword solver");
+    add("/hangman-solver", "Hangman solver");
     add("/word-checker", "Check a word");
     if (n === 5) add("/5-letter-words-starting-with", "5-letter starting with");
     else add("/words-starting-with", "Words starting with");
@@ -1046,6 +1202,8 @@
     if (wordle) wordle.hidden = mode !== "wordle";
     const bee = $("beeFields");
     if (bee) bee.hidden = mode !== "bee";
+    const boxed = $("boxedFields");
+    if (boxed) boxed.hidden = mode !== "boxed";
     if (mode === "wordle" && $("length") && !$("length").value) $("length").value = "5";
     const coach = $("coach");
     if (coach && COACH[mode]) coach.textContent = COACH[mode];
@@ -1066,6 +1224,17 @@
     collect();
     if (matchMedia("(max-width: 720px)").matches) $("results")?.scrollIntoView({ behavior: "smooth", block: "start" });
   });
+  $("randomWord")?.addEventListener("click", () => {
+    if (!ready) return;
+    const chip = document.querySelector(".len[aria-pressed='true']");
+    const lenKey = chip ? chip.dataset.len : "";
+    const n = (lenKey && lenKey !== "9+" ? parseInt(lenKey, 10) : ($("length")?.value ? parseInt($("length").value, 10) : 7)) || 7;
+    const list = byLen[n] || byLen[7] || [];
+    if (!list.length) return;
+    lettersEl.value = list[Math.floor(Math.random() * list.length)].toUpperCase();
+    collect();
+    lettersEl.focus();
+  });
   lettersEl.addEventListener("input", () => {
     const tool = document.body.dataset.tool || mode;
     let clean;
@@ -1075,10 +1244,21 @@
       clean = lettersEl.value.toUpperCase().replace(/[^A-Z]/g, "").slice(0, 20);
     } else if (tool === "bee" || mode === "bee") {
       clean = lettersEl.value.toUpperCase().replace(/[^A-Z]/g, "").slice(0, 7);
+    } else if (tool === "boxed" || mode === "boxed") {
+      clean = lettersEl.value.toUpperCase().replace(/[^A-Z]/g, "").slice(0, 12);
+    } else if (tool === "pattern" || mode === "pattern") {
+      clean = lettersEl.value.toUpperCase().replace(/[^A-Z?*_]/g, "").replace(/_/g, "?").slice(0, 16);
+    } else if (tool === "gen" || mode === "gen") {
+      clean = lettersEl.value.toUpperCase().replace(/[^A-Z]/g, "").slice(0, 16);
     } else {
       clean = lettersEl.value.toUpperCase().replace(/[^A-Z?*]/g, "").slice(0, 16);
     }
     if (clean !== lettersEl.value) lettersEl.value = clean;
+    if ((tool === "boxed" || mode === "boxed") && clean.length === 12) {
+      ["side0", "side1", "side2", "side3"].forEach((id, i) => {
+        if ($(id)) $(id).value = clean.slice(i * 3, i * 3 + 3);
+      });
+    }
     const c = $("clear");
     if (c) c.hidden = !lettersEl.value;
     schedule();
@@ -1174,12 +1354,15 @@
     if (coach) coach.after(box);
     else lettersEl.parentNode.after(box);
   })();
-  ["starts", "ends", "contains", "exclude", "greys", "center"].forEach((id) => {
+  ["starts", "ends", "contains", "exclude", "greys", "center", "side0", "side1", "side2", "side3"].forEach((id) => {
     $(id)?.addEventListener("input", (e) => {
-      const max = id === "center" ? 1 : 99;
+      const max = id === "center" ? 1 : id.indexOf("side") === 0 ? 3 : 99;
       const clean = e.target.value.toUpperCase().replace(/[^A-Z]/g, "").slice(0, max);
       if (clean !== e.target.value) e.target.value = clean;
-      if (hasQuery() || (id === "center" && clean)) schedule();
+      if (id.indexOf("side") === 0 && (mode === "boxed" || document.body.dataset.tool === "boxed")) {
+        lettersEl.value = ["side0", "side1", "side2", "side3"].map((s) => ($(s)?.value || "")).join("");
+      }
+      if (hasQuery() || (id === "center" && clean) || id.indexOf("side") === 0) schedule();
     });
   });
   $("length")?.addEventListener("input", () => { if (hasQuery()) schedule(); });
@@ -1205,6 +1388,11 @@
       if (btn.dataset.ends != null && $("ends")) $("ends").value = btn.dataset.ends;
       if (btn.dataset.contains != null && $("contains")) $("contains").value = btn.dataset.contains;
       if (btn.dataset.center != null && $("center")) $("center").value = btn.dataset.center;
+      if (btn.dataset.sides) {
+        const parts = btn.dataset.sides.toUpperCase().split(/[,\s]+/);
+        parts.forEach((p, i) => { if ($("side" + i)) $("side" + i).value = p.replace(/[^A-Z]/g, "").slice(0, 3); });
+        lettersEl.value = parts.join("").replace(/[^A-Z]/g, "").slice(0, 12);
+      }
       collect();
       const hub = document.body.dataset.hub;
       (hub === "starts" ? $("starts") : hub === "ends" ? $("ends") : hub === "contains" ? $("contains") : lettersEl)?.focus();
@@ -1396,7 +1584,7 @@
 
   const params = new URLSearchParams(location.search);
   const tool = document.body.dataset.tool || "subset";
-  const allowedMode = { subset: 1, anagram: 1, wordle: 1, pattern: 1, check: 1, bee: 1, multi: 1, scramble: 1 };
+  const allowedMode = { subset: 1, anagram: 1, wordle: 1, pattern: 1, check: 1, bee: 1, multi: 1, scramble: 1, gen: 1, boxed: 1 };
   if (allowedMode[params.get("mode")]) mode = params.get("mode");
   const qRaw = params.get("q") || "";
   let qIn;
@@ -1406,6 +1594,12 @@
     qIn = qRaw.toUpperCase().replace(/[^A-Z]/g, "").slice(0, 20);
   } else if (tool === "bee" || mode === "bee") {
     qIn = qRaw.toUpperCase().replace(/[^A-Z]/g, "").slice(0, 7);
+  } else if (tool === "boxed" || mode === "boxed") {
+    qIn = qRaw.toUpperCase().replace(/[^A-Z]/g, "").slice(0, 12);
+  } else if (tool === "pattern" || mode === "pattern") {
+    qIn = qRaw.toUpperCase().replace(/[^A-Z?*_]/g, "").replace(/_/g, "?").slice(0, 16);
+  } else if (tool === "gen" || mode === "gen") {
+    qIn = qRaw.toUpperCase().replace(/[^A-Z]/g, "").slice(0, 16);
   } else {
     qIn = qRaw.toUpperCase().replace(/[^A-Z?*]/g, "").slice(0, 16);
   }
@@ -1424,6 +1618,17 @@
     document.querySelectorAll(".len").forEach((b) => {
       b.setAttribute("aria-pressed", b.dataset.len === lenIn ? "true" : "false");
     });
+  } else if (document.body.dataset.exact) {
+    const lock = document.body.dataset.exact;
+    if ($("length")) $("length").value = lock;
+    document.querySelectorAll(".len").forEach((b) => {
+      b.setAttribute("aria-pressed", b.dataset.len === lock ? "true" : "false");
+    });
+  }
+  if ((tool === "boxed" || mode === "boxed") && qIn.length === 12) {
+    ["side0", "side1", "side2", "side3"].forEach((id, i) => {
+      if ($(id)) $(id).value = qIn.slice(i * 3, i * 3 + 3);
+    });
   }
   setMode(mode);
   const hub = document.body.dataset.hub;
@@ -1436,6 +1641,8 @@
   if (hub === "contains" && $("coach") && !qIn) $("coach").textContent = "Type a letter or cluster (TH, ING, QU). A rack is optional.";
   if (hub === "five-start" && $("coach") && !qIn) $("coach").textContent = "Type a starting letter. Length is locked to 5 for Wordle lists.";
   if ((tool === "bee" || mode === "bee") && $("coach") && !qIn) $("coach").textContent = COACH.bee;
+  if ((tool === "gen" || mode === "gen") && $("coach") && !qIn) $("coach").textContent = COACH.gen;
+  if ((tool === "boxed" || mode === "boxed") && $("coach") && !qIn) $("coach").textContent = COACH.boxed;
   loadDict();
 
   (function initAds() {

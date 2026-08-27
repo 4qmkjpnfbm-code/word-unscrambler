@@ -50,6 +50,14 @@ Updated: 2026-08-27
 - Word scrambler: https://lettersunscrambler.com/word-scrambler
 - Spelling Bee helper: https://lettersunscrambler.com/spelling-bee
 - Multiple-word unscrambler: https://lettersunscrambler.com/multiple-word-unscrambler
+- 7-letter unscrambler: https://lettersunscrambler.com/7-letter-unscrambler
+- 8-letter unscrambler: https://lettersunscrambler.com/8-letter-unscrambler
+- 10-letter unscrambler: https://lettersunscrambler.com/10-letter-unscrambler
+- Word generator: https://lettersunscrambler.com/word-generator
+- Letter Boxed helper: https://lettersunscrambler.com/letter-boxed
+- Text Twist solver: https://lettersunscrambler.com/text-twist-solver
+- Hangman solver: https://lettersunscrambler.com/hangman-solver
+- Is it a word: https://lettersunscrambler.com/is-it-a-word
 - 9-letter words: https://lettersunscrambler.com/9-letter-words
 - 10-letter words: https://lettersunscrambler.com/10-letter-words
 - 5-letter words starting with: https://lettersunscrambler.com/5-letter-words-starting-with

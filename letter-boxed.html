@@ -62,25 +62,25 @@
   </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Word Scrambler – Scramble Words & Solve Scrambles</title>
-  <meta name="description" content="Free word scrambler. Shuffle a word into a puzzle, see how many ENABLE anagrams it has, or solve a scramble. For teachers, worksheets and word scramble games." />
+  <title>Letter Boxed Solver – Square Words That Hop Sides</title>
+  <meta name="description" content="Free Letter Boxed helper. Enter 12 unique letters, 3 per side. Lists ENABLE words of 3+ letters that never use two consecutive letters from the same side, plus a suggested chain. Not NYT answers." />
   <meta name="robots" content="index,follow,max-image-preview:large" />
   <meta name="google-adsense-account" content="ca-pub-2666058844257008" />
   <meta name="author" content="Word Unscrambler" />
-  <link rel="canonical" href="https://lettersunscrambler.com/word-scrambler" />
+  <link rel="canonical" href="https://lettersunscrambler.com/letter-boxed" />
   <meta property="og:site_name" content="Word Unscrambler" />
-  <meta property="og:title" content="Word Scrambler – Scramble Words & Solve Scrambles" />
-  <meta property="og:description" content="Free word scrambler. Shuffle a word into a puzzle, see how many ENABLE anagrams it has, or solve a scramble. For teachers, worksheets and word scramble games." />
+  <meta property="og:title" content="Letter Boxed Solver – Square Words That Hop Sides" />
+  <meta property="og:description" content="Free Letter Boxed helper. Enter 12 unique letters, 3 per side. Lists ENABLE words of 3+ letters that never use two consecutive letters from the same side, plus a suggested chain. Not NYT answers." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://lettersunscrambler.com/word-scrambler" />
+  <meta property="og:url" content="https://lettersunscrambler.com/letter-boxed" />
   <meta property="og:image" content="https://lettersunscrambler.com/og.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:locale" content="en_GB" />
   <meta property="og:locale:alternate" content="en_US" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Word Scrambler – Scramble Words & Solve Scrambles" />
-  <meta name="twitter:description" content="Free word scrambler. Shuffle a word into a puzzle, see how many ENABLE anagrams it has, or solve a scramble. For teachers, worksheets and word scramble games." />
+  <meta name="twitter:title" content="Letter Boxed Solver – Square Words That Hop Sides" />
+  <meta name="twitter:description" content="Free Letter Boxed helper. Enter 12 unique letters, 3 per side. Lists ENABLE words of 3+ letters that never use two consecutive letters from the same side, plus a suggested chain. Not NYT answers." />
   <meta name="twitter:image" content="https://lettersunscrambler.com/og.jpg" />
   <meta name="twitter:image:alt" content="Word Unscrambler letter tiles" />
   <meta name="theme-color" content="#1f4a38" />
@@ -110,9 +110,9 @@
     gtag('js', new Date());
     gtag('config', 'G-VR1EE3K51N', { anonymize_ip: true });
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Word Unscrambler","url":"https://lettersunscrambler.com/","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"GBP"},"description":"Free online word unscrambler and anagram solver using the ENABLE English word list.","inLanguage":"en-GB"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lettersunscrambler.com/"},{"@type":"ListItem","position":2,"name":"Word scrambler","item":"https://lettersunscrambler.com/word-scrambler"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is a word scrambler the same as a word unscrambler?","acceptedAnswer":{"@type":"Answer","text":"No. A scrambler mixes a known word into a puzzle. An unscrambler takes mixed letters and lists words. This page does both: shuffle a word, or paste a scramble to list its anagrams."}},{"@type":"Question","name":"How many ways can one word be scrambled?","acceptedAnswer":{"@type":"Answer","text":"A word of n distinct letters has n! shuffles. LETTERS has repeats, so fewer unique shuffles. What matters for a puzzle is how many ENABLE anagrams exist, not how many shuffles."}},{"@type":"Question","name":"Can I scramble several words?","acceptedAnswer":{"@type":"Answer","text":"Scramble each word here, then type the mixed forms into the multiple-word unscrambler to check the answers."}}]}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Word Unscrambler","url":"https://lettersunscrambler.com/","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"GBP"},"description":"Free online word unscrambler and anagram solver using the ENABLE English word list.","inLanguage":"en-GB"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lettersunscrambler.com/"},{"@type":"ListItem","position":2,"name":"Letter Boxed","item":"https://lettersunscrambler.com/letter-boxed"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this the New York Times Letter Boxed?","acceptedAnswer":{"@type":"Answer","text":"No. Not affiliated. Paste any square to practise. ENABLE is public-domain; NYT uses its own word list, so some ENABLE words will not count officially."}},{"@type":"Question","name":"How do I enter the sides?","acceptedAnswer":{"@type":"Answer","text":"Type 12 letters clockwise from the top side (3+3+3+3), or fill the Top / Right / Bottom / Left boxes. Each side is three letters, all 12 unique."}},{"@type":"Question","name":"What is a chain?","acceptedAnswer":{"@type":"Answer","text":"A sequence of legal words where each word starts with the last letter of the one before it, and together they use every letter on the square at least once. This page suggests one greedy chain; better chains may exist."}}]}]}</script>
 </head>
-<body data-tool="scramble">
+<body data-tool="boxed">
   <a class="skip" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="wrap header-inner">
@@ -125,7 +125,7 @@
       <nav class="nav" id="site-nav" aria-label="Primary">
         <a href="/">Unscrambler</a>
         <a href="/scrabble-word-finder">Scrabble</a>
-        <a href="/anagram-solver">Anagrams</a>
+        <a href="/anagram-solver" aria-current="page">Anagrams</a>
         <a href="/wordle-helper">Wordle</a>
         <a href="/crossword-solver">Crossword</a>
         <a href="/word-lists">Lists</a>
@@ -133,11 +133,11 @@
     </div>
   </header>
 <main class="wrap" id="main">
-  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <span>Word scrambler</span></nav>
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <span>Letter Boxed</span></nav>
   <section class="hero">
-    <h1>Word scrambler</h1>
-    <p class="lede">A <strong>word scrambler</strong> is the inverse of an unscrambler: type a real word and shuffle it into a puzzle. The page also lists every ENABLE anagram so you do not publish a scramble with two answers by accident. Paste a scramble instead and it solves it.</p>
-    <p>Try <a href="/word-scrambler?q=LETTERS">LETTERS</a> or <a href="/word-scrambler?q=PUZZLES">PUZZLES</a>. Tap Reshuffle until the chunks look unlike the original. To only solve, stay here or use <a href="/unjumble">unjumble</a>.</p>
+    <h1>Letter Boxed helper</h1>
+    <p class="lede">A <strong>Letter Boxed</strong> helper finds words that hop around a square of 12 letters. Consecutive letters cannot come from the same side. Words are 3+ letters. This page lists legal ENABLE words and a greedy chain. ENABLE is not the New York Times list — practise a square, do not paste today’s official answers.</p>
+    <p>Try <a href="/letter-boxed?q=WAXEITLNRODG">WAX · EIT · LNR · ODG</a> (type 12 letters clockwise from the top). Fill Top / Right / Bottom / Left, or paste all 12 in order. Related: <a href="/spelling-bee">Spelling Bee helper</a>.</p>
   </section>
   <aside class="daily" id="daily" aria-label="Today’s scramble">
       <div>
@@ -150,7 +150,7 @@
   <section class="panel" aria-labelledby="letters-label">
       <label class="field-label" id="letters-label" for="letters">Letters</label>
       <div class="input-row">
-        <input id="letters" type="text" maxlength="20" autocomplete="off" spellcheck="false" inputmode="text" placeholder="LETTERS" aria-describedby="coach" />
+        <input id="letters" type="text" maxlength="12" autocomplete="off" spellcheck="false" inputmode="text" placeholder="WAXEITLNRODG" aria-describedby="coach" />
         <button class="primary" id="go" type="button">Find words</button>
       </div>
       <p class="coach" id="coach">Use ? for a blank tile. Words appear as you type.</p>
@@ -180,7 +180,13 @@
           <input id="greys" type="text" maxlength="16" autocomplete="off" spellcheck="false" placeholder="letters not in the word" />
           <p class="mini">Yellows go in Letters. Greens in the five boxes.</p>
         </div></div>
-      <div class="examples" aria-label="Try an example"><button class="chip" type="button" data-ex="LETTERS">LETTERS</button><button class="chip" type="button" data-ex="PUZZLES">PUZZLES</button><button class="chip" type="button" data-ex="ENGLISH">ENGLISH</button></div>
+      <div class="examples" aria-label="Try an example"><button class="chip" type="button" data-ex="WAXEITLNRODG" data-sides="WAX,EIT,LNR,ODG">WAX · EIT · LNR · ODG</button><button class="chip" type="button" data-ex="PLANETQRSUVW" data-sides="PLA,NET,QRS,UVW">PLA · NET · QRS · UVW</button></div>
+      <div class="filters quick-filters" id="boxedFields" aria-label="Square sides">
+        <div><label for="side0">Top</label><input id="side0" type="text" maxlength="3" autocomplete="off" spellcheck="false" placeholder="ABC" /></div>
+        <div><label for="side1">Right</label><input id="side1" type="text" maxlength="3" autocomplete="off" spellcheck="false" placeholder="DEF" /></div>
+        <div><label for="side2">Bottom</label><input id="side2" type="text" maxlength="3" autocomplete="off" spellcheck="false" placeholder="GHI" /></div>
+        <div><label for="side3">Left</label><input id="side3" type="text" maxlength="3" autocomplete="off" spellcheck="false" placeholder="JKL" /></div>
+      </div>
       <div class="filters quick-filters" aria-label="Letter filters">
         <div><label for="starts">Starts with</label><input id="starts" type="text" maxlength="5" autocomplete="off" placeholder="TH" /></div>
         <div><label for="ends">Ends with</label><input id="ends" type="text" maxlength="5" autocomplete="off" placeholder="ING" /></div>
@@ -232,22 +238,22 @@
       <a class="bento-card" href="/scrabble-word-finder"><p class="try-label">Board games</p><h3>Scrabble finder</h3><p>Scores and bingos for a seven-tile rack.</p></a>
       <a class="bento-card" href="/2-letter-words"><p class="try-label">Learn</p><h3>Two-letter words</h3><p>The list that wins close games.</p></a>
     </section>
-  <section class="prose"><h2>Create a scrambled-word puzzle</h2>
-    <p>Word.tips, UnscrambleX and WordUnscrambler.net all ship a scrambler as well as an unscrambler. Teachers, quiz hosts and worksheet makers need the inverse: a fair mixed-up word. This page shuffles in the browser and tells you if the anagram is unique.</p>
-    <p>A good scramble breaks obvious chunks (ING, TION, QU), moves every letter, and has one ENABLE solution. If the list shows several anagrams, pick a rarer word or accept that solvers may find the other answer.</p>
-    <p>Solving a scramble is the same as unjumbling. Related: <a href="/unjumble">unjumble</a>, <a href="/jumble-solver">jumble solver</a> and the <a href="/letter-unscrambler">letter unscrambler</a>.</p>
+  <section class="prose"><h2>How the square works</h2>
+    <p>Rivals rank for “letter boxed solver” and “letter boxed hints” with daily NYT answer pages. We do not publish today’s NYT answers. This is a solver: paste any 12 unique letters, 3 per side.</p>
+    <p>Rules used here: 12 unique letters; words 3 letters or longer; consecutive letters must sit on different sides; letters may be reused in later words. A solution is a chain where the last letter of one word is the first letter of the next, covering all 12 letters. The suggested chain is greedy, not always the shortest.</p>
+    <p>Not affiliated with The New York Times. Related: <a href="/spelling-bee">Spelling Bee helper</a>, <a href="/word-generator">word generator</a> (reuse, no sides) and <a href="/crossword-solver">crossword solver</a>.</p>
     <h2>FAQ</h2>
     <details open>
-      <summary>Is a word scrambler the same as a word unscrambler?</summary>
-      <p>No. A scrambler mixes a known word into a puzzle. An unscrambler takes mixed letters and lists words. This page does both: shuffle a word, or paste a scramble to list its anagrams.</p>
+      <summary>Is this the New York Times Letter Boxed?</summary>
+      <p>No. Not affiliated. Paste any square to practise. ENABLE is public-domain; NYT uses its own word list, so some ENABLE words will not count officially.</p>
     </details>
     <details>
-      <summary>How many ways can one word be scrambled?</summary>
-      <p>A word of n distinct letters has n! shuffles. LETTERS has repeats, so fewer unique shuffles. What matters for a puzzle is how many ENABLE anagrams exist, not how many shuffles.</p>
+      <summary>How do I enter the sides?</summary>
+      <p>Type 12 letters clockwise from the top side (3+3+3+3), or fill the Top / Right / Bottom / Left boxes. Each side is three letters, all 12 unique.</p>
     </details>
     <details>
-      <summary>Can I scramble several words?</summary>
-      <p>Scramble each word here, then type the mixed forms into the <a href="/multiple-word-unscrambler">multiple-word unscrambler</a> to check the answers.</p>
+      <summary>What is a chain?</summary>
+      <p>A sequence of legal words where each word starts with the last letter of the one before it, and together they use every letter on the square at least once. This page suggests one greedy chain; better chains may exist.</p>
     </details>
   </section>
 </main>
@@ -265,6 +271,11 @@
         <a href="/words-from-letters">Words from letters</a>
         <a href="/word-checker">Word checker</a>
         <a href="/word-descrambler">Word descrambler</a>
+        <a href="/letter-unscrambler">Letter unscrambler</a>
+        <a href="/word-maker">Word maker</a>
+        <a href="/unjumble">Unjumble</a>
+        <a href="/word-scrambler">Word scrambler</a>
+        <a href="/spelling-bee">Spelling Bee helper</a>
       </div>
       <div>
         <p class="footer-head">Word lists</p>

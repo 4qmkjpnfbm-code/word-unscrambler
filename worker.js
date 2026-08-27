@@ -32,6 +32,18 @@ const ROUTES = {
   "/word-scrambler": "word-scrambler.html",
   "/spelling-bee": "spelling-bee.html",
   "/multiple-word-unscrambler": "multiple-word-unscrambler.html",
+  "/7-letter-unscrambler": "7-letter-unscrambler.html",
+  "/8-letter-unscrambler": "8-letter-unscrambler.html",
+  "/10-letter-unscrambler": "10-letter-unscrambler.html",
+  "/3-letter-unscrambler": "3-letter-unscrambler.html",
+  "/4-letter-unscrambler": "4-letter-unscrambler.html",
+  "/letters-unscrambler": "letters-unscrambler.html",
+  "/word-generator": "word-generator.html",
+  "/letter-boxed": "letter-boxed.html",
+  "/text-twist-solver": "text-twist-solver.html",
+  "/hangman-solver": "hangman-solver.html",
+  "/is-it-a-word": "is-it-a-word.html",
+  "/word-mix-up-solver": "word-mix-up-solver.html",
   "/2-letter-words": "2-letter-words.html",
   "/3-letter-words": "3-letter-words.html",
   "/4-letter-words": "4-letter-words.html",
@@ -210,7 +222,7 @@ async function pull(name) {
   const fromMain = name === "profit-v1.js" || name === "modern-v39.css";
   const srcs = fromMain
     ? ["https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/main/" + name + "?v=39"]
-    : [GH_MAIN + name + "?v=rival1", GH + name];
+    : [GH_MAIN + name + "?v=rival2", GH + name];
   for (let s = 0; s < srcs.length; s++) {
     for (let i = 0; i < 2; i++) {
       try {
@@ -260,6 +272,9 @@ function injectModern(htmlBuf) {
   }
   if (out.indexOf('href="/letter-unscrambler"') === -1 && out.indexOf('href="/word-descrambler">Word descrambler</a>') !== -1) {
     out = out.replace('<a href="/word-descrambler">Word descrambler</a>', '<a href="/word-descrambler">Word descrambler</a>\n        <a href="/letter-unscrambler">Letter unscrambler</a>\n        <a href="/word-maker">Word maker</a>\n        <a href="/unjumble">Unjumble</a>\n        <a href="/word-scrambler">Word scrambler</a>\n        <a href="/spelling-bee">Spelling Bee helper</a>\n        <a href="/multiple-word-unscrambler">Multiple-word unscrambler</a>');
+  }
+  if (out.indexOf('href="/word-generator"') === -1 && out.indexOf('href="/spelling-bee">Spelling Bee helper</a>') !== -1) {
+    out = out.replace('<a href="/spelling-bee">Spelling Bee helper</a>', '<a href="/spelling-bee">Spelling Bee helper</a>\n        <a href="/word-generator">Word generator</a>\n        <a href="/letter-boxed">Letter Boxed</a>\n        <a href="/7-letter-unscrambler">7-letter unscrambler</a>\n        <a href="/text-twist-solver">Text Twist solver</a>\n        <a href="/is-it-a-word">Is it a word</a>');
   }
   if (out.indexOf('href="/words-containing"') === -1 && out.indexOf('href="/bingo-stems">Bingo stems</a>') !== -1) {
     out = out.replace('<a href="/bingo-stems">Bingo stems</a>', '<a href="/bingo-stems">Bingo stems</a>\n        <a href="/words-containing">Words containing</a>');
