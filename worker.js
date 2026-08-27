@@ -19,6 +19,10 @@ const ROUTES = {
   "/guides/pattern-solver": "guide-pattern-solver.html",
   "/guides/how-to-unscramble": "guide-how-to-unscramble.html",
   "/word-lists": "word-lists.html",
+  "/words-starting-with": "words-starting-with.html",
+  "/words-ending-with": "words-ending-with.html",
+  "/5-letter-words-starting-with": "5-letter-words-starting-with.html",
+  "/word-checker": "word-checker.html",
   "/2-letter-words": "2-letter-words.html",
   "/3-letter-words": "3-letter-words.html",
   "/4-letter-words": "4-letter-words.html",
@@ -195,7 +199,7 @@ async function pull(name) {
   const fromMain = name === "profit-v1.js" || name === "modern-v39.css";
   const srcs = fromMain
     ? ["https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/main/" + name + "?v=39"]
-    : [GH_MAIN + name + "?v=b27thu4", GH + name];
+    : [GH_MAIN + name + "?v=start1", GH + name];
   for (let s = 0; s < srcs.length; s++) {
     for (let i = 0; i < 2; i++) {
       try {
@@ -230,6 +234,12 @@ function injectModern(htmlBuf) {
   }
   if (out.indexOf('href="/feedback"') === -1 && out.indexOf('href="/contact">Contact</a>') !== -1) {
     out = out.replace('<a href="/contact">Contact</a>', '<a href="/feedback">Feedback</a>\n        <a href="/contact">Contact</a>');
+  }
+  if (out.indexOf('href="/word-checker"') === -1 && out.indexOf('href="/words-from-letters">Words from letters</a>') !== -1) {
+    out = out.replace('<a href="/words-from-letters">Words from letters</a>', '<a href="/words-from-letters">Words from letters</a>\n        <a href="/word-checker">Word checker</a>');
+  }
+  if (out.indexOf('href="/words-starting-with"') === -1 && out.indexOf('href="/bingo-stems">Bingo stems</a>') !== -1) {
+    out = out.replace('<a href="/bingo-stems">Bingo stems</a>', '<a href="/bingo-stems">Bingo stems</a>\n        <a href="/words-starting-with">Words starting with</a>\n        <a href="/words-ending-with">Words ending with</a>\n        <a href="/5-letter-words-starting-with">5-letter starting with</a>');
   }
   if (out.indexOf('id="adAfterResults"') === -1 && out.indexOf('id="results"') !== -1) {
     const ad = '<aside class="ad-region ad-after-results" id="adAfterResults" hidden aria-label="Advertisement"><p class="ad-label">Advertisement</p><div class="ad-box ad-box-slim"><ins class="adsbygoogle" style="display:block;min-height:90px" data-ad-client="ca-pub-2666058844257008" data-ad-format="horizontal" data-full-width-responsive="true"></ins></div></aside>';
@@ -282,7 +292,7 @@ export default {
     const isHtml = name.indexOf(".") === -1 || name.slice(-5) === ".html";
     if (isHtml) buf = injectModern(buf);
     return new Response(buf, {
-      headers: headers(name, (url.searchParams.has("q") || url.searchParams.has("mode"))
+      headers: headers(name, (url.searchParams.has("q") || url.searchParams.has("mode") || url.searchParams.has("starts") || url.searchParams.has("ends") || url.searchParams.has("contains") || url.searchParams.has("len"))
         ? { "x-robots-tag": "noindex, follow" }
         : undefined)
     });

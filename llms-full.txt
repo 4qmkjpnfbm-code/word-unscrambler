@@ -44,6 +44,10 @@ SCRABBLE, TRAIN, EARTH: see https://lettersunscrambler.com/unscramble
 - https://lettersunscrambler.com/jumble-solver — newspaper-style jumbles
 - https://lettersunscrambler.com/crossword-solver — pattern with ? for unknown squares
 - https://lettersunscrambler.com/words-from-letters — subset search (“words from these letters”)
+- https://lettersunscrambler.com/word-checker — is this a valid ENABLE word?
+- https://lettersunscrambler.com/words-starting-with — A–Z prefixes, no rack required
+- https://lettersunscrambler.com/words-ending-with — suffixes such as ING, TION, NESS
+- https://lettersunscrambler.com/5-letter-words-starting-with — Wordle-length lists by first letter
 
 ## Word lists
 

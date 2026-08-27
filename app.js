@@ -15,7 +15,7 @@
     subset: "Type the letters on your rack. Every word you can make appears below — including shorter ones.",
     anagram: "Type all the letters. Only words that use every letter are shown.",
     wordle: "Green boxes = right letter, right place. Letters box = yellows. Exclude = greys.",
-    pattern: "Type the crossword pattern. Use ? for a blank square, like C?O??."
+    check: "Type a word. ENABLE is checked in this browser — nothing is sent to a server."
   };
 
   const $ = (id) => document.getElementById(id);
@@ -106,6 +106,123 @@
     return true;
   }
 
+  function filterValues() {
+    return {
+      starts: ($("starts")?.value || "").toLowerCase().replace(/[^a-z]/g, ""),
+      ends: ($("ends")?.value || "").toLowerCase().replace(/[^a-z]/g, ""),
+      contains: ($("contains")?.value || "").toLowerCase().replace(/[^a-z]/g, ""),
+      exclude: (($("exclude")?.value || "") + ($("greys")?.value || "")).toLowerCase().replace(/[^a-z]/g, "")
+    };
+  }
+
+  function hasFilters(f) {
+    return Boolean(f.starts || f.ends || f.contains || f.exclude);
+  }
+
+  function hasQuery() {
+    return Boolean(lettersEl.value.trim() || mode === "wordle" || mode === "check" || hasFilters(filterValues()));
+  }
+
+  function filterLabel(f) {
+    const bits = [];
+    if (f.starts) bits.push("starting with " + f.starts.toUpperCase());
+    if (f.ends) bits.push("ending with " + f.ends.toUpperCase());
+    if (f.contains) bits.push("containing " + f.contains.toUpperCase());
+    return bits.join(", ");
+  }
+
+  function renderCheck(raw) {
+    const box = $("results");
+    const meta = $("resultMeta");
+    const copy = $("copy");
+    hideDefine();
+    hideNextPlay();
+    hideBest();
+    hideJumps();
+    if ($("share")) $("share").hidden = true;
+    if (copy) copy.hidden = true;
+    if (!box) return [];
+    box.replaceChildren();
+    const w = (raw || "").toLowerCase().replace(/[^a-z]/g, "");
+    if (!w) {
+      box.className = "empty";
+      const p = el("p", "", ready ? "Type a word. ENABLE is checked in this browser — nothing is sent away." : "Loading 168,000 words…");
+      box.appendChild(p);
+      if (ready) {
+        const row = el("div", "examples");
+        ["QI", "QAT", "LISTEN", "XYZZY"].forEach((ex) => {
+          const b = el("button", "chip", ex);
+          b.type = "button";
+          b.addEventListener("click", () => { lettersEl.value = ex; collect(); lettersEl.focus(); });
+          row.appendChild(b);
+        });
+        box.appendChild(row);
+      }
+      setResultsHeading("Word checker ");
+      if (meta) meta.textContent = "";
+      syncShare("");
+      return [];
+    }
+    if (!ready) {
+      box.className = "empty";
+      box.textContent = "Dictionary still loading. Try again in a moment.";
+      return [];
+    }
+    const valid = wordSet.has(w);
+    box.className = "";
+    const card = el("aside", valid ? "check-verdict is-yes" : "check-verdict is-no");
+    card.appendChild(el("p", "try-label", "ENABLE dictionary"));
+    card.appendChild(el("p", "check-word", w));
+    if (valid) {
+      card.appendChild(el("p", "best-meta", "Valid word · " + scoreWord(w) + " pts · " + w.length + " letters"));
+      const def = el("p", "best-def");
+      card.appendChild(def);
+      lookup(w).then((text) => { if (def.isConnected) def.textContent = text; });
+    } else {
+      card.appendChild(el("p", "best-meta", "Not in ENABLE. Not a valid word on this site."));
+    }
+    const play = el("a", "chip", valid ? "Unscramble " + w.toUpperCase() : "Unscramble these letters instead");
+    play.href = "/?q=" + encodeURIComponent(w.toUpperCase());
+    card.appendChild(play);
+    box.appendChild(card);
+    setResultsHeading(valid ? w.toUpperCase() + " is a word " : w.toUpperCase() + " is not a word ");
+    if (meta) meta.textContent = valid ? "· " + scoreWord(w) + " pts" : "";
+    syncShare(lettersEl.value.trim());
+    syncTitle(lettersEl.value.trim());
+    if ($("share")) $("share").hidden = false;
+    if (!valid) {
+      renderNextPlay(w);
+      return [];
+    }
+    const family = (bySig[sig(w)] || []).filter((x) => x !== w);
+    const { front, back } = hooksOf(w);
+    const extra = [];
+    family.forEach((word) => extra.push({ word, len: word.length, score: scoreWord(word), tag: "anagram" }));
+    front.concat(back).forEach((word) => extra.push({ word, len: word.length, score: scoreWord(word), tag: "hook" }));
+    if (extra.length) {
+      const group = el("div", "group");
+      const title = el("div", "group-title");
+      title.appendChild(el("span", "", "Anagrams and hooks"));
+      title.appendChild(el("span", "", String(extra.length)));
+      const grid = el("div", "grid");
+      extra.forEach((m) => {
+        const btn = el("button", "word", null);
+        btn.type = "button";
+        btn.dataset.word = m.word;
+        btn.appendChild(el("b", "", m.word));
+        btn.appendChild(el("span", "pts", m.tag + " · " + m.score + " pts"));
+        btn.addEventListener("click", () => pickWord(m, btn, w.length));
+        grid.appendChild(btn);
+      });
+      group.appendChild(title);
+      group.appendChild(grid);
+      box.appendChild(group);
+    }
+    renderNextPlay(w);
+    showDefine({ word: w, score: scoreWord(w), len: w.length }, w.length);
+    return [{ word: w, len: w.length, score: scoreWord(w) }];
+  }
+
   function collect() {
     const input = lettersEl.value.trim();
     const box = $("results");
@@ -115,12 +232,17 @@
     box.replaceChildren();
     renderTiles(input);
 
-    if (!input && mode !== "wordle") {
+    if (mode === "check") return renderCheck(input);
+
+    const f = filterValues();
+    const filterOnly = !input && hasFilters(f);
+
+    if (!input && mode !== "wordle" && !filterOnly) {
       box.className = "empty";
       box.replaceChildren();
-      const p = el("p", "", ready ? "Type a rack above. Try a famous one:" : "Loading 168,000 words…");
+      const p = el("p", "", ready ? "Type a rack, or a start / end / contains filter — no letters required." : "Loading 168,000 words…");
       box.appendChild(p);
-      if (ready) {
+      if (ready && !document.body.dataset.hub) {
         const row = el("div", "examples");
         ["LISTEN", "A?PLE", "AEINRST"].forEach((ex) => {
           const b = el("button", "chip", ex);
@@ -163,10 +285,10 @@
     }
 
     const avail = countsOf(input);
-    const starts = ($("starts")?.value || "").toLowerCase().trim();
-    const ends = ($("ends")?.value || "").toLowerCase().trim();
-    const contains = ($("contains")?.value || "").toLowerCase().trim();
-    const exclude = (($("exclude")?.value || "") + ($("greys")?.value || "")).toLowerCase().replace(/[^a-z]/g, "");
+    const starts = f.starts;
+    const ends = f.ends;
+    const contains = f.contains;
+    const exclude = f.exclude;
     const chip = document.querySelector(".len[aria-pressed='true']");
     const lenKey = chip ? chip.dataset.len : "";
     const exact = lenKey && lenKey !== "9+" ? parseInt(lenKey, 10) : ($("length")?.value ? parseInt($("length").value, 10) : null);
@@ -176,7 +298,7 @@
     const minLen = 2;
     const matches = [];
 
-    if (mode === "pattern") {
+    if (mode === "pattern" && input) {
       const raw = input.toLowerCase().replace(/[^a-z?.*]/g, "");
       const len = raw.length;
       const list = byLen[len] || [];
@@ -189,7 +311,7 @@
         if (exclude && [...exclude].some((c) => word.includes(c))) continue;
           matches.push({ word, len: word.length, score: scoreWord(word) });
       }
-    } else if (mode === "anagram" && !avail.wild) {
+    } else if (mode === "anagram" && input && !avail.wild) {
       const key = sig(input.toLowerCase().replace(/[^a-z]/g, ""));
       const list = bySig[key] || [];
       for (const word of list) {
@@ -205,7 +327,7 @@
       const lo = mode === "wordle" ? 5 : from;
       const hi = mode === "wordle" ? 5 : Math.min(to, 15);
       for (let len = hi; len >= lo; len--) {
-        if (mode === "anagram" && len !== maxLen) continue;
+        if (mode === "anagram" && input && len !== maxLen) continue;
         const list = byLen[len] || [];
         for (const word of list) {
           if (word.length !== len) continue;
@@ -223,7 +345,7 @@
               }
               if (!ok) continue;
             }
-          } else if (!canForm(word, avail)) continue;
+          } else if (input && !canForm(word, avail)) continue;
           matches.push({ word, len: word.length, score: scoreWord(word) });
         }
       }
@@ -236,7 +358,9 @@
         ? "No exact anagrams for these letters. Shorter words still exist in All words."
         : mode === "wordle"
           ? "No 5-letter matches. Check greens, or take a letter out of yellows/greys."
-          : "No words match yet. Type ? for a blank, or switch mode.");
+          : filterOnly
+            ? "No ENABLE words match that start / end / contains filter. Try a shorter prefix."
+            : "No words match yet. Type ? for a blank, or switch mode.");
       box.appendChild(p);
       if (mode === "anagram") {
         const b = el("button", "primary", "Show shorter words");
@@ -255,10 +379,13 @@
     }
 
     box.className = "";
+    const totalFound = matches.length;
+    const MAX_PER_LEN = 60;
     const grouped = {};
     for (const m of matches) (grouped[m.len] ||= []).push(m);
-    const frag = document.createDocumentFragment();
     const lens = Object.keys(grouped).map(Number).sort((a, b) => b - a);
+    let truncated = false;
+    const frag = document.createDocumentFragment();
     lens.forEach((len) => {
       const group = el("div", "group");
       group.id = "len-" + len;
@@ -266,10 +393,12 @@
       const words = grouped[len];
       if (sortBy === "alpha") words.sort((a, b) => a.word.localeCompare(b.word));
       else words.sort((a, b) => b.score - a.score || a.word.localeCompare(b.word));
+      const shown = words.length > MAX_PER_LEN ? words.slice(0, MAX_PER_LEN) : words;
+      if (shown.length < words.length) truncated = true;
       title.appendChild(el("span", "", len + "-letter words"));
-      title.appendChild(el("span", "", words.length.toLocaleString("en-GB")));
+      title.appendChild(el("span", "", words.length.toLocaleString("en-GB") + (shown.length < words.length ? " · showing " + shown.length : "")));
       const grid = el("div", "grid");
-      words.forEach((m) => {
+      shown.forEach((m) => {
         const card = el("button", m.len >= 7 && m.len === maxLen ? "word bingo" : "word", null);
         card.type = "button";
         if (typeof dailyAnswer === "string" && m.word === dailyAnswer.toLowerCase()) card.classList.add("daily-hit");
@@ -287,9 +416,10 @@
     box.appendChild(frag);
     lastRack = input;
     lastMatches = matches;
-    const bingoNote = mode !== "wordle" && matches.some((m) => m.len >= 7 && m.len === maxLen);
-    setResultsHeading(matches.length.toLocaleString("en-GB") + " words from your letters ");
-    if (meta) meta.textContent = bingoNote ? "· bingos marked" : "";
+    const bingoNote = mode !== "wordle" && input && matches.some((m) => m.len >= 7 && m.len === maxLen);
+    const label = filterOnly ? filterLabel(f) : "from your letters";
+    setResultsHeading(totalFound.toLocaleString("en-GB") + " words " + label + " ");
+    if (meta) meta.textContent = truncated ? "· add a letter or pick a length to see the rest" : (bingoNote ? "· bingos marked" : "");
     const all = matches.map((m) => m.word).join(", ");
     if (copy) {
       copy.hidden = false;
@@ -332,6 +462,13 @@
       const defaultMode = document.body.dataset.tool || "subset";
       if (mode && mode !== defaultMode) u.searchParams.set("mode", mode);
       else u.searchParams.delete("mode");
+      const f = filterValues();
+      if (f.starts) u.searchParams.set("starts", f.starts.toUpperCase());
+      else u.searchParams.delete("starts");
+      if (f.ends) u.searchParams.set("ends", f.ends.toUpperCase());
+      else u.searchParams.delete("ends");
+      if (f.contains) u.searchParams.set("contains", f.contains.toUpperCase());
+      else u.searchParams.delete("contains");
       history.replaceState(null, "", u.pathname + u.search + u.hash);
     } catch {}
   }
@@ -339,6 +476,10 @@
   const BASE_TITLE = document.title;
   function syncTitle(q) {
     const v = (q || "").toUpperCase().replace(/[^A-Z?]/g, "");
+    if (mode === "check") {
+      document.title = v ? ("Is " + v + " a word? – Word checker") : BASE_TITLE;
+      return;
+    }
     document.title = v ? ("Unscramble " + v + " – Word Unscrambler") : BASE_TITLE;
   }
 
@@ -346,6 +487,7 @@
   let lastMatches = [];
 
   function leftoverOf(rack, word) {
+    if (!rack) return "";
     const a = countsOf(rack || "");
     for (const c of word) {
       if (a.count[c]) a.count[c]--;
@@ -376,11 +518,10 @@
   function setCoach(matches, input) {
     const coach = $("coach");
     if (!coach) return;
-    if (!input) {
-      coach.textContent = COACH[mode] || COACH.subset;
+    if (!matches || !matches.length) {
+      if (!input) coach.textContent = COACH[mode] || COACH.subset;
       return;
     }
-    if (!matches || !matches.length) return;
     const best = matches.reduce((a, b) => (a.score > b.score || (a.score === b.score && a.len > b.len) ? a : b));
     coach.textContent = matches.length.toLocaleString("en-GB") + " words · best " + best.word.toUpperCase() + " · " + best.score + " pts";
   }
@@ -598,6 +739,10 @@
     if (mode !== "anagram" && n >= 3) add("/anagram-solver?q=" + encodeURIComponent(raw), "Anagrams only");
     add("/jumble-solver", "Jumble solver");
     add("/crossword-solver", "Crossword solver");
+    add("/word-checker", "Check a word");
+    if (n === 5) add("/5-letter-words-starting-with", "5-letter starting with");
+    else add("/words-starting-with", "Words starting with");
+    add("/words-ending-with", "Words ending with");
     nav.hidden = false;
     nav.replaceChildren();
     nav.appendChild(el("p", "try-label", "Play these next"));
@@ -777,10 +922,10 @@
     $(id)?.addEventListener("input", (e) => {
       const clean = e.target.value.toUpperCase().replace(/[^A-Z]/g, "");
       if (clean !== e.target.value) e.target.value = clean;
-      if (lettersEl.value.trim() || mode === "wordle") schedule();
+      if (hasQuery()) schedule();
     });
   });
-  $("length")?.addEventListener("input", () => { if (lettersEl.value.trim() || mode === "wordle") schedule(); });
+  $("length")?.addEventListener("input", () => { if (hasQuery()) schedule(); });
   document.querySelectorAll("[data-slot]").forEach((s) => {
     s.addEventListener("input", (e) => {
       e.target.value = e.target.value.toUpperCase().replace(/[^A-Z]/g, "").slice(0, 1);
@@ -796,11 +941,13 @@
       }
     });
   });
-  document.querySelectorAll("[data-ex]").forEach((btn) => {
+  document.querySelectorAll("[data-ex], [data-starts], [data-ends]").forEach((btn) => {
     btn.addEventListener("click", () => {
-      lettersEl.value = btn.dataset.ex;
+      if (btn.dataset.ex != null) lettersEl.value = btn.dataset.ex;
+      if (btn.dataset.starts != null && $("starts")) $("starts").value = btn.dataset.starts;
+      if (btn.dataset.ends != null && $("ends")) $("ends").value = btn.dataset.ends;
       collect();
-      lettersEl.focus();
+      (document.body.dataset.hub === "starts" ? $("starts") : document.body.dataset.hub === "ends" ? $("ends") : lettersEl)?.focus();
     });
   });
   document.querySelectorAll("[data-mode]").forEach((btn) => {
@@ -990,10 +1137,29 @@
   const params = new URLSearchParams(location.search);
   const qIn = (params.get("q") || "").toUpperCase().replace(/[^A-Z?*]/g, "").slice(0, 16);
   if (qIn) lettersEl.value = qIn;
-  const allowedMode = { subset: 1, anagram: 1, wordle: 1, pattern: 1 };
+  const allowedMode = { subset: 1, anagram: 1, wordle: 1, pattern: 1, check: 1 };
   if (allowedMode[params.get("mode")]) mode = params.get("mode");
+  const startsIn = (params.get("starts") || "").toUpperCase().replace(/[^A-Z]/g, "").slice(0, 5);
+  const endsIn = (params.get("ends") || "").toUpperCase().replace(/[^A-Z]/g, "").slice(0, 5);
+  const containsIn = (params.get("contains") || "").toUpperCase().replace(/[^A-Z]/g, "").slice(0, 8);
+  const lenIn = (params.get("len") || "").replace(/[^0-9+]/g, "");
+  if (startsIn && $("starts")) $("starts").value = startsIn;
+  if (endsIn && $("ends")) $("ends").value = endsIn;
+  if (containsIn && $("contains")) $("contains").value = containsIn;
+  if (lenIn) {
+    if ($("length") && lenIn !== "9+") $("length").value = lenIn === "5" ? "5" : lenIn;
+    document.querySelectorAll(".len").forEach((b) => {
+      b.setAttribute("aria-pressed", b.dataset.len === lenIn ? "true" : "false");
+    });
+  }
   setMode(mode);
-  if (!qIn) lettersEl.focus();
+  const hub = document.body.dataset.hub;
+  if (hub === "starts" && $("starts") && !qIn) $("starts").focus();
+  else if (hub === "ends" && $("ends") && !qIn) $("ends").focus();
+  else if (!qIn) lettersEl.focus();
+  if (hub === "starts" && $("coach") && !qIn) $("coach").textContent = "Type a prefix in Starts with. A rack is optional.";
+  if (hub === "ends" && $("coach") && !qIn) $("coach").textContent = "Type a suffix in Ends with. A rack is optional.";
+  if (hub === "five-start" && $("coach") && !qIn) $("coach").textContent = "Type a starting letter. Length is locked to 5 for Wordle lists.";
   loadDict();
 
   (function initAds() {

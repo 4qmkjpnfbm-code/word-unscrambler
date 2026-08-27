@@ -62,15 +62,15 @@
   </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Jumble Solver – Unscramble Puzzle Words Instantly</title>
-  <meta name="description" content="Free jumble solver for newspaper puzzles and word scrambles. Enter the mixed letters to see every ENABLE anagram." />
+  <title>Jumble Solver – Unjumble Letters & Scrambled Words</title>
+  <meta name="description" content="Free jumble word solver. Unjumble letters from newspaper puzzles, Daily Jumble and Text Twist. Exact ENABLE anagrams, no signup." />
   <meta name="robots" content="index,follow,max-image-preview:large" />
   <meta name="google-adsense-account" content="ca-pub-2666058844257008" />
   <meta name="author" content="Word Unscrambler" />
   <link rel="canonical" href="https://lettersunscrambler.com/jumble-solver" />
   <meta property="og:site_name" content="Word Unscrambler" />
-  <meta property="og:title" content="Jumble Solver – Unscramble Puzzle Words Instantly" />
-  <meta property="og:description" content="Free jumble solver for newspaper puzzles and word scrambles. Enter the mixed letters to see every ENABLE anagram." />
+  <meta property="og:title" content="Jumble Solver – Unjumble Letters & Scrambled Words" />
+  <meta property="og:description" content="Free jumble word solver. Unjumble letters from newspaper puzzles, Daily Jumble and Text Twist. Exact ENABLE anagrams." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://lettersunscrambler.com/jumble-solver" />
   <meta property="og:image" content="https://lettersunscrambler.com/og.jpg" />
@@ -92,7 +92,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,640&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=30" />
+  <link rel="stylesheet" href="/styles.css?v=31" />
   <link rel="preconnect" href="https://www.googletagmanager.com" />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-VR1EE3K51N"></script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2666058844257008" crossorigin="anonymous"></script>
@@ -136,7 +136,7 @@
   <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <span>Jumble solver</span></nav>
   <section class="hero">
     <h1>Jumble solver</h1>
-    <p class="lede">A jumble solver only keeps words that use <em>every</em> letter you type. That is newspaper Daily Jumble and Text Twist — not a full Scrabble rack.</p>
+    <p class="lede">A jumble word solver only keeps words that use <em>every</em> letter you type. Unjumble newspaper Daily Jumble, Text Twist and other scrambled-word puzzles — not a full Scrabble rack.</p>
     <p>Worked example: type <a href="/jumble-solver?q=LISTEN&amp;mode=anagram">LISTEN</a>. The anagrams that use all six letters are silent, listen, enlist, tinsel, inlets and elints. Shorter leftovers such as isle or tile belong on the <a href="/?q=LISTEN">word unscrambler</a>, not here.</p>
   </section>
   <aside class="daily" id="daily" aria-label="Today’s scramble">
@@ -181,12 +181,14 @@
           <p class="mini">Yellows go in Letters. Greens in the five boxes.</p>
         </div></div>
       <div class="examples" aria-label="Try an example"><button class="chip" type="button" data-ex="MEBOTL">MEBOTL</button><button class="chip" type="button" data-ex="LISTEN">LISTEN</button><button class="chip" type="button" data-ex="ORCHESTRA">ORCHESTRA</button></div>
+      <div class="filters quick-filters" aria-label="Letter filters">
+        <div><label for="starts">Starts with</label><input id="starts" type="text" maxlength="5" autocomplete="off" placeholder="TH" /></div>
+        <div><label for="ends">Ends with</label><input id="ends" type="text" maxlength="5" autocomplete="off" placeholder="ING" /></div>
+        <div><label for="contains">Must include</label><input id="contains" type="text" maxlength="8" autocomplete="off" placeholder="Q" /></div>
+      </div>
       <details class="more">
         <summary>More options</summary>
         <div class="filters">
-          <div><label for="starts">Starts with</label><input id="starts" type="text" maxlength="5" autocomplete="off" placeholder="TH" /></div>
-          <div><label for="ends">Ends with</label><input id="ends" type="text" maxlength="5" autocomplete="off" placeholder="ING" /></div>
-          <div><label for="contains">Must include</label><input id="contains" type="text" maxlength="8" autocomplete="off" placeholder="Q" /></div>
           <div><label for="length">Exact length</label><input id="length" type="number" min="2" max="15" inputmode="numeric" value="" /></div>
         </div>
         <div class="filters" style="margin-top:12px">
@@ -220,7 +222,7 @@
       </div>
     </aside>
 
-    <script src="/app.js?v=20" defer></script>
+    <script src="/app.js?v=21" defer></script>
   <section class="bento" aria-label="Come back for">
       <div class="bento-card" id="recentsCard">
         <p class="try-label">Recent racks</p>
@@ -247,6 +249,14 @@
       <summary>Is LISTEN a good test?</summary>
       <p>Yes. <a href="/jumble-solver?q=LISTEN&amp;mode=anagram">LISTEN in anagram mode</a> should return six full words, not the 92-word subset list. The crawlable HTML version is <a href="/unscramble/listen">/unscramble/listen</a>.</p>
     </details>
+    <details>
+      <summary>How do I unjumble letters?</summary>
+      <p>Paste the scrambled word into this jumble solver. It only returns rearrangements that use every letter. If you also want shorter leftovers, use the <a href="/">letter unscrambler</a> instead.</p>
+    </details>
+    <details>
+      <summary>What is a jumble word solver?</summary>
+      <p>A jumble word solver (also called an unjumble tool) takes mixed letters from a newspaper puzzle or Text Twist and lists the exact English words they make. This page is that tool, using ENABLE.</p>
+    </details>
   </section>
 </main>
 <footer class="site-footer">
@@ -261,6 +271,7 @@
         <a href="/jumble-solver">Jumble solver</a>
         <a href="/crossword-solver">Crossword solver</a>
         <a href="/words-from-letters">Words from letters</a>
+        <a href="/word-checker">Word checker</a>
       </div>
       <div>
         <p class="footer-head">Word lists</p>
@@ -268,12 +279,15 @@
         <a href="/3-letter-words">3-letter words</a>
         <a href="/4-letter-words">4-letter words</a>
         <a href="/5-letter-words">5-letter words</a>
+        <a href="/5-letter-words-starting-with">5-letter starting with</a>
         <a href="/6-letter-words">6-letter words</a>
         <a href="/7-letter-words">7-letter words</a>
         <a href="/8-letter-words">8-letter words</a>
         <a href="/q-without-u">Q without U</a>
         <a href="/jqxz-words">J, Q, X and Z words</a>
         <a href="/bingo-stems">Bingo stems</a>
+        <a href="/words-starting-with">Words starting with</a>
+        <a href="/words-ending-with">Words ending with</a>
       </div>
       <div>
         <p class="footer-head">Site</p>

@@ -92,7 +92,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,640&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=30" />
+  <link rel="stylesheet" href="/styles.css?v=31" />
   <link rel="preconnect" href="https://www.googletagmanager.com" />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-VR1EE3K51N"></script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2666058844257008" crossorigin="anonymous"></script>
@@ -180,12 +180,14 @@
           <p class="mini">Yellows go in Letters. Greens in the five boxes.</p>
         </div></div>
       <div class="examples" aria-label="Try an example"><button class="chip" type="button" data-ex="C?O??">C?O??</button><button class="chip" type="button" data-ex="A?E">A?E</button><button class="chip" type="button" data-ex="??ING">??ING</button></div>
+      <div class="filters quick-filters" aria-label="Letter filters">
+        <div><label for="starts">Starts with</label><input id="starts" type="text" maxlength="5" autocomplete="off" placeholder="TH" /></div>
+        <div><label for="ends">Ends with</label><input id="ends" type="text" maxlength="5" autocomplete="off" placeholder="ING" /></div>
+        <div><label for="contains">Must include</label><input id="contains" type="text" maxlength="8" autocomplete="off" placeholder="Q" /></div>
+      </div>
       <details class="more">
         <summary>More options</summary>
         <div class="filters">
-          <div><label for="starts">Starts with</label><input id="starts" type="text" maxlength="5" autocomplete="off" placeholder="TH" /></div>
-          <div><label for="ends">Ends with</label><input id="ends" type="text" maxlength="5" autocomplete="off" placeholder="ING" /></div>
-          <div><label for="contains">Must include</label><input id="contains" type="text" maxlength="8" autocomplete="off" placeholder="Q" /></div>
           <div><label for="length">Exact length</label><input id="length" type="number" min="2" max="15" inputmode="numeric" value="" /></div>
         </div>
         <div class="filters" style="margin-top:12px">
@@ -219,7 +221,7 @@
       </div>
     </aside>
 
-    <script src="/app.js?v=20" defer></script>
+    <script src="/app.js?v=21" defer></script>
   <section class="bento" aria-label="Come back for">
       <div class="bento-card" id="recentsCard">
         <p class="try-label">Recent racks</p>
@@ -261,6 +263,7 @@
         <a href="/jumble-solver">Jumble solver</a>
         <a href="/crossword-solver">Crossword solver</a>
         <a href="/words-from-letters">Words from letters</a>
+        <a href="/word-checker">Word checker</a>
       </div>
       <div>
         <p class="footer-head">Word lists</p>
@@ -268,12 +271,15 @@
         <a href="/3-letter-words">3-letter words</a>
         <a href="/4-letter-words">4-letter words</a>
         <a href="/5-letter-words">5-letter words</a>
+        <a href="/5-letter-words-starting-with">5-letter starting with</a>
         <a href="/6-letter-words">6-letter words</a>
         <a href="/7-letter-words">7-letter words</a>
         <a href="/8-letter-words">8-letter words</a>
         <a href="/q-without-u">Q without U</a>
         <a href="/jqxz-words">J, Q, X and Z words</a>
         <a href="/bingo-stems">Bingo stems</a>
+        <a href="/words-starting-with">Words starting with</a>
+        <a href="/words-ending-with">Words ending with</a>
       </div>
       <div>
         <p class="footer-head">Site</p>
