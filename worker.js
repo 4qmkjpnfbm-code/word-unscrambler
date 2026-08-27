@@ -1,4 +1,4 @@
-const GH = "https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/4163b20e8268bfd30c3d83cc3d10674e0367f1ca/";
+const GH = "https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/0f324f48a55064ad68204914e1b4300a89c7e759/";
 const GH_MAIN = "https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/main/";
 const CANONICAL_HOST = "lettersunscrambler.com";
 const DICT = "https://raw.githubusercontent.com/dolph/dictionary/master/enable1.txt";
