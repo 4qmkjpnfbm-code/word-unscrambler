@@ -127,7 +127,7 @@ body.has-results .stage-tool .modes { opacity: 0.82; }
   margin: 4px 0 8px;
 }
 
-/* v40 — mobile results layout fix (Share/Copy vs length chips) */
+/* v40 — mobile results layout fix */
 @media (max-width: 720px) {
   .status {
     position: static !important;
@@ -142,30 +142,21 @@ body.has-results .stage-tool .modes { opacity: 0.82; }
     background: transparent !important;
     backdrop-filter: none !important;
   }
-  .status h2 {
-    margin: 0 !important;
-    width: 100%;
-  }
+  .status h2 { margin: 0 !important; width: 100%; }
   .status .toolbar {
     display: flex !important;
     flex-wrap: wrap !important;
     gap: 8px !important;
     width: 100%;
   }
-  .status .toolbar .ghost {
-    min-height: 40px;
-    padding: 0 12px;
-  }
+  .status .toolbar .ghost { min-height: 40px; padding: 0 12px; }
   .len-jumps {
     position: relative;
     z-index: 1;
     margin: 4px 0 12px !important;
     gap: 8px !important;
   }
-  .len-jumps .chip {
-    position: relative;
-    z-index: 1;
-  }
+  .len-jumps .chip { position: relative; z-index: 1; }
   .consent {
     position: fixed !important;
     left: 12px !important;
@@ -175,12 +166,9 @@ body.has-results .stage-tool .modes { opacity: 0.82; }
     z-index: 30 !important;
     max-width: none !important;
   }
-  body.has-consent {
-    padding-bottom: 120px;
-  }
+  body.has-consent { padding-bottom: 120px; }
 }
 
-/* Desktop: pin consent to bottom center so results stay readable */
 @media (min-width: 721px) {
   .consent {
     position: fixed !important;
@@ -194,9 +182,7 @@ body.has-results .stage-tool .modes { opacity: 0.82; }
     width: 100%;
     box-shadow: 0 12px 40px color-mix(in oklab, #000 35%, transparent);
   }
-  body.has-consent {
-    padding-bottom: 100px;
-  }
+  body.has-consent { padding-bottom: 100px; }
   .status {
     display: flex;
     flex-wrap: wrap;
@@ -204,22 +190,13 @@ body.has-results .stage-tool .modes { opacity: 0.82; }
     justify-content: space-between;
     gap: 10px 16px;
   }
-  .status .toolbar {
-    flex-shrink: 0;
-  }
-  .len-jumps {
-    clear: both;
-    width: 100%;
-  }
+  .status .toolbar { flex-shrink: 0; }
+  .len-jumps { clear: both; width: 100%; }
 }
 
-body.has-results .status {
-  margin-top: 4px;
-}
+body.has-results .status { margin-top: 4px; }
 
-/* ========== v41 theme + layout polish (light & dark) ========== */
-
-/* Consent: always bottom of viewport, readable, never mid-panel */
+/* ========== v41 theme + layout polish ========== */
 .consent {
   position: fixed !important;
   left: 50% !important;
@@ -279,11 +256,8 @@ body.has-results .status {
   color: #f6ecda !important;
   border: 1px solid color-mix(in oklab, #fff 28%, transparent) !important;
 }
-body.has-consent {
-  padding-bottom: 120px !important;
-}
+body.has-consent { padding-bottom: 120px !important; }
 
-/* Results status: readable cream on wood stage (both themes) */
 .stage-tool .status,
 .stage-tool .status h2,
 #resultsHeading {
@@ -306,7 +280,6 @@ body.has-consent {
   gap: 8px !important;
   flex-shrink: 0 !important;
 }
-/* Share / Copy — high contrast on stage */
 .stage-tool .toolbar .ghost,
 .stage-tool .status .ghost {
   color: #f3e2b8 !important;
@@ -324,7 +297,6 @@ body.has-consent {
   border-color: color-mix(in oklab, #fff 35%, transparent) !important;
 }
 
-/* Length jump chips on stage */
 .stage-tool .len-jumps,
 .len-jumps {
   display: flex !important;
@@ -351,23 +323,17 @@ body.has-consent {
   border-color: #f3e2b8 !important;
 }
 
-/* Coach under input — readable on glass (both themes) */
 .stage-tool .coach {
   color: #2a2218 !important;
   font-weight: 550;
 }
-html[data-theme="dark"] .stage-tool .coach {
-  color: #e2d6c0 !important;
-}
+html[data-theme="dark"] .stage-tool .coach { color: #e2d6c0 !important; }
 .stage-tool .field-label {
   color: #2a2218 !important;
   font-weight: 650 !important;
 }
-html[data-theme="dark"] .stage-tool .field-label {
-  color: #e8dcc8 !important;
-}
+html[data-theme="dark"] .stage-tool .field-label { color: #e8dcc8 !important; }
 
-/* Best-play card: solid surface, strong type */
 .best-play {
   background: #f7f0e4 !important;
   color: #1c1710 !important;
@@ -378,13 +344,9 @@ html[data-theme="dark"] .stage-tool .field-label {
 .best-play .try-label { color: #6a5e50 !important; }
 .best-play .best-word,
 .best-play .best-word button,
-button.best-word {
-  color: #1c1710 !important;
-}
+button.best-word { color: #1c1710 !important; }
 .best-play .best-meta,
-.best-play .best-def {
-  color: #4a4238 !important;
-}
+.best-play .best-def { color: #4a4238 !important; }
 html[data-theme="dark"] .best-play {
   background: #241f1b !important;
   color: #f3eadc !important;
@@ -396,7 +358,6 @@ html[data-theme="dark"] button.best-word { color: #f6ecda !important; }
 html[data-theme="dark"] .best-play .best-meta,
 html[data-theme="dark"] .best-play .best-def { color: #cbbda6 !important; }
 
-/* Word cards below stage use theme tokens */
 html[data-theme="light"] .word {
   background: #fff8ea !important;
   color: #1c1710 !important;
@@ -408,7 +369,6 @@ html[data-theme="dark"] .word {
   border-color: #3d362e !important;
 }
 
-/* Mobile: status column, no sticky collision */
 @media (max-width: 720px) {
   .stage-tool .status {
     flex-direction: column !important;
@@ -416,12 +376,8 @@ html[data-theme="dark"] .word {
     position: static !important;
   }
   .stage-tool .status h2,
-  #resultsHeading {
-    width: 100% !important;
-  }
-  .stage-tool .toolbar {
-    width: 100% !important;
-  }
+  #resultsHeading { width: 100% !important; }
+  .stage-tool .toolbar { width: 100% !important; }
   .consent {
     left: 12px !important;
     right: 12px !important;
@@ -431,10 +387,77 @@ html[data-theme="dark"] .word {
   }
 }
 
-/* Below-stage body (lists, footer-adjacent) keeps theme text */
-html[data-theme="light"] body {
-  color: #1c1710;
+html[data-theme="light"] body { color: #1c1710; }
+html[data-theme="dark"] body { color: #f3eadc; }
+
+/* ========== v42 WCAG 2.1 AA contrast (4.5:1 text, 3:1 UI) ========== */
+html[data-theme="light"] {
+  --fg-subtle: #5f564c;
+  --fg-muted: #5a5248;
+  --border: color-mix(in oklab, var(--fg) 22%, transparent);
+  --border-strong: color-mix(in oklab, var(--fg) 34%, transparent);
+  --focus: #1f4a38;
 }
-html[data-theme="dark"] body {
-  color: #f3eadc;
+html[data-theme="dark"] {
+  --fg-subtle: #b5a790;
+  --border: color-mix(in oklab, #f3eadc 22%, transparent);
+  --border-strong: color-mix(in oklab, #f3eadc 36%, transparent);
+  --focus: #7dcea0;
+}
+html[data-theme="light"] #resultMeta,
+html[data-theme="light"] .stat span,
+html[data-theme="light"] .group-title,
+html[data-theme="light"] .bento-card p,
+html[data-theme="light"] .prose .meta,
+html[data-theme="light"] .card p,
+html[data-theme="light"] .az-grid a span {
+  color: var(--fg-subtle) !important;
+}
+html[data-theme="light"] .input-row input[type="text"],
+html[data-theme="light"] .filters input,
+html[data-theme="light"] .len,
+html[data-theme="light"] .stage-tool .input-row input[type="text"] {
+  border-color: color-mix(in oklab, #1c1710 32%, transparent) !important;
+}
+html[data-theme="dark"] .input-row input[type="text"],
+html[data-theme="dark"] .filters input,
+html[data-theme="dark"] .len {
+  border-color: #5a5248 !important;
+}
+:focus-visible {
+  outline: 2px solid var(--focus) !important;
+  outline-offset: 2px !important;
+}
+html[data-theme="light"] :focus-visible { outline-color: #1f4a38 !important; }
+html[data-theme="dark"] :focus-visible { outline-color: #7dcea0 !important; }
+html[data-theme="light"] .ghost:not(.stage-tool .ghost):not(.status .ghost) {
+  color: #1c1710 !important;
+  border: 1px solid color-mix(in oklab, #1c1710 28%, transparent) !important;
+}
+html[data-theme="light"] .chip:not(.len-jumps .chip),
+html[data-theme="light"] .mode {
+  color: #1c1710 !important;
+  border-color: color-mix(in oklab, #1c1710 28%, transparent) !important;
+}
+.stage-tool .len-jumps .chip,
+.len-jumps .chip {
+  border-color: color-mix(in oklab, #f3e2b8 55%, transparent) !important;
+}
+.stage-tool .modes .mode {
+  color: #e8dcc4 !important;
+  border-color: color-mix(in oklab, #fff 22%, transparent) !important;
+}
+.stage-tool .modes .mode[aria-pressed="true"],
+.stage-tool .modes .mode[aria-current="true"] {
+  color: #1c1710 !important;
+  background: #f3e2b8 !important;
+  border-color: #f3e2b8 !important;
+}
+.cinematic .site-footer a { color: #d4c4aa !important; }
+.cinematic .site-footer a:hover { color: #f6ecda !important; }
+.cinematic .site-footer { color: #b5a790 !important; }
+.skip:focus {
+  background: #1c1710 !important;
+  color: #f6ecda !important;
+  outline: 2px solid #7dcea0 !important;
 }
