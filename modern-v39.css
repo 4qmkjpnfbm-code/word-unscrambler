@@ -166,7 +166,6 @@ body.has-results .stage-tool .modes { opacity: 0.82; }
     position: relative;
     z-index: 1;
   }
-  /* consent must not cover the word grid (mobile) */
   .consent {
     position: fixed !important;
     left: 12px !important;
@@ -198,7 +197,6 @@ body.has-results .stage-tool .modes { opacity: 0.82; }
   body.has-consent {
     padding-bottom: 100px;
   }
-  /* Keep Share/Copy on a clean row with the heading on desktop */
   .status {
     display: flex;
     flex-wrap: wrap;
@@ -217,4 +215,226 @@ body.has-results .stage-tool .modes { opacity: 0.82; }
 
 body.has-results .status {
   margin-top: 4px;
+}
+
+/* ========== v41 theme + layout polish (light & dark) ========== */
+
+/* Consent: always bottom of viewport, readable, never mid-panel */
+.consent {
+  position: fixed !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: max(12px, env(safe-area-inset-bottom)) !important;
+  top: auto !important;
+  transform: translateX(-50%) !important;
+  translate: none !important;
+  z-index: 100 !important;
+  width: min(420px, calc(100vw - 24px)) !important;
+  max-width: min(420px, calc(100vw - 24px)) !important;
+  margin: 0 !important;
+  padding: 14px 16px !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px 14px !important;
+  background: color-mix(in oklab, #14100c 92%, transparent) !important;
+  color: #f6ecda !important;
+  border: 1px solid color-mix(in oklab, #fff 18%, transparent) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45) !important;
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+}
+.consent p {
+  color: #f0e6d4 !important;
+  max-width: 36ch !important;
+  font-size: 0.88rem !important;
+  line-height: 1.4 !important;
+}
+.consent a {
+  color: #e8c98a !important;
+  font-weight: 650 !important;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.consent-actions {
+  display: flex !important;
+  gap: 8px !important;
+  flex-shrink: 0 !important;
+}
+.consent button {
+  font: inherit;
+  font-weight: 700 !important;
+  min-height: 40px !important;
+  padding: 0 14px !important;
+  border-radius: 10px !important;
+  border: 0 !important;
+  cursor: pointer;
+  background: #2a5d48 !important;
+  color: #f6ecda !important;
+}
+.consent button.ghost {
+  background: transparent !important;
+  color: #f6ecda !important;
+  border: 1px solid color-mix(in oklab, #fff 28%, transparent) !important;
+}
+body.has-consent {
+  padding-bottom: 120px !important;
+}
+
+/* Results status: readable cream on wood stage (both themes) */
+.stage-tool .status,
+.stage-tool .status h2,
+#resultsHeading {
+  color: #f6ecda !important;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+.stage-tool .status {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: baseline !important;
+  justify-content: space-between !important;
+  gap: 8px 16px !important;
+  position: relative !important;
+  z-index: 2 !important;
+  background: transparent !important;
+}
+.stage-tool .toolbar {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  flex-shrink: 0 !important;
+}
+/* Share / Copy — high contrast on stage */
+.stage-tool .toolbar .ghost,
+.stage-tool .status .ghost {
+  color: #f3e2b8 !important;
+  border: 1px solid color-mix(in oklab, #fff 22%, transparent) !important;
+  background: color-mix(in oklab, #070908 35%, transparent) !important;
+  min-height: 40px !important;
+  padding: 0 12px !important;
+  border-radius: 10px !important;
+  font-weight: 650 !important;
+}
+.stage-tool .toolbar .ghost:hover,
+.stage-tool .status .ghost:hover {
+  color: #fff8e8 !important;
+  background: color-mix(in oklab, #070908 50%, transparent) !important;
+  border-color: color-mix(in oklab, #fff 35%, transparent) !important;
+}
+
+/* Length jump chips on stage */
+.stage-tool .len-jumps,
+.len-jumps {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  width: 100% !important;
+  clear: both !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+.stage-tool .len-jumps .chip,
+.len-jumps .chip {
+  color: #f3e2b8 !important;
+  background: color-mix(in oklab, #070908 40%, transparent) !important;
+  border: 1px solid color-mix(in oklab, #fff 20%, transparent) !important;
+  min-height: 36px !important;
+  padding: 0 12px !important;
+  font-weight: 700 !important;
+}
+.stage-tool .len-jumps .chip:hover,
+.len-jumps .chip:hover {
+  color: #1c1710 !important;
+  background: #f3e2b8 !important;
+  border-color: #f3e2b8 !important;
+}
+
+/* Coach under input — readable on glass (both themes) */
+.stage-tool .coach {
+  color: #2a2218 !important;
+  font-weight: 550;
+}
+html[data-theme="dark"] .stage-tool .coach {
+  color: #e2d6c0 !important;
+}
+.stage-tool .field-label {
+  color: #2a2218 !important;
+  font-weight: 650 !important;
+}
+html[data-theme="dark"] .stage-tool .field-label {
+  color: #e8dcc8 !important;
+}
+
+/* Best-play card: solid surface, strong type */
+.best-play {
+  background: #f7f0e4 !important;
+  color: #1c1710 !important;
+  border: 1px solid color-mix(in oklab, #1c1710 12%, transparent) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+}
+.best-play .try-label { color: #6a5e50 !important; }
+.best-play .best-word,
+.best-play .best-word button,
+button.best-word {
+  color: #1c1710 !important;
+}
+.best-play .best-meta,
+.best-play .best-def {
+  color: #4a4238 !important;
+}
+html[data-theme="dark"] .best-play {
+  background: #241f1b !important;
+  color: #f3eadc !important;
+  border-color: #3d362e !important;
+}
+html[data-theme="dark"] .best-play .try-label { color: #9a8d7a !important; }
+html[data-theme="dark"] .best-play .best-word,
+html[data-theme="dark"] button.best-word { color: #f6ecda !important; }
+html[data-theme="dark"] .best-play .best-meta,
+html[data-theme="dark"] .best-play .best-def { color: #cbbda6 !important; }
+
+/* Word cards below stage use theme tokens */
+html[data-theme="light"] .word {
+  background: #fff8ea !important;
+  color: #1c1710 !important;
+  border-color: color-mix(in oklab, #1c1710 14%, transparent) !important;
+}
+html[data-theme="dark"] .word {
+  background: #241f1b !important;
+  color: #f3eadc !important;
+  border-color: #3d362e !important;
+}
+
+/* Mobile: status column, no sticky collision */
+@media (max-width: 720px) {
+  .stage-tool .status {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    position: static !important;
+  }
+  .stage-tool .status h2,
+  #resultsHeading {
+    width: 100% !important;
+  }
+  .stage-tool .toolbar {
+    width: 100% !important;
+  }
+  .consent {
+    left: 12px !important;
+    right: 12px !important;
+    width: auto !important;
+    max-width: none !important;
+    transform: none !important;
+  }
+}
+
+/* Below-stage body (lists, footer-adjacent) keeps theme text */
+html[data-theme="light"] body {
+  color: #1c1710;
+}
+html[data-theme="dark"] body {
+  color: #f3eadc;
 }
