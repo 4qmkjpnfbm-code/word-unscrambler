@@ -126,3 +126,61 @@ body.has-results .stage-tool .modes { opacity: 0.82; }
   font-size: clamp(1.8rem, 5vw, 2.6rem);
   margin: 4px 0 8px;
 }
+
+/* v40 — mobile results layout fix (Share/Copy vs length chips) */
+@media (max-width: 720px) {
+  .status {
+    position: static !important;
+    top: auto !important;
+    z-index: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+    margin: 10px 0 6px !important;
+    padding: 4px 0 !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+  }
+  .status h2 {
+    margin: 0 !important;
+    width: 100%;
+  }
+  .status .toolbar {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    width: 100%;
+  }
+  .status .toolbar .ghost {
+    min-height: 40px;
+    padding: 0 12px;
+  }
+  .len-jumps {
+    position: relative;
+    z-index: 1;
+    margin: 4px 0 12px !important;
+    gap: 8px !important;
+  }
+  .len-jumps .chip {
+    position: relative;
+    z-index: 1;
+  }
+  /* consent must not cover the word grid */
+  .consent {
+    position: fixed !important;
+    left: 12px !important;
+    right: 12px !important;
+    bottom: 12px !important;
+    top: auto !important;
+    z-index: 30 !important;
+    max-width: none !important;
+  }
+  body.has-consent {
+    padding-bottom: 120px;
+  }
+}
+
+body.has-results .status {
+  margin-top: 4px;
+}
