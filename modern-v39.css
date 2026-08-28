@@ -390,7 +390,7 @@ html[data-theme="dark"] .word {
 html[data-theme="light"] body { color: #1c1710; }
 html[data-theme="dark"] body { color: #f3eadc; }
 
-/* ========== v42 WCAG 2.1 AA contrast (4.5:1 text, 3:1 UI) ========== */
+/* ========== v42 WCAG 2.1 AA contrast ========== */
 html[data-theme="light"] {
   --fg-subtle: #5f564c;
   --fg-muted: #5a5248;
@@ -460,4 +460,47 @@ html[data-theme="light"] .mode {
   background: #1c1710 !important;
   color: #f6ecda !important;
   outline: 2px solid #7dcea0 !important;
+}
+
+/* ========== v43 consent: compact, never covers best-play ========== */
+.consent {
+  position: fixed !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: max(10px, env(safe-area-inset-bottom)) !important;
+  top: auto !important;
+  transform: translateX(-50%) !important;
+  translate: none !important;
+  z-index: 100 !important;
+  width: min(360px, calc(100vw - 24px)) !important;
+  max-width: min(360px, calc(100vw - 24px)) !important;
+  margin: 0 !important;
+  padding: 10px 12px !important;
+  gap: 8px 10px !important;
+  font-size: 0.82rem !important;
+  box-shadow: 0 10px 32px rgba(0,0,0,0.4) !important;
+}
+.consent p {
+  max-width: 28ch !important;
+  font-size: 0.8rem !important;
+  line-height: 1.35 !important;
+}
+body.has-consent {
+  padding-bottom: 88px !important;
+}
+body.has-results.has-consent .best-play {
+  margin-bottom: 12px;
+  scroll-margin-bottom: 100px;
+}
+body.has-results.has-consent #results {
+  padding-bottom: 8px;
+}
+@media (max-width: 720px) {
+  .consent {
+    left: 10px !important;
+    right: 10px !important;
+    width: auto !important;
+    max-width: none !important;
+    transform: none !important;
+  }
 }
