@@ -1,19 +1,38 @@
 (function () {
   function $(id) { return document.getElementById(id); }
-  function hide() {
+
+  function fill(root) {
+    var scope = root || document;
+    var list = scope.querySelectorAll ? scope.querySelectorAll("ins.adsbygoogle") : [];
+    list.forEach(function (ins) {
+      if (ins.getAttribute("data-adsbygoogle-status")) return;
+      try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
+    });
+  }
+
+  function hideUnfilled() {
+    document.querySelectorAll(".ad-region").forEach(function (n) {
+      if (n.hidden) return;
+      if (n.querySelector("iframe")) return;
+      n.hidden = true;
+    });
+  }
+
+  function hideAfter() {
     var n = $("adAfterResults");
     if (n) n.hidden = true;
     document.body.classList.remove("has-results");
   }
-  function show() {
+
+  function showAfter() {
     document.body.classList.add("has-results");
     var n = $("adAfterResults");
     if (!n) return;
     n.hidden = false;
-    var ins = n.querySelector("ins.adsbygoogle");
-    if (!ins || ins.getAttribute("data-adsbygoogle-status")) return;
-    try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
+    fill(n);
+    setTimeout(hideUnfilled, 4000);
   }
+
   var sent = false;
   function track(n) {
     if (sent || !n) return;
@@ -22,6 +41,7 @@
       if (typeof gtag === "function") gtag("event", "solve", { event_category: "tool", value: n });
     } catch (e) {}
   }
+
   function ensureRefine() {
     if ($("refineBtn")) return;
     var modes = document.querySelector(".stage-tool .modes");
@@ -39,17 +59,21 @@
     });
     modes.after(btn);
   }
+
+  fill(document);
+  setTimeout(hideUnfilled, 4000);
+
   var box = $("results");
   if (!box) return;
   ensureRefine();
   var mo = new MutationObserver(function () {
-    if (box.classList.contains("empty")) hide();
+    if (box.classList.contains("empty")) hideAfter();
     else {
       var n = box.querySelectorAll(".word").length;
-      if (n) { show(); track(n); }
-      else hide();
+      if (n) { showAfter(); track(n); }
+      else hideAfter();
     }
   });
   mo.observe(box, { childList: true, subtree: true, attributes: true, attributeFilter: ["class"] });
-  if (!box.classList.contains("empty") && box.querySelectorAll(".word").length) show();
+  if (!box.classList.contains("empty") && box.querySelectorAll(".word").length) showAfter();
 })();
