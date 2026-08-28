@@ -221,7 +221,7 @@ async function pull(name) {
   const ttl = fresh ? 60 : (LONG.has(ext) ? 86400 : 120);
   const fromMain = name === "profit-v1.js" || name === "modern-v39.css";
   const srcs = fromMain
-    ? ["https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/main/" + name + "?v=39"]
+    ? ["https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/main/" + name + "?v=42"]
     : [GH_MAIN + name + "?v=rival2", GH + name];
   for (let s = 0; s < srcs.length; s++) {
     for (let i = 0; i < 2; i++) {
@@ -241,9 +241,10 @@ function injectModern(htmlBuf) {
   out = out.replace(/<meta name="twitter:site"[^>]*>\n?/g, "");
   out = out.replace(/,"sameAs":\["https:\/\/x\.com\/h4_rry2"\]/g, "");
   out = out.replace(/"sameAs":\["https:\/\/x\.com\/h4_rry2"\],/g, "");
-  if (out.indexOf("modern-v38.css") === -1) {
-    out = out.replace(/<link rel="stylesheet" href="\/modern-v3[0-9]\.css\?v=[0-9]+" \/>\n?/g, "");
-    const link = '<link rel="stylesheet" href="/modern-v38.css?v=39" />';
+  out = out.replace(/<link rel="stylesheet" href="\/modern-v3[0-9]\.css\?v=[^"]+" \/>\n?/g, "");
+  out = out.replace(/<link rel="stylesheet" href="\/styles\.css\?v=[0-9]+" \/>/g, '<link rel="stylesheet" href="/styles.css?v=32" />');
+  if (out.indexOf("modern-v39.css") === -1) {
+    const link = '<link rel="stylesheet" href="/modern-v39.css?v=42" />';
     if (out.indexOf("</head>") !== -1) out = out.replace("</head>", link + "\n</head>");
     else if (out.indexOf("<head>") !== -1) out = out.replace("<head>", "<head>\n" + link);
   }
@@ -292,9 +293,6 @@ function injectModern(htmlBuf) {
       'bar.remove();',
       'document.body.classList.remove("has-consent"); bar.remove();'
     );
-  }
-  if (out.indexOf("modern-v39.css") === -1) {
-    out = out.replace("</head>", '<link rel="stylesheet" href="/modern-v39.css?v=39" />\n</head>');
   }
   if (out.indexOf("profit-v1.js") === -1 && out.indexOf('id="results"') !== -1) {
     out = out.replace("</body>", '<script src="/profit-v1.js" defer></script>\n</body>');
