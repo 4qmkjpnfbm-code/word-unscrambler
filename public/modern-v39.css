@@ -559,3 +559,7 @@ body.has-results.has-consent #results {
     border-color: color-mix(in oklab, #fff 22%, transparent) !important;
   }
 }
+
+.hp{position:absolute;left:-9999px;height:0;overflow:hidden}
+.fb-human{display:flex;align-items:flex-start;gap:.6rem;margin:1rem 0;font-size:.95rem}
+.fb-human input{margin-top:.2rem}

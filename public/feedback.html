@@ -130,6 +130,10 @@
         <label for="email">Email if you want a reply (optional)</label>
         <input id="email" name="email" type="email" maxlength="120" autocomplete="email" placeholder="you@example.com" />
         <input type="hidden" name="path" id="fbPath" value="/feedback" />
+        <label class="fb-human" for="human">
+          <input id="human" name="human" type="checkbox" required />
+          I am a person, not a spam script
+        </label>
         <p class="fb-note">Optional email is only used to reply. See <a href="/privacy">privacy</a>.</p>
         <div class="fb-actions">
           <button class="primary" id="fbSubmit" type="submit">Send feedback</button>
@@ -179,8 +183,9 @@
         e.preventDefault();
         var msg=(form.message.value||"").trim();
         if(msg.length<8){ card.classList.add("is-err"); return; }
+        if(!form.human.checked){ card.classList.add("is-err"); return; }
         btn.disabled=true; btn.textContent="Sending…";
-        var payload={kind:form.kind.value,rating:rating.value||"",message:msg,email:(form.email.value||"").trim(),path:form.path.value,company:form.company.value};
+        var payload={kind:form.kind.value,rating:rating.value||"",message:msg,email:(form.email.value||"").trim(),path:form.path.value,company:form.company.value,human:form.human.checked};
         fetch("/feedback",{method:"POST",headers:{"content-type":"application/json","accept":"application/json"},body:JSON.stringify(payload)})
           .then(function(r){ return r.json().then(function(j){return{ok:r.ok,j:j};}).catch(function(){return{ok:false,j:null};}); })
           .then(function(res){

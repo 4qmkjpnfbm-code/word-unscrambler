@@ -70,3 +70,9 @@ Allow: /
 Sitemap: https://lettersunscrambler.com/sitemap.xml
 # Machine-readable summary for LLMs:
 # https://lettersunscrambler.com/llms.txt
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-InspectionTool
+Allow: /

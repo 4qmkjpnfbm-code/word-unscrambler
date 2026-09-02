@@ -1175,7 +1175,7 @@
   }
 
   async function loadDict() {
-    const sources = ["/words.txt", "https://raw.githubusercontent.com/dolph/dictionary/master/enable1.txt"];
+    const sources = ["/words.txt"];
     for (const src of sources) {
       try {
         const res = await fetch(src, { cache: "force-cache" });
