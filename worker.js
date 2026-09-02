@@ -222,7 +222,7 @@ async function pull(name) {
   const fromMain = name === "profit-v1.js" || name === "modern-v39.css";
   const srcs = fromMain
     ? ["https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/main/" + name + "?v=42"]
-    : [GH_MAIN + name + "?v=rival2", GH + name];
+    : [GH_MAIN + name + "?v=eaglefix1", GH + name];
   for (let s = 0; s < srcs.length; s++) {
     for (let i = 0; i < 2; i++) {
       try {
