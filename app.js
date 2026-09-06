@@ -1352,6 +1352,11 @@
     const coach = $("coach");
     if (coach) coach.after(box);
     else lettersEl.parentNode.after(box);
+    if (matchMedia("(max-width: 899px)").matches) {
+      lettersEl.setAttribute("inputmode", "none");
+      lettersEl.setAttribute("enterkeyhint", "search");
+      lettersEl.setAttribute("autocapitalize", "characters");
+    }
   })();
   ["starts", "ends", "contains", "exclude", "greys", "center", "side0", "side1", "side2", "side3"].forEach((id) => {
     $(id)?.addEventListener("input", (e) => {

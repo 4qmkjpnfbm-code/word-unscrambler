@@ -221,8 +221,8 @@ async function pull(name) {
   const ttl = fresh ? 60 : (LONG.has(ext) ? 86400 : 120);
   const fromMain = name === "profit-v1.js" || name === "modern-v39.css" || name === "modern-v40.css" || name === "modern-v41.css" || name === "app.js";
   const srcs = fromMain
-    ? ["https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/main/" + name + "?v=46"]
-    : [GH_MAIN + name + "?v=polish1", GH + name];
+    ? ["https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/main/" + name + "?v=47"]
+    : [GH_MAIN + name + "?v=polish2", GH + name];
   for (let s = 0; s < srcs.length; s++) {
     for (let i = 0; i < 2; i++) {
       try {
@@ -245,10 +245,10 @@ function injectModern(htmlBuf) {
   out = out.replace(/<link rel="stylesheet" href="\/modern-v40\.css\?v=[^"]+" \/>\n?/g, "");
   out = out.replace(/<link rel="stylesheet" href="\/modern-v41\.css\?v=[^"]+" \/>\n?/g, "");
   out = out.replace(/<link rel="stylesheet" href="\/styles\.css\?v=[0-9]+" \/>/g, '<link rel="stylesheet" href="/styles.css?v=32" />');
-  out = out.replace(/<script src="\/app\.js\?v=[0-9]+" defer><\/script>/g, '<script src="/app.js?v=25" defer></script>');
+  out = out.replace(/<script src="\/app\.js\?v=[0-9]+" defer><\/script>/g, '<script src="/app.js?v=26" defer></script>');
   out = out.replace('content="width=device-width, initial-scale=1"', 'content="width=device-width, initial-scale=1, viewport-fit=cover"');
   if (out.indexOf("modern-v41.css") === -1) {
-    const link = '<link rel="stylesheet" href="/modern-v39.css?v=46" />\n  <link rel="stylesheet" href="/modern-v40.css?v=46" />\n  <link rel="stylesheet" href="/modern-v41.css?v=46" />';
+    const link = '<link rel="stylesheet" href="/modern-v39.css?v=47" />\n  <link rel="stylesheet" href="/modern-v40.css?v=47" />\n  <link rel="stylesheet" href="/modern-v41.css?v=47" />';
     if (out.indexOf("</head>") !== -1) out = out.replace("</head>", link + "\n</head>");
     else if (out.indexOf("<head>") !== -1) out = out.replace("<head>", "<head>\n" + link);
   }

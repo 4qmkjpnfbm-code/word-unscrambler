@@ -1,4 +1,4 @@
-/* v46 — phone-first keypad, no empty ad hole, compact empty state */
+/* v47 — phone keypad stays, ads after results, compact empty state */
 
 html { overflow-x: clip; }
 body { overflow-x: clip; }
@@ -73,8 +73,18 @@ body:not(.has-results) .ad-region { display: none !important; }
 body:not(.has-results) .status { padding: 4px 0 0 !important; }
 body:not(.has-results) #resultsHeading { font-size: 1rem !important; }
 
+/* Tool pages: letter box before the daily widget on phones. */
 @media (max-width: 899px) {
-  body.has-results .keypad { display: none !important; }
+  main.wrap {
+    display: flex;
+    flex-direction: column;
+  }
+  main.wrap > * { order: 10; }
+  main.wrap > .crumbs { order: 0; }
+  main.wrap > .hero { order: 1; }
+  main.wrap > .panel { order: 2; }
+  main.wrap > .daily { order: 3; }
+  main.wrap > .ad-region { order: 4; }
   body.has-results .orbit { display: none !important; }
 }
 
@@ -96,6 +106,7 @@ body:not(.has-results) #resultsHeading { font-size: 1rem !important; }
   .keypad { max-width: 520px !important; }
   .key { max-width: 46px !important; min-height: 42px !important; }
   .key-wide { max-width: 56px !important; }
+  main.wrap > * { order: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
