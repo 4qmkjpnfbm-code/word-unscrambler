@@ -1302,7 +1302,6 @@
   })();
   (function ensureKeypad() {
     if ($("keypad") || !lettersEl) return;
-    if (matchMedia("(max-width: 720px)").matches) return;
     const box = el("div", "keypad");
     box.id = "keypad";
     box.setAttribute("aria-label", "Letter keys");

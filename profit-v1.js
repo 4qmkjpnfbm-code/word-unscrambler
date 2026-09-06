@@ -60,9 +60,6 @@
     modes.after(btn);
   }
 
-  fill(document);
-  setTimeout(hideUnfilled, 4000);
-
   var box = $("results");
   if (!box) return;
   ensureRefine();

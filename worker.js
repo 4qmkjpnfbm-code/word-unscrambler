@@ -86,7 +86,7 @@ const ROUTES = {
   "/security.txt": "security.txt"
 };
 const ALLOW = new Set(Object.values(ROUTES).concat([
-  "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest","llms.txt","llms-full.txt","b7e4c91a0f3d68e25a14c0b9d8e7f612.txt","8d7c4a91b2e05f63c1a47d90e8b6f352.txt","BingSiteAuth.xml","modern-v38.css","modern-v39.css","modern-v40.css","modern-v37.css","modern-v35.css","modern-v34.css","modern-v32.css","profit-v1.js","feedback.html","guide-blank-tiles.html","guide-scrabble-vs-wwf.html","guide-wordle-starters.html","guide-pattern-solver.html","guide-how-to-unscramble.html","security.txt","unscramble-eagle.html","unscramble-airbag.html","unscramble-pallet.html"
+  "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest","llms.txt","llms-full.txt","b7e4c91a0f3d68e25a14c0b9d8e7f612.txt","8d7c4a91b2e05f63c1a47d90e8b6f352.txt","BingSiteAuth.xml","modern-v38.css","modern-v39.css","modern-v40.css","modern-v41.css","modern-v37.css","modern-v35.css","modern-v34.css","modern-v32.css","profit-v1.js","feedback.html","guide-blank-tiles.html","guide-scrabble-vs-wwf.html","guide-wordle-starters.html","guide-pattern-solver.html","guide-how-to-unscramble.html","security.txt","unscramble-eagle.html","unscramble-airbag.html","unscramble-pallet.html"
 ]));
 const LONG = new Set(["css","js","svg","jpg","webmanifest"]);
 const MIME = {
@@ -217,12 +217,12 @@ async function pull(name) {
   const ext = name.indexOf(".") >= 0 ? name.split(".").pop() : "html";
   const modern = name.indexOf("modern-v") === 0;
   const isHtml = ext === "html" || name.indexOf(".") === -1;
-  const fresh = modern || isHtml || name === "sitemap.xml" || name === "robots.txt" || name === "profit-v1.js" || name === "modern-v39.css";
+  const fresh = modern || isHtml || name === "sitemap.xml" || name === "robots.txt" || name === "profit-v1.js" || name === "app.js";
   const ttl = fresh ? 60 : (LONG.has(ext) ? 86400 : 120);
-  const fromMain = name === "profit-v1.js" || name === "modern-v39.css" || name === "modern-v40.css";
+  const fromMain = name === "profit-v1.js" || name === "modern-v39.css" || name === "modern-v40.css" || name === "modern-v41.css" || name === "app.js";
   const srcs = fromMain
-    ? ["https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/main/" + name + "?v=45"]
-    : [GH_MAIN + name + "?v=rival2", GH + name];
+    ? ["https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/main/" + name + "?v=46"]
+    : [GH_MAIN + name + "?v=polish1", GH + name];
   for (let s = 0; s < srcs.length; s++) {
     for (let i = 0; i < 2; i++) {
       try {
@@ -243,10 +243,12 @@ function injectModern(htmlBuf) {
   out = out.replace(/"sameAs":\["https:\/\/x\.com\/h4_rry2"\],/g, "");
   out = out.replace(/<link rel="stylesheet" href="\/modern-v3[0-9]\.css\?v=[^"]+" \/>\n?/g, "");
   out = out.replace(/<link rel="stylesheet" href="\/modern-v40\.css\?v=[^"]+" \/>\n?/g, "");
+  out = out.replace(/<link rel="stylesheet" href="\/modern-v41\.css\?v=[^"]+" \/>\n?/g, "");
   out = out.replace(/<link rel="stylesheet" href="\/styles\.css\?v=[0-9]+" \/>/g, '<link rel="stylesheet" href="/styles.css?v=32" />');
+  out = out.replace(/<script src="\/app\.js\?v=[0-9]+" defer><\/script>/g, '<script src="/app.js?v=25" defer></script>');
   out = out.replace('content="width=device-width, initial-scale=1"', 'content="width=device-width, initial-scale=1, viewport-fit=cover"');
-  if (out.indexOf("modern-v40.css") === -1) {
-    const link = '<link rel="stylesheet" href="/modern-v39.css?v=45" />\n  <link rel="stylesheet" href="/modern-v40.css?v=45" />';
+  if (out.indexOf("modern-v41.css") === -1) {
+    const link = '<link rel="stylesheet" href="/modern-v39.css?v=46" />\n  <link rel="stylesheet" href="/modern-v40.css?v=46" />\n  <link rel="stylesheet" href="/modern-v41.css?v=46" />';
     if (out.indexOf("</head>") !== -1) out = out.replace("</head>", link + "\n</head>");
     else if (out.indexOf("<head>") !== -1) out = out.replace("<head>", "<head>\n" + link);
   }
