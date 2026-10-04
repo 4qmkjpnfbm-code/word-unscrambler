@@ -102,21 +102,25 @@
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/how-it-works">Guides</a> / <span>Pattern solver</span></nav>
     <p class="kicker">Guide</p>
     <h1>Crossword pattern solver</h1>
-    <p>When you know some letters in a slot, type the pattern with <code>?</code> for each blank square. Pattern mode matches length and fixed letters against ENABLE.</p>
-    <h2>Examples</h2>
+    <p>A crossword slot is a length and a few known letters. It is not a rack. Pattern mode keeps the length and the positions you have already filled, and drops everything else in ENABLE.</p>
+    <h2>What the mask means</h2>
+    <p>Type <code>?</code> for each empty square. These counts are from the same ENABLE list the solver uses:</p>
     <ul>
-      <li><code>C?O??</code> — five letters, C then any, O, then two unknowns</li>
-      <li><code>??ING</code> — five-letter words ending in ING</li>
-      <li><code>A????E</code> — six letters starting with A and ending with E</li>
+      <li><code>C?O??</code> — five letters, C, anything, O, then two unknowns. 68 words, including choir, choke, chord and chose.</li>
+      <li><code>??ING</code> — five letters ending in ING. 34 words.</li>
+      <li><code>A????E</code> — six letters from A to E. 104 words. That is still a pile. Add the next crossing before you read it.</li>
     </ul>
-    <h2>Steps</h2>
+    <h2>How to narrow a slot</h2>
     <ol>
-      <li>Open the <a href="/crossword-solver">crossword solver</a> or choose <strong>Pattern</strong> on the home tool.</li>
-      <li>Type the mask using letters you know and <code>?</code> for gaps.</li>
-      <li>Optional: add starts-with / ends-with / contains filters to narrow further.</li>
+      <li>Open the <a href="/crossword-solver">crossword solver</a>, or choose Pattern on the home tool.</li>
+      <li>Type the mask. Letters you know stay in their squares. <code>?</code> marks a gap.</li>
+      <li>When a crossing gives you another letter, put that letter in. Do not leave a question mark you could have filled.</li>
+      <li>Starts with and Ends with are optional. The mask already fixes positions. Use them only for something the mask does not say.</li>
     </ol>
-    <p>Pattern mode is for fixed positions. For “any order from these letters”, use <strong>All words</strong> or <strong>Anagrams</strong> instead.</p>
-    <p><a href="/crossword-solver">Open crossword solver</a> · <a href="/?mode=pattern">Home in pattern mode</a> · <a href="/guides/wordle-starters">Wordle helper guide</a></p>
+    <h2>Do not mix this up with a blank tile</h2>
+    <p>Pattern is the wrong mode for “I have these tiles, any order”. That search is All words. It is also the wrong mode for a blank in your hand. In Pattern, <code>?</code> stays in that square. In All words and Anagrams, <code>?</code> is a blank you can spend on any letter. <code>A?PLE</code> is two different searches. The rack version — 37 five-letter anagrams, including apple and maple — is in the <a href="/guides/blank-tiles">blank-tile guide</a>.</p>
+    <p>A pattern with one known letter in a long slot will look like a dictionary page. That is the grid being open, not the tool being vague. Add the crossing.</p>
+    <p><a href="/crossword-solver">Open the crossword solver</a> · <a href="/guides/how-to-unscramble">How to unscramble a rack</a> · <a href="/wordle-helper">Wordle helper</a></p>
   </main>
   <footer class="site-footer">
     <div class="wrap footer-grid">
