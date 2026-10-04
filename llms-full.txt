@@ -17,15 +17,15 @@ https://lettersunscrambler.com/unscramble/listen
 EAGLE (25) — eagle, aglee: https://lettersunscrambler.com/unscramble/eagle
 AIRBAG (35) — no six-letter anagram; agria, brag, grab: https://lettersunscrambler.com/unscramble/airbag
 PALLET (62) — plate, petal, pleat: https://lettersunscrambler.com/unscramble/pallet
-STRESSED → desserts: https://lettersunscrambler.com/unscramble/stressed
-ORANGE → onager: https://lettersunscrambler.com/unscramble/orange
-MASTER → stream: https://lettersunscrambler.com/unscramble/master
-PLANET → platen: https://lettersunscrambler.com/unscramble/planet
-CREDIT → direct, triced: https://lettersunscrambler.com/unscramble/credit
-FRIEND → finder, refind, redfin: https://lettersunscrambler.com/unscramble/friend
-RETINA (88) — retain, ratine, bingo stem: https://lettersunscrambler.com/unscramble/retina
-ADOBE → abode: https://lettersunscrambler.com/unscramble/adobe
-RACE → acre, care: https://lettersunscrambler.com/unscramble/race
+STRESSED → desserts: https://lettersunscrambler.com/?q=STRESSED
+ORANGE → onager: https://lettersunscrambler.com/?q=ORANGE
+MASTER → stream: https://lettersunscrambler.com/?q=MASTER
+PLANET → platen: https://lettersunscrambler.com/?q=PLANET
+CREDIT → direct, triced: https://lettersunscrambler.com/?q=CREDIT
+FRIEND → finder, refind, redfin: https://lettersunscrambler.com/?q=FRIEND
+RETINA (88) — retain, ratine, bingo stem: https://lettersunscrambler.com/?q=RETINA
+ADOBE → abode: https://lettersunscrambler.com/?q=ADOBE
+RACE → acre, care: https://lettersunscrambler.com/?q=RACE
 
 AEINRST (bingo stem). Famous seven-letter anagrams include retains, nastier, stainer, retinas.
 https://lettersunscrambler.com/unscramble/aeinrst
@@ -42,9 +42,9 @@ SCRABBLE, TRAIN, EARTH: see https://lettersunscrambler.com/unscramble
 - https://lettersunscrambler.com/words-with-friends — WWF score table
 - https://lettersunscrambler.com/wordle-helper — greens, yellows, greys; does not reveal the daily answer
 - https://lettersunscrambler.com/jumble-solver — newspaper-style jumbles
-- https://lettersunscrambler.com/word-descrambler — descramble mixed-up letters (subsets + anagrams)
+- https://lettersunscrambler.com/ — descramble mixed-up letters (subsets + anagrams)
 - https://lettersunscrambler.com/crossword-solver — pattern with ? for unknown squares
-- https://lettersunscrambler.com/words-from-letters — subset search (“words from these letters”)
+- https://lettersunscrambler.com/ — subset search (“words from these letters”)
 - https://lettersunscrambler.com/word-checker — is this a valid ENABLE word?
 - https://lettersunscrambler.com/words-starting-with — A–Z prefixes, no rack required
 - https://lettersunscrambler.com/words-ending-with — suffixes such as ING, TION, NESS
@@ -62,19 +62,17 @@ This is not the NASPA TWL or Collins CSW tournament list. Tournament words may d
 
 Operator: HDK Distribution Ltd, United Kingdom. Updated 2026-08-27.
 
-
 ## Extra tools (2026-08-27)
-- https://lettersunscrambler.com/letter-unscrambler
-- https://lettersunscrambler.com/word-maker
-- https://lettersunscrambler.com/unjumble
-- https://lettersunscrambler.com/word-solver
+- https://lettersunscrambler.com/
+- https://lettersunscrambler.com/
+- https://lettersunscrambler.com/jumble-solver
+- https://lettersunscrambler.com/crossword-solver
 - https://lettersunscrambler.com/word-scrambler
 - https://lettersunscrambler.com/spelling-bee
 - https://lettersunscrambler.com/multiple-word-unscrambler
 
-
 ## Extra tools (2026-08-27 b)
-- https://lettersunscrambler.com/7-letter-unscrambler
+- https://lettersunscrambler.com/7-letter-words
 - https://lettersunscrambler.com/word-generator
 - https://lettersunscrambler.com/letter-boxed
 - https://lettersunscrambler.com/text-twist-solver

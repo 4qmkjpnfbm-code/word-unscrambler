@@ -11,7 +11,6 @@ const ROUTES = {
   "/wordle-helper": "wordle-helper.html",
   "/jumble-solver": "jumble-solver.html",
   "/crossword-solver": "crossword-solver.html",
-  "/words-from-letters": "words-from-letters.html",
   "/how-it-works": "how-it-works.html",
   "/guides/blank-tiles": "guide-blank-tiles.html",
   "/guides/scrabble-vs-wwf": "guide-scrabble-vs-wwf.html",
@@ -23,27 +22,15 @@ const ROUTES = {
   "/words-ending-with": "words-ending-with.html",
   "/5-letter-words-starting-with": "5-letter-words-starting-with.html",
   "/word-checker": "word-checker.html",
-  "/word-descrambler": "word-descrambler.html",
   "/words-containing": "words-containing.html",
-  "/letter-unscrambler": "letter-unscrambler.html",
-  "/word-maker": "word-maker.html",
-  "/unjumble": "unjumble.html",
-  "/word-solver": "word-solver.html",
   "/word-scrambler": "word-scrambler.html",
   "/spelling-bee": "spelling-bee.html",
   "/multiple-word-unscrambler": "multiple-word-unscrambler.html",
-  "/7-letter-unscrambler": "7-letter-unscrambler.html",
-  "/8-letter-unscrambler": "8-letter-unscrambler.html",
-  "/10-letter-unscrambler": "10-letter-unscrambler.html",
-  "/3-letter-unscrambler": "3-letter-unscrambler.html",
-  "/4-letter-unscrambler": "4-letter-unscrambler.html",
-  "/letters-unscrambler": "letters-unscrambler.html",
   "/word-generator": "word-generator.html",
   "/letter-boxed": "letter-boxed.html",
   "/text-twist-solver": "text-twist-solver.html",
   "/hangman-solver": "hangman-solver.html",
   "/is-it-a-word": "is-it-a-word.html",
-  "/word-mix-up-solver": "word-mix-up-solver.html",
   "/2-letter-words": "2-letter-words.html",
   "/3-letter-words": "3-letter-words.html",
   "/4-letter-words": "4-letter-words.html",
@@ -65,17 +52,6 @@ const ROUTES = {
   "/unscramble/listen": "unscramble-listen.html",
   "/unscramble/aeinrst": "unscramble-aeinrst.html",
   "/unscramble/scrabble": "unscramble-scrabble.html",
-  "/unscramble/train": "unscramble-train.html",
-  "/unscramble/earth": "unscramble-earth.html",
-  "/unscramble/adobe": "unscramble-adobe.html",
-  "/unscramble/race": "unscramble-race.html",
-  "/unscramble/retina": "unscramble-retina.html",
-  "/unscramble/orange": "unscramble-orange.html",
-  "/unscramble/stressed": "unscramble-stressed.html",
-  "/unscramble/master": "unscramble-master.html",
-  "/unscramble/planet": "unscramble-planet.html",
-  "/unscramble/credit": "unscramble-credit.html",
-  "/unscramble/friend": "unscramble-friend.html",
   "/unscramble/eagle": "unscramble-eagle.html",
   "/unscramble/airbag": "unscramble-airbag.html",
   "/unscramble/pallet": "unscramble-pallet.html",
@@ -84,6 +60,32 @@ const ROUTES = {
   "/.well-known/llms.txt": "llms.txt",
   "/.well-known/security.txt": "security.txt",
   "/security.txt": "security.txt"
+};
+const GONE = {
+  "/words-from-letters": "/",
+  "/word-descrambler": "/",
+  "/letter-unscrambler": "/",
+  "/letters-unscrambler": "/",
+  "/word-maker": "/",
+  "/unjumble": "/jumble-solver",
+  "/word-mix-up-solver": "/jumble-solver",
+  "/word-solver": "/crossword-solver",
+  "/3-letter-unscrambler": "/3-letter-words",
+  "/4-letter-unscrambler": "/4-letter-words",
+  "/7-letter-unscrambler": "/7-letter-words",
+  "/8-letter-unscrambler": "/8-letter-words",
+  "/10-letter-unscrambler": "/10-letter-words",
+  "/unscramble/train": "/?q=TRAIN",
+  "/unscramble/earth": "/?q=EARTH",
+  "/unscramble/adobe": "/?q=ADOBE",
+  "/unscramble/race": "/?q=RACE",
+  "/unscramble/retina": "/?q=RETINA",
+  "/unscramble/orange": "/?q=ORANGE",
+  "/unscramble/stressed": "/?q=STRESSED",
+  "/unscramble/master": "/?q=MASTER",
+  "/unscramble/planet": "/?q=PLANET",
+  "/unscramble/credit": "/?q=CREDIT",
+  "/unscramble/friend": "/?q=FRIEND"
 };
 const ALLOW = new Set(Object.values(ROUTES).concat([
   "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest","llms.txt","llms-full.txt","b7e4c91a0f3d68e25a14c0b9d8e7f612.txt","8d7c4a91b2e05f63c1a47d90e8b6f352.txt","BingSiteAuth.xml","modern-v38.css","modern-v39.css","modern-v40.css","modern-v41.css","modern-v37.css","modern-v35.css","modern-v34.css","modern-v32.css","profit-v1.js","feedback.html","guide-blank-tiles.html","guide-scrabble-vs-wwf.html","guide-wordle-starters.html","guide-pattern-solver.html","guide-how-to-unscramble.html","security.txt","unscramble-eagle.html","unscramble-airbag.html","unscramble-pallet.html"
@@ -263,11 +265,8 @@ function injectModern(htmlBuf) {
   if (out.indexOf('href="/feedback"') === -1 && out.indexOf('href="/contact">Contact</a>') !== -1) {
     out = out.replace('<a href="/contact">Contact</a>', '<a href="/feedback">Feedback</a>\n        <a href="/contact">Contact</a>');
   }
-  if (out.indexOf('href="/word-checker"') === -1 && out.indexOf('href="/words-from-letters">Words from letters</a>') !== -1) {
-    out = out.replace('<a href="/words-from-letters">Words from letters</a>', '<a href="/words-from-letters">Words from letters</a>\n        <a href="/word-checker">Word checker</a>\n        <a href="/word-descrambler">Word descrambler</a>');
-  }
-  if (out.indexOf('href="/word-descrambler"') === -1 && out.indexOf('href="/word-checker">Word checker</a>') !== -1) {
-    out = out.replace('<a href="/word-checker">Word checker</a>', '<a href="/word-checker">Word checker</a>\n        <a href="/word-descrambler">Word descrambler</a>');
+  if (out.indexOf('href="/word-checker"') === -1 && out.indexOf('href="/jumble-solver">Jumble solver</a>') !== -1) {
+    out = out.replace('<a href="/jumble-solver">Jumble solver</a>', '<a href="/jumble-solver">Jumble solver</a>\n        <a href="/word-checker">Word checker</a>');
   }
   if (out.indexOf('href="/words-starting-with"') === -1 && out.indexOf('href="/bingo-stems">Bingo stems</a>') !== -1) {
     out = out.replace('<a href="/bingo-stems">Bingo stems</a>', '<a href="/bingo-stems">Bingo stems</a>\n        <a href="/words-starting-with">Words starting with</a>\n        <a href="/words-ending-with">Words ending with</a>\n        <a href="/words-containing">Words containing</a>\n        <a href="/5-letter-words-starting-with">5-letter starting with</a>\n        <a href="/9-letter-words">9-letter words</a>\n        <a href="/10-letter-words">10-letter words</a>');
@@ -275,11 +274,11 @@ function injectModern(htmlBuf) {
   if (out.indexOf('href="/words-containing"') === -1 && out.indexOf('href="/words-ending-with">Words ending with</a>') !== -1) {
     out = out.replace('<a href="/words-ending-with">Words ending with</a>', '<a href="/words-ending-with">Words ending with</a>\n        <a href="/words-containing">Words containing</a>');
   }
-  if (out.indexOf('href="/letter-unscrambler"') === -1 && out.indexOf('href="/word-descrambler">Word descrambler</a>') !== -1) {
-    out = out.replace('<a href="/word-descrambler">Word descrambler</a>', '<a href="/word-descrambler">Word descrambler</a>\n        <a href="/letter-unscrambler">Letter unscrambler</a>\n        <a href="/word-maker">Word maker</a>\n        <a href="/unjumble">Unjumble</a>\n        <a href="/word-scrambler">Word scrambler</a>\n        <a href="/spelling-bee">Spelling Bee helper</a>\n        <a href="/multiple-word-unscrambler">Multiple-word unscrambler</a>');
+  if (out.indexOf('href="/word-scrambler"') === -1 && out.indexOf('href="/word-checker">Word checker</a>') !== -1) {
+    out = out.replace('<a href="/word-checker">Word checker</a>', '<a href="/word-checker">Word checker</a>\n        <a href="/word-scrambler">Word scrambler</a>\n        <a href="/spelling-bee">Spelling Bee helper</a>\n        <a href="/multiple-word-unscrambler">Multiple-word unscrambler</a>');
   }
   if (out.indexOf('href="/word-generator"') === -1 && out.indexOf('href="/spelling-bee">Spelling Bee helper</a>') !== -1) {
-    out = out.replace('<a href="/spelling-bee">Spelling Bee helper</a>', '<a href="/spelling-bee">Spelling Bee helper</a>\n        <a href="/word-generator">Word generator</a>\n        <a href="/letter-boxed">Letter Boxed</a>\n        <a href="/7-letter-unscrambler">7-letter unscrambler</a>\n        <a href="/text-twist-solver">Text Twist solver</a>\n        <a href="/is-it-a-word">Is it a word</a>');
+    out = out.replace('<a href="/spelling-bee">Spelling Bee helper</a>', '<a href="/spelling-bee">Spelling Bee helper</a>\n        <a href="/word-generator">Word generator</a>\n        <a href="/letter-boxed">Letter Boxed</a>\n        <a href="/7-letter-words">7-letter words</a>\n        <a href="/text-twist-solver">Text Twist solver</a>\n        <a href="/is-it-a-word">Is it a word</a>');
   }
   if (out.indexOf('href="/words-containing"') === -1 && out.indexOf('href="/bingo-stems">Bingo stems</a>') !== -1) {
     out = out.replace('<a href="/bingo-stems">Bingo stems</a>', '<a href="/bingo-stems">Bingo stems</a>\n        <a href="/words-containing">Words containing</a>');
@@ -318,6 +317,13 @@ export default {
     if (p.length > 1 && p.charAt(p.length - 1) === "/") p = p.slice(0, -1);
     if (p === "/feedback" && (req.method === "POST" || req.method === "OPTIONS")) return handleFeedback(req);
     if (p === "/words.txt") return dictionary();
+    const gone = GONE[p] || GONE[p.replace(/\.html$/, "")];
+    if (gone) {
+      const dest = new URL("https://" + CANONICAL_HOST + gone);
+      const q = url.searchParams.get("q");
+      if (q && !dest.searchParams.has("q")) dest.searchParams.set("q", q);
+      return Response.redirect(dest.toString(), 301);
+    }
     let name = ROUTES[p];
     if (!name && p.charAt(0) === "/" && ALLOW.has(p.slice(1))) name = p.slice(1);
     if (!name) {

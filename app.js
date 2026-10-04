@@ -171,7 +171,6 @@
     return chain;
   }
 
-
   function filterValues() {
     return {
       starts: ($("starts")?.value || "").toLowerCase().replace(/[^a-z]/g, ""),
@@ -1127,10 +1126,6 @@
     if (n >= 2 && n <= 10 && n !== 5 && n !== 7) add("/" + n + "-letter-words", n + "-letter list");
     if (mode !== "anagram" && n >= 3) add("/anagram-solver?q=" + encodeURIComponent(raw), "Anagrams only");
     add("/jumble-solver", "Jumble solver");
-    add("/word-descrambler", "Word descrambler");
-    add("/letter-unscrambler", "Letter unscrambler");
-    add("/word-maker", "Word maker");
-    add("/unjumble", "Unjumble");
     add("/word-scrambler", "Word scrambler");
     add("/word-generator", "Word generator");
     add("/spelling-bee", "Spelling Bee helper");
