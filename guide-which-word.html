@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("wu_theme");
+        if (!t) t = (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+        document.documentElement.setAttribute("data-theme", t === "dark" ? "dark" : "light");
+      } catch (e) {}
+      function sync(btn) {
+        var dark = document.documentElement.getAttribute("data-theme") === "dark";
+        if (!btn) return;
+        btn.setAttribute("aria-pressed", dark ? "true" : "false");
+        btn.setAttribute("aria-label", dark ? "Switch to light theme" : "Switch to dark theme");
+        btn.textContent = dark ? "Light" : "Dark";
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute("content", dark ? "#13110f" : "#1f4a38");
+      }
+      function bind() {
+        var btn = document.getElementById("themeBtn");
+        sync(btn);
+        if (btn && !btn.dataset.bound) {
+          btn.dataset.bound = "1";
+          btn.addEventListener("click", function () {
+            var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+            document.documentElement.setAttribute("data-theme", next);
+            try { localStorage.setItem("wu_theme", next); } catch (e) {}
+            sync(btn);
+          });
+        }
+        var menu = document.querySelector("[data-nav]");
+        var nav = document.getElementById("site-nav");
+        if (menu && nav && !menu.dataset.bound) {
+          menu.dataset.bound = "1";
+          function setOpen(open) {
+            nav.classList.toggle("is-open", open);
+            menu.setAttribute("aria-expanded", open ? "true" : "false");
+            menu.textContent = open ? "Close" : "Menu";
+          }
+          menu.addEventListener("click", function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            setOpen(!nav.classList.contains("is-open"));
+          });
+          document.addEventListener("click", function (e) {
+            if (!nav.classList.contains("is-open")) return;
+            if (nav.contains(e.target) || menu.contains(e.target)) return;
+            setOpen(false);
+          });
+          nav.querySelectorAll("a").forEach(function (a) {
+            a.addEventListener("click", function () { setOpen(false); });
+          });
+          document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") setOpen(false);
+          });
+        }
+      }
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", bind);
+      else bind();
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Which Word Should You Play? – Read the Finder List</title>
+  <meta name="description" content="The finder sorts by tile value, not the board. How to pick a play when the top word needs two Z tiles, or when Scrabble and Words With Friends disagree." />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <link rel="canonical" href="https://lettersunscrambler.com/guides/which-word" />
+  <meta property="og:title" content="Which Word Should You Play?" />
+  <meta property="og:description" content="The top score can be a word an English Scrabble set cannot make. How to read an ENABLE list before you play." />
+  <meta property="og:url" content="https://lettersunscrambler.com/guides/which-word" />
+  <meta property="og:image" content="https://lettersunscrambler.com/og.jpg" />
+  <meta name="theme-color" content="#1f4a38" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,640&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css?v=32" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VR1EE3K51N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    var _c = 'denied';
+    try { if (localStorage.getItem('wu_consent') === 'granted') _c = 'granted'; } catch (e) {}
+    gtag('consent', 'default', { analytics_storage: _c, ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+    gtag('js', new Date());
+    gtag('config', 'G-VR1EE3K51N', { anonymize_ip: true });
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Which word should you play?","description":"How to choose a play from an ENABLE word list when the score is only the tile values.","dateModified":"2026-10-04","inLanguage":"en-GB","author":{"@type":"Organization","name":"HDK Distribution Ltd","url":"https://lettersunscrambler.com/"},"publisher":{"@type":"Organization","name":"Word Unscrambler","url":"https://lettersunscrambler.com/"},"mainEntityOfPage":"https://lettersunscrambler.com/guides/which-word"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lettersunscrambler.com/"},{"@type":"ListItem","position":2,"name":"How it works","item":"https://lettersunscrambler.com/how-it-works"},{"@type":"ListItem","position":3,"name":"Which word to play","item":"https://lettersunscrambler.com/guides/which-word"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why is the highest scoring word sometimes unplayable?","acceptedAnswer":{"@type":"Answer","text":"The finder checks the ENABLE spelling list, not the tiles in the box. FIZZY scores 29 in Scrabble and FIZZ scores 25, but a standard English Scrabble set has one Z and both words need two. With no blank, the play is FIZ at 15. A blank can stand in for the extra Z and scores 0, so FIZZ with a blank is also 15."}},{"@type":"Question","name":"Does the score include the bingo bonus?","acceptedAnswer":{"@type":"Answer","text":"No. The number is the sum of the tile values. Add 50 yourself in Scrabble, or 35 in Words With Friends, when the play uses all seven tiles. Premium squares are not included, because the finder cannot see the board."}},{"@type":"Question","name":"Why did the order change when I switched to Words With Friends?","acceptedAnswer":{"@type":"Answer","text":"Some letters have different values. On LINEN, Scrabble ties LIEN, LINE, LINN and NINE at 4, behind LINEN at 5. Words With Friends ranks LINN alone in second at 7, because N is worth 2 there and LINN has two of them."}},{"@type":"Question","name":"How should I choose when several words fit?","acceptedAnswer":{"@type":"Answer","text":"Cross off words the tile set cannot make, add the bingo bonus in your head if a seven-tile word fits, then look at the tiles you would keep. All vowels, or a clump of the same awkward consonant, is a reason to try the next word. The board comes last."}}]}]}</script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="/"><span class="mark" aria-hidden="true">W<small>4</small></span><span class="brand-name">Word Unscrambler<span>Find words from letters</span></span></a>
+      <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch colour theme">Theme</button>
+      <button class="menu-btn" type="button" data-nav aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="nav" id="site-nav" aria-label="Primary">
+        <a href="/">Unscrambler</a><a href="/scrabble-word-finder">Scrabble</a><a href="/anagram-solver">Anagrams</a><a href="/wordle-helper">Wordle</a><a href="/crossword-solver">Crossword</a><a href="/word-lists">Lists</a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap page" id="main">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/how-it-works">Guides</a> / <span>Which word to play</span></nav>
+    <p class="kicker">Guide</p>
+    <h1>Which word should you play?</h1>
+    <p>The finder sorts by face value. That number is the sum of the tiles, not the score you will write down. This page is how to read the list: when the top word is the right play, when it cannot be made from the tile set, and when a shorter word is the one to keep.</p>
+    <p>The list is ENABLE, 168,581 words, checked in your browser. Scores below are English Scrabble values unless a line says Words With Friends. Nothing here adds a premium square. We cannot see your board.</p>
+
+    <h2>The number is only the tiles</h2>
+    <p>On the default table, A E I L N O R S T U are 1, D and G are 2, B C M P are 3, F H V W Y are 4, K is 5, J and X are 8, Q and Z are 10. A blank is 0. The same letters, with the differences, are written out on the <a href="/guides/scrabble-vs-wwf">Scrabble versus Words With Friends</a> page.</p>
+    <p>A play that uses all seven tiles scores an extra 50 in Scrabble and an extra 35 in Words With Friends, after the tile sum. The finder does not add that bonus. A bingo that shows 12 on screen is 62 in Scrabble before you touch a double-word square, and 47 in Words With Friends. If you only compare the numbers in the list, a short word with J or X can look better than the seven that wins the game.</p>
+    <p>Words With Friends also prices some letters differently. L and N are 1 in Scrabble and 2 in that game. J is 8 here and 10 there. Y is 4 here and 3 there. Switch Score to WWF before you trust the order.</p>
+
+    <h2>Four racks, four decisions</h2>
+
+    <h3>LISTEN, when every letter is worth one</h3>
+    <p>Type <a href="/?q=LISTEN">LISTEN</a>. ENABLE returns 92 words: 13 of two letters, 25 of three, 32 of four, 16 of five, and 6 that use every tile. Those six are silent, listen, enlist, tinsel, inlets and elints. The full HTML list is on <a href="/unscramble/listen">unscramble LISTEN</a>.</p>
+    <p>Each of the six scores 6 in Scrabble, because L, I, S, T, E and N are all 1-point tiles. In Words With Friends each scores 8, because L and N are worth 2, and they are still tied with each other. The sort is not choosing a winner. Play the one that fits. If the six will not go down, a shorter word is simply worth its length: every letter on this rack is 1 in Scrabble, so a four scores 4.</p>
+
+    <h3>FIZZY, when the top of the list cannot be played</h3>
+    <p>Type <a href="/?q=FIZZY">FIZZY</a>. ENABLE returns five words. In Scrabble points they rank like this:</p>
+    <dl>
+      <dt>FIZZY — 29</dt>
+      <dd>Needs two Z. A standard English Scrabble set has one.</dd>
+      <dt>FIZZ — 25</dt>
+      <dd>Also needs two Z. With a blank standing in for the second Z, the blank scores 0, so the word is 15, not 25.</dd>
+      <dt>FIZ — 15</dt>
+      <dd>One Z, and the set has one. This is the play if you have no blank.</dd>
+      <dt>FY — 8, and IF — 5</dt>
+      <dd>Legal, and worse than FIZ unless the board does something the list cannot see.</dd>
+    </dl>
+    <p>FIZZY and FIZZ are real words. They are not plays you can make from that set unless a blank covers the extra Z, and spending the blank on FIZZ ties FIZ. You have used the most flexible tile on the rack to score the same 15.</p>
+    <p>The same trap sits under ordinary words people ask a checker about. The face value assumes every copy of the letter is a real tile:</p>
+    <ul>
+      <li><strong>JAZZ</strong> shows 29. One Z and a blank makes it 19.</li>
+      <li><strong>PIZZA</strong> shows 25. With a blank it is 15.</li>
+      <li><strong>PUZZLE</strong> shows 26. With a blank it is 16.</li>
+      <li><strong>KICK</strong> shows 14, and the set has one K. With a blank it is 9.</li>
+      <li><strong>BUBBLE</strong> shows 12 and needs three B. The set has two. With a blank it is 9.</li>
+      <li><strong>PUPPY</strong> and <strong>MUMMY</strong> show 14 and need three P or three M. The set has two of each. With a blank each is 11.</li>
+      <li><strong>FLUFF</strong> shows 14 and needs three F. The set has two. With a blank it is 10.</li>
+    </ul>
+    <p>BOOK, COFFEE, ASSESS and <a href="/?q=QUIZ">QUIZ</a> do fit. QUIZ is 22 from one Q and one Z. QUEUE is 14. “It is in the dictionary” is not the same question as “the box contains these tiles.”</p>
+    <p>Counted in the ENABLE file this site loads: <strong>2,628 words</strong> need more copies of a letter than that 100-tile English set contains, and <strong>563</strong> of those are seven letters or shorter, which is the range you try to play from a rack. <strong>398</strong> are impossible only because they need two or more Z. Words With Friends ships a different set, so do not copy the Scrabble limits across without looking. The finder does not know which box is on your table.</p>
+
+    <h3>LINEN, when the two games disagree</h3>
+    <p>Type <a href="/?q=LINEN">LINEN</a>. ENABLE returns 15 words. Scrabble ranks LINEN at 5, then LIEN, LINE, LINN and NINE in a tie at 4. Words With Friends ranks LINEN at 8, then LINN alone at 7, then LIEN, LINE and NINE at 6.</p>
+    <p>LINN moved up because N is worth 2 in Words With Friends and the word has two of them. Same tiles, different second play. Flip the score control before you commit. The <a href="/words-with-friends">Words With Friends finder</a> opens with that table already selected.</p>
+
+    <h3>QUARTZ, when the top word is real</h3>
+    <p>Type <a href="/?q=QUARTZ">QUARTZ</a>. ENABLE returns 17 words, and the top of the list can be played from the set:</p>
+    <dl>
+      <dt>QUARTZ — 24</dt>
+      <dd>Six letters. Legal. Not a bingo: a bingo spends seven tiles from the rack.</dd>
+      <dt>QUART — 14</dt>
+      <dd>Leaves Z and A.</dd>
+      <dt>TZAR — 13</dt>
+      <dd>Leaves Q and U, still next to each other.</dd>
+      <dt>QAT — 12</dt>
+      <dd>Leaves Z, U and R. You have played the Q and kept the Z.</dd>
+      <dt>QUA — 12</dt>
+      <dd>Leaves Z, R and T. You have played both Q and U, and the Z is left without a U.</dd>
+      <dt>ZA — 11</dt>
+      <dd>Leaves Q, U, R and T. You still hold Q beside U, and you have banked the Z.</dd>
+    </dl>
+    <p>If QUARTZ fits the board, 24 is the best face value on the rack. If it does not fit, the next lines are a decision about what you keep, not just a smaller number. The finder ranks the tiles you would play. It will not tell you which leave you want for the next draw.</p>
+
+    <h2>A way to read any list</h2>
+    <ol>
+      <li><strong>Leave the sort on score.</strong> A–Z is for hunting a spelling, not for choosing a turn.</li>
+      <li><strong>Cross off words the set cannot build</strong>, unless you will spend a blank. Then redo the sum with that blank as 0. English Scrabble limits: one each of J, K, Q, X and Z; two each of B, C, F, H, M, P, V, W and Y; three G; four each of D, L, S and U; six each of N, R and T; eight O; nine each of A and I; twelve E; two blanks.</li>
+      <li><strong>Add the bingo in your head</strong> if a seven-letter word fits. That is 50 in Scrabble and 35 in Words With Friends, on top of the tiles, and it is not on the screen. A seven that shows a modest number often beats a prettier four.</li>
+      <li><strong>Read what you would keep.</strong> All vowels, or a pile of the same awkward consonant, is a reason to try the next line. S is the second most common letter inside ENABLE words, about 9.5% of every letter in the list, behind only E at about 11.5%. The English set has four S tiles. A weak plural can be an expensive way to gain one point. The <a href="/2-letter-words">two-letter list</a> is how you spend one awkward tile without emptying the rack.</li>
+      <li><strong>Look at the board last.</strong> Set the length if the opening is a known number of squares. Use Ends with when you are checking a hook. Premium squares are yours to add. If the slot is a pattern rather than a rack, switch to Pattern and read the <a href="/guides/pattern-solver">pattern guide</a>: there, <code>?</code> is an empty square, not a blank tile. The <a href="/guides/blank-tiles">blank-tile guide</a> is the other meaning.</li>
+    </ol>
+
+    <h2>What this will not pretend</h2>
+    <p>It will not lay the tiles down for you. It does not know the other player’s rack, the bonus squares, or whether your club plays Collins or NASPA. Those books are copyrighted, so this site does not copy them. ENABLE includes QI and ZA, and a few words differ from the tournament lists. If the play is the one that decides a challenge, check the book your club actually uses.</p>
+    <p>Open the <a href="/">word unscrambler</a> or the <a href="/scrabble-word-finder">Scrabble word finder</a> and run the five steps on your own rack. For a stem you are trying to learn, the <a href="/bingo-stems">bingo stems</a> page is the study list, not a substitute for the board.</p>
+    <p>Updated <time datetime="2026-10-04">4 October 2026</time>. Counts are from the ENABLE file this site serves, 168,581 words.</p>
+
+    <section class="prose faq" id="faq">
+      <h2>FAQ</h2>
+      <details open>
+        <summary>Why is the highest scoring word sometimes unplayable?</summary>
+        <p>The finder checks the ENABLE spelling list, not the tiles in the box. <a href="/?q=FIZZY">FIZZY</a> scores 29 in Scrabble and FIZZ scores 25, but a standard English Scrabble set has one Z and both words need two. With no blank, the play is FIZ at 15. A blank can stand in for the extra Z and scores 0, so FIZZ with a blank is also 15.</p>
+      </details>
+      <details>
+        <summary>Does the score include the bingo bonus?</summary>
+        <p>No. The number is the sum of the tile values. Add 50 yourself in Scrabble, or 35 in Words With Friends, when the play uses all seven tiles. Premium squares are not included, because the finder cannot see the board.</p>
+      </details>
+      <details>
+        <summary>Why did the order change when I switched to Words With Friends?</summary>
+        <p>Some letters have different values. On <a href="/?q=LINEN">LINEN</a>, Scrabble ties LIEN, LINE, LINN and NINE at 4, behind LINEN at 5. Words With Friends ranks LINN alone in second at 7, because N is worth 2 there and LINN has two of them.</p>
+      </details>
+      <details>
+        <summary>How should I choose when several words fit?</summary>
+        <p>Cross off words the tile set cannot make, add the bingo bonus in your head if a seven-tile word fits, then look at the tiles you would keep. All vowels, or a clump of the same awkward consonant, is a reason to try the next word. The board comes last.</p>
+      </details>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div><p class="footer-head">Tools</p><a href="/">Word unscrambler</a><a href="/scrabble-word-finder">Scrabble</a><a href="/words-with-friends">WWF</a></div>
+      <div><p class="footer-head">Guides</p><a href="/guides/which-word">Which word to play</a><a href="/guides/how-to-unscramble">How to unscramble</a><a href="/guides/blank-tiles">Blank tiles</a></div>
+      <div><p class="footer-head">Site</p><a href="/about">About</a><a href="/feedback">Feedback</a><a href="/privacy">Privacy</a></div>
+    </div>
+    <div class="wrap legal-line"><p>© 2026 Word Unscrambler. ENABLE dictionary. Not affiliated with Hasbro, Mattel, Zynga or The New York Times. United Kingdom.</p></div>
+  </footer>
+  <script>
+    (function(){
+      var KEY="wu_consent";
+      function apply(v){ if(typeof gtag!=="function")return; gtag("consent","update",{analytics_storage:v==="granted"?"granted":"denied",ad_storage:"denied",ad_user_data:"denied",ad_personalization:"denied"}); }
+      try{ var saved=localStorage.getItem(KEY); if(saved){ apply(saved); return; } }catch(e){}
+      var bar=document.createElement("div");
+      bar.className="consent"; bar.setAttribute("role","dialog"); bar.setAttribute("aria-label","Cookie choices");
+      bar.innerHTML='<p>Optional analytics cookies only. Letters stay in this browser. <a href="/privacy">Privacy</a></p><div class="consent-actions"><button type="button" data-c="granted">Accept</button><button type="button" class="ghost" data-c="denied">Reject</button></div>';
+      document.body.appendChild(bar);
+      bar.addEventListener("click",function(e){ var b=e.target.closest("button[data-c]"); if(!b)return; var v=b.getAttribute("data-c"); try{localStorage.setItem(KEY,v);}catch(err){} apply(v); bar.remove(); });
+    })();
+  </script>
+</body>
+</html>
