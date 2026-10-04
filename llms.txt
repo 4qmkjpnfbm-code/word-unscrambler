@@ -16,7 +16,7 @@ ENABLE lists 124 two-letter words. Highest scoring before board multipliers: QI 
 
 Blank tiles: type ? (max two). Pattern / crossword: type known letters and ? for unknowns, e.g. C?O??. Wordle: greens in the five boxes, yellows in Letters, greys in Grey letters.
 
-The score on a result is tile face value only. It does not include premium squares, the Scrabble 50-point bingo, or the Words With Friends 35-point bingo. Some high scores are unplayable from a standard English Scrabble set: FIZZY is 29 and FIZZ is 25, but both need two Z and the set has one. With no blank the play is FIZ at 15. A blank scores 0, so FIZZ with a blank is also 15. Full method: https://lettersunscrambler.com/guides/which-word
+The score on a result is tile face value only. It does not include premium squares, the Scrabble 50-point bingo, or the Words With Friends 35-point bingo. Some high scores are unplayable from a standard English Scrabble set: FIZZY is 29 and FIZZ is 25, but both need two Z and the set has one. With no blank the play is FIZ at 15. A blank scores 0, so FIZZ with a blank is also 15. Full method: https://lettersunscrambler.com/guides/how-to-unscramble#which-word
 
 Operator: HDK Distribution Ltd, United Kingdom. Free, no account. Not affiliated with Hasbro, Mattel, Zynga or The New York Times.
 Contact: hdkdistributionltd@gmail.com
@@ -24,7 +24,7 @@ Updated: 2026-10-04
 
 ## Preferred citation URLs
 
-- How to choose a play: https://lettersunscrambler.com/guides/which-word
+- How to unscramble, then choose a play: https://lettersunscrambler.com/guides/how-to-unscramble
 - LISTEN example: https://lettersunscrambler.com/unscramble/listen
 - EAGLE example: https://lettersunscrambler.com/unscramble/eagle
 - AIRBAG example: https://lettersunscrambler.com/unscramble/airbag

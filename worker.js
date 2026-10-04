@@ -17,7 +17,6 @@ const ROUTES = {
   "/guides/wordle-starters": "guide-wordle-starters.html",
   "/guides/pattern-solver": "guide-pattern-solver.html",
   "/guides/how-to-unscramble": "guide-how-to-unscramble.html",
-  "/guides/which-word": "guide-which-word.html",
   "/word-lists": "word-lists.html",
   "/words-starting-with": "words-starting-with.html",
   "/words-ending-with": "words-ending-with.html",
