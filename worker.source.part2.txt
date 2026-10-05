@@ -1,0 +1,106 @@
+type": "application/json;charset=UTF-8",
+      "cache-control": "no-store",
+      "x-content-type-options": "nosniff"
+    }
+  });
+}
+function clip(s, n) {
+  s = String(s || "").replace(/\s+/g, " ").trim();
+  return s.length > n ? s.slice(0, n) : s;
+}
+async function handleFeedback(req) {
+  if (req.method === "OPTIONS") {
+    return new Response(null, { status: 204, headers: { "access-control-allow-origin": "https://lettersunscrambler.com", "access-control-allow-methods": "POST", "access-control-allow-headers": "content-type" } });
+  }
+  let data = {};
+  const ctype = (req.headers.get("content-type") || "").toLowerCase();
+  try {
+    if (ctype.indexOf("application/json") !== -1) data = await req.json();
+    else {
+      const fd = await req.formData();
+      fd.forEach(function (v, k) { data[k] = String(v); });
+    }
+  } catch (e) {
+    return json({ ok: false, error: "bad_body" }, 400);
+  }
+  if (clip(data.company, 80)) return json({ ok: true });
+  const message = clip(data.message, 4000);
+  if (message.length < 8) return json({ ok: false, error: "message" }, 400);
+  const kind = clip(data.kind, 32) || "other";
+  const rating = clip(data.rating, 2);
+  const email = clip(data.email, 120);
+  const path = clip(data.path, 180);
+  const payload = {
+    _subject: "Word Unscrambler feedback (" + kind + ")",
+    _template: "table",
+    _captcha: "false",
+    kind: kind,
+    rating: rating || "unrated",
+    message: message,
+    email: email || "(none)",
+    path: path || "/",
+    sent_at: new Date().toISOString()
+  };
+  try {
+    const r = await fetch("https://formsubmit.co/ajax/" + FEEDBACK_TO, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "accept": "application/json",
+        "origin": "https://lettersunscrambler.com",
+        "referer": "https://lettersunscrambler.com/feedback"
+      },
+      body: JSON.stringify(payload)
+    });
+    const text = await r.text();
+    let body = null;
+    try { body = JSON.parse(text); } catch (e) {}
+    if (r.ok || (body && (body.success === true || body.ok === true))) return json({ ok: true });
+    if (body && /confirm|activat/i.test(String(body.message || ""))) {
+      return json({ ok: false, error: "activate", detail: body.message }, 502);
+    }
+  } catch (e) {}
+  return json({ ok: false, error: "delivery" }, 502);
+}
+async function dictionary() {
+  const r = await fetch(DICT, { cf: { cacheTtl: 86400, cacheEverything: true } });
+  if (!r.ok) return new Response("dictionary unavailable", { status: 502 });
+  const text = await r.text();
+  const extra = extraWords().join("\n");
+  return new Response(text.trimEnd() + "\n" + extra + "\n", {
+    headers: {
+      "content-type": "text/plain;charset=UTF-8",
+      "cache-control": "public, max-age=86400",
+      "access-control-allow-origin": "*"
+    }
+  });
+}
+async function pull(name, env) {
+  if (env && env.SITE) {
+    try {
+      const kvVal = await env.SITE.get(name, { type: "arrayBuffer" });
+      if (kvVal && kvVal.byteLength > 20) return kvVal;
+    } catch (e) {}
+  }
+  const ext = name.indexOf(".") >= 0 ? name.split(".").pop() : "html";
+  const modern = name.indexOf("modern-v") === 0;
+  const isHtml = ext === "html" || name.indexOf(".") === -1;
+  const fresh = modern || isHtml || name === "sitemap.xml" || name === "robots.txt" || name === "profit-v1.js" || name === "app.js";
+  const ttl = fresh ? 60 : (LONG.has(ext) ? 86400 : 120);
+  const fromMain = name === "profit-v1.js" || name === "modern-v39.css" || name === "modern-v40.css" || name === "modern-v41.css" || name === "app.js";
+  const srcs = fromMain
+    ? ["https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/main/" + name + "?v=47"]
+    : [GH_MAIN + name + "?v=polish3", GH + name];
+  for (let s = 0; s < srcs.length; s++) {
+    for (let i = 0; i < 2; i++) {
+      try {
+        const r = await fetch(srcs[s], { cf: { cacheTtl: ttl } });
+        if (r.ok) {
+          const buf = await r.arrayBuffer();
+          if (buf.byteLength > 20) return buf;
+        }
+      } catch (e) {}
+    }
+  }
+  return null;
+}
