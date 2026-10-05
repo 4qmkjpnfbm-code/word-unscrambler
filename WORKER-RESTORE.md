@@ -1,15 +1,21 @@
 # Worker restore
 
-Live site uses the Cloudflare Worker `word-unscrambler` (not the stub `worker.js` on this branch).
+**Live site is fine.** Cloudflare Worker `word-unscrambler` (deployment family `0f44fc56…`) serves [lettersunscrambler.com](https://lettersunscrambler.com) from KV + the deployed Worker. Do **not** `wrangler deploy` from the stub `worker.js` on this branch (it returns 503 on purpose).
 
-## Rebuild production Worker source on main
+## Where the real Worker source is
+
+- Grok Bot box: `/workspace/word-unscrambler/worker.js` (readable) and `worker.min.js` (same behaviour)
+- Backup tarball on the box: `/workspace/letters-counsel-2026-10-05.bundle`
+
+## To put a deployable `worker.js` back on `main`
+
+Copy the box file over this stub, commit, review, then deploy:
 
 ```bash
-bash scripts/restore-worker-from-parts.sh
-# writes worker.js from worker.min.part0.js + part1 + part2 (minified equivalent of live)
-npx wrangler deploy   # only after reviewing worker.js
+# from a machine that has the box file or the bundle
+cp /path/to/worker.js ./worker.js
+git add worker.js && git commit -m "Restore production worker.js"
+npx wrangler deploy
 ```
 
-Readable source also lives on the Grok Bot box at `/workspace/word-unscrambler/worker.js` and in the counsel backup bundle.
-
-Do not deploy the stub `worker.js` that returns 503.
+MCP push of the full ~19KB file from this agent hit size/activity limits; the stub + this note are intentional so nobody ships a blank PLACEHOLDER again.
