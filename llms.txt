@@ -37,9 +37,7 @@ Updated: 2026-10-04
 - Words starting with: https://lettersunscrambler.com/words-starting-with
 - Words ending with: https://lettersunscrambler.com/words-ending-with
 - Words containing: https://lettersunscrambler.com/words-containing
-- Word scrambler: https://lettersunscrambler.com/word-scrambler
 - Spelling Bee helper: https://lettersunscrambler.com/spelling-bee
-- Multiple-word unscrambler: https://lettersunscrambler.com/multiple-word-unscrambler
 - Word generator: https://lettersunscrambler.com/word-generator
 - Letter Boxed helper: https://lettersunscrambler.com/letter-boxed
 - Text Twist solver: https://lettersunscrambler.com/text-twist-solver
