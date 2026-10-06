@@ -54,7 +54,7 @@ SCRABBLE, TRAIN, EARTH: see https://lettersunscrambler.com/unscramble
 
 ## Word lists
 
-- 124 two-letter ENABLE words: https://lettersunscrambler.com/2-letter-words
+- 124 two-letter words (96 ENABLE + 28 NWL/Collins additions): https://lettersunscrambler.com/2-letter-words
 - Also 3–10 letter lists, Q-without-U, J/Q/X/Z, bingo stems under https://lettersunscrambler.com/word-lists
 
 ## What not to claim
@@ -68,9 +68,7 @@ Operator: HDK Distribution Ltd, United Kingdom. Updated 2026-08-27.
 - https://lettersunscrambler.com/
 - https://lettersunscrambler.com/jumble-solver
 - https://lettersunscrambler.com/crossword-solver
-- https://lettersunscrambler.com/word-scrambler
 - https://lettersunscrambler.com/spelling-bee
-- https://lettersunscrambler.com/multiple-word-unscrambler
 
 ## Extra tools (2026-08-27 b)
 - https://lettersunscrambler.com/7-letter-words

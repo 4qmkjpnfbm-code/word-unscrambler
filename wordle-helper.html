@@ -229,9 +229,50 @@
       <a class="bento-card" href="/scrabble-word-finder"><p class="try-label">Board games</p><h3>Scrabble finder</h3><p>Scores and bingos for a seven-tile rack.</p></a>
       <a class="bento-card" href="/2-letter-words"><p class="try-label">Learn</p><h3>Two-letter words</h3><p>The list that wins close games.</p></a>
     </section>
-  <section class="prose"><h2>A calmer way to finish Wordle</h2>
-    <p>This helper filters the ENABLE <a href="/5-letter-words">5-letter word list</a> by pattern. It does not scrape NYT answers and it does not require an account. Yellows must appear somewhere; greens must sit in the box you filled.</p>
-    <p>Starting words with good coverage: CRANE, SLATE, AROSE. If you want every word those letters can make — not just five-letter ones — go back to the <a href="/">word unscrambler</a>.</p></section>
+  <section class="prose">
+    <h2>A calmer way to finish Wordle</h2>
+    <p>This helper never scrapes today’s New York Times answer and it never asks for an account. It filters the public-domain ENABLE five-letter list against the greens, yellows and greys you already have. The wooden panel above is the whole product: type what you know, press Find words, and read a short list instead of doom-scrolling a spoiler thread.</p>
+    <p>Wordle is a five-letter constraint puzzle, not a vocabulary test. Greens must sit in the boxes you filled. Yellows must appear somewhere else in the word. Greys are banned. The engine walks ENABLE once in your browser — the same list the rest of this site uses for Scrabble-style racks — and drops every word that breaks a clue. Nothing leaves the device as a search query to our servers.</p>
+    <h2>Worked ENABLE example: greens and yellows</h2>
+    <p>Suppose your board shows greens in positions 2 and 4 for R and N, and you hold a yellow A that is not in position 1. Put R and N in the green slots, keep A in Letters, exclude letters you have already ruled out, and keep length on 5. ENABLE returns a tight set such as CRANE, BRAIN, DRAIN, GRAIN and TRAIN when those letters fit — exact membership depends on your greys. CRANE itself is a strong opener on this site’s list because C, R, A, N and E cover common consonants and vowels without repeating a letter.</p>
+    <p>Another rack: greens spell S??RE and yellows include L. Candidates from ENABLE include SHARE, SPARE, SCARE, STORE and SWORE once greys remove the impossibles. If STORE appears and you already greyed T, it drops. That is the whole loop — clues in, illegal words out — with no “today’s answer” API.</p>
+    <h2>Starter words that earn their keep</h2>
+    <p>On an ENABLE five-letter list, starters that spread vowels and common consonants help early. Useful first guesses on this tool include CRANE, SLATE, AROSE, AUDIO and TRIED. None of those are guaranteed best against every secret; they simply hit many positions and letters so your second guess has something to bite. If you prefer vowel hunting, AROSE and AUDIO surface A, E, I, O and U quickly. If you prefer consonant coverage, CRANE and SLATE put R, N, S, L and T on the board.</p>
+    <p>After the first row, resist the urge to burn a turn on a flashy rare word. Feed the helper what you know. A short list of twenty ENABLE words is easier to scan than a viral tip thread, and it stays honest about the dictionary: QI and ZA are two-letter plays for Scrabble here, not five-letter Wordle answers.</p>
+    <h2>How this differs from the main unscrambler</h2>
+    <p>The homepage <a href="/">word unscrambler</a> lists every subset you can build from a rack — brilliant for Scrabble, noisy for Wordle. This page defaults to Wordle mode and length five so you are not offered AR, ARE and CARE when you only need five-letter fits. If you later want every word those letters can make for a board game, jump back to the main tool or the <a href="/scrabble-word-finder">Scrabble word finder</a>.</p>
+    <p>Pattern fans who already know positions can also use the <a href="/crossword-solver">crossword solver</a> with question-mark masks. Wordle mode here is simply pattern mode with yellows and greys wired for the daily habit.</p>
+    <h2>Hard mode and duplicate letters</h2>
+    <p>Hard mode (must use revealed hints) maps cleanly onto this UI: fill every green, keep every yellow in Letters, and never retype a grey. Duplicate letters trip people up. If the secret is SHEEP and your guess SHOWED paints one E yellow, you still do not know whether a second E exists. Leave Extra E guesses possible until a grey or a green settles it. ENABLE includes SHEEP, SWEEP and SLEEP; the helper will keep all three until your clues separate them.</p>
+    <h2>A second worked board</h2>
+    <p>Imagine greens fixed as C R A _ _ after two guesses, with yellow L waiting for a new seat and greys covering S, T, E, O. The helper should prefer words that keep C, R and A in place, include L somewhere after position 1, and avoid the grey set. When the list is short, read every survivor aloud before you spend the next row. If the list is empty, one of your greys or yellows is wrong; undo the last assumption instead of forcing a glamorous guess.</p>
+    <p>Mobile play works the same way: the panel stays thumb-friendly, results stack under the field, and any advertisement region remains beneath the tool. That layout is deliberate for AdSense readiness and for humans who still need to see what they typed.</p>
+    <h2>Study links</h2>
+    <p>Five-letter drilling pairs well with <a href="/5-letter-words">5-letter words</a> and <a href="/guides/wordle-starters">Wordle starters</a>. Pattern-only drills live on the <a href="/guides/pattern-solver">pattern solver guide</a>. None of those pages invent win-rate statistics; they teach habits you can verify against ENABLE yourself.</p>
+    <h2>What this site will not do</h2>
+    <p>We do not publish today’s answer, we do not mirror NYT’s proprietary list, and we do not claim tournament-word authority. ENABLE is public-domain English with roughly 168,000 entries — close enough for a calm daily puzzle, not a substitute for a club lexicon. Ads, when Google show them, sit under the tool panel only; they never cover the letter field or the results list.</p>
+    <h2>FAQ</h2>
+    <details open>
+      <summary>Does this reveal today’s Wordle?</summary>
+      <p>No. It only filters ENABLE by the clues you type. There is no answer feed.</p>
+    </details>
+    <details>
+      <summary>Which dictionary is used?</summary>
+      <p>ENABLE, loaded in your browser. It is not NASPA TWL or Collins CSW.</p>
+    </details>
+    <details>
+      <summary>Where do ads appear?</summary>
+      <p>Only after the solver panel. The letter box and word list stay clear.</p>
+    </details>
+    <details>
+      <summary>Can I share a filtered list?</summary>
+      <p>Use Share or Copy when results appear. Letters still never leave the device as a backend query.</p>
+    </details>
+    <details>
+      <summary>What if I want every subset, not just five letters?</summary>
+      <p>Open the <a href="/">word unscrambler</a> or try a worked rack such as <a href="/unscramble/listen">LISTEN</a>.</p>
+    </details>
+  </section>
 </main>
 <footer class="site-footer">
     <div class="wrap footer-grid">
@@ -245,7 +286,6 @@
         <a href="/jumble-solver">Jumble solver</a>
         <a href="/crossword-solver">Crossword solver</a>
         <a href="/word-checker">Word checker</a>
-        <a href="/word-scrambler">Word scrambler</a>
         <a href="/spelling-bee">Spelling Bee helper</a>
         <a href="/word-generator">Word generator</a>
         <a href="/letter-boxed">Letter Boxed</a>

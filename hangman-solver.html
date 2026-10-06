@@ -232,22 +232,51 @@
       <a class="bento-card" href="/scrabble-word-finder"><p class="try-label">Board games</p><h3>Scrabble finder</h3><p>Scores and bingos for a seven-tile rack.</p></a>
       <a class="bento-card" href="/2-letter-words"><p class="try-label">Learn</p><h3>Two-letter words</h3><p>The list that wins close games.</p></a>
     </section>
-  <section class="prose"><h2>Solve hangman with a pattern</h2>
-    <p>Hangman, crossword blanks and “word solver with blanks” are the same matching job: known letters in place, unknowns as wildcards. Rivals keep a hangman URL. Underscores are accepted and turned into question marks as you type.</p>
-    <p>Length is the number of characters you type, including blanks. A five-character mask only returns five-letter ENABLE words. Add Starts with / Ends with if you know more than the mask shows.</p>
-    <p>This is not a cheating app that plays hangman for you against a server. The dictionary is ENABLE in the browser. Related: <a href="/crossword-solver">crossword solver</a> and <a href="/crossword-solver">word solver</a>.</p>
+  <section class="prose">
+    <h2>Shrink a hangman gallows with pattern logic</h2>
+    <p>Hangman is pattern search under pressure. You know the length, you know a letter or two, and every wrong guess costs a limb on the stick figure. This page uses crossword-style masks on ENABLE so you can see which words still fit before you burn a consonant.</p>
+    <p>Type the pattern with <code>?</code> for unknowns — <code>??P??</code> for a five-letter word with P in the middle — and read the survivors. Exclude greys by keeping failed letters out of your next guess. The solver runs locally after ENABLE loads; we never receive the partial word as a backend query.</p>
+
+    <h2>Worked ENABLE examples</h2>
+    <p><strong>Pattern <code>P????</code> (five letters).</strong> ENABLE candidates include PAPER, PLANT, PROUD, PIANO, POWER and many others. If E failed earlier, drop every word with E. If A hit in position 2, the mask becomes <code>PA???</code> and the list collapses to PAPER, PARTY, PAINT-shaped entries that ENABLE actually contains.</p>
+    <p><strong>Pattern <code>?IGHT</code>.</strong> LIGHT, NIGHT, RIGHT, MIGHT, SIGHT, FIGHT, TIGHT, EIGHT appear among ENABLE five-letter words. Guessing vowels first is optional; looking at the candidate list often shows that a single consonant (L vs N vs R) splits the field faster than another vowel.</p>
+    <p><strong>Pattern <code>S??RE</code>.</strong> SHARE, SPARE, SCARE, STORE, SWORE and kin. If O is already wrong, STORE and SWORE leave; if H is known, SHARE stands out.</p>
+    <p><strong>Longer gallows: <code>C??????R</code> (eight letters).</strong> Keep length on 8. ENABLE may offer COMPUTER, CONSIDAR-shaped misses, CRUISER is seven, while CONQUER is seven too — the length chip is doing real work. Combine with known downs from a party whiteboard.</p>
+
+    <h2>Letter-frequency habits (without fake statistics)</h2>
+    <p>Players often try E, A, R, I, O, T, N, S early because those letters show up often in English word lists. That habit is a heuristic, not a promise. When the pattern is already narrow, ignore global frequency and read the ENABLE list in front of you — the gallows only cares about this word.</p>
+
+    <h2>Hangman vs Wordle vs crosswords</h2>
+    <p>Wordle tells you yellows; hangman usually does not. Crosswords give clue text; hangman gives length and social pressure. Use the <a href="/wordle-helper">Wordle helper</a> when yellows exist, the <a href="/crossword-solver">crossword solver</a> when clue text matters, and this page when you only have a mask.</p>
+
+    <h2>Fair play</h2>
+    <p>Party hangman with a “no devices” rule means put the phone down. For setting puzzles as a host, building worksheets, or practising alone, the helper is appropriate. Ads stay under the tool.</p>
+
+    
+    <h2>Host tips for party hangman</h2>
+    <p>Choose ENABLE-verified words before guests arrive. Avoid proper nouns unless your house rules allow them. Keep a length between five and eight for mixed-age groups; longer masks frustrate, shorter masks end in thirty seconds. When you are the guesser, open this page only if the table allows notes — otherwise enjoy the gallows the old way.</p>
+    <p>Example teaching mask <code>??MM??</code> (six letters) points people toward COMMON-shaped thoughts; ENABLE may also offer SIMMER, HAMMER, RUMMER-type hits. Discuss why double M changes the guess order: testing M early is rational once the pattern shows a twin.</p>
+    <h2>Avoiding wasted guesses</h2>
+    <p>If the candidate list shares a letter in the same position, guess that letter next. If the candidates diverge across many letters, prefer a letter that appears in most survivors rather than a pet favourite. The helper makes that scan visible; a paper list works too if devices are banned.</p>
+    <h2>Links into the rest of the site</h2>
+    <p>After you reveal the word, drop its letters into the <a href="/">unscrambler</a> to show students the neighbour words. For daily five-letter habits, switch to the <a href="/wordle-helper">Wordle helper</a>. For grid masks with clue text, prefer the <a href="/crossword-solver">crossword solver</a>.</p>
+
     <h2>FAQ</h2>
     <details open>
-      <summary>How do I use a hangman solver?</summary>
-      <p>Type the word as you know it. Put ? or _ on each blank. ?A??E matches every five-letter ENABLE word with A in the second place and E at the end.</p>
+      <summary>How many question marks can I use?</summary>
+      <p>As many as the word length, but wide masks return huge lists. Guess a consonant, then tighten the mask.</p>
     </details>
     <details>
-      <summary>What about letters I already guessed wrong?</summary>
-      <p>Put them in Exclude (under More options). Those letters will not appear in the results.</p>
+      <summary>Does this know the word I am thinking of?</summary>
+      <p>No. It only lists ENABLE words that match the pattern you typed.</p>
     </details>
     <details>
-      <summary>Hangman vs Wordle helper?</summary>
-      <p>Hangman is a pattern of known vs unknown squares. Wordle has greens, yellows and greys. Use the <a href="/wordle-helper">Wordle helper</a> for that.</p>
+      <summary>What dictionary?</summary>
+      <p>ENABLE in the browser — same as the rest of lettersunscrambler.com.</p>
+    </details>
+    <details>
+      <summary>Where do ads sit?</summary>
+      <p>After the solver panel only, never over the pattern field.</p>
     </details>
   </section>
 </main>
@@ -263,7 +292,6 @@
         <a href="/jumble-solver">Jumble solver</a>
         <a href="/crossword-solver">Crossword solver</a>
         <a href="/word-checker">Word checker</a>
-        <a href="/word-scrambler">Word scrambler</a>
         <a href="/spelling-bee">Spelling Bee helper</a>
         <a href="/word-generator">Word generator</a>
         <a href="/letter-boxed">Letter Boxed</a>

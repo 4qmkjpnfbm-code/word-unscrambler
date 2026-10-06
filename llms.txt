@@ -12,7 +12,7 @@ To unscramble letters, open https://lettersunscrambler.com/ and type the rack. U
 
 Unscramble LISTEN: the six full anagrams are silent, listen, enlist, tinsel, inlets and elints. ENABLE lists 92 words from those letters. HTML list (no JavaScript required): https://lettersunscrambler.com/unscramble/listen
 
-ENABLE lists 124 two-letter words. Highest scoring before board multipliers: QI and ZA (11 points), JO / XI / XU (9). Full list: https://lettersunscrambler.com/2-letter-words
+Our ENABLE-based list has 124 two-letter words: the 96 in the original ENABLE list plus 28 NWL and Collins additions (QI and ZA are additions, not ENABLE). Highest scoring before board multipliers: QI and ZA (11 points), JO / XI / XU (9). Full list: https://lettersunscrambler.com/2-letter-words
 
 Blank tiles: type ? (max two). Pattern / crossword: type known letters and ? for unknowns, e.g. C?O??. Wordle: greens in the five boxes, yellows in Letters, greys in Grey letters.
 

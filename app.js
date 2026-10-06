@@ -26,6 +26,50 @@
   const $ = (id) => document.getElementById(id);
   const lettersEl = $("letters");
   if (!lettersEl) return;
+  // Each explicit search (Enter, Find words, example chips, recents, Search again) loads its own URL,
+  // e.g. /?q=LISTEN, so it is a real page view and shareable. Live results while typing stay in place.
+  const LOADED_URL = location.pathname + location.search;
+  let scrollOnReady = false;
+
+  function cleanFor(v) {
+    const tool = document.body.dataset.tool || mode;
+    v = String(v || "").toUpperCase();
+    if (tool === "multi" || mode === "multi") return v.replace(/[^A-Z?*,\s]/g, "").replace(/\s+/g, " ").slice(0, 80);
+    if (tool === "scramble" || mode === "scramble") return v.replace(/[^A-Z]/g, "").slice(0, 20);
+    if (tool === "bee" || mode === "bee") return v.replace(/[^A-Z]/g, "").slice(0, 7);
+    if (tool === "boxed" || mode === "boxed") return v.replace(/[^A-Z]/g, "").slice(0, 12);
+    if (tool === "pattern" || mode === "pattern") return v.replace(/[^A-Z?*_]/g, "").replace(/_/g, "?").slice(0, 16);
+    if (tool === "gen" || mode === "gen") return v.replace(/[^A-Z]/g, "").slice(0, 16);
+    return v.replace(/[^A-Z?*]/g, "").slice(0, 16);
+  }
+
+  function searchUrl() {
+    const q = cleanFor(lettersEl.value).trim();
+    const f = filterValues();
+    if (!q && !f.starts && !f.ends && !f.contains) return "";
+    // q (or mode/starts/ends/contains) always comes first so robots.txt's /*?q= style rules cover it.
+    const sp = new URLSearchParams();
+    if (q) sp.set("q", q);
+    const defaultMode = document.body.dataset.tool || "subset";
+    if (mode && mode !== defaultMode) sp.set("mode", mode);
+    if (f.starts) sp.set("starts", f.starts.toUpperCase().slice(0, 5));
+    if (f.ends) sp.set("ends", f.ends.toUpperCase().slice(0, 5));
+    if (f.contains) sp.set("contains", f.contains.toUpperCase().slice(0, 8));
+    const center = ($("center")?.value || "").toUpperCase().replace(/[^A-Z]/g, "").slice(0, 1);
+    if (mode === "bee" && center) sp.set("center", center);
+    const len = ($("length")?.value || "").replace(/[^0-9]/g, "").slice(0, 2);
+    if (len && len !== (document.body.dataset.exact || "")) sp.set("len", len);
+    return location.pathname + "?" + sp.toString();
+  }
+
+  function submitSearch() {
+    const tool = document.body.dataset.tool || "subset";
+    // Wordle greens/greys and multi-word input are not carried in the URL: keep those in place.
+    if (mode === "wordle" || tool === "wordle" || mode === "multi" || tool === "multi") { collect(); return false; }
+    const next = searchUrl();
+    if (!next || next === LOADED_URL) { collect(); return false; }
+    try { location.assign(next); return true; } catch { collect(); return false; }
+  }
 
   function scoreWord(word) {
     const table = scoring === "wwf" ? WWF : SCRABBLE;
@@ -1126,7 +1170,6 @@
     if (n >= 2 && n <= 10 && n !== 5 && n !== 7) add("/" + n + "-letter-words", n + "-letter list");
     if (mode !== "anagram" && n >= 3) add("/anagram-solver?q=" + encodeURIComponent(raw), "Anagrams only");
     add("/jumble-solver", "Jumble solver");
-    add("/word-scrambler", "Word scrambler");
     add("/word-generator", "Word generator");
     add("/spelling-bee", "Spelling Bee helper");
     add("/letter-boxed", "Letter Boxed");
@@ -1167,6 +1210,17 @@
     const countEl = $("dictCount");
     if (countEl) countEl.textContent = wordCount.toLocaleString("en-GB");
     collect();
+    if (scrollOnReady) {
+      scrollOnReady = false;
+      // Phones: a result page opens on the results (the letter box and keypad sit above them).
+      // Wait two frames so has-results layout changes have applied before measuring.
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        const target = $("resultsHeading") || $("searchAgain");
+        if (!target || window.scrollY > 40) return;
+        const top = Math.max(0, target.getBoundingClientRect().top + window.scrollY - 64);
+        try { window.scrollTo({ top, behavior: "instant" }); } catch { window.scrollTo(0, top); }
+      }));
+    }
   }
 
   async function loadDict() {
@@ -1216,7 +1270,7 @@
   }
 
   $("go")?.addEventListener("click", () => {
-    collect();
+    if (submitSearch()) return;
     if (matchMedia("(max-width: 720px)").matches) $("results")?.scrollIntoView({ behavior: "smooth", block: "start" });
   });
   $("randomWord")?.addEventListener("click", () => {
@@ -1227,27 +1281,12 @@
     const list = byLen[n] || byLen[7] || [];
     if (!list.length) return;
     lettersEl.value = list[Math.floor(Math.random() * list.length)].toUpperCase();
-    collect();
+    if (submitSearch()) return;
     lettersEl.focus();
   });
   lettersEl.addEventListener("input", () => {
     const tool = document.body.dataset.tool || mode;
-    let clean;
-    if (tool === "multi" || mode === "multi") {
-      clean = lettersEl.value.toUpperCase().replace(/[^A-Z?*,\s]/g, "").replace(/\s+/g, " ").slice(0, 80);
-    } else if (tool === "scramble" || mode === "scramble") {
-      clean = lettersEl.value.toUpperCase().replace(/[^A-Z]/g, "").slice(0, 20);
-    } else if (tool === "bee" || mode === "bee") {
-      clean = lettersEl.value.toUpperCase().replace(/[^A-Z]/g, "").slice(0, 7);
-    } else if (tool === "boxed" || mode === "boxed") {
-      clean = lettersEl.value.toUpperCase().replace(/[^A-Z]/g, "").slice(0, 12);
-    } else if (tool === "pattern" || mode === "pattern") {
-      clean = lettersEl.value.toUpperCase().replace(/[^A-Z?*_]/g, "").replace(/_/g, "?").slice(0, 16);
-    } else if (tool === "gen" || mode === "gen") {
-      clean = lettersEl.value.toUpperCase().replace(/[^A-Z]/g, "").slice(0, 16);
-    } else {
-      clean = lettersEl.value.toUpperCase().replace(/[^A-Z?*]/g, "").slice(0, 16);
-    }
+    const clean = cleanFor(lettersEl.value);
     if (clean !== lettersEl.value) lettersEl.value = clean;
     if ((tool === "boxed" || mode === "boxed") && clean.length === 12) {
       ["side0", "side1", "side2", "side3"].forEach((id, i) => {
@@ -1259,7 +1298,7 @@
     schedule();
   });
   lettersEl.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") collect();
+    if (e.key === "Enter") { e.preventDefault(); submitSearch(); }
     if (e.key === "Escape") {
       lettersEl.value = "";
       collect();
@@ -1364,6 +1403,11 @@
       if (hasQuery() || (id === "center" && clean) || id.indexOf("side") === 0) schedule();
     });
   });
+  ["starts", "ends", "contains", "center"].forEach((id) => {
+    $(id)?.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") { e.preventDefault(); submitSearch(); }
+    });
+  });
   $("length")?.addEventListener("input", () => { if (hasQuery()) schedule(); });
   document.querySelectorAll("[data-slot]").forEach((s) => {
     s.addEventListener("input", (e) => {
@@ -1392,7 +1436,7 @@
         parts.forEach((p, i) => { if ($("side" + i)) $("side" + i).value = p.replace(/[^A-Z]/g, "").slice(0, 3); });
         lettersEl.value = parts.join("").replace(/[^A-Z]/g, "").slice(0, 12);
       }
-      collect();
+      if (submitSearch()) return;
       const hub = document.body.dataset.hub;
       (hub === "starts" ? $("starts") : hub === "ends" ? $("ends") : hub === "contains" ? $("contains") : lettersEl)?.focus();
     });
@@ -1467,7 +1511,7 @@
     r.forEach((q) => {
       const b = el("button", "chip", q);
       b.type = "button";
-      b.addEventListener("click", () => { lettersEl.value = q; collect(); lettersEl.focus(); });
+      b.addEventListener("click", () => { lettersEl.value = q; if (!submitSearch()) lettersEl.focus(); });
       box.appendChild(b);
     });
   }
@@ -1526,9 +1570,9 @@
     if (meta) meta.textContent = solved ? "Solved · streak " + streak : "New seven-letter jumble · streak " + streak;
     if (solved) $("daily")?.classList.add("is-solved");
     $("dailyPlay")?.addEventListener("click", () => {
-      setMode("anagram");
       lettersEl.value = dailyScramble;
-      collect();
+      setMode("anagram");
+      if (submitSearch()) return;
       lettersEl.focus();
     });
   }
@@ -1603,6 +1647,23 @@
     qIn = qRaw.toUpperCase().replace(/[^A-Z?*]/g, "").slice(0, 16);
   }
   if (qIn) lettersEl.value = qIn;
+  if (qIn && matchMedia("(max-width: 720px)").matches) scrollOnReady = true;
+  (function searchAgain() {
+    const form = $("searchAgainForm");
+    const input = $("searchAgainInput");
+    if (!form || !input) return;
+    input.addEventListener("input", () => {
+      const c = cleanFor(input.value);
+      if (c !== input.value) input.value = c;
+    });
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const c = cleanFor(input.value).trim();
+      if (!c) { input.focus(); return; }
+      lettersEl.value = c;
+      if (!submitSearch()) $("results")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  })();
   const centerIn = (params.get("center") || "").toUpperCase().replace(/[^A-Z]/g, "").slice(0, 1);
   if (centerIn && $("center")) $("center").value = centerIn;
   const startsIn = (params.get("starts") || "").toUpperCase().replace(/[^A-Z]/g, "").slice(0, 5);

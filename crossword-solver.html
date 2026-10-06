@@ -231,9 +231,46 @@
       <a class="bento-card" href="/scrabble-word-finder"><p class="try-label">Board games</p><h3>Scrabble finder</h3><p>Scores and bingos for a seven-tile rack.</p></a>
       <a class="bento-card" href="/2-letter-words"><p class="try-label">Learn</p><h3>Two-letter words</h3><p>The list that wins close games.</p></a>
     </section>
-  <section class="prose"><h2>Fill a crossword slot</h2>
-    <p>Unlike the unscrambler, this page treats your input as a mask, not a rack. <code>P?T</code> finds PAT, PET, PIT, POT, PUT. Combine with Starts / Ends / Contains if a crossing has already given you extra letters.</p>
-    <p>For a full anagram of leftover letters, switch to the <a href="/anagram-solver">anagram solver</a>.</p></section>
+  <section class="prose">
+    <h2>Fill a crossword pattern without the guesswork spiral</h2>
+    <p>Crosswords punish blank staring. You know three letters, you know the length, and the remaining squares feel like fog. This page opens in pattern mode: type the skeleton with ? for unknowns, keep length locked, and read every ENABLE word that fits the mask. It is the same wood-and-felt solver as the rest of the site — just aimed at grids instead of racks.</p>
+    <p>British and American puzzles both yield to masks. A seven-letter across clue with known ends might look like C?????D. Paste that into Letters, leave Pattern pressed, and the helper walks ENABLE for matches such as CRACKED, CROOKED, CHARGED or CLEANED depending on what you already inked from downs. No account, no mobile app, no clue database that spoils the joy of the cryptic later.</p>
+    <h2>Worked ENABLE examples</h2>
+    <p><strong>Example 1 — five-letter gap.</strong> Mask ST??E with length 5. You should see STALE, STONE, STORE, STATE, STYLE and similar five-letter ENABLE entries. Cross-check with a down letter: if position 3 must be O, STORE and STONE survive and STALE leaves.</p>
+    <p><strong>Example 2 — common ending.</strong> Mask ?IGHT. ENABLE returns LIGHT, NIGHT, RIGHT, FIGHT, MIGHT, SIGHT, TIGHT and EIGHT among others. If a down already forces L in position 1, only LIGHT remains. That is the discipline: let intersecting letters shrink the list instead of hunting synonyms in a vacuum.</p>
+    <p><strong>Example 3 — longer entry.</strong> Mask UN?????LE (nine letters). Keep the length chip on 9 so seven-letter noise never appears. When a down gives B in position 3, unbeatable-shaped ENABLE hits rise and unrelated stems fall away.</p>
+    <p><strong>Example 4 — short fill.</strong> Mask B??K with length 4 yields BOOK, BARK, BEAK, BIKE, BULK and similar ENABLE fours. Add a known O in position 2 for BO?K and BOOK stands out quickly.</p>
+    <h2>Cryptic vs quick crossword</h2>
+    <p>A quick crossword wants a definition match; a cryptic wants wordplay plus definition. This solver does not parse cryptic indicators. It only answers which ENABLE words fit these letters and gaps. Use it after you have a few checked letters from downs, or when the anagram fodder in a cryptic is already clear — in that case the <a href="/anagram-solver">anagram solver</a> or <a href="/jumble-solver">jumble solver</a> may be faster.</p>
+    <p>For American-style themed puzzles with long revelatory answers, pattern mode still helps on the short fill that unlocks the theme. For British-style blocked grids, short common words dominate — see also our <a href="/2-letter-words">2-letter</a> and <a href="/3-letter-words">3-letter</a> lists when the grid is tight.</p>
+    <h2>British spelling and ENABLE</h2>
+    <p>ENABLE leans toward broad English spellings. COLOUR versus COLOR disputes still happen at the table. If your paper is firmly UK-facing and ENABLE returns only the US form, trust the paper for that grid square and treat this tool as a letter engine, not a style guide. The site chrome itself is written in en-GB because the operator is a UK company — HDK Distribution Ltd — but the word list is the public ENABLE dump, not a bespoke UK crossword lexicon.</p>
+    <h2>Wildcards and blanks</h2>
+    <p>Use up to two ? wildcards when you truly do not know a square. More than that floods the list; better to solve another clue first. Blank tiles in Scrabble are a different job — read <a href="/guides/blank-tiles">blank tiles</a> and use the main <a href="/">unscrambler</a> with question marks in the rack.</p>
+    <h2>How pattern mode works here</h2>
+    <p>Letters stay in your browser. ENABLE loads once, then every keystroke filters locally. Ads sit under the tool, never over the pattern field. The dictionary is not a crossword publisher’s word list; if a niche proper noun is missing, that is expected. For game scores rather than grids, open the <a href="/scrabble-word-finder">Scrabble finder</a> or <a href="/words-with-friends">Words With Friends</a> page.</p>
+    <h2>FAQ</h2>
+    <details open>
+      <summary>What does a question mark mean?</summary>
+      <p>One unknown letter. C?T matches CAT, COT, CUT and other three-letter ENABLE words with C and T at the ends.</p>
+    </details>
+    <details>
+      <summary>Can I solve a whole grid?</summary>
+      <p>Not as a file upload. Paste one pattern at a time as letters appear from crossing clues.</p>
+    </details>
+    <details>
+      <summary>Is this a clue solver with definitions?</summary>
+      <p>No. It is a letter-pattern filter on ENABLE. Definitions stay in your puzzle book.</p>
+    </details>
+    <details>
+      <summary>Why is a word I know missing?</summary>
+      <p>ENABLE is public-domain and broad, but it is not every proper noun or every UK paper’s house list.</p>
+    </details>
+    <details>
+      <summary>Where should ads show?</summary>
+      <p>Only after the solver panel on this page, never above the pattern box.</p>
+    </details>
+  </section>
     <section class="faq" id="faq">
       <h2>FAQ</h2>
     <details open>
@@ -263,7 +300,6 @@
         <a href="/jumble-solver">Jumble solver</a>
         <a href="/crossword-solver">Crossword solver</a>
         <a href="/word-checker">Word checker</a>
-        <a href="/word-scrambler">Word scrambler</a>
         <a href="/spelling-bee">Spelling Bee helper</a>
         <a href="/word-generator">Word generator</a>
         <a href="/letter-boxed">Letter Boxed</a>
