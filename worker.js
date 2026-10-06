@@ -88,9 +88,9 @@ const GONE = {
   "/multiple-word-unscrambler": "/jumble-solver"
 };
 const ALLOW = new Set(Object.values(ROUTES).concat([
-  "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","stage.webp","stage.avif","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest","llms.txt","llms-full.txt","b7e4c91a0f3d68e25a14c0b9d8e7f612.txt","8d7c4a91b2e05f63c1a47d90e8b6f352.txt","BingSiteAuth.xml","modern-v38.css","modern-v39.css","modern-v40.css","modern-v41.css","modern-v37.css","modern-v35.css","modern-v34.css","modern-v32.css","profit-v1.js","feedback.html","guide-blank-tiles.html","guide-scrabble-vs-wwf.html","guide-wordle-starters.html","guide-pattern-solver.html","guide-how-to-unscramble.html","security.txt","unscramble-eagle.html","unscramble-airbag.html","unscramble-pallet.html"
+  "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","stage.webp","stage.avif","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest","llms.txt","llms-full.txt","b7e4c91a0f3d68e25a14c0b9d8e7f612.txt","8d7c4a91b2e05f63c1a47d90e8b6f352.txt","BingSiteAuth.xml","modern-v38.css","modern-v39.css","modern-v40.css","modern-v41.css","modern-v42.css","modern-v37.css","modern-v35.css","modern-v34.css","modern-v32.css","fonts/roboto-400.woff2","fonts/roboto-500.woff2","fonts/roboto-700.woff2","img/listen-hero.avif","img/listen-hero.webp","profit-v1.js","feedback.html","guide-blank-tiles.html","guide-scrabble-vs-wwf.html","guide-wordle-starters.html","guide-pattern-solver.html","guide-how-to-unscramble.html","security.txt","unscramble-eagle.html","unscramble-airbag.html","unscramble-pallet.html"
 ]));
-const LONG = new Set(["css","js","svg","jpg","webp","avif","webmanifest"]);
+const LONG = new Set(["css","js","svg","jpg","webp","avif","webmanifest","woff2"]);
 const MIME = {
   html: "text/html;charset=UTF-8",
   css: "text/css;charset=UTF-8",
@@ -99,6 +99,7 @@ const MIME = {
   jpg: "image/jpeg",
   webp: "image/webp",
   avif: "image/avif",
+  woff2: "font/woff2",
   xml: "application/xml;charset=UTF-8",
   txt: "text/plain;charset=UTF-8",
   webmanifest: "application/manifest+json"
@@ -281,13 +282,16 @@ function injectModern(htmlBuf) {
   out = out.replace(/<meta name="twitter:site"[^>]*>\n?/g, "");
   out = out.replace(/,"sameAs":\["https:\/\/x\.com\/h4_rry2"\]/g, "");
   out = out.replace(/"sameAs":\["https:\/\/x\.com\/h4_rry2"\],/g, "");
-  out = out.replace(/<link rel="stylesheet" href="\/modern-v3[0-9]\.css\?v=[^"]+" \/>\n?/g, "");
-  out = out.replace(/<link rel="stylesheet" href="\/modern-v40\.css\?v=[^"]+" \/>\n?/g, "");
-  out = out.replace(/<link rel="stylesheet" href="\/modern-v41\.css\?v=[^"]+" \/>\n?/g, "");
+  const redesigned = out.indexOf("modern-v42.css") !== -1;
+  if (!redesigned) {
+    out = out.replace(/<link rel="stylesheet" href="\/modern-v3[0-9]\.css\?v=[^"]+" \/>\n?/g, "");
+    out = out.replace(/<link rel="stylesheet" href="\/modern-v40\.css\?v=[^"]+" \/>\n?/g, "");
+    out = out.replace(/<link rel="stylesheet" href="\/modern-v41\.css\?v=[^"]+" \/>\n?/g, "");
+  }
   out = out.replace(/<link rel="stylesheet" href="\/styles\.css\?v=[0-9]+" \/>/g, '<link rel="stylesheet" href="/styles.css?v=32" />');
   out = out.replace(/<script src="\/app\.js\?v=[0-9]+" defer><\/script>/g, '<script src="/app.js?v=27" defer></script>');
   out = out.replace('content="width=device-width, initial-scale=1"', 'content="width=device-width, initial-scale=1, viewport-fit=cover"');
-  if (out.indexOf("modern-v41.css") === -1) {
+  if (!redesigned && out.indexOf("modern-v41.css") === -1) {
     const link = '<link rel="stylesheet" href="/modern-v39.css?v=47" />\n  <link rel="stylesheet" href="/modern-v40.css?v=47" />\n  <link rel="stylesheet" href="/modern-v41.css?v=47" />';
     if (out.indexOf("</head>") !== -1) out = out.replace("</head>", link + "\n</head>");
     else if (out.indexOf("<head>") !== -1) out = out.replace("<head>", "<head>\n" + link);

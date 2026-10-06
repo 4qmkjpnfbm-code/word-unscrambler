@@ -1,5 +1,3 @@
-.wrangler/
 node_modules/
-worker.min*.js
-.env
-.dev.vars
+.wrangler/
+lighthouse/

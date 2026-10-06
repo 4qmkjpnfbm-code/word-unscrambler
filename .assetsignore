@@ -1,0 +1,17 @@
+.git
+.gitignore
+node_modules
+.wrangler
+lighthouse
+shots
+lus-deploy.tar.gz
+worker.source.part1.txt
+worker.source.part2.txt
+*.md
+preview-worker.js
+wrangler.toml
+wrangler.preview.toml
+package.json
+package-lock.json
+restore-worker-via-gh.sh
+scripts
