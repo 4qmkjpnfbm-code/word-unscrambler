@@ -24,8 +24,9 @@ Changed images (same keys, new transparent bytes):
 Changed brand files:
 
 - `favicon.svg`
-- `manifest.webmanifest`
 - `modern-v42.css`
+
+`manifest.webmanifest` already points at `/favicon.svg`, so the manifest file itself did not change.
 
 Every HTML file (theme script, and the home hero size):
 
