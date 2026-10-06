@@ -95,9 +95,10 @@
   <link rel="apple-touch-icon" href="/og.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,560;0,9..144,640;1,9..144,480&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,560;0,9..144,640;1,9..144,480&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=optional" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,560;0,9..144,640;1,9..144,480&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=optional" /></noscript>
   <link rel="stylesheet" href="/styles.css?v=32" />
-  <link rel="preload" href="/stage.jpg" as="image" fetchpriority="high" />
+  <link rel="preload" href="/stage.avif" as="image" type="image/avif" fetchpriority="high" />
   <link rel="preconnect" href="https://www.googletagmanager.com" />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-VR1EE3K51N"></script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2666058844257008" crossorigin="anonymous"></script>
@@ -144,8 +145,12 @@
   </header>
 <main id="main">
   <section class="stage" aria-label="Word unscrambler">
-    <div class="stage-bg" aria-hidden="true">
-      <img class="stage-photo" src="/stage.jpg" width="1600" height="900" alt="" fetchpriority="high" decoding="async" />
+    <div class="stage-bg">
+      <picture>
+        <source srcset="/stage.avif" type="image/avif" />
+        <source srcset="/stage.webp" type="image/webp" />
+        <img class="stage-photo" src="/stage.jpg" width="1600" height="900" alt="Wooden letter tiles on a felt table" fetchpriority="high" decoding="async" />
+      </picture>
     </div>
     <div class="orbit" id="orbit" aria-hidden="true">
       <span class="orb" data-ch="L"></span>
@@ -176,7 +181,8 @@
         <input id="letters" type="text" maxlength="16" autocomplete="off" spellcheck="false" inputmode="text" placeholder="LISTEN or A?PLE" aria-describedby="coach" />
         <button class="primary" id="go" type="button">Find words</button>
       </div>
-      <p class="coach" id="coach">Use ? for a blank tile. Words appear as you type.</p>
+      <p class="coach" id="coach">Type the letters on your rack. Every word you can make appears below — including shorter ones.</p>
+      <div class="keypad" id="keypad" aria-label="Letter keys"><div class="key-row"><button type="button" class="key">Q</button><button type="button" class="key">W</button><button type="button" class="key">E</button><button type="button" class="key">R</button><button type="button" class="key">T</button><button type="button" class="key">Y</button><button type="button" class="key">U</button><button type="button" class="key">I</button><button type="button" class="key">O</button><button type="button" class="key">P</button></div><div class="key-row"><button type="button" class="key">A</button><button type="button" class="key">S</button><button type="button" class="key">D</button><button type="button" class="key">F</button><button type="button" class="key">G</button><button type="button" class="key">H</button><button type="button" class="key">J</button><button type="button" class="key">K</button><button type="button" class="key">L</button></div><div class="key-row"><button type="button" class="key key-wide" aria-label="Delete last letter">⌫</button><button type="button" class="key">Z</button><button type="button" class="key">X</button><button type="button" class="key">C</button><button type="button" class="key">V</button><button type="button" class="key">B</button><button type="button" class="key">N</button><button type="button" class="key">M</button><button type="button" class="key key-wide" aria-label="Blank tile">?</button></div></div>
       <div class="status">
       <h2 id="resultsHeading">Words from your letters <span id="resultMeta"></span></h2>
       <div class="toolbar">
@@ -185,13 +191,15 @@
       </div>
     </div>
     <div id="results" class="empty">Your words will show here.</div>
+      <nav id="nextPlay" class="next-play" hidden aria-label="Related tools"></nav>
       <div class="tiles" id="tiles" aria-hidden="true"></div>
       <div class="modes" role="tablist" aria-label="Mode">
-        <button class="mode" type="button" data-mode="subset" aria-pressed="true">All words</button>
-        <button class="mode" type="button" data-mode="anagram" aria-pressed="false">Anagrams</button>
-        <button class="mode" type="button" data-mode="wordle" aria-pressed="false">Wordle</button>
-        <button class="mode" type="button" data-mode="pattern" aria-pressed="false">Pattern</button>
+        <button role="tab" class="mode" type="button" data-mode="subset" aria-selected="true">All words</button>
+        <button role="tab" class="mode" type="button" data-mode="anagram" aria-selected="false">Anagrams</button>
+        <button role="tab" class="mode" type="button" data-mode="wordle" aria-selected="false">Wordle</button>
+        <button role="tab" class="mode" type="button" data-mode="pattern" aria-selected="false">Pattern</button>
       </div>
+      <button type="button" id="refineBtn" class="refine-btn" aria-pressed="false">Refine length &amp; filters</button>
       <p class="try-label">Length</p>
       <div class="len-row" role="group" aria-label="Word length"><button type="button" class="len" data-len="" aria-pressed="true">Any</button><button type="button" class="len" data-len="2" aria-pressed="false">2</button><button type="button" class="len" data-len="3" aria-pressed="false">3</button><button type="button" class="len" data-len="4" aria-pressed="false">4</button><button type="button" class="len" data-len="5" aria-pressed="false">5</button><button type="button" class="len" data-len="6" aria-pressed="false">6</button><button type="button" class="len" data-len="7" aria-pressed="false">7</button><button type="button" class="len" data-len="8" aria-pressed="false">8</button><button type="button" class="len" data-len="9+" aria-pressed="false">9+</button></div>
       <div class="filters quick-filters" aria-label="Letter filters">
@@ -458,6 +466,6 @@
       });
     })();
   </script>
-  <script src="/profit-v1.js" defer></script>
+  <script>addEventListener("load",function(){if(document.querySelector("script[data-profit]"))return;var s=document.createElement("script");s.src="/profit-v1.js";s.defer=true;s.setAttribute("data-profit","1");document.body.appendChild(s);},{once:true});</script>
 </body>
 </html>

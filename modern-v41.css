@@ -12,9 +12,12 @@ body:not(.has-results) .ad-region { display: none !important; }
 .ad-after-results ins.adsbygoogle { min-height: 90px !important; }
 
 #results.empty {
-  min-height: 0 !important;
+  min-height: 120px !important;
   padding: 8px 0 4px !important;
   font-size: 0.95rem;
+}
+#coach {
+  min-height: 4.7em;
 }
 #results.empty .examples { display: flex !important; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
 
@@ -59,10 +62,18 @@ body:not(.has-results) .ad-region { display: none !important; }
 .panel > .coach { order: 2; }
 .panel > .keypad { order: 3; }
 .panel > .modes { order: 4; }
+@media (max-width: 720px) {
+  .modes { min-height: 96px; }
+}
 .panel > .refine-btn { order: 5; }
 .panel > .status { order: 6; }
 .panel > #results { order: 7; }
 .panel > .tiles { order: 8; }
+.panel > .next-play,
+.panel > #nextPlay { order: 8; }
+.panel > .best-play,
+.panel > .len-jumps,
+.panel > .define { order: 6; }
 .panel > .try-label,
 .panel > .len-row,
 .panel > .quick-filters,
@@ -252,4 +263,96 @@ body.has-results .scroll-cue { display: none; }
     animation: none;
     transform: rotateY(180deg);
   }
+}
+
+/* v49 — stable hero, contrast that does not depend on the photo */
+.stage-bg picture {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+#resultsHeading,
+.stage-tool .status h2,
+.stage-tool .status {
+  color: #1c1710 !important;
+  text-shadow: none !important;
+}
+#resultsHeading {
+  background: #f6ecda !important;
+  border-radius: 8px;
+  padding: 2px 8px;
+}
+html[data-theme="dark"] #resultsHeading,
+html[data-theme="dark"] .stage-tool .status,
+html[data-theme="dark"] .stage-tool .status h2 {
+  color: #1c1710 !important;
+}
+
+.modes .mode,
+.stage-tool .modes .mode,
+.panel .modes .mode {
+  color: #1c1710 !important;
+  background: #f6ecda !important;
+  border-color: #6a5c48 !important;
+}
+.modes .mode[aria-pressed="true"],
+.modes .mode[aria-selected="true"],
+.stage-tool .modes .mode[aria-pressed="true"],
+.stage-tool .modes .mode[aria-selected="true"],
+.panel .modes .mode[aria-pressed="true"],
+.panel .modes .mode[aria-selected="true"] {
+  color: #f6ecda !important;
+  background: #1f4a38 !important;
+  border-color: #1f4a38 !important;
+}
+
+.chip,
+.examples .chip,
+.len-jumps .chip,
+.stage-tool .len-jumps .chip,
+.next-play .chip {
+  color: #1c1710 !important;
+  background: #f3e2b8 !important;
+  border-color: #6b5a3e !important;
+}
+
+.refine-btn {
+  color: #1c1710 !important;
+  background: #f6ecda !important;
+  border: 1px solid #6a5c48 !important;
+}
+.refine-btn[aria-pressed="true"] {
+  color: #f6ecda !important;
+  background: #1f4a38 !important;
+  border-color: #1f4a38 !important;
+}
+
+.cinematic .site-footer {
+  background: #14110e !important;
+  color: #f3e6d0 !important;
+}
+.cinematic .site-footer a,
+html[data-theme="light"] .cinematic .site-footer a {
+  color: #f6ecda !important;
+}
+.cinematic .footer-grid .footer-head,
+.cinematic .footer-grid h2,
+html[data-theme="light"] .cinematic .footer-grid .footer-head,
+html[data-theme="light"] .cinematic .footer-grid h2 {
+  color: #f6ecda !important;
+}
+
+.consent {
+  background: #1c1710 !important;
+  color: #f6ecda !important;
+}
+.consent a { color: #f3e2b8 !important; }
+.consent button.ghost {
+  color: #f6ecda !important;
+  background: #1c1710 !important;
+  border: 2px solid #f6ecda !important;
 }

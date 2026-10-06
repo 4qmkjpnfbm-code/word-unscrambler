@@ -90,7 +90,8 @@
   <link rel="apple-touch-icon" href="/og.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,640&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,640&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=optional" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,640&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=optional" /></noscript>
   <link rel="stylesheet" href="/styles.css?v=31" />
   <link rel="preconnect" href="https://www.googletagmanager.com" />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-VR1EE3K51N"></script>
@@ -145,6 +146,7 @@
         <button class="primary" id="go" type="button">Check word</button>
       </div>
       <p class="coach" id="coach">Type a word. ENABLE is checked in this browser — nothing is sent to a server.</p>
+      <div class="keypad" id="keypad" aria-label="Letter keys"><div class="key-row"><button type="button" class="key">Q</button><button type="button" class="key">W</button><button type="button" class="key">E</button><button type="button" class="key">R</button><button type="button" class="key">T</button><button type="button" class="key">Y</button><button type="button" class="key">U</button><button type="button" class="key">I</button><button type="button" class="key">O</button><button type="button" class="key">P</button></div><div class="key-row"><button type="button" class="key">A</button><button type="button" class="key">S</button><button type="button" class="key">D</button><button type="button" class="key">F</button><button type="button" class="key">G</button><button type="button" class="key">H</button><button type="button" class="key">J</button><button type="button" class="key">K</button><button type="button" class="key">L</button></div><div class="key-row"><button type="button" class="key key-wide" aria-label="Delete last letter">⌫</button><button type="button" class="key">Z</button><button type="button" class="key">X</button><button type="button" class="key">C</button><button type="button" class="key">V</button><button type="button" class="key">B</button><button type="button" class="key">N</button><button type="button" class="key">M</button><button type="button" class="key key-wide" aria-label="Blank tile">?</button></div></div>
       <div class="status">
       <h2 id="resultsHeading">Word checker <span id="resultMeta"></span></h2>
       <div class="toolbar">
@@ -153,6 +155,7 @@
       </div>
     </div>
     <div id="results" class="empty">Type a word above.</div>
+      <nav id="nextPlay" class="next-play" hidden aria-label="Related tools"></nav>
       <div class="examples" aria-label="Try an example"><button class="chip" type="button" data-ex="QI">QI</button><button class="chip" type="button" data-ex="QAT">QAT</button><button class="chip" type="button" data-ex="LISTEN">LISTEN</button><button class="chip" type="button" data-ex="XYZZY">XYZZY</button></div>
       <p class="hint">Dictionary: ENABLE, <span id="dictCount">loading</span> words.</p>
     </section>

@@ -43,21 +43,25 @@
   }
 
   function ensureRefine() {
-    if ($("refineBtn")) return;
-    var modes = document.querySelector(".stage-tool .modes");
-    if (!modes) return;
-    var btn = document.createElement("button");
-    btn.type = "button";
-    btn.id = "refineBtn";
-    btn.className = "refine-btn";
-    btn.setAttribute("aria-pressed", "false");
-    btn.textContent = "Refine length & filters";
+    var modes = document.querySelector(".stage-tool .modes") || document.querySelector(".modes");
+    var btn = $("refineBtn");
+    if (!btn) {
+      if (!modes) return;
+      btn = document.createElement("button");
+      btn.type = "button";
+      btn.id = "refineBtn";
+      btn.className = "refine-btn";
+      btn.setAttribute("aria-pressed", "false");
+      btn.textContent = "Refine length & filters";
+      modes.after(btn);
+    }
+    if (btn.dataset.bound) return;
+    btn.dataset.bound = "1";
     btn.addEventListener("click", function () {
       var on = document.body.classList.toggle("is-refine");
       btn.setAttribute("aria-pressed", on ? "true" : "false");
       btn.textContent = on ? "Hide filters" : "Refine length & filters";
     });
-    modes.after(btn);
   }
 
   var box = $("results");

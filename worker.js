@@ -88,15 +88,17 @@ const GONE = {
   "/multiple-word-unscrambler": "/jumble-solver"
 };
 const ALLOW = new Set(Object.values(ROUTES).concat([
-  "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest","llms.txt","llms-full.txt","b7e4c91a0f3d68e25a14c0b9d8e7f612.txt","8d7c4a91b2e05f63c1a47d90e8b6f352.txt","BingSiteAuth.xml","modern-v38.css","modern-v39.css","modern-v40.css","modern-v41.css","modern-v37.css","modern-v35.css","modern-v34.css","modern-v32.css","profit-v1.js","feedback.html","guide-blank-tiles.html","guide-scrabble-vs-wwf.html","guide-wordle-starters.html","guide-pattern-solver.html","guide-how-to-unscramble.html","security.txt","unscramble-eagle.html","unscramble-airbag.html","unscramble-pallet.html"
+  "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","stage.webp","stage.avif","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest","llms.txt","llms-full.txt","b7e4c91a0f3d68e25a14c0b9d8e7f612.txt","8d7c4a91b2e05f63c1a47d90e8b6f352.txt","BingSiteAuth.xml","modern-v38.css","modern-v39.css","modern-v40.css","modern-v41.css","modern-v37.css","modern-v35.css","modern-v34.css","modern-v32.css","profit-v1.js","feedback.html","guide-blank-tiles.html","guide-scrabble-vs-wwf.html","guide-wordle-starters.html","guide-pattern-solver.html","guide-how-to-unscramble.html","security.txt","unscramble-eagle.html","unscramble-airbag.html","unscramble-pallet.html"
 ]));
-const LONG = new Set(["css","js","svg","jpg","webmanifest"]);
+const LONG = new Set(["css","js","svg","jpg","webp","avif","webmanifest"]);
 const MIME = {
   html: "text/html;charset=UTF-8",
   css: "text/css;charset=UTF-8",
   js: "text/javascript;charset=UTF-8",
   svg: "image/svg+xml",
   jpg: "image/jpeg",
+  webp: "image/webp",
+  avif: "image/avif",
   xml: "application/xml;charset=UTF-8",
   txt: "text/plain;charset=UTF-8",
   webmanifest: "application/manifest+json"
@@ -290,8 +292,8 @@ function injectModern(htmlBuf) {
     if (out.indexOf("</head>") !== -1) out = out.replace("</head>", link + "\n</head>");
     else if (out.indexOf("<head>") !== -1) out = out.replace("<head>", "<head>\n" + link);
   }
-  if (out.indexOf('src="/stage.jpg"') !== -1 && out.indexOf('href="/stage.jpg"') === -1) {
-    const pre = '<link rel="preload" href="/stage.jpg" as="image" fetchpriority="high" />';
+  if (out.indexOf('src="/stage.jpg"') !== -1 && out.indexOf('href="/stage.avif"') === -1 && out.indexOf('href="/stage.webp"') === -1 && out.indexOf('href="/stage.jpg"') === -1) {
+    const pre = '<link rel="preload" href="/stage.avif" as="image" type="image/avif" fetchpriority="high" />';
     if (out.indexOf("</head>") !== -1) out = out.replace("</head>", pre + "\n</head>");
   }
   if (out.indexOf("application/ld+json") === -1 && out.indexOf("</head>") !== -1) {
@@ -335,8 +337,13 @@ function injectModern(htmlBuf) {
       'document.body.classList.remove("has-consent"); bar.remove();'
     );
   }
+  // Ads and the refine button are not needed for the first paint. Load after the
+  // load event so they do not sit on the main thread with the solver.
+  const profitLazy = '<script>addEventListener("load",function(){if(document.querySelector("script[data-profit]"))return;var s=document.createElement("script");s.src="/profit-v1.js";s.defer=true;s.setAttribute("data-profit","1");document.body.appendChild(s);},{once:true});</script>';
   if (out.indexOf("profit-v1.js") === -1 && out.indexOf('id="results"') !== -1) {
-    out = out.replace("</body>", '<script src="/profit-v1.js" defer></script>\n</body>');
+    out = out.replace("</body>", profitLazy + "\n</body>");
+  } else {
+    out = out.replace(/<script src="\/profit-v1\.js"[^>]*><\/script>/g, profitLazy);
   }
   return new TextEncoder().encode(out).buffer;
 }

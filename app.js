@@ -526,7 +526,11 @@
     const f = filterValues();
     const filterOnly = !input && hasFilters(f);
 
-    if (!input && mode !== "wordle" && !filterOnly) {
+    const wordleClue = mode === "wordle" && (
+      [...document.querySelectorAll("[data-slot]")].some((s) => (s.value || "").trim()) ||
+      (($("greys")?.value || "").replace(/[^a-zA-Z]/g, ""))
+    );
+    if (!input && !filterOnly && !wordleClue) {
       box.className = "empty";
       box.replaceChildren();
       const p = el("p", "", ready
@@ -536,10 +540,12 @@
             ? "Type the letters you may use. They can be reused. Every ENABLE word that only uses those letters appears below."
             : mode === "boxed"
               ? "Type 12 unique letters, 3 per side, clockwise from the top. Words of 3+ letters must hop sides."
+            : mode === "wordle"
+              ? "Enter yellow letters, greens in the five boxes, and greys in Exclude."
           : "Type a rack, or a start / end / contains filter — no letters required.")
         : "Loading 168,000 words…");
       box.appendChild(p);
-      if (ready && !document.body.dataset.hub) {
+      if (ready && !document.body.dataset.hub && mode !== "wordle") {
         const row = el("div", "examples");
         ["LISTEN", "A?PLE", "AEINRST"].forEach((ex) => {
           const b = el("button", "chip", ex);
@@ -1199,11 +1205,20 @@
       const n = w.length;
       return n >= 2 && n <= 15 && /^[a-z]+$/.test(w);
     });
-    for (const w of EXTRA) if (!words.includes(w)) words.push(w);
-    for (const w of words) {
+    const have = new Set(words);
+    for (const w of EXTRA) if (!have.has(w)) words.push(w);
+    // Yield often enough that indexing ~168k words stays under a long-task.
+    // The letter box and keypad stay usable while this runs.
+    const CHUNK = 4000;
+    for (let i = 0; i < words.length; i++) {
+      const w = words[i];
       (byLen[w.length] ||= []).push(w);
       (bySig[sig(w)] ||= []).push(w);
       wordSet.add(w);
+      if (i > 0 && i % CHUNK === 0) {
+        if (typeof scheduler !== "undefined" && scheduler.yield) await scheduler.yield();
+        else await new Promise((resolve) => setTimeout(resolve, 0));
+      }
     }
     wordCount = words.length;
     ready = true;
@@ -1245,7 +1260,13 @@
     if (!next) return;
     mode = next;
     document.querySelectorAll("[data-mode]").forEach((btn) => {
-      btn.setAttribute("aria-pressed", btn.dataset.mode === mode ? "true" : "false");
+      const on = btn.dataset.mode === mode;
+      if (btn.getAttribute("role") === "tab") {
+        btn.setAttribute("aria-selected", on ? "true" : "false");
+        btn.removeAttribute("aria-pressed");
+      } else {
+        btn.setAttribute("aria-pressed", on ? "true" : "false");
+      }
     });
     const wordle = $("wordleFields");
     if (wordle) wordle.hidden = mode !== "wordle";
@@ -1335,10 +1356,39 @@
     }
   })();
   (function ensureKeypad() {
-    if ($("keypad") || !lettersEl) return;
-    const box = el("div", "keypad");
-    box.id = "keypad";
-    box.setAttribute("aria-label", "Letter keys");
+    if (!lettersEl) return;
+    let box = $("keypad");
+    if (!box) {
+      box = el("div", "keypad");
+      box.id = "keypad";
+      box.setAttribute("aria-label", "Letter keys");
+      ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"].forEach((line, i) => {
+        const r = el("div", "key-row");
+        if (i === 2) {
+          const del = el("button", "key key-wide", "⌫");
+          del.type = "button";
+          del.setAttribute("aria-label", "Delete last letter");
+          r.appendChild(del);
+        }
+        line.split("").forEach((ch) => {
+          const b = el("button", "key", ch);
+          b.type = "button";
+          r.appendChild(b);
+        });
+        if (i === 2) {
+          const blank = el("button", "key key-wide", "?");
+          blank.type = "button";
+          blank.setAttribute("aria-label", "Blank tile");
+          r.appendChild(blank);
+        }
+        box.appendChild(r);
+      });
+      const coach = $("coach");
+      if (coach) coach.after(box);
+      else lettersEl.parentNode.after(box);
+    }
+    if (box.dataset.bound) return;
+    box.dataset.bound = "1";
     function addLetter(ch) {
       const n = lettersEl.value.replace(/[^a-zA-Z?]/g, "").length;
       if (n >= 16) return;
@@ -1347,45 +1397,29 @@
       if (c) c.hidden = false;
       schedule();
     }
-    ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"].forEach((line, i) => {
-      const r = el("div", "key-row");
-      if (i === 2) {
-        const del = el("button", "key key-wide", "⌫");
-        del.type = "button";
-        del.setAttribute("aria-label", "Delete last letter");
-        del.addEventListener("click", () => {
+    box.querySelectorAll("button.key").forEach((b) => {
+      b.addEventListener("click", () => {
+        const label = b.getAttribute("aria-label") || "";
+        const text = b.textContent || "";
+        if (label === "Delete last letter" || text === "⌫") {
           lettersEl.value = lettersEl.value.slice(0, -1);
           const c = $("clear");
           if (c) c.hidden = !lettersEl.value;
           schedule();
-        });
-        r.appendChild(del);
-      }
-      line.split("").forEach((ch) => {
-        const b = el("button", "key", ch);
-        b.type = "button";
-        b.addEventListener("click", () => addLetter(ch));
-        r.appendChild(b);
-      });
-      if (i === 2) {
-        const blank = el("button", "key key-wide", "?");
-        blank.type = "button";
-        blank.setAttribute("aria-label", "Blank tile");
-        blank.addEventListener("click", () => {
+          return;
+        }
+        if (label === "Blank tile" || text === "?") {
           const wilds = (lettersEl.value.match(/[?*]/g) || []).length;
           if (wilds >= 2) { toast("Two blanks maximum"); return; }
           lettersEl.value = (lettersEl.value + "?").slice(0, 16);
           const c = $("clear");
           if (c) c.hidden = false;
           collect();
-        });
-        r.appendChild(blank);
-      }
-      box.appendChild(r);
+          return;
+        }
+        addLetter(text);
+      });
     });
-    const coach = $("coach");
-    if (coach) coach.after(box);
-    else lettersEl.parentNode.after(box);
     if (matchMedia("(max-width: 899px)").matches) {
       lettersEl.setAttribute("inputmode", "none");
       lettersEl.setAttribute("enterkeyhint", "search");
@@ -1443,6 +1477,22 @@
   });
   document.querySelectorAll("[data-mode]").forEach((btn) => {
     btn.addEventListener("click", () => setMode(btn.dataset.mode));
+  });
+  document.querySelectorAll('.modes[role="tablist"]').forEach((list) => {
+    list.addEventListener("keydown", (e) => {
+      const tabs = [...list.querySelectorAll('[role="tab"]')];
+      const i = tabs.indexOf(document.activeElement);
+      if (i < 0) return;
+      let next = null;
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") next = tabs[(i + 1) % tabs.length];
+      else if (e.key === "ArrowLeft" || e.key === "ArrowUp") next = tabs[(i - 1 + tabs.length) % tabs.length];
+      else if (e.key === "Home") next = tabs[0];
+      else if (e.key === "End") next = tabs[tabs.length - 1];
+      if (!next) return;
+      e.preventDefault();
+      next.focus();
+      setMode(next.dataset.mode);
+    });
   });
   document.querySelectorAll("[data-sort]").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -1703,7 +1753,20 @@
   if ((tool === "bee" || mode === "bee") && $("coach") && !qIn) $("coach").textContent = COACH.bee;
   if ((tool === "gen" || mode === "gen") && $("coach") && !qIn) $("coach").textContent = COACH.gen;
   if ((tool === "boxed" || mode === "boxed") && $("coach") && !qIn) $("coach").textContent = COACH.boxed;
-  loadDict();
+  // Dictionary is large. A shared ?q= link starts it immediately; otherwise wait
+  // until after first paint so the hero and the solver chrome are not blocked.
+  (function scheduleDict() {
+    const eager = new URLSearchParams(location.search);
+    const soon = eager.has("q") || eager.has("starts") || eager.has("ends") || eager.has("contains");
+    const start = () => loadDict();
+    if (soon) { start(); return; }
+    const kick = () => {
+      if ("requestIdleCallback" in window) requestIdleCallback(start, { timeout: 1500 });
+      else setTimeout(start, 1);
+    };
+    if (document.readyState === "complete") kick();
+    else window.addEventListener("load", kick, { once: true });
+  })();
 
   (function initAds() {
     const ins = document.querySelector(".ad-box ins.adsbygoogle");
