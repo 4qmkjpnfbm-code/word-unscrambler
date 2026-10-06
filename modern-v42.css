@@ -160,14 +160,20 @@ html[data-theme="dark"] button.theme-btn {
 .brand, .brand-name, .brand-name span { color: #202124 !important; }
 .brand-name span { color: #5f6368 !important; font-weight: 400 !important; }
 .mark {
-  background: #ffffff !important;
-  color: #1a73e8 !important;
-  border: 1px solid #dadce0 !important;
+  width: 36px !important;
+  height: 36px !important;
+  border: 0 !important;
   border-radius: 10px !important;
-  box-shadow: 0 1px 2px rgba(60, 64, 67, 0.12), 0 10px 24px -14px rgba(161, 66, 244, 0.9) !important;
+  background: linear-gradient(145deg, #1a73e8 0%, #1a73e8 58%, #7b4dff 145%) !important;
+  color: #ffffff !important;
   font-family: "Roboto", Arial, sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 1.2rem !important;
+  letter-spacing: -0.04em !important;
+  line-height: 1 !important;
+  box-shadow: 0 1px 2px rgba(26, 115, 232, 0.45) !important;
 }
-.mark small { color: #a142f4 !important; }
+.mark small { display: none !important; }
 .menu-btn {
   border-radius: 20px !important;
   border: 1px solid #dadce0 !important;
@@ -245,7 +251,7 @@ html[data-theme="dark"] .cinematic .nav a {
 .hero-art img {
   width: 100%;
   height: auto;
-  aspect-ratio: 1200 / 428;
+  aspect-ratio: 1100 / 332;
   object-fit: contain;
   object-position: center;
 }
@@ -759,11 +765,11 @@ html[data-theme="dark"] .brand,
 html[data-theme="dark"] .brand-name { color: #e8eaed !important; }
 html[data-theme="dark"] .brand-name span { color: #9aa0a6 !important; }
 html[data-theme="dark"] .mark {
-  background: #303134 !important;
-  color: #8ab4f8 !important;
-  border-color: #3c4043 !important;
+  background: #8ab4f8 !important;
+  color: #202124 !important;
+  border: 0 !important;
+  box-shadow: none !important;
 }
-html[data-theme="dark"] .mark small { color: #d7aefb !important; }
 html[data-theme="dark"] .menu-btn {
   background: #303134 !important;
   color: #8ab4f8 !important;
@@ -792,20 +798,20 @@ html[data-theme="dark"] .hero-art { position: relative; }
 html[data-theme="dark"] .hero-art::before {
   content: "";
   position: absolute;
-  left: 8%;
-  right: 8%;
-  top: 22%;
-  bottom: 12%;
-  background: radial-gradient(ellipse at center, rgba(138, 180, 248, 0.35), rgba(215, 174, 251, 0.2) 46%, transparent 72%);
-  filter: blur(10px);
+  left: 12%;
+  right: 12%;
+  top: 58%;
+  bottom: 6%;
+  background: radial-gradient(ellipse at center, rgba(138, 180, 248, 0.45), rgba(167, 66, 244, 0.28) 42%, transparent 72%);
+  filter: blur(16px);
   pointer-events: none;
   z-index: 0;
 }
 html[data-theme="dark"] .hero-art img {
   position: relative;
   z-index: 1;
-  -webkit-mask-image: radial-gradient(ellipse 74% 70% at 50% 46%, #000 46%, transparent 76%);
-  mask-image: radial-gradient(ellipse 74% 70% at 50% 46%, #000 46%, transparent 76%);
+  -webkit-mask-image: none;
+  mask-image: none;
 }
 
 html[data-theme="dark"] .panel,

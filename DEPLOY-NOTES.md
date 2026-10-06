@@ -1,24 +1,33 @@
 # Deploy dark mode
 
-This branch adds a light/dark toggle. It is a draft. Do not merge until Harry says so. Fetch this branch via codeload and deploy the preview yourself with:
+Draft branch `dark-mode`. Do not merge until Harry says so. Preview deploy, from a checkout of this branch:
 
 ```bash
 npx wrangler deploy -c wrangler.preview.toml
 ```
 
-That publishes `lus-redesign-preview` only. `wrangler.preview.toml` has `workers_dev = true`, no routes, and no production KV binding. `preview-worker.js` serves this branch's files and still strips ads, GA4 and the consent bar.
+That publishes `lus-redesign-preview` only. No routes and no production KV binding.
 
 ## Worker
 
-`worker.js` did not change. A production `wrangler deploy -c wrangler.toml` is not required for dark mode.
+`worker.js` did not change for this pass. The cutout reuses the existing names `img/listen-hero.avif` and `img/listen-hero.webp`, which are already on the allow-list. A production `wrangler deploy -c wrangler.toml` is not required.
 
-## KV keys to re-upload for production
+## KV keys to re-upload
 
-The live Worker still prefers KV `SITE` over GitHub when the value is longer than 20 bytes. After a future merge, re-upload these keys (path with no leading slash):
+The live Worker prefers KV `SITE` when the value is longer than 20 bytes. Keys are paths with no leading slash.
 
+Changed images (same keys, new transparent bytes):
+
+- `img/listen-hero.avif`
+- `img/listen-hero.webp`
+
+Changed brand files:
+
+- `favicon.svg`
+- `manifest.webmanifest`
 - `modern-v42.css`
 
-Every HTML file, because the header script and theme button changed:
+Every HTML file (theme script, and the home hero size):
 
 - `index.html`
 - `404.html`
@@ -73,4 +82,4 @@ Every HTML file, because the header script and theme button changed:
 - `9-letter-words.html`
 - `10-letter-words.html`
 
-No new font or image files. Ads, GA4 and the consent bar stay in the HTML. The preview Worker removes them only on `lus-redesign-preview`.
+`stage.jpg`, `stage.avif` and `stage.webp` are not used by these pages (the home hero is the cutout). `og.jpg` is unchanged and was left out on purpose. No new filenames, so nothing new to add to the Worker allow-list.
