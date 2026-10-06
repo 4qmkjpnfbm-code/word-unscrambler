@@ -1,44 +1,25 @@
-# Deploy the Material 3 redesign
+# Deploy dark mode
 
-Harry approved this for production on 6 October 2026. Merge is into `main`. Do the KV upload and the Worker deploy yourself. The repo is public; fetch `main` via codeload after the merge.
+This branch adds a light/dark toggle. It is a draft. Do not merge until Harry says so. Fetch this branch via codeload and deploy the preview yourself with:
 
-The live Worker is `word-unscrambler`. It reads KV namespace `SITE` (`3a8db125fded4e80873b31240dd5f0e8`). The key is the path relative to the repo root, with no leading slash (the same string `pull()` passes to `env.SITE.get`). If that key exists and is longer than 20 bytes, KV wins and GitHub is not used. Re-upload every changed file below or the old KV copy stays live.
+```bash
+npx wrangler deploy -c wrangler.preview.toml
+```
+
+That publishes `lus-redesign-preview` only. `wrangler.preview.toml` has `workers_dev = true`, no routes, and no production KV binding. `preview-worker.js` serves this branch's files and still strips ads, GA4 and the consent bar.
 
 ## Worker
 
-`worker.js` changed. It needs a deploy with the production config, not the preview config:
+`worker.js` did not change. A production `wrangler deploy -c wrangler.toml` is not required for dark mode.
 
-```bash
-npx wrangler deploy -c wrangler.toml
-```
+## KV keys to re-upload for production
 
-Do not deploy `wrangler.preview.toml` for this. That file is only the `lus-redesign-preview` Worker.
+The live Worker still prefers KV `SITE` over GitHub when the value is longer than 20 bytes. After a future merge, re-upload these keys (path with no leading slash):
 
-What the Worker change does:
-
-- Allows `modern-v42.css`, `fonts/roboto-400.woff2`, `fonts/roboto-500.woff2`, `fonts/roboto-700.woff2`, `img/listen-hero.avif` and `img/listen-hero.webp`. Without this deploy those URLs 404 even if the bytes are in KV.
-- Serves `.woff2` as `font/woff2`.
-- Leaves HTML that already links `modern-v42.css` alone. Pages without that link still get the old `modern-v39/40/41` injection.
-
-Upload the KV files first, then deploy the Worker, so the new allow-list and the new bytes go live together.
-
-## New KV keys
-
-- `fonts/roboto-400.woff2`
-- `fonts/roboto-500.woff2`
-- `fonts/roboto-700.woff2`
-- `img/listen-hero.avif`
-- `img/listen-hero.webp`
 - `modern-v42.css`
 
-## Changed KV keys
+Every HTML file, because the header script and theme button changed:
 
-Re-upload these. They already exist in KV or are served by filename from this repo.
-
-- `app.js`
-- `profit-v1.js`
-- `favicon.svg`
-- `manifest.webmanifest`
 - `index.html`
 - `404.html`
 - `about.html`
@@ -92,18 +73,4 @@ Re-upload these. They already exist in KV or are served by filename from this re
 - `9-letter-words.html`
 - `10-letter-words.html`
 
-## Not KV keys
-
-These changed on `main` and should not be uploaded to `SITE`:
-
-- `worker.js` (deploy with the command above)
-- `wrangler.toml` (unchanged; still the production Worker and the live KV id)
-- `wrangler.preview.toml`, `preview-worker.js` (preview only)
-- `PREVIEW-NOTES.md`, `DEPLOY-NOTES.md`
-- `package.json`, `package-lock.json`
-- `shots/*.png`
-- `.assetsignore`, `.gitignore`
-
-## Production HTML
-
-Indexable pages keep `robots` `index,follow`. AdSense (`ca-pub-2666058844257008`), GA4 (`G-VR1EE3K51N`) and the `wu_consent` bar are still in the HTML. The preview Worker strips those only when serving `lus-redesign-preview`. `404.html` is the only page with `noindex`, and that was already true on the previous `main`.
+No new font or image files. Ads, GA4 and the consent bar stay in the HTML. The preview Worker removes them only on `lus-redesign-preview`.
