@@ -12,10 +12,10 @@
   let mode = document.body.dataset.tool || "subset";
   let sortBy = "score";
   const COACH = {
-    subset: "Type the letters on your rack. Every word you can make appears below — including shorter ones.",
-    anagram: "Type all the letters. Only words that use every letter are shown.",
-    wordle: "Green boxes = right letter, right place. Letters box = yellows. Exclude = greys.",
-    check: "Type a word. ENABLE is checked in this browser — nothing is sent to a server.",
+    subset: "Use ? for a blank tile.",
+    anagram: "Use ? if a letter is unknown.",
+    wordle: "Five-letter words only.",
+    check: "A meaning and hooks show when it matches.",
     bee: "Type the 7 hive letters. Set the center letter. Words of 4+ letters, using only the hive, must include the center.",
     multi: "Type several scrambled words separated by spaces. Each is unjumbled on its own.",
     scramble: "Type a real word to shuffle a puzzle, or paste a scramble to solve it. Reshuffle until it looks hard.",

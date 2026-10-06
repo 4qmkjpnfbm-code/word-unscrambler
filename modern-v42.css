@@ -215,7 +215,7 @@ html[data-theme="dark"] .stage-tool .panel {
 .coach, .stage-tool .coach, .hint, .mini, .try-label, .stage-tool .try-label, .stage-tool .mini {
   color: #5f6368 !important;
 }
-#coach { min-height: 4.7em; }
+#coach { min-height: 2.6em; }
 .input-row input[type="text"],
 .stage-tool .input-row input[type="text"],
 .filters input,
