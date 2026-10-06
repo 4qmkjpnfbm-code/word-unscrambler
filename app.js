@@ -543,7 +543,9 @@
             : mode === "wordle"
               ? "Enter yellow letters, greens in the five boxes, and greys in Exclude."
           : "Type a rack, or a start / end / contains filter — no letters required.")
-        : "Loading 168,000 words…");
+        : (mode === "wordle"
+          ? "Enter yellow letters, greens in the five boxes, and greys in Exclude."
+          : "Type a rack, or a start / end / contains filter — no letters required."));
       box.appendChild(p);
       if (ready && !document.body.dataset.hub && mode !== "wordle") {
         const row = el("div", "examples");

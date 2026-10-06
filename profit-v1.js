@@ -1,7 +1,12 @@
 (function () {
   function $(id) { return document.getElementById(id); }
 
+  function preview() {
+    return document.documentElement.classList.contains("preview");
+  }
+
   function fill(root) {
+    if (preview()) return;
     var scope = root || document;
     var list = scope.querySelectorAll ? scope.querySelectorAll("ins.adsbygoogle") : [];
     list.forEach(function (ins) {
@@ -11,6 +16,7 @@
   }
 
   function hideUnfilled() {
+    if (preview()) return;
     document.querySelectorAll(".ad-region").forEach(function (n) {
       if (n.hidden) return;
       if (n.querySelector("iframe")) return;

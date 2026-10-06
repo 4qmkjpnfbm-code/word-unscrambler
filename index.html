@@ -4,9 +4,7 @@
   <script>
     (function () {
       try {
-        var t = localStorage.getItem("wu_theme");
-        if (!t) t = (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
-        document.documentElement.setAttribute("data-theme", t === "dark" ? "dark" : "light");
+        document.documentElement.setAttribute("data-theme", "light");
       } catch (e) {}
       function sync(btn) {
         var dark = document.documentElement.getAttribute("data-theme") === "dark";
@@ -15,7 +13,7 @@
         btn.setAttribute("aria-label", dark ? "Switch to light theme" : "Switch to dark theme");
         btn.textContent = dark ? "Light" : "Dark";
         var meta = document.querySelector('meta[name="theme-color"]');
-        if (meta) meta.setAttribute("content", dark ? "#13110f" : "#1f4a38");
+        if (meta) meta.setAttribute("content", "#ffffff");
       }
       function bind() {
         var btn = document.getElementById("themeBtn");
@@ -62,6 +60,8 @@
   </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preload" href="/fonts/roboto-500.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" as="image" href="/img/listen-hero.avif" type="image/avif" media="(min-width: 960px)" />
   <title>Word Unscrambler – Make Words from Letters</title>
   <meta name="description" content="Make words from letters. Free word unscrambler for Scrabble, jumbles and Wordle. ENABLE dictionary, blank tiles as ?, scores as you type. No signup." />
   <meta name="robots" content="index,follow,max-image-preview:large" />
@@ -79,26 +79,21 @@
   <meta property="og:url" content="https://lettersunscrambler.com/" />
   <meta property="og:image" content="https://lettersunscrambler.com/og.jpg" />
   <meta property="og:image:width" content="1200" />
-  <meta property="og:image:alt" content="Word Unscrambler — wooden letter tiles on a felt table" />
+  <meta property="og:image:alt" content="Frosted glass letter tiles spelling LISTEN" />
   <meta property="og:locale" content="en_GB" />
   <meta property="og:locale:alternate" content="en_US" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Word Unscrambler – Make Words from Letters" />
   <meta name="twitter:description" content="Make words from letters. Free unscrambler for Scrabble, jumbles and Wordle." />
   <meta name="twitter:image" content="https://lettersunscrambler.com/og.jpg" />
-  <meta name="twitter:image:alt" content="Word Unscrambler — wooden letter tiles on a felt table" />
-  <meta name="theme-color" content="#1f4a38" />
+  <meta name="twitter:image:alt" content="Frosted glass letter tiles spelling LISTEN" />
+  <meta name="theme-color" content="#ffffff" />
   <link rel="manifest" href="/manifest.webmanifest" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/og.jpg" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,560;0,9..144,640;1,9..144,480&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=optional" onload="this.onload=null;this.rel='stylesheet'" />
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,560;0,9..144,640;1,9..144,480&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=optional" /></noscript>
   <link rel="stylesheet" href="/styles.css?v=32" />
-  <link rel="preload" href="/stage.avif" as="image" type="image/avif" fetchpriority="high" />
   <link rel="preconnect" href="https://www.googletagmanager.com" />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-VR1EE3K51N"></script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2666058844257008" crossorigin="anonymous"></script>
@@ -121,6 +116,7 @@
   <link rel="stylesheet" href="/modern-v39.css?v=47" />
   <link rel="stylesheet" href="/modern-v40.css?v=47" />
   <link rel="stylesheet" href="/modern-v41.css?v=47" />
+  <link rel="stylesheet" href="/modern-v42.css?v=1" />
 </head>
 <body data-tool="subset" class="cinematic">
   <noscript><p class="wrap">This word unscrambler needs JavaScript. Meanwhile, browse the <a href="/2-letter-words">two-letter word list</a>, <a href="/5-letter-words">5-letter words</a> or <a href="/how-it-works">how it works</a>.</p></noscript>
@@ -144,37 +140,19 @@
     </div>
   </header>
 <main id="main">
-  <section class="stage" aria-label="Word unscrambler">
-    <div class="stage-bg">
-      <picture>
-        <source srcset="/stage.avif" type="image/avif" />
-        <source srcset="/stage.webp" type="image/webp" />
-        <img class="stage-photo" src="/stage.jpg" width="1600" height="900" alt="Wooden letter tiles on a felt table" fetchpriority="high" decoding="async" />
-      </picture>
-    </div>
-    <div class="orbit" id="orbit" aria-hidden="true">
-      <span class="orb" data-ch="L"></span>
-      <span class="orb" data-ch="I"></span>
-      <span class="orb" data-ch="S"></span>
-      <span class="orb" data-ch="T"></span>
-      <span class="orb" data-ch="E"></span>
-      <span class="orb" data-ch="N"></span>
-    </div>
-    <div class="wrap stage-copy">
+  <section class="stage home-hero" aria-label="Word unscrambler">
+    <div class="wrap home-layout">
+    <div class="stage-copy home-copy">
       <p class="kicker">Word unscrambler · 168,000 ENABLE words</p>
-      <h1 class="split-title"><span class="line">Make words </span><span class="line ital">from letters</span></h1>
-      <div class="story-rack" aria-hidden="true">
-        <span class="story-tile" style="--d:0"><i>L</i><b>S</b></span>
-        <span class="story-tile" style="--d:1"><i>I</i><b>I</b></span>
-        <span class="story-tile" style="--d:2"><i>S</i><b>L</b></span>
-        <span class="story-tile" style="--d:3"><i>T</i><b>E</b></span>
-        <span class="story-tile" style="--d:4"><i>E</i><b>N</b></span>
-        <span class="story-tile" style="--d:5"><i>N</i><b>T</b></span>
-      </div>
-      <p class="story-cap">LISTEN becomes SILENT</p>
+      <h1 class="split-title">Make words from letters</h1>
       <p class="lede">Type your rack. Every valid English word appears as you type — including shorter leftovers.</p>
     </div>
-    <div class="wrap stage-tool">
+    <picture class="hero-art">
+      <source media="(min-width: 960px)" srcset="/img/listen-hero.avif" type="image/avif" />
+      <source media="(min-width: 960px)" srcset="/img/listen-hero.webp" type="image/webp" />
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" width="1200" height="428" decoding="async" />
+    </picture>
+    <div class="stage-tool">
   <section class="panel" aria-labelledby="letters-label">
       <label class="field-label" id="letters-label" for="letters">Letters</label>
       <div class="input-row">
@@ -190,7 +168,7 @@
         <button class="ghost" id="copy" type="button" hidden>Copy all</button>
       </div>
     </div>
-    <div id="results" class="empty">Your words will show here.</div>
+    <div id="results" class="empty"><p>Type a rack, or a start / end / contains filter — no letters required.</p></div>
       <nav id="nextPlay" class="next-play" hidden aria-label="Related tools"></nav>
       <div class="tiles" id="tiles" aria-hidden="true"></div>
       <div class="modes" role="tablist" aria-label="Mode">
@@ -250,10 +228,18 @@
       </div>
       <button class="ghost" id="dailyPlay" type="button">Play today’s</button>
     </aside>
-    <a class="scroll-cue" href="#story-beats">How it works</a>
+    </div>
     </div>
   </section>
   <div class="wrap after-stage">
+    <nav class="tool-row" aria-label="More tools">
+      <a class="tool-card" href="/anagram-solver"><em>Anagrams</em><strong>Anagram solver</strong><span>LISTEN becomes SILENT, ENLIST, TINSEL.</span></a>
+      <a class="tool-card" href="/wordle-helper"><em>Wordle</em><strong>Wordle helper</strong><span>Greens, yellows and greys. Five letters only.</span></a>
+      <a class="tool-card" href="/scrabble-word-finder"><em>Scrabble</em><strong>Scrabble finder</strong><span>Scores and bingos for a seven-tile rack.</span></a>
+      <a class="tool-card" href="/crossword-solver"><em>Crossword</em><strong>Crossword solver</strong><span>Use ? for the squares you cannot see.</span></a>
+      <a class="tool-card" href="/spelling-bee"><em>Spelling Bee</em><strong>Spelling Bee helper</strong><span>Centre letter, hive and pangrams.</span></a>
+      <a class="tool-card" href="/word-lists"><em>Lists</em><strong>Word lists</strong><span>Two-letter words through ten, plus Q without U.</span></a>
+    </nav>
     <aside class="ad-region ad-after-results" id="adAfterResults" hidden aria-label="Advertisement">
       <p class="ad-label">Advertisement</p>
       <div class="ad-box ad-box-slim">
@@ -266,21 +252,21 @@
     </aside>
 
     <script src="/app.js?v=26" defer></script>
-  <ol class="story-beats" id="story-beats" aria-label="How it works">
+  <ol class="story-beats" id="story-beats" aria-label="Tips">
       <li>
         <p class="try-label">01 · Type</p>
-        <h3>A jumble on the felt</h3>
-        <p>Put the letters from your rack in the box. <a href="/?q=LISTEN">LISTEN</a> is the worked example.</p>
+        <h3>Put the rack in the box</h3>
+        <p>Letters only. Use ? for a blank. <a href="/?q=LISTEN">LISTEN</a> is the worked example.</p>
       </li>
       <li>
-        <p class="try-label">02 · Rearrange</p>
-        <h3>Tiles become a word</h3>
-        <p>LISTEN flips to silent, enlist, tinsel, inlets and elints — every letter used.</p>
+        <p class="try-label">02 · Read</p>
+        <h3>Every word, scored</h3>
+        <p>LISTEN returns silent, enlist, tinsel, inlets and elints, plus the shorter plays.</p>
       </li>
       <li>
         <p class="try-label">03 · Play</p>
-        <h3>Every valid leftover</h3>
-        <p>92 ENABLE words from those six tiles, scored as you type. Nothing leaves this browser.</p>
+        <h3>Open the next tool</h3>
+        <p>92 ENABLE words stay in this browser. Wordle, Scrabble and anagrams are one tap away.</p>
       </li>
     </ol>
   <section class="bento" aria-label="Come back for">
