@@ -76,6 +76,19 @@ test("author bio stays hidden until Harry replaces the placeholder", () => {
   }
 });
 
+test("homepage lists each tool once in a single card grid", () => {
+  const html = fs.readFileSync(new URL("../index.html", import.meta.url), "utf8");
+  const body = html.split("<footer")[0];
+  assert.equal((body.match(/class="tool-row"/g) || []).length, 1);
+  assert.equal((body.match(/class="related"/g) || []).length, 0);
+  assert.equal((body.match(/class="bento-card" href=/g) || []).length, 0);
+  const cards = body.match(/class="tool-card" href="([^"]+)"/g) || [];
+  const hrefs = cards.map((c) => c.match(/href="([^"]+)"/)[1]);
+  assert.equal(new Set(hrefs).size, hrefs.length);
+  assert.ok(hrefs.includes("/word-ladder-solver"));
+  assert.ok(hrefs.includes("/jumble-solver"));
+});
+
 test("max steps and missing words produce no ladder", () => {
   const words = ["cat", "cot", "cog", "dog"];
   assert.equal(ladder.shortestLadder(words, "cat", "dog", 2).path, null);
