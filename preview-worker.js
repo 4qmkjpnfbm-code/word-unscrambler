@@ -1,3 +1,5 @@
+import { classifyPath, prettyMap } from "./seo-redirect.mjs";
+
 /**
  * Preview-only Worker for lus-redesign-preview.
  * Serves this branch's files as static assets. No production KV. No routes.
@@ -92,6 +94,7 @@ const GONE = {
   "/word-scrambler": "/jumble-solver",
   "/multiple-word-unscrambler": "/jumble-solver"
 };
+const PRETTY = prettyMap(ROUTES);
 
 function withRobots(headers) {
   const h = new Headers(headers);
@@ -137,8 +140,24 @@ async function readAsset(request, env, pathname) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-    let path = url.pathname;
-    if (path.length > 1 && path.endsWith("/")) path = path.slice(0, -1);
+    const classified = classifyPath(url.pathname, GONE, PRETTY);
+    if (classified.type === "redirect") {
+      const dest = new URL(classified.location, url.origin);
+      url.searchParams.forEach((value, key) => {
+        if (!dest.searchParams.has(key)) dest.searchParams.set(key, value);
+      });
+      return new Response(null, { status: 301, headers: withRobots(new Headers({ location: dest.pathname + dest.search })) });
+    }
+    if (classified.type === "notfound") {
+      const missing = await readAsset(request, env, "/404.html");
+      const headers = withRobots(new Headers(missing.headers));
+      headers.set("x-robots-tag", "noindex, follow");
+      const html = rewriteHtml(await missing.text());
+      headers.delete("content-length");
+      headers.set("content-type", "text/html; charset=utf-8");
+      return new Response(html, { status: 404, headers });
+    }
+    let path = classified.path;
 
     if (path === "/robots.txt") {
       return new Response("User-agent: *\nDisallow: /\n", {

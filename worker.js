@@ -1,3 +1,5 @@
+import { classifyPath, prettyMap, withRequestQuery } from "./seo-redirect.mjs";
+
 const GH = "https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/0f324f48a55064ad68204914e1b4300a89c7e759/";
 const GH_MAIN = "https://raw.githubusercontent.com/4qmkjpnfbm-code/word-unscrambler/main/";
 const CANONICAL_HOST = "lettersunscrambler.com";
@@ -91,6 +93,7 @@ const GONE = {
   "/word-scrambler": "/jumble-solver",
   "/multiple-word-unscrambler": "/jumble-solver"
 };
+const PRETTY = prettyMap(ROUTES);
 const ALLOW = new Set(Object.values(ROUTES).concat([
   "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","stage.webp","stage.avif","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest","llms.txt","llms-full.txt","b7e4c91a0f3d68e25a14c0b9d8e7f612.txt","8d7c4a91b2e05f63c1a47d90e8b6f352.txt","BingSiteAuth.xml","modern-v38.css","modern-v39.css","modern-v40.css","modern-v41.css","modern-v42.css","modern-v37.css","modern-v35.css","modern-v34.css","modern-v32.css","fonts/roboto-400.woff2","fonts/roboto-500.woff2","fonts/roboto-700.woff2","img/listen-hero.avif","img/listen-hero.webp","daily-share.js","word-ladder.js","word-ladder-solver.html","author-bio.html","scrabble-score.js","boggle.js","scrabble-score-calculator.html","boggle-solver.html","daily.js","daily.html","icon-180.png","icon-192.png","icon-512.png","icon-512-maskable.png","help.js","profit-v1.js","feedback.html","guide-blank-tiles.html","guide-scrabble-vs-wwf.html","guide-wordle-starters.html","guide-pattern-solver.html","guide-how-to-unscramble.html","security.txt","unscramble-eagle.html","unscramble-airbag.html","unscramble-pallet.html"
 ]));
@@ -457,16 +460,27 @@ function injectSearch(htmlBuf, url, path) {
 export default {
   async fetch(req, env) {
     const url = new URL(req.url);
-    if (url.hostname !== CANONICAL_HOST) {
-      url.hostname = CANONICAL_HOST;
-      url.protocol = "https:";
-      url.port = "";
-      return Response.redirect(url.toString(), 301);
+    const classified = classifyPath(url.pathname, GONE, PRETTY);
+    if (classified.type === "redirect") {
+      return Response.redirect(withRequestQuery(classified.location, url.searchParams), 301);
     }
-    let p = url.pathname;
-    if (p.length > 1 && p.charAt(p.length - 1) === "/") {
-      url.pathname = p.slice(0, -1);
-      return Response.redirect(url.toString(), 301);
+    if (url.hostname !== CANONICAL_HOST || url.protocol !== "https:") {
+      const known = classified.path === "/words.txt" || classified.path === "/favicon.ico" || classified.path === "/apple-touch-icon.png" || classified.path === "/apple-touch-icon-precomposed.png" || !!ROUTES[classified.path] || (classified.path.charAt(0) === "/" && ALLOW.has(classified.path.slice(1)));
+      if (classified.type === "notfound" || !known) {
+        const miss = await pull("404.html", env);
+        return new Response(miss || "Not found", { status: 404, headers: headers("404.html", { "cache-control": "no-store", "x-robots-tag": "noindex, follow" }) });
+      }
+      const canon = new URL(url.toString());
+      canon.hostname = CANONICAL_HOST;
+      canon.protocol = "https:";
+      canon.port = "";
+      canon.pathname = classified.path;
+      return Response.redirect(canon.toString(), 301);
+    }
+    let p = classified.type === "ok" ? classified.path : url.pathname;
+    if (classified.type === "notfound") {
+      const miss = await pull("404.html", env);
+      return new Response(miss || "Not found", { status: 404, headers: headers("404.html", { "cache-control": "no-store", "x-robots-tag": "noindex, follow" }) });
     }
     if (p === "/favicon.ico") p = "/favicon.svg";
     if (p === "/apple-touch-icon.png" || p === "/apple-touch-icon-precomposed.png") p = "/icon-180.png";
@@ -483,19 +497,21 @@ export default {
     if (!name && p.charAt(0) === "/" && ALLOW.has(p.slice(1))) name = p.slice(1);
     if (!name) {
       const miss = await pull("404.html", env);
-      return new Response(miss || "Not found", { status: 404, headers: headers("404.html", { "cache-control": "no-store" }) });
+      return new Response(miss || "Not found", { status: 404, headers: headers("404.html", { "cache-control": "no-store", "x-robots-tag": "noindex, follow" }) });
     }
     let buf = await pull(name, env);
     if (!buf) {
       const miss = await pull("404.html", env);
-      return new Response(miss || "Not found", { status: 404, headers: headers("404.html", { "cache-control": "no-store" }) });
+      return new Response(miss || "Not found", { status: 404, headers: headers("404.html", { "cache-control": "no-store", "x-robots-tag": "noindex, follow" }) });
     }
     const isHtml = name.indexOf(".") === -1 || name.slice(-5) === ".html";
     const search = isSearchView(url);
     if (isHtml) buf = injectModern(buf);
     if (isHtml && search) buf = injectSearch(buf, url, p);
+    const extra = {};
+    if (search || name === "author-bio.html") extra["x-robots-tag"] = "noindex, follow";
     return new Response(buf, {
-      headers: headers(name, search ? { "x-robots-tag": "noindex, follow" } : undefined)
+      headers: headers(name, Object.keys(extra).length ? extra : undefined)
     });
   }
 };
