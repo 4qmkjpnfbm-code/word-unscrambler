@@ -3,17 +3,21 @@
 <head>
   <script>
     (function () {
+      var theme = "light";
       try {
-        document.documentElement.setAttribute("data-theme", "light");
+        var saved = localStorage.getItem("wu_theme");
+        if (saved === "dark" || saved === "light") theme = saved;
+        else if (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches) theme = "dark";
       } catch (e) {}
+      document.documentElement.setAttribute("data-theme", theme);
       function sync(btn) {
         var dark = document.documentElement.getAttribute("data-theme") === "dark";
-        if (!btn) return;
-        btn.setAttribute("aria-pressed", dark ? "true" : "false");
-        btn.setAttribute("aria-label", dark ? "Switch to light theme" : "Switch to dark theme");
-        btn.textContent = dark ? "Light" : "Dark";
+        if (btn) {
+          btn.setAttribute("aria-pressed", dark ? "true" : "false");
+          btn.setAttribute("aria-label", dark ? "Switch to light theme" : "Switch to dark theme");
+        }
         var meta = document.querySelector('meta[name="theme-color"]');
-        if (meta) meta.setAttribute("content", "#ffffff");
+        if (meta) meta.setAttribute("content", dark ? "#202124" : "#ffffff");
       }
       function bind() {
         var btn = document.getElementById("themeBtn");
@@ -82,13 +86,14 @@
   <meta name="twitter:description" content="Find words containing any letter or cluster. TH, QU, ING, TION and A–Z ENABLE lists, plus a live filter that needs no rack." />
   <meta name="twitter:image" content="https://lettersunscrambler.com/og.jpg" />
   <meta name="theme-color" content="#ffffff" />
+  <script>try{var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute("content",document.documentElement.getAttribute("data-theme")==="dark"?"#202124":"#ffffff");}catch(e){}</script>
   <link rel="manifest" href="/manifest.webmanifest" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/og.jpg" />
   <link rel="stylesheet" href="/styles.css?v=31" />
-  <link rel="stylesheet" href="/modern-v42.css?v=1" />
+  <link rel="stylesheet" href="/modern-v42.css?v=2" />
   <link rel="preconnect" href="https://www.googletagmanager.com" />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-VR1EE3K51N"></script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2666058844257008" crossorigin="anonymous"></script>
@@ -117,7 +122,7 @@
         <span class="mark" aria-hidden="true">W<small>4</small></span>
         <span class="brand-name">Word Unscrambler<span>Find words from letters</span></span>
       </a>
-      <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch colour theme">Theme</button>
+      <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch to dark theme" aria-pressed="false">Theme</button>
       <button class="menu-btn" type="button" data-nav aria-expanded="false" aria-controls="site-nav">Menu</button>
       <nav class="nav" id="site-nav" aria-label="Primary">
         <a href="/">Unscrambler</a>
