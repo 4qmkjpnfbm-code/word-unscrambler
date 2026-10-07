@@ -59,6 +59,9 @@
   if (typeof document === "undefined" || !document.getElementById("ladderStart")) return;
   const startEl = document.getElementById("ladderStart");
   const endEl = document.getElementById("ladderEnd");
+  const preset = new URLSearchParams(location.search).get("q") || "";
+  const presetWord = preset.toUpperCase().replace(/[^A-Z]/g, "").slice(0, 6);
+  if (presetWord.length >= 3) startEl.value = presetWord;
   const maxEl = document.getElementById("ladderMax");
   const out = document.getElementById("ladderOut");
   const status = document.getElementById("ladderStatus");

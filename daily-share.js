@@ -1,4 +1,4 @@
-/* Daily scramble stats and spoiler-free share text. No puzzle answer is accepted or returned. */
+/* Daily scramble stats and spoiler-free share text. Share lines never include the answer. */
 (function (g) {
   function pad(n) { return String(n).padStart(2, "0"); }
   function dayKey(d) {
@@ -53,6 +53,47 @@
     const t = tries === 1 ? "1 try" : tries + " tries";
     return "Letters Unscrambler Daily #" + n + " ✅ in " + t + " 🔥 " + streak + "-day streak lettersunscrambler.com";
   }
+  const DAILY_WORDS = "LETTERS PUZZLES ENGLISH PLAYING READING WRITING NATURAL STRANGE RESULTS MACHINE ALREADY PROBLEM SERVICE PICTURE BETWEEN WITHOUT GREATER ANOTHER BECAUSE THROUGH JUMBLED RACKETS FINDERS SOLVING WORDING".split(" ");
+  function mulberry(a) {
+    return function () {
+      let t = (a += 0x6d2b79f5);
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function scramble(word, seed) {
+    const rnd = mulberry(seed);
+    const arr = word.split("");
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(rnd() * (i + 1));
+      const tmp = arr[i];
+      arr[i] = arr[j];
+      arr[j] = tmp;
+    }
+    const out = arr.join("");
+    return out === word ? word.slice(1) + word.charAt(0) : out;
+  }
+  function puzzle(date) {
+    const key = dayKey(date);
+    const seed = Number(key.replace(/-/g, "")) || 1;
+    const answer = DAILY_WORDS[Math.floor(mulberry(seed)() * DAILY_WORDS.length)];
+    return {
+      key: key,
+      number: puzzleNumber(date || new Date()),
+      answer: answer,
+      scramble: scramble(answer, seed + 17)
+    };
+  }
+  function recent(date, count) {
+    const start = date || new Date();
+    const n = count > 0 ? count : 15;
+    const days = [];
+    for (let i = 0; i < n; i++) {
+      days.push(puzzle(new Date(start.getFullYear(), start.getMonth(), start.getDate() - i)));
+    }
+    return days;
+  }
   function countdown(now) {
     const next = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
     let sec = Math.max(0, Math.floor((next - now) / 1000));
@@ -69,6 +110,8 @@
     recordTry: recordTry,
     applySolve: applySolve,
     shareLine: shareLine,
-    countdown: countdown
+    countdown: countdown,
+    puzzle: puzzle,
+    recent: recent
   };
 })(typeof globalThis !== "undefined" ? globalThis : this);

@@ -161,6 +161,11 @@
     return dict;
   }
 
+  const preset = new URLSearchParams(location.search).get("q") || "";
+  if (preset) {
+    wordEl.value = preset.toUpperCase().replace(/[^A-Z?]/g, "").slice(0, 15);
+    paintTiles();
+  }
   wordEl.addEventListener("input", paintTiles);
   if (bingoEl) bingoEl.addEventListener("change", function () { bingoEl.dataset.touched = "1"; });
   document.getElementById("scoreForm").addEventListener("submit", async function (e) {

@@ -149,6 +149,35 @@ test("new tools are routed and describe themselves", () => {
   assert.match(home, /href="\/boggle-solver"/);
 });
 
+test("daily archive is stable and today’s share text hides the answer", () => {
+  const day = new Date(2026, 9, 7);
+  const puzzle = daily.puzzle(day);
+  assert.equal(puzzle.key, "2026-10-07");
+  assert.equal(puzzle.answer.length, 7);
+  assert.equal(puzzle.scramble.split("").sort().join(""), puzzle.answer.split("").sort().join(""));
+  assert.equal(daily.puzzle(day).scramble, puzzle.scramble);
+  const days = daily.recent(day, 15);
+  assert.equal(days.length, 15);
+  assert.equal(days[0].key, "2026-10-07");
+  assert.equal(days[14].key, "2026-09-23");
+  assert.equal(daily.shareLine(puzzle.number, 2, 3).includes(puzzle.answer), false);
+  const page = fs.readFileSync(new URL("../daily.html", import.meta.url), "utf8");
+  const script = fs.readFileSync(new URL("../daily.js", import.meta.url), "utf8");
+  assert.match(page, /id="dailyList"/);
+  assert.match(script, /days\.slice\(1\)/);
+  assert.match(script, /today\.scramble/);
+  const worker = fs.readFileSync(new URL("../worker.js", import.meta.url), "utf8");
+  assert.match(worker, /\/daily": "daily.html"/);
+  const manifest = JSON.parse(fs.readFileSync(new URL("../manifest.webmanifest", import.meta.url), "utf8"));
+  assert.equal(manifest.display, "standalone");
+  assert.equal(manifest.name, "Letters Unscrambler");
+  assert.ok(manifest.icons.some((icon) => icon.sizes === "192x192" && icon.type === "image/png"));
+  assert.ok(manifest.icons.some((icon) => icon.sizes === "512x512"));
+  const app = fs.readFileSync(new URL("../app.js", import.meta.url), "utf8");
+  assert.match(app, /Try these letters in…/);
+  assert.match(app, /scrabble-score-calculator" \+ qLink/);
+});
+
 test("max steps and missing words produce no ladder", () => {
   const words = ["cat", "cot", "cog", "dog"];
   assert.equal(ladder.shortestLadder(words, "cat", "dog", 2).path, null);

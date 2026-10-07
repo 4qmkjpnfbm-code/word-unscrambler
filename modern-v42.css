@@ -117,6 +117,14 @@ p, .lede, .prose p { text-wrap: pretty; }
 }
 
 a { color: #1a73e8; }
+a.primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  background: var(--felt) !important;
+  color: var(--felt-fg) !important;
+}
 :focus-visible {
   outline: 2px solid #1a73e8 !important;
   outline-offset: 2px !important;
@@ -580,6 +588,26 @@ html[data-theme="light"] .stage-tool .daily {
   padding: 0;
   list-style: none;
 }
+.daily-archive {
+  display: grid;
+  gap: 8px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.daily-archive li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 16px;
+  padding: 12px 16px;
+  border: 1px solid #dadce0;
+  border-radius: 16px;
+  background: #fff;
+  color: #202124;
+}
+.daily-archive .when { color: #5f6368; font-size: 0.8rem; }
+.daily-archive .rack { font-weight: 500; letter-spacing: 0.08em; }
+.daily-archive .answer { color: #5f6368; }
 @media (max-width: 599px) {
   .daily-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
@@ -1130,6 +1158,14 @@ html[data-theme="dark"] .boggle-grid input {
 html[data-theme="dark"] .score-tile label,
 html[data-theme="dark"] .score-bingo { color: #9aa0a6 !important; }
 html[data-theme="dark"] .score-total { color: #e8eaed !important; }
+html[data-theme="dark"] .daily-archive li {
+  background: #292a2d !important;
+  color: #e8eaed !important;
+  border-color: #3c4043 !important;
+}
+html[data-theme="dark"] .daily-archive .when,
+html[data-theme="dark"] .daily-archive .answer { color: #9aa0a6 !important; }
+html[data-theme="dark"] .daily-archive .rack { color: #e8eaed !important; }
 html[data-theme="dark"] .ladder-empty {
   background: #202124 !important;
   border-color: #3c4043 !important;

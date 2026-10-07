@@ -136,6 +136,11 @@
     return dict;
   }
 
+  const preset = (new URLSearchParams(location.search).get("q") || "").toLowerCase().replace(/[^a-z]/g, "");
+  if (preset.length >= 16) {
+    for (let i = 0; i < 16; i++) inputs[i].value = preset.charAt(i);
+  }
+
   document.getElementById("boggleSample").addEventListener("click", function () {
     const sample = ["c","a","t","s","a","r","e","o","t","i","n","s","s","e","d","l"];
     sample.forEach(function (ch, i) { inputs[i].value = ch; });

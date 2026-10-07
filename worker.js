@@ -29,6 +29,7 @@ const ROUTES = {
   "/text-twist-solver": "text-twist-solver.html",
   "/hangman-solver": "hangman-solver.html",
   "/word-ladder-solver": "word-ladder-solver.html",
+  "/daily": "daily.html",
   "/scrabble-score-calculator": "scrabble-score-calculator.html",
   "/boggle-solver": "boggle-solver.html",
   "/is-it-a-word": "is-it-a-word.html",
@@ -91,15 +92,16 @@ const GONE = {
   "/multiple-word-unscrambler": "/jumble-solver"
 };
 const ALLOW = new Set(Object.values(ROUTES).concat([
-  "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","stage.webp","stage.avif","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest","llms.txt","llms-full.txt","b7e4c91a0f3d68e25a14c0b9d8e7f612.txt","8d7c4a91b2e05f63c1a47d90e8b6f352.txt","BingSiteAuth.xml","modern-v38.css","modern-v39.css","modern-v40.css","modern-v41.css","modern-v42.css","modern-v37.css","modern-v35.css","modern-v34.css","modern-v32.css","fonts/roboto-400.woff2","fonts/roboto-500.woff2","fonts/roboto-700.woff2","img/listen-hero.avif","img/listen-hero.webp","daily-share.js","word-ladder.js","word-ladder-solver.html","author-bio.html","scrabble-score.js","boggle.js","scrabble-score-calculator.html","boggle-solver.html","profit-v1.js","feedback.html","guide-blank-tiles.html","guide-scrabble-vs-wwf.html","guide-wordle-starters.html","guide-pattern-solver.html","guide-how-to-unscramble.html","security.txt","unscramble-eagle.html","unscramble-airbag.html","unscramble-pallet.html"
+  "styles.css","app.js","favicon.svg","og.jpg","stage.jpg","stage.webp","stage.avif","wood.jpg","robots.txt","sitemap.xml","404.html","ads.txt","manifest.webmanifest","llms.txt","llms-full.txt","b7e4c91a0f3d68e25a14c0b9d8e7f612.txt","8d7c4a91b2e05f63c1a47d90e8b6f352.txt","BingSiteAuth.xml","modern-v38.css","modern-v39.css","modern-v40.css","modern-v41.css","modern-v42.css","modern-v37.css","modern-v35.css","modern-v34.css","modern-v32.css","fonts/roboto-400.woff2","fonts/roboto-500.woff2","fonts/roboto-700.woff2","img/listen-hero.avif","img/listen-hero.webp","daily-share.js","word-ladder.js","word-ladder-solver.html","author-bio.html","scrabble-score.js","boggle.js","scrabble-score-calculator.html","boggle-solver.html","daily.js","daily.html","icon-180.png","icon-192.png","icon-512.png","icon-512-maskable.png","profit-v1.js","feedback.html","guide-blank-tiles.html","guide-scrabble-vs-wwf.html","guide-wordle-starters.html","guide-pattern-solver.html","guide-how-to-unscramble.html","security.txt","unscramble-eagle.html","unscramble-airbag.html","unscramble-pallet.html"
 ]));
-const LONG = new Set(["css","js","svg","jpg","webp","avif","webmanifest","woff2"]);
+const LONG = new Set(["css","js","svg","jpg","png","webp","avif","webmanifest","woff2"]);
 const MIME = {
   html: "text/html;charset=UTF-8",
   css: "text/css;charset=UTF-8",
   js: "text/javascript;charset=UTF-8",
   svg: "image/svg+xml",
   jpg: "image/jpeg",
+  png: "image/png",
   webp: "image/webp",
   avif: "image/avif",
   woff2: "font/woff2",
@@ -467,7 +469,7 @@ export default {
       return Response.redirect(url.toString(), 301);
     }
     if (p === "/favicon.ico") p = "/favicon.svg";
-    if (p === "/apple-touch-icon.png" || p === "/apple-touch-icon-precomposed.png") p = "/og.jpg";
+    if (p === "/apple-touch-icon.png" || p === "/apple-touch-icon-precomposed.png") p = "/icon-180.png";
     if (p === "/feedback" && (req.method === "POST" || req.method === "OPTIONS")) return handleFeedback(req);
     if (p === "/words.txt") return dictionary();
     const gone = GONE[p] || GONE[p.replace(/\.html$/, "")];
