@@ -29,6 +29,8 @@ const ROUTES = {
   "/text-twist-solver": "text-twist-solver.html",
   "/hangman-solver": "hangman-solver.html",
   "/word-ladder-solver": "word-ladder-solver.html",
+  "/scrabble-score-calculator": "scrabble-score-calculator.html",
+  "/boggle-solver": "boggle-solver.html",
   "/is-it-a-word": "is-it-a-word.html",
   "/2-letter-words": "2-letter-words.html",
   "/3-letter-words": "3-letter-words.html",

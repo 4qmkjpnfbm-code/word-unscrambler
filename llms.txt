@@ -31,6 +31,8 @@ Updated: 2026-10-04
 - PALLET example: https://lettersunscrambler.com/unscramble/pallet
 - Anagram solver: https://lettersunscrambler.com/anagram-solver
 - Word ladder solver: https://lettersunscrambler.com/word-ladder-solver
+- Scrabble score calculator: https://lettersunscrambler.com/scrabble-score-calculator
+- Boggle solver: https://lettersunscrambler.com/boggle-solver
 - Scrabble word finder: https://lettersunscrambler.com/scrabble-word-finder
 - Words With Friends: https://lettersunscrambler.com/words-with-friends
 - Wordle helper: https://lettersunscrambler.com/wordle-helper

@@ -89,6 +89,66 @@ test("homepage lists each tool once in a single card grid", () => {
   assert.ok(hrefs.includes("/jumble-solver"));
 });
 
+test("scrabble score applies premiums before the bingo", () => {
+  const score = load("scrabble-score.js");
+  assert.equal(score.scorePlay("quiz", { game: "scrabble" }).total, 22);
+  assert.equal(score.scorePlay("quiz", { game: "wwf" }).total, 23);
+  const doubled = score.scorePlay("quiz", { game: "scrabble", letterMult: [1, 1, 1, 2], wordMult: 2 });
+  assert.equal(doubled.face, 32);
+  assert.equal(doubled.total, 64);
+  const bingo = score.scorePlay("letters", { game: "scrabble", bingo: true, wordMult: 2 });
+  assert.equal(bingo.face, 7);
+  assert.equal(bingo.bingo, 50);
+  assert.equal(bingo.total, 64);
+  const blank = score.scorePlay("fizz", { blanks: [false, false, false, true] });
+  assert.equal(blank.total, 15);
+  assert.equal(score.scorePlay("", {}).error, "empty");
+});
+
+test("boggle finds touching words and scores the Qu die once", () => {
+  const boggle = load("boggle.js");
+  assert.equal(boggle.boggleScore(3), 1);
+  assert.equal(boggle.boggleScore(4), 1);
+  assert.equal(boggle.boggleScore(5), 2);
+  assert.equal(boggle.boggleScore(6), 3);
+  assert.equal(boggle.boggleScore(7), 5);
+  assert.equal(boggle.boggleScore(8), 11);
+  const row = ["c", "a", "t", "s"].concat(Array(12).fill("x"));
+  const found = boggle.solveBoggle(["cat", "cats", "sat", "at"], row);
+  assert.equal(JSON.stringify(found.words.map((w) => w.word)), JSON.stringify(["cat", "cats"]));
+  assert.equal(found.total, 2);
+  const qu = ["qu", "i", "t", "x"].concat(Array(12).fill("z"));
+  const quit = boggle.solveBoggle(["quit", "it"], qu);
+  assert.equal(JSON.stringify(quit.words.map((w) => w.word)), JSON.stringify(["quit"]));
+  const reused = ["c"].concat(Array(15).fill("a"));
+  const once = boggle.solveBoggle(["cac", "caa"], reused);
+  assert.equal(once.words.some((w) => w.word === "cac"), false);
+  assert.equal(once.words.some((w) => w.word === "caa"), true);
+  assert.equal(boggle.solveBoggle(["cat"], ["c"]).error, "board");
+});
+
+test("new tools are routed and describe themselves", () => {
+  const worker = fs.readFileSync(new URL("../worker.js", import.meta.url), "utf8");
+  const preview = fs.readFileSync(new URL("../preview-worker.js", import.meta.url), "utf8");
+  for (const file of [worker, preview]) {
+    assert.match(file, /\/scrabble-score-calculator": "scrabble-score-calculator.html"/);
+    assert.match(file, /\/boggle-solver": "boggle-solver.html"/);
+  }
+  assert.match(worker, /scrabble-score.js/);
+  assert.match(worker, /boggle.js/);
+  for (const name of ["scrabble-score-calculator.html", "boggle-solver.html"]) {
+    const html = fs.readFileSync(new URL("../" + name, import.meta.url), "utf8");
+    assert.match(html, /FAQPage/);
+    assert.match(html, /id="how"/);
+    assert.match(html, /G-VR1EE3K51N/);
+    assert.match(html, /ca-pub-2666058844257008/);
+    assert.match(html, /data-theme/);
+  }
+  const home = fs.readFileSync(new URL("../index.html", import.meta.url), "utf8");
+  assert.match(home, /href="\/scrabble-score-calculator"/);
+  assert.match(home, /href="\/boggle-solver"/);
+});
+
 test("max steps and missing words produce no ladder", () => {
   const words = ["cat", "cot", "cog", "dog"];
   assert.equal(ladder.shortestLadder(words, "cat", "dog", 2).path, null);
