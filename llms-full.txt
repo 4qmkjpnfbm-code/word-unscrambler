@@ -1,4 +1,4 @@
-# Word Unscrambler — full notes for AI systems
+# Letters Unscrambler — full notes for AI systems
 
 Site: https://lettersunscrambler.com/
 Dictionary: ENABLE, public domain, about 168,000 English words.

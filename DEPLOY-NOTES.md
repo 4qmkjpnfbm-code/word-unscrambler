@@ -1,37 +1,65 @@
-# Deploy dark mode
+# Deploy improvements-v1
 
-Draft branch `dark-mode`. Do not merge until Harry says so. Preview deploy, from a checkout of this branch:
+Draft branch `improvements-v1`, based on `features-v1` (PR #5). Do not merge until Harry says so. This environment does not deploy.
+
+Preview, from a checkout of this branch:
 
 ```bash
 npx wrangler deploy -c wrangler.preview.toml
 ```
 
-That publishes `lus-redesign-preview` only. No routes and no production KV binding.
+Use only `wrangler.preview.toml`. It publishes `lus-redesign-preview`, with `workers_dev` on, no routes, and no production KV binding. `preview-worker.js` serves this branch and still strips AdSense, GA4 and the consent bar.
 
 ## Worker
 
-`worker.js` did not change for this pass. The cutout reuses the existing names `img/listen-hero.avif` and `img/listen-hero.webp`, which are already on the allow-list. A production `wrangler deploy -c wrangler.toml` is not required.
+`worker.js` changed. New pages 404 on the live Worker until you deploy production after a merge:
 
-## KV keys to re-upload
+```bash
+npx wrangler deploy -c wrangler.toml
+```
 
-The live Worker prefers KV `SITE` when the value is longer than 20 bytes. Keys are paths with no leading slash.
+Do the KV upload first, then the Worker deploy, so the new allow-list and the new files go live together.
 
-Changed images (same keys, new transparent bytes):
+Routes added on top of `features-v1`:
 
-- `img/listen-hero.avif`
-- `img/listen-hero.webp`
+- `/about` already routed; `author-bio.html` must be allow-listed or the author slot 404s after you fill it
+- `/scrabble-score-calculator`
+- `/boggle-solver`
+- `/daily`
 
-Changed brand files:
+`/apple-touch-icon.png` now serves `icon-180.png`.
 
-- `favicon.svg`
-- `modern-v42.css`
+## KV keys
 
-`manifest.webmanifest` already points at `/favicon.svg`, so the manifest file itself did not change.
+Keys are paths with no leading slash. The live Worker uses KV `SITE` when the value is longer than 20 bytes, so every changed file must be uploaded again. This list is everything on `improvements-v1` that production `main` does not already have, including the `features-v1` files, because that branch is not merged.
 
-Every HTML file (theme script, and the home hero size):
+New:
+
+- `author-bio.html`
+- `scrabble-score-calculator.html`
+- `scrabble-score.js`
+- `boggle-solver.html`
+- `boggle.js`
+- `daily.html`
+- `daily.js`
+- `help.js`
+- `icon-180.png`
+- `icon-192.png`
+- `icon-512.png`
+- `icon-512-maskable.png`
+- `word-ladder-solver.html`
+- `word-ladder.js`
+- `daily-share.js`
+
+Changed:
 
 - `index.html`
-- `404.html`
+- `app.js`
+- `modern-v42.css`
+- `sitemap.xml`
+- `llms.txt`
+- `llms-full.txt`
+- `manifest.webmanifest`
 - `about.html`
 - `anagram-solver.html`
 - `bingo-stems.html`
@@ -56,13 +84,13 @@ Every HTML file (theme script, and the home hero size):
 - `spelling-bee.html`
 - `terms.html`
 - `text-twist-solver.html`
+- `unscramble.html`
 - `unscramble-aeinrst.html`
 - `unscramble-airbag.html`
 - `unscramble-eagle.html`
 - `unscramble-listen.html`
 - `unscramble-pallet.html`
 - `unscramble-scrabble.html`
-- `unscramble.html`
 - `word-checker.html`
 - `word-generator.html`
 - `word-lists.html`
@@ -75,12 +103,13 @@ Every HTML file (theme script, and the home hero size):
 - `2-letter-words.html`
 - `3-letter-words.html`
 - `4-letter-words.html`
-- `5-letter-words-starting-with.html`
 - `5-letter-words.html`
+- `5-letter-words-starting-with.html`
 - `6-letter-words.html`
 - `7-letter-words.html`
 - `8-letter-words.html`
 - `9-letter-words.html`
 - `10-letter-words.html`
+- `404.html`
 
-`stage.jpg`, `stage.avif` and `stage.webp` are not used by these pages (the home hero is the cutout). `og.jpg` is unchanged and was left out on purpose. No new filenames, so nothing new to add to the Worker allow-list.
+Ads and GA4 stay in the HTML. The help prompt calls `gtag` only when that function exists, so the preview strip still removes Analytics. No new font or hero image.

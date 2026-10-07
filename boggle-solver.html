@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <script>
+    (function () {
+      var theme = "light";
+      try {
+        var saved = localStorage.getItem("wu_theme");
+        if (saved === "dark" || saved === "light") theme = saved;
+        else if (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches) theme = "dark";
+      } catch (e) {}
+      document.documentElement.setAttribute("data-theme", theme);
+      function sync(btn) {
+        var dark = document.documentElement.getAttribute("data-theme") === "dark";
+        if (btn) {
+          btn.setAttribute("aria-pressed", dark ? "true" : "false");
+          btn.setAttribute("aria-label", dark ? "Switch to light theme" : "Switch to dark theme");
+        }
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute("content", dark ? "#202124" : "#ffffff");
+      }
+      function bind() {
+        var btn = document.getElementById("themeBtn");
+        sync(btn);
+        if (btn && !btn.dataset.bound) {
+          btn.dataset.bound = "1";
+          btn.addEventListener("click", function () {
+            var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+            document.documentElement.setAttribute("data-theme", next);
+            try { localStorage.setItem("wu_theme", next); } catch (e) {}
+            sync(btn);
+          });
+        }
+        var menu = document.querySelector("[data-nav]");
+        var nav = document.getElementById("site-nav");
+        if (menu && nav && !menu.dataset.bound) {
+          menu.dataset.bound = "1";
+          function setOpen(open) {
+            nav.classList.toggle("is-open", open);
+            menu.setAttribute("aria-expanded", open ? "true" : "false");
+            menu.textContent = open ? "Close" : "Menu";
+          }
+          menu.addEventListener("click", function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            setOpen(!nav.classList.contains("is-open"));
+          });
+          document.addEventListener("click", function (e) {
+            if (!nav.classList.contains("is-open")) return;
+            if (nav.contains(e.target) || menu.contains(e.target)) return;
+            setOpen(false);
+          });
+          nav.querySelectorAll("a").forEach(function (a) {
+            a.addEventListener("click", function () { setOpen(false); });
+          });
+          document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") setOpen(false);
+          });
+        }
+      }
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", bind);
+      else bind();
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preload" href="/fonts/roboto-500.woff2" as="font" type="font/woff2" crossorigin />
+  <title>Boggle Solver – Every Word on a 4×4 Board</title>
+  <meta name="description" content="Free Boggle solver. Type a 4×4 board and list every ENABLE word of 3 or more letters, with classic Boggle points. Runs in your browser." />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta name="google-adsense-account" content="ca-pub-2666058844257008" />
+  <meta name="author" content="Letters Unscrambler" />
+  <link rel="canonical" href="https://lettersunscrambler.com/boggle-solver" />
+  <meta property="og:site_name" content="Letters Unscrambler" />
+  <meta property="og:title" content="Boggle Solver" />
+  <meta property="og:description" content="Find every word on a 4×4 Boggle board. Q counts as QU." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://lettersunscrambler.com/boggle-solver" />
+  <meta property="og:image" content="https://lettersunscrambler.com/og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_GB" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Boggle Solver" />
+  <meta name="twitter:description" content="Every ENABLE word on a 4×4 board, with classic points." />
+  <meta name="twitter:image" content="https://lettersunscrambler.com/og.jpg" />
+  <meta name="theme-color" content="#ffffff" />
+  <script>try{var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute("content",document.documentElement.getAttribute("data-theme")==="dark"?"#202124":"#ffffff");}catch(e){}</script>
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/styles.css?v=31" />
+  <link rel="stylesheet" href="/modern-v42.css?v=3" />
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VR1EE3K51N"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2666058844257008" crossorigin="anonymous"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    var _c = 'denied';
+    try { if (localStorage.getItem('wu_consent') === 'granted') _c = 'granted'; } catch (e) {}
+    gtag('consent', 'default', {
+      analytics_storage: _c,
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied'
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-VR1EE3K51N', { anonymize_ip: true });
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Boggle solver","url":"https://lettersunscrambler.com/boggle-solver","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"GBP"},"description":"Lists every ENABLE word of three or more letters on a 4 by 4 Boggle board.","inLanguage":"en-GB"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lettersunscrambler.com/"},{"@type":"ListItem","position":2,"name":"Boggle solver","item":"https://lettersunscrambler.com/boggle-solver"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How does this Boggle solver connect letters?","acceptedAnswer":{"@type":"Answer","text":"Each next letter must touch the current one, including diagonals. A square can be used once in a word. Words of three or more letters count."}},{"@type":"Question","name":"What do I type for the Qu die?","acceptedAnswer":{"@type":"Answer","text":"Type Q or QU in that one square. It counts as the two letters Q and U, and it still uses only one square."}},{"@type":"Question","name":"How are Boggle points counted?","acceptedAnswer":{"@type":"Answer","text":"Classic 4×4 scoring: 1 point for 3 or 4 letters, 2 for 5, 3 for 6, 5 for 7, and 11 for 8 or more."}},{"@type":"Question","name":"Which dictionary does the Boggle solver use?","acceptedAnswer":{"@type":"Answer","text":"The public ENABLE list, the same list as the rest of this site. It is not Hasbro’s official Boggle word list, so a few words can differ. The search runs in your browser."}}]}]}</script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="/">
+        <span class="mark" aria-hidden="true">W<small>4</small></span>
+        <span class="brand-name">Letters Unscrambler<span>Find words from letters</span></span>
+      </a>
+      <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch to dark theme" aria-pressed="false">Theme</button>
+      <button class="menu-btn" type="button" data-nav aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="nav" id="site-nav" aria-label="Primary">
+        <a href="/">Unscrambler</a>
+        <a href="/scrabble-word-finder">Scrabble</a>
+        <a href="/scrabble-score-calculator">Score</a>
+        <a href="/boggle-solver" aria-current="page">Boggle</a>
+        <a href="/wordle-helper">Wordle</a>
+        <a href="/word-ladder-solver">Ladder</a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap" id="main">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <span>Boggle solver</span></nav>
+    <section class="hero">
+      <h1>Boggle solver</h1>
+      <p class="lede">Type the 16 dice. This page lists every ENABLE word of three or more letters, using classic Boggle points.</p>
+    </section>
+    <section class="panel" aria-labelledby="boggle-heading">
+      <h2 id="boggle-heading" class="try-label">Board</h2>
+      <form id="boggleForm">
+        <div id="boggleGrid" class="boggle-grid"></div>
+        <p class="coach" id="boggleHelp">One letter per square. Type Q for the QU die. Words must join by an edge or a corner, and a square is used once per word.</p>
+        <p style="margin:16px 0 0; display:flex; flex-wrap:wrap; gap:8px">
+          <button class="primary" type="submit">Find words</button>
+          <button class="ghost" id="boggleSample" type="button">Fill a sample board</button>
+        </p>
+      </form>
+      <p class="try-label" id="boggleStatus" style="margin-top:16px">Words will show here.</p>
+      <div id="boggleOut" aria-live="polite"></div>
+    </section>
+    <aside class="ad-region" aria-label="Advertisement">
+      <p class="ad-label">Advertisement</p>
+      <div class="ad-box">
+        <ins class="adsbygoogle" style="display:block;min-height:90px" data-ad-client="ca-pub-2666058844257008" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      </div>
+    </aside>
+    <section class="prose" id="how">
+      <h2>How to use the solver</h2>
+      <ol>
+        <li>Type the board left to right, top to bottom. A Q die is one square: type Q or QU there, not Q in one square and U in the next.</li>
+        <li>Press Find words. The ENABLE list loads in this browser, then the search starts. Nothing you type is sent to a server.</li>
+        <li>Read the list. Longer words score more: 1 point for 3–4 letters, 2 for 5, 3 for 6, 5 for 7, and 11 for 8 or more.</li>
+      </ol>
+      <p>A legal Boggle word steps to a touching square, including diagonals, and never revisits a square. The solver follows those rules and keeps the first time it builds each word, so the same spelling is not listed twice from two paths. Two-letter words are ignored, matching the classic 4×4 game.</p>
+      <p>The word list is the public ENABLE dictionary, about 168,000 words, the same list as the <a href="/">unscrambler</a>. Hasbro’s official Boggle list is not public, so a word here may be refused in a tournament, and the reverse can happen too. Fill a sample board if you want to see the shape of a result before you type your own dice.</p>
+    </section>
+    <section class="prose faq" id="faq">
+      <h2>FAQ</h2>
+      <details open>
+        <summary>How does this connect letters?</summary>
+        <p>The next letter must touch the current square, including corners. Each square is used once in a word. Three letters is the shortest word that counts.</p>
+      </details>
+      <details>
+        <summary>What do I type for Qu?</summary>
+        <p>Type Q or QU in that one square. It is the letters Q and U, and it still occupies a single die.</p>
+      </details>
+      <details>
+        <summary>How are the points counted?</summary>
+        <p>Classic 4×4 scoring: 1 for 3 or 4 letters, 2 for 5, 3 for 6, 5 for 7, and 11 for 8 or longer.</p>
+      </details>
+      <details>
+        <summary>Which dictionary is this?</summary>
+        <p>ENABLE, loaded when you press Find words. It is not the official Boggle word list.</p>
+      </details>
+    </section>
+    <div class="related">
+      <a class="card" href="/scrabble-score-calculator"><h3>Scrabble score calculator</h3><p>Premiums and the bingo for one word.</p></a>
+      <a class="card" href="/spelling-bee"><h3>Spelling Bee helper</h3><p>A hive, a centre letter, and pangrams.</p></a>
+      <a class="card" href="/"><h3>Word unscrambler</h3><p>Every word from a loose rack of letters.</p></a>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div>
+        <p class="footer-head">Tools</p>
+        <a href="/">Word unscrambler</a>
+        <a href="/boggle-solver">Boggle solver</a>
+        <a href="/scrabble-score-calculator">Scrabble score calculator</a>
+        <a href="/word-ladder-solver">Word ladder solver</a>
+        <a href="/anagram-solver">Anagram solver</a>
+      </div>
+      <div>
+        <p class="footer-head">Site</p>
+        <a href="/how-it-works">How it works</a>
+        <a href="/about">About</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+      </div>
+    </div>
+    <div class="wrap legal-line">
+      <p>© 2026 Letters Unscrambler. ENABLE dictionary. Not affiliated with Hasbro, Mattel, Zynga or The New York Times.</p>
+    </div>
+  </footer>
+  <script>
+    (function(){
+      var KEY = "wu_consent";
+      function apply(v){
+        if (typeof gtag !== "function") return;
+        gtag("consent", "update", {
+          analytics_storage: v === "granted" ? "granted" : "denied",
+          ad_storage: "denied",
+          ad_user_data: "denied",
+          ad_personalization: "denied"
+        });
+      }
+      try {
+        var saved = localStorage.getItem(KEY);
+        if (saved) { apply(saved); return; }
+      } catch (e) {}
+      var bar = document.createElement("div");
+      bar.className = "consent";
+      bar.setAttribute("role", "dialog");
+      bar.setAttribute("aria-label", "Cookie choices");
+      bar.innerHTML = '<p>We use optional analytics cookies (Google Analytics) to see which tools people use. Your letters stay in this browser. <a href="/privacy">Privacy</a></p><div class="consent-actions"><button type="button" data-c="granted">Accept</button><button type="button" class="ghost" data-c="denied">Reject</button></div>';
+      document.body.appendChild(bar);
+      bar.addEventListener("click", function(e){
+        var b = e.target.closest("button[data-c]");
+        if (!b) return;
+        var v = b.getAttribute("data-c");
+        try { localStorage.setItem(KEY, v); } catch (err) {}
+        apply(v);
+        bar.remove();
+      });
+    })();
+  </script>
+  <script src="/boggle.js" defer></script>
+  <script src="/help.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <script>
+    (function () {
+      var theme = "light";
+      try {
+        var saved = localStorage.getItem("wu_theme");
+        if (saved === "dark" || saved === "light") theme = saved;
+        else if (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches) theme = "dark";
+      } catch (e) {}
+      document.documentElement.setAttribute("data-theme", theme);
+      function sync(btn) {
+        var dark = document.documentElement.getAttribute("data-theme") === "dark";
+        if (btn) {
+          btn.setAttribute("aria-pressed", dark ? "true" : "false");
+          btn.setAttribute("aria-label", dark ? "Switch to light theme" : "Switch to dark theme");
+        }
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute("content", dark ? "#202124" : "#ffffff");
+      }
+      function bind() {
+        var btn = document.getElementById("themeBtn");
+        sync(btn);
+        if (btn && !btn.dataset.bound) {
+          btn.dataset.bound = "1";
+          btn.addEventListener("click", function () {
+            var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+            document.documentElement.setAttribute("data-theme", next);
+            try { localStorage.setItem("wu_theme", next); } catch (e) {}
+            sync(btn);
+          });
+        }
+        var menu = document.querySelector("[data-nav]");
+        var nav = document.getElementById("site-nav");
+        if (menu && nav && !menu.dataset.bound) {
+          menu.dataset.bound = "1";
+          function setOpen(open) {
+            nav.classList.toggle("is-open", open);
+            menu.setAttribute("aria-expanded", open ? "true" : "false");
+            menu.textContent = open ? "Close" : "Menu";
+          }
+          menu.addEventListener("click", function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            setOpen(!nav.classList.contains("is-open"));
+          });
+          document.addEventListener("click", function (e) {
+            if (!nav.classList.contains("is-open")) return;
+            if (nav.contains(e.target) || menu.contains(e.target)) return;
+            setOpen(false);
+          });
+          nav.querySelectorAll("a").forEach(function (a) {
+            a.addEventListener("click", function () { setOpen(false); });
+          });
+          document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") setOpen(false);
+          });
+        }
+      }
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", bind);
+      else bind();
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preload" href="/fonts/roboto-500.woff2" as="font" type="font/woff2" crossorigin />
+  <title>Daily Scramble – Today and the Past 14 Days</title>
+  <meta name="description" content="Today’s seven-letter scramble on Letters Unscrambler, plus the past 14 days. Play today’s jumble in the browser." />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta name="google-adsense-account" content="ca-pub-2666058844257008" />
+  <meta name="author" content="Letters Unscrambler" />
+  <link rel="canonical" href="https://lettersunscrambler.com/daily" />
+  <meta property="og:site_name" content="Letters Unscrambler" />
+  <meta property="og:title" content="Daily Scramble" />
+  <meta property="og:description" content="Today’s jumble and the past 14 days." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://lettersunscrambler.com/daily" />
+  <meta property="og:image" content="https://lettersunscrambler.com/og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_GB" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Daily Scramble" />
+  <meta name="twitter:description" content="Today’s jumble and the past 14 days." />
+  <meta name="twitter:image" content="https://lettersunscrambler.com/og.jpg" />
+  <meta name="theme-color" content="#ffffff" />
+  <script>try{var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute("content",document.documentElement.getAttribute("data-theme")==="dark"?"#202124":"#ffffff");}catch(e){}</script>
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/icon-180.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Unscramble" />
+  <link rel="stylesheet" href="/styles.css?v=31" />
+  <link rel="stylesheet" href="/modern-v42.css?v=3" />
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VR1EE3K51N"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2666058844257008" crossorigin="anonymous"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    var _c = 'denied';
+    try { if (localStorage.getItem('wu_consent') === 'granted') _c = 'granted'; } catch (e) {}
+    gtag('consent', 'default', {
+      analytics_storage: _c,
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied'
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-VR1EE3K51N', { anonymize_ip: true });
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Daily scramble","url":"https://lettersunscrambler.com/daily","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"GBP"},"description":"A seven-letter scramble each day, with the previous 14 days listed.","inLanguage":"en-GB"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lettersunscrambler.com/"},{"@type":"ListItem","position":2,"name":"Daily scramble","item":"https://lettersunscrambler.com/daily"}]}]}</script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="/">
+        <span class="mark" aria-hidden="true">W<small>4</small></span>
+        <span class="brand-name">Letters Unscrambler<span>Find words from letters</span></span>
+      </a>
+      <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch to dark theme" aria-pressed="false">Theme</button>
+      <button class="menu-btn" type="button" data-nav aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="nav" id="site-nav" aria-label="Primary">
+        <a href="/">Unscrambler</a>
+        <a href="/daily" aria-current="page">Daily</a>
+        <a href="/anagram-solver">Anagrams</a>
+        <a href="/scrabble-word-finder">Scrabble</a>
+        <a href="/wordle-helper">Wordle</a>
+        <a href="/word-ladder-solver">Ladder</a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap" id="main">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <span>Daily scramble</span></nav>
+    <section class="hero">
+      <h1>Daily scramble</h1>
+      <p class="lede">A new seven-letter jumble every day. Today’s answer stays hidden. Earlier days show the word.</p>
+    </section>
+    <section class="panel" aria-labelledby="today-heading">
+      <h2 id="today-heading" class="try-label">Today</h2>
+      <p class="daily-word" id="dailyTodayWord">·······</p>
+      <p class="mini" id="dailyTodayMeta">Loading today’s puzzle.</p>
+      <p style="margin:16px 0 0"><a class="primary" id="dailyTodayPlay" href="/">Play today’s</a></p>
+    </section>
+    <section class="prose" aria-labelledby="past-heading">
+      <h2 id="past-heading">Past 14 days</h2>
+      <ol id="dailyList" class="daily-archive"></ol>
+    </section>
+    <aside class="ad-region" aria-label="Advertisement">
+      <p class="ad-label">Advertisement</p>
+      <div class="ad-box">
+        <ins class="adsbygoogle" style="display:block;min-height:90px" data-ad-client="ca-pub-2666058844257008" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      </div>
+    </aside>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div>
+        <p class="footer-head">Tools</p>
+        <a href="/">Word unscrambler</a>
+        <a href="/daily">Daily scramble</a>
+        <a href="/anagram-solver">Anagram solver</a>
+        <a href="/scrabble-word-finder">Scrabble word finder</a>
+        <a href="/word-ladder-solver">Word ladder solver</a>
+      </div>
+      <div>
+        <p class="footer-head">Site</p>
+        <a href="/how-it-works">How it works</a>
+        <a href="/about">About</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+      </div>
+    </div>
+    <div class="wrap legal-line">
+      <p>© 2026 Letters Unscrambler. ENABLE dictionary. Not affiliated with Hasbro, Mattel, Zynga or The New York Times.</p>
+    </div>
+  </footer>
+  <script>
+    (function(){
+      var KEY = "wu_consent";
+      function apply(v){
+        if (typeof gtag !== "function") return;
+        gtag("consent", "update", {
+          analytics_storage: v === "granted" ? "granted" : "denied",
+          ad_storage: "denied",
+          ad_user_data: "denied",
+          ad_personalization: "denied"
+        });
+      }
+      try {
+        var saved = localStorage.getItem(KEY);
+        if (saved) { apply(saved); return; }
+      } catch (e) {}
+      var bar = document.createElement("div");
+      bar.className = "consent";
+      bar.setAttribute("role", "dialog");
+      bar.setAttribute("aria-label", "Cookie choices");
+      bar.innerHTML = '<p>We use optional analytics cookies (Google Analytics) to see which tools people use. Your letters stay in this browser. <a href="/privacy">Privacy</a></p><div class="consent-actions"><button type="button" data-c="granted">Accept</button><button type="button" class="ghost" data-c="denied">Reject</button></div>';
+      document.body.appendChild(bar);
+      bar.addEventListener("click", function(e){
+        var b = e.target.closest("button[data-c]");
+        if (!b) return;
+        var v = b.getAttribute("data-c");
+        try { localStorage.setItem(KEY, v); } catch (err) {}
+        apply(v);
+        bar.remove();
+      });
+    })();
+  </script>
+  <script src="/daily-share.js" defer></script>
+  <script src="/daily.js" defer></script>
+  <script src="/help.js" defer></script>
+</body>
+</html>

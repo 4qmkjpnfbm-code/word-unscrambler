@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <script>
+    (function () {
+      var theme = "light";
+      try {
+        var saved = localStorage.getItem("wu_theme");
+        if (saved === "dark" || saved === "light") theme = saved;
+        else if (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches) theme = "dark";
+      } catch (e) {}
+      document.documentElement.setAttribute("data-theme", theme);
+      function sync(btn) {
+        var dark = document.documentElement.getAttribute("data-theme") === "dark";
+        if (btn) {
+          btn.setAttribute("aria-pressed", dark ? "true" : "false");
+          btn.setAttribute("aria-label", dark ? "Switch to light theme" : "Switch to dark theme");
+        }
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute("content", dark ? "#202124" : "#ffffff");
+      }
+      function bind() {
+        var btn = document.getElementById("themeBtn");
+        sync(btn);
+        if (btn && !btn.dataset.bound) {
+          btn.dataset.bound = "1";
+          btn.addEventListener("click", function () {
+            var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+            document.documentElement.setAttribute("data-theme", next);
+            try { localStorage.setItem("wu_theme", next); } catch (e) {}
+            sync(btn);
+          });
+        }
+        var menu = document.querySelector("[data-nav]");
+        var nav = document.getElementById("site-nav");
+        if (menu && nav && !menu.dataset.bound) {
+          menu.dataset.bound = "1";
+          function setOpen(open) {
+            nav.classList.toggle("is-open", open);
+            menu.setAttribute("aria-expanded", open ? "true" : "false");
+            menu.textContent = open ? "Close" : "Menu";
+          }
+          menu.addEventListener("click", function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            setOpen(!nav.classList.contains("is-open"));
+          });
+          document.addEventListener("click", function (e) {
+            if (!nav.classList.contains("is-open")) return;
+            if (nav.contains(e.target) || menu.contains(e.target)) return;
+            setOpen(false);
+          });
+          nav.querySelectorAll("a").forEach(function (a) {
+            a.addEventListener("click", function () { setOpen(false); });
+          });
+          document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") setOpen(false);
+          });
+        }
+      }
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", bind);
+      else bind();
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preload" href="/fonts/roboto-500.woff2" as="font" type="font/woff2" crossorigin />
+  <title>Scrabble Score Calculator – Tile Points, Premiums and Bingo</title>
+  <meta name="description" content="Free Scrabble score calculator. Add letter premiums, word premiums and the bingo bonus. Checks the word against the ENABLE list in your browser." />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta name="google-adsense-account" content="ca-pub-2666058844257008" />
+  <meta name="author" content="Letters Unscrambler" />
+  <link rel="canonical" href="https://lettersunscrambler.com/scrabble-score-calculator" />
+  <meta property="og:site_name" content="Letters Unscrambler" />
+  <meta property="og:title" content="Scrabble Score Calculator" />
+  <meta property="og:description" content="Score one word with double-letter, triple-letter, word premiums and the bingo bonus." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://lettersunscrambler.com/scrabble-score-calculator" />
+  <meta property="og:image" content="https://lettersunscrambler.com/og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_GB" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Scrabble Score Calculator" />
+  <meta name="twitter:description" content="Tile points, premiums and bingo. Scrabble or Words With Friends." />
+  <meta name="twitter:image" content="https://lettersunscrambler.com/og.jpg" />
+  <meta name="theme-color" content="#ffffff" />
+  <script>try{var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute("content",document.documentElement.getAttribute("data-theme")==="dark"?"#202124":"#ffffff");}catch(e){}</script>
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/styles.css?v=31" />
+  <link rel="stylesheet" href="/modern-v42.css?v=3" />
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VR1EE3K51N"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2666058844257008" crossorigin="anonymous"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    var _c = 'denied';
+    try { if (localStorage.getItem('wu_consent') === 'granted') _c = 'granted'; } catch (e) {}
+    gtag('consent', 'default', {
+      analytics_storage: _c,
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied'
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-VR1EE3K51N', { anonymize_ip: true });
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Scrabble score calculator","url":"https://lettersunscrambler.com/scrabble-score-calculator","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"GBP"},"description":"Scores one English word with letter premiums, a word premium and the bingo bonus.","inLanguage":"en-GB"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lettersunscrambler.com/"},{"@type":"ListItem","position":2,"name":"Scrabble score calculator","item":"https://lettersunscrambler.com/scrabble-score-calculator"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does the bingo get doubled by a word premium?","acceptedAnswer":{"@type":"Answer","text":"No. Letter premiums are applied first, then the word premium multiplies that sum. The 50-point Scrabble bingo, or 35 in Words With Friends, is added afterwards."}},{"@type":"Question","name":"How do blank tiles score?","acceptedAnswer":{"@type":"Answer","text":"A blank scores 0. Tick Blank under the letter it stands for, or type a question mark. A blank on a premium square still scores 0."}},{"@type":"Question","name":"Which word list is the score checked against?","acceptedAnswer":{"@type":"Answer","text":"The public ENABLE list, about 168,000 words, loaded in your browser when you press Score. It is not the copyrighted NASPA or Collins tournament lists, so a few spellings can differ."}},{"@type":"Question","name":"Can this see my board?","acceptedAnswer":{"@type":"Answer","text":"No. You mark double-letter, triple-letter and word premiums yourself. The calculator does not guess which squares the word covers."}}]}]}</script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="/">
+        <span class="mark" aria-hidden="true">W<small>4</small></span>
+        <span class="brand-name">Letters Unscrambler<span>Find words from letters</span></span>
+      </a>
+      <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch to dark theme" aria-pressed="false">Theme</button>
+      <button class="menu-btn" type="button" data-nav aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="nav" id="site-nav" aria-label="Primary">
+        <a href="/">Unscrambler</a>
+        <a href="/scrabble-word-finder">Scrabble</a>
+        <a href="/scrabble-score-calculator" aria-current="page">Score</a>
+        <a href="/boggle-solver">Boggle</a>
+        <a href="/wordle-helper">Wordle</a>
+        <a href="/word-ladder-solver">Ladder</a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap" id="main">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <span>Scrabble score calculator</span></nav>
+    <section class="hero">
+      <h1>Scrabble score calculator</h1>
+      <p class="lede">Score one word. Mark blanks and premium squares yourself. The bingo is added after the word multiplier.</p>
+    </section>
+    <section class="panel" aria-labelledby="score-heading">
+      <h2 id="score-heading" class="try-label">Score a word</h2>
+      <form id="scoreForm">
+        <div class="ladder-row">
+          <div style="flex:1 1 180px">
+            <label for="scoreWord">Word</label>
+            <input id="scoreWord" type="text" maxlength="15" autocomplete="off" spellcheck="false" placeholder="QUIZ" aria-describedby="scoreHelp" />
+          </div>
+          <div style="flex:1 1 160px">
+            <label for="scoreGame">Game</label>
+            <select id="scoreGame">
+              <option value="scrabble">Scrabble</option>
+              <option value="wwf">Words With Friends</option>
+            </select>
+          </div>
+          <div style="flex:1 1 200px">
+            <label for="scoreWordMult">Word premium</label>
+            <select id="scoreWordMult">
+              <option value="1">None</option>
+              <option value="2">Double word</option>
+              <option value="3">Triple word</option>
+              <option value="4">Two double-word squares</option>
+              <option value="6">Double and triple word</option>
+              <option value="9">Two triple-word squares</option>
+            </select>
+          </div>
+        </div>
+        <p class="coach" id="scoreHelp">Type the word, then set DL or TL on a letter and tick Blank where a blank tile stands in. ? is also a blank.</p>
+        <div id="scoreTiles" class="score-tiles"></div>
+        <p class="score-bingo"><label><input id="scoreBingo" type="checkbox" /> Count the bingo bonus (50 in Scrabble, 35 in Words With Friends, 7+ letters)</label></p>
+        <p style="margin:16px 0 0"><button class="primary" type="submit">Score word</button></p>
+      </form>
+      <p class="try-label" id="scoreStatus" style="margin-top:16px">The total will show here.</p>
+      <div id="scoreOut" aria-live="polite"></div>
+    </section>
+    <aside class="ad-region" aria-label="Advertisement">
+      <p class="ad-label">Advertisement</p>
+      <div class="ad-box">
+        <ins class="adsbygoogle" style="display:block;min-height:90px" data-ad-client="ca-pub-2666058844257008" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      </div>
+    </aside>
+    <section class="prose" id="how">
+      <h2>How to score a word</h2>
+      <ol>
+        <li>Type the word as it sits on the board. Use a letter for a blank, then tick Blank, or type ?.</li>
+        <li>Set DL or TL on any letter that covers a premium square. Choose the word premium if the word covers one.</li>
+        <li>Press Score word. Letter premiums apply first. The word premium multiplies that sum. The bingo is added last, and it is not multiplied.</li>
+      </ol>
+      <p>English Scrabble face values: 1 for A E I O U L N R S T, 2 for D G, 3 for B C M P, 4 for F H V W Y, 5 for K, 8 for J X, 10 for Q Z. A blank is 0 on any square. Words With Friends uses a different table — switch Game if that is what you are playing. QUIZ with no premiums is 22 in Scrabble (Q 10, U 1, I 1, Z 10) and 23 in Words With Friends, because U is worth 2 there.</p>
+      <p>This page cannot see the board, so it does not guess premiums. The <a href="/scrabble-word-finder">Scrabble word finder</a> lists every word from a rack at face value only, for the same reason. When you press Score word, the spelling is checked against the public ENABLE list in this browser. A missing word still shows a tile total, because a house rule might allow it. Tournament lists differ by a few entries.</p>
+    </section>
+    <section class="prose faq" id="faq">
+      <h2>FAQ</h2>
+      <details open>
+        <summary>Does the bingo get doubled by a word premium?</summary>
+        <p>No. Premiums on letters apply first, then the word premium multiplies that sum. The 50-point Scrabble bingo, or 35 in Words With Friends, is added afterwards.</p>
+      </details>
+      <details>
+        <summary>How do blank tiles score?</summary>
+        <p>A blank scores 0. Tick Blank under the letter it stands for, or type ?. A blank on a double-letter square is still 0.</p>
+      </details>
+      <details>
+        <summary>Which word list is this checked against?</summary>
+        <p>The same ENABLE list as the <a href="/">unscrambler</a>, loaded when you press Score word. It is not the NASPA or Collins tournament list.</p>
+      </details>
+      <details>
+        <summary>Can this see my board?</summary>
+        <p>No. You mark the premiums. The calculator only adds the squares you choose.</p>
+      </details>
+    </section>
+    <div class="related">
+      <a class="card" href="/scrabble-word-finder"><h3>Scrabble word finder</h3><p>Every word from a rack, at face value.</p></a>
+      <a class="card" href="/guides/scrabble-vs-wwf"><h3>Scrabble vs Words With Friends</h3><p>Where the two score tables disagree.</p></a>
+      <a class="card" href="/boggle-solver"><h3>Boggle solver</h3><p>Every word on a 4×4 board.</p></a>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div>
+        <p class="footer-head">Tools</p>
+        <a href="/">Word unscrambler</a>
+        <a href="/scrabble-word-finder">Scrabble word finder</a>
+        <a href="/scrabble-score-calculator">Scrabble score calculator</a>
+        <a href="/boggle-solver">Boggle solver</a>
+        <a href="/word-ladder-solver">Word ladder solver</a>
+      </div>
+      <div>
+        <p class="footer-head">Site</p>
+        <a href="/how-it-works">How it works</a>
+        <a href="/about">About</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+      </div>
+    </div>
+    <div class="wrap legal-line">
+      <p>© 2026 Letters Unscrambler. ENABLE dictionary. Not affiliated with Hasbro, Mattel, Zynga or The New York Times.</p>
+    </div>
+  </footer>
+  <script>
+    (function(){
+      var KEY = "wu_consent";
+      function apply(v){
+        if (typeof gtag !== "function") return;
+        gtag("consent", "update", {
+          analytics_storage: v === "granted" ? "granted" : "denied",
+          ad_storage: "denied",
+          ad_user_data: "denied",
+          ad_personalization: "denied"
+        });
+      }
+      try {
+        var saved = localStorage.getItem(KEY);
+        if (saved) { apply(saved); return; }
+      } catch (e) {}
+      var bar = document.createElement("div");
+      bar.className = "consent";
+      bar.setAttribute("role", "dialog");
+      bar.setAttribute("aria-label", "Cookie choices");
+      bar.innerHTML = '<p>We use optional analytics cookies (Google Analytics) to see which tools people use. Your letters stay in this browser. <a href="/privacy">Privacy</a></p><div class="consent-actions"><button type="button" data-c="granted">Accept</button><button type="button" class="ghost" data-c="denied">Reject</button></div>';
+      document.body.appendChild(bar);
+      bar.addEventListener("click", function(e){
+        var b = e.target.closest("button[data-c]");
+        if (!b) return;
+        var v = b.getAttribute("data-c");
+        try { localStorage.setItem(KEY, v); } catch (err) {}
+        apply(v);
+        bar.remove();
+      });
+    })();
+  </script>
+  <script src="/scrabble-score.js" defer></script>
+  <script src="/help.js" defer></script>
+</body>
+</html>
