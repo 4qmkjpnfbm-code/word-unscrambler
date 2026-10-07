@@ -1,6 +1,6 @@
 # DESIGN.md — lettersunscrambler.com
 
-Word Unscrambler. Tool-first. Cinematic wood/felt table visible in **both** themes. Frosted glass panel over `stage.jpg`. Apple-like restraint. Not a SaaS dashboard. Not a casino. Not a kids’ word-game skin.
+Letters Unscrambler. Tool-first. Cinematic wood/felt table visible in **both** themes. Frosted glass panel over `stage.jpg`. Apple-like restraint. Not a SaaS dashboard. Not a casino. Not a kids’ word-game skin.
 
 Live overlay: `/modern-v39.css` (v41 theme + v42 WCAG + v43 consent + v44 mobile nav). Base: `/styles.css`. Domain: https://lettersunscrambler.com  
 Legal: HDK Distribution Ltd · GB · contact hdkdistributionltd@gmail.com  
@@ -23,7 +23,7 @@ Voice: British English (en-GB). Short. Concrete. No “unlock your word potentia
 | Stage | Full-bleed wood + felt photo. Dark film in dark theme; light wash in light theme. Always visible behind the tool. |
 | Panel | Frosted glass card over the stage. Holds the form. |
 | Results | Best play card + length chips + word tiles. After first solve, stage copy hides on mobile. |
-| Chrome | Slim header: tile mark + Word Unscrambler + Theme + Menu. Footer: tools, legal, Feedback. |
+| Chrome | Slim header: tile mark + Letters Unscrambler + Theme + Menu. Footer: tools, legal, Feedback. |
 | Consent | Compact bar pinned to bottom. Never overlaps Best play. |
 
 Mobile breakpoint: **720px**. Touch targets ≥ 44px.

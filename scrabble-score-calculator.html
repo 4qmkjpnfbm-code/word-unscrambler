@@ -65,24 +65,24 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="preload" href="/fonts/roboto-500.woff2" as="font" type="font/woff2" crossorigin />
-  <title>Word Ladder Solver – Shortest Path, One Letter at a Time</title>
-  <meta name="description" content="Free word ladder solver. Turn one ENABLE word into another by changing a single letter at each step. Shortest path, 3 to 6 letters, in your browser." />
+  <title>Scrabble Score Calculator – Tile Points, Premiums and Bingo</title>
+  <meta name="description" content="Free Scrabble score calculator. Add letter premiums, word premiums and the bingo bonus. Checks the word against the ENABLE list in your browser." />
   <meta name="robots" content="index,follow,max-image-preview:large" />
   <meta name="google-adsense-account" content="ca-pub-2666058844257008" />
   <meta name="author" content="Letters Unscrambler" />
-  <link rel="canonical" href="https://lettersunscrambler.com/word-ladder-solver" />
+  <link rel="canonical" href="https://lettersunscrambler.com/scrabble-score-calculator" />
   <meta property="og:site_name" content="Letters Unscrambler" />
-  <meta property="og:title" content="Word Ladder Solver – Shortest Path, One Letter at a Time" />
-  <meta property="og:description" content="Change one letter at a time and find the shortest word ladder in the ENABLE dictionary." />
+  <meta property="og:title" content="Scrabble Score Calculator" />
+  <meta property="og:description" content="Score one word with double-letter, triple-letter, word premiums and the bingo bonus." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://lettersunscrambler.com/word-ladder-solver" />
+  <meta property="og:url" content="https://lettersunscrambler.com/scrabble-score-calculator" />
   <meta property="og:image" content="https://lettersunscrambler.com/og.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:locale" content="en_GB" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Word Ladder Solver" />
-  <meta name="twitter:description" content="Shortest word ladder. One letter changes at each step." />
+  <meta name="twitter:title" content="Scrabble Score Calculator" />
+  <meta name="twitter:description" content="Tile points, premiums and bingo. Scrabble or Words With Friends." />
   <meta name="twitter:image" content="https://lettersunscrambler.com/og.jpg" />
   <meta name="theme-color" content="#ffffff" />
   <script>try{var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute("content",document.documentElement.getAttribute("data-theme")==="dark"?"#202124":"#ffffff");}catch(e){}</script>
@@ -107,7 +107,7 @@
     gtag('js', new Date());
     gtag('config', 'G-VR1EE3K51N', { anonymize_ip: true });
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Word ladder solver","url":"https://lettersunscrambler.com/word-ladder-solver","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"GBP"},"description":"Finds the shortest word ladder between two ENABLE words of 3 to 6 letters.","inLanguage":"en-GB"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lettersunscrambler.com/"},{"@type":"ListItem","position":2,"name":"Word ladder solver","item":"https://lettersunscrambler.com/word-ladder-solver"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a word ladder?","acceptedAnswer":{"@type":"Answer","text":"A word ladder is a chain of real words. Each step changes exactly one letter, and the word stays the same length. COLD can become CORD, then CARD, then WARD, then WARM."}},{"@type":"Question","name":"Why was no ladder found?","acceptedAnswer":{"@type":"Answer","text":"Both words must be in the ENABLE list, the same length, and between 3 and 6 letters. Some pairs are in different parts of the dictionary and have no chain. A max-steps limit can also stop a longer ladder."}},{"@type":"Question","name":"Which dictionary does the ladder use?","acceptedAnswer":{"@type":"Answer","text":"The same public-domain ENABLE list as the rest of this site, about 168,000 words. The search runs in your browser. The two words you type are not sent to a server."}},{"@type":"Question","name":"What does max steps do?","acceptedAnswer":{"@type":"Answer","text":"Leave it blank for the shortest ladder of any length. Type a number to refuse ladders that need more changes than that. If nothing fits, the page says no ladder was found."}}]}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Scrabble score calculator","url":"https://lettersunscrambler.com/scrabble-score-calculator","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"GBP"},"description":"Scores one English word with letter premiums, a word premium and the bingo bonus.","inLanguage":"en-GB"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lettersunscrambler.com/"},{"@type":"ListItem","position":2,"name":"Scrabble score calculator","item":"https://lettersunscrambler.com/scrabble-score-calculator"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does the bingo get doubled by a word premium?","acceptedAnswer":{"@type":"Answer","text":"No. Letter premiums are applied first, then the word premium multiplies that sum. The 50-point Scrabble bingo, or 35 in Words With Friends, is added afterwards."}},{"@type":"Question","name":"How do blank tiles score?","acceptedAnswer":{"@type":"Answer","text":"A blank scores 0. Tick Blank under the letter it stands for, or type a question mark. A blank on a premium square still scores 0."}},{"@type":"Question","name":"Which word list is the score checked against?","acceptedAnswer":{"@type":"Answer","text":"The public ENABLE list, about 168,000 words, loaded in your browser when you press Score. It is not the copyrighted NASPA or Collins tournament lists, so a few spellings can differ."}},{"@type":"Question","name":"Can this see my board?","acceptedAnswer":{"@type":"Answer","text":"No. You mark double-letter, triple-letter and word premiums yourself. The calculator does not guess which squares the word covers."}}]}]}</script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -122,41 +122,53 @@
       <nav class="nav" id="site-nav" aria-label="Primary">
         <a href="/">Unscrambler</a>
         <a href="/scrabble-word-finder">Scrabble</a>
-        <a href="/anagram-solver">Anagrams</a>
+        <a href="/scrabble-score-calculator" aria-current="page">Score</a>
+        <a href="/boggle-solver">Boggle</a>
         <a href="/wordle-helper">Wordle</a>
-        <a href="/crossword-solver">Crossword</a>
-        <a href="/word-ladder-solver" aria-current="page">Ladder</a>
+        <a href="/word-ladder-solver">Ladder</a>
       </nav>
     </div>
   </header>
   <main class="wrap" id="main">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <span>Word ladder solver</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <span>Scrabble score calculator</span></nav>
     <section class="hero">
-      <h1>Word ladder solver</h1>
-      <p class="lede">Change one letter at a time. This page finds the shortest chain of ENABLE words between your start and your end.</p>
+      <h1>Scrabble score calculator</h1>
+      <p class="lede">Score one word. Mark blanks and premium squares yourself. The bingo is added after the word multiplier.</p>
     </section>
-    <section class="panel" aria-labelledby="ladder-heading">
-      <h2 id="ladder-heading" class="try-label">Find a ladder</h2>
-      <form id="ladderForm">
+    <section class="panel" aria-labelledby="score-heading">
+      <h2 id="score-heading" class="try-label">Score a word</h2>
+      <form id="scoreForm">
         <div class="ladder-row">
-          <div style="flex:1 1 140px">
-            <label for="ladderStart">Start</label>
-            <input id="ladderStart" type="text" maxlength="6" autocomplete="off" spellcheck="false" placeholder="COLD" aria-describedby="ladderHelp" />
+          <div style="flex:1 1 180px">
+            <label for="scoreWord">Word</label>
+            <input id="scoreWord" type="text" maxlength="15" autocomplete="off" spellcheck="false" placeholder="QUIZ" aria-describedby="scoreHelp" />
           </div>
-          <div style="flex:1 1 140px">
-            <label for="ladderEnd">End</label>
-            <input id="ladderEnd" type="text" maxlength="6" autocomplete="off" spellcheck="false" placeholder="WARM" />
+          <div style="flex:1 1 160px">
+            <label for="scoreGame">Game</label>
+            <select id="scoreGame">
+              <option value="scrabble">Scrabble</option>
+              <option value="wwf">Words With Friends</option>
+            </select>
           </div>
-          <div style="flex:0 1 120px">
-            <label for="ladderMax">Max steps</label>
-            <input id="ladderMax" type="number" min="1" max="20" inputmode="numeric" placeholder="Any" />
+          <div style="flex:1 1 200px">
+            <label for="scoreWordMult">Word premium</label>
+            <select id="scoreWordMult">
+              <option value="1">None</option>
+              <option value="2">Double word</option>
+              <option value="3">Triple word</option>
+              <option value="4">Two double-word squares</option>
+              <option value="6">Double and triple word</option>
+              <option value="9">Two triple-word squares</option>
+            </select>
           </div>
         </div>
-        <p class="coach" id="ladderHelp">3 to 6 letters. Both words must be the same length. Leave max steps blank for the shortest path.</p>
-        <p style="margin:16px 0 0"><button class="primary" id="ladderGo" type="submit">Find ladder</button></p>
+        <p class="coach" id="scoreHelp">Type the word, then set DL or TL on a letter and tick Blank where a blank tile stands in. ? is also a blank.</p>
+        <div id="scoreTiles" class="score-tiles"></div>
+        <p class="score-bingo"><label><input id="scoreBingo" type="checkbox" /> Count the bingo bonus (50 in Scrabble, 35 in Words With Friends, 7+ letters)</label></p>
+        <p style="margin:16px 0 0"><button class="primary" type="submit">Score word</button></p>
       </form>
-      <p class="try-label" id="ladderStatus" style="margin-top:16px">The ladder will show here.</p>
-      <div id="ladderOut" class="ladder-steps" aria-live="polite"></div>
+      <p class="try-label" id="scoreStatus" style="margin-top:16px">The total will show here.</p>
+      <div id="scoreOut" aria-live="polite"></div>
     </section>
     <aside class="ad-region" aria-label="Advertisement">
       <p class="ad-label">Advertisement</p>
@@ -165,40 +177,38 @@
       </div>
     </aside>
     <section class="prose" id="how">
-      <h2>What a word ladder is</h2>
-      <p>A word ladder, sometimes called a doublets puzzle after Lewis Carroll, is a chain of real words. You begin with one word and finish with another. Every step changes exactly one letter, and the length never changes. COLD can become CORD, then CARD, then WARD, then WARM. You may not rearrange letters, add one, or drop one. That is what separates a ladder from an anagram. SILENT is an anagram of LISTEN because the letters move. A ladder keeps every position and alters only one of them.</p>
-      <p>This solver searches the same public-domain ENABLE list as the rest of the site, about 168,000 English words. It keeps the words that match the length you typed, from three letters through six. The search is a breadth-first walk: from the start word it tries every one-letter change that is still in the dictionary, then the changes from those words. The first time it reaches the end, that path is a shortest ladder. Other routes of the same length may exist. None is shorter.</p>
-      <p>Nothing you type is sent to a server. The word list loads in the browser when you press Find ladder, and the path is calculated on this device. If either word is missing from ENABLE, or the two words never meet, the page says no ladder was found. It does not invent a near-miss. Leave max steps blank for the shortest chain of any length. Type 4 and a chain that needs five changes is reported as not found, even if a longer ladder exists.</p>
-      <h2>How to use it</h2>
+      <h2>How to score a word</h2>
       <ol>
-        <li>Type a start word and an end word of the same length, 3 to 6 letters.</li>
-        <li>Leave max steps empty, or set a cap if you want a shorter puzzle.</li>
-        <li>Press Find ladder. Each tile is one word. The arrow is a single letter change.</li>
+        <li>Type the word as it sits on the board. Use a letter for a blank, then tick Blank, or type ?.</li>
+        <li>Set DL or TL on any letter that covers a premium square. Choose the word premium if the word covers one.</li>
+        <li>Press Score word. Letter premiums apply first. The word premium multiplies that sum. The bingo is added last, and it is not multiplied.</li>
       </ol>
+      <p>English Scrabble face values: 1 for A E I O U L N R S T, 2 for D G, 3 for B C M P, 4 for F H V W Y, 5 for K, 8 for J X, 10 for Q Z. A blank is 0 on any square. Words With Friends uses a different table — switch Game if that is what you are playing. QUIZ with no premiums is 22 in Scrabble (Q 10, U 1, I 1, Z 10) and 23 in Words With Friends, because U is worth 2 there.</p>
+      <p>This page cannot see the board, so it does not guess premiums. The <a href="/scrabble-word-finder">Scrabble word finder</a> lists every word from a rack at face value only, for the same reason. When you press Score word, the spelling is checked against the public ENABLE list in this browser. A missing word still shows a tile total, because a house rule might allow it. Tournament lists differ by a few entries.</p>
     </section>
     <section class="prose faq" id="faq">
       <h2>FAQ</h2>
       <details open>
-        <summary>What is a word ladder?</summary>
-        <p>A chain of real words. Each step changes exactly one letter and keeps the same length. COLD can become CORD, CARD, WARD, then WARM.</p>
+        <summary>Does the bingo get doubled by a word premium?</summary>
+        <p>No. Premiums on letters apply first, then the word premium multiplies that sum. The 50-point Scrabble bingo, or 35 in Words With Friends, is added afterwards.</p>
       </details>
       <details>
-        <summary>Why was no ladder found?</summary>
-        <p>Both words must be in ENABLE, the same length, and between 3 and 6 letters. Some pairs never meet. A max-steps limit can also hide a longer chain.</p>
+        <summary>How do blank tiles score?</summary>
+        <p>A blank scores 0. Tick Blank under the letter it stands for, or type ?. A blank on a double-letter square is still 0.</p>
       </details>
       <details>
-        <summary>Which dictionary does this use?</summary>
-        <p>The same ENABLE list as the <a href="/">word unscrambler</a>. The search stays in your browser.</p>
+        <summary>Which word list is this checked against?</summary>
+        <p>The same ENABLE list as the <a href="/">unscrambler</a>, loaded when you press Score word. It is not the NASPA or Collins tournament list.</p>
       </details>
       <details>
-        <summary>What does max steps do?</summary>
-        <p>Blank means the shortest ladder of any length. A number refuses ladders with more changes than that.</p>
+        <summary>Can this see my board?</summary>
+        <p>No. You mark the premiums. The calculator only adds the squares you choose.</p>
       </details>
     </section>
     <div class="related">
-      <a class="card" href="/anagram-solver"><h3>Anagram solver</h3><p>Use every letter, instead of changing one.</p></a>
-      <a class="card" href="/jumble-solver"><h3>Jumble solver</h3><p>Exact anagrams for a scrambled word.</p></a>
-      <a class="card" href="/"><h3>Word unscrambler</h3><p>Every shorter word from a rack of letters.</p></a>
+      <a class="card" href="/scrabble-word-finder"><h3>Scrabble word finder</h3><p>Every word from a rack, at face value.</p></a>
+      <a class="card" href="/guides/scrabble-vs-wwf"><h3>Scrabble vs Words With Friends</h3><p>Where the two score tables disagree.</p></a>
+      <a class="card" href="/boggle-solver"><h3>Boggle solver</h3><p>Every word on a 4×4 board.</p></a>
     </div>
   </main>
   <footer class="site-footer">
@@ -206,11 +216,10 @@
       <div>
         <p class="footer-head">Tools</p>
         <a href="/">Word unscrambler</a>
-        <a href="/anagram-solver">Anagram solver</a>
-        <a href="/word-ladder-solver">Word ladder solver</a>
-        <a href="/jumble-solver">Jumble solver</a>
-        <a href="/wordle-helper">Wordle helper</a>
         <a href="/scrabble-word-finder">Scrabble word finder</a>
+        <a href="/scrabble-score-calculator">Scrabble score calculator</a>
+        <a href="/boggle-solver">Boggle solver</a>
+        <a href="/word-ladder-solver">Word ladder solver</a>
       </div>
       <div>
         <p class="footer-head">Site</p>
@@ -256,7 +265,7 @@
       });
     })();
   </script>
-  <script src="/word-ladder.js" defer></script>
+  <script src="/scrabble-score.js" defer></script>
   <script src="/help.js" defer></script>
 </body>
 </html>

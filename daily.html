@@ -65,29 +65,32 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="preload" href="/fonts/roboto-500.woff2" as="font" type="font/woff2" crossorigin />
-  <title>Word Ladder Solver – Shortest Path, One Letter at a Time</title>
-  <meta name="description" content="Free word ladder solver. Turn one ENABLE word into another by changing a single letter at each step. Shortest path, 3 to 6 letters, in your browser." />
+  <title>Daily Scramble – Today and the Past 14 Days</title>
+  <meta name="description" content="Today’s seven-letter scramble on Letters Unscrambler, plus the past 14 days. Play today’s jumble in the browser." />
   <meta name="robots" content="index,follow,max-image-preview:large" />
   <meta name="google-adsense-account" content="ca-pub-2666058844257008" />
   <meta name="author" content="Letters Unscrambler" />
-  <link rel="canonical" href="https://lettersunscrambler.com/word-ladder-solver" />
+  <link rel="canonical" href="https://lettersunscrambler.com/daily" />
   <meta property="og:site_name" content="Letters Unscrambler" />
-  <meta property="og:title" content="Word Ladder Solver – Shortest Path, One Letter at a Time" />
-  <meta property="og:description" content="Change one letter at a time and find the shortest word ladder in the ENABLE dictionary." />
+  <meta property="og:title" content="Daily Scramble" />
+  <meta property="og:description" content="Today’s jumble and the past 14 days." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://lettersunscrambler.com/word-ladder-solver" />
+  <meta property="og:url" content="https://lettersunscrambler.com/daily" />
   <meta property="og:image" content="https://lettersunscrambler.com/og.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:locale" content="en_GB" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Word Ladder Solver" />
-  <meta name="twitter:description" content="Shortest word ladder. One letter changes at each step." />
+  <meta name="twitter:title" content="Daily Scramble" />
+  <meta name="twitter:description" content="Today’s jumble and the past 14 days." />
   <meta name="twitter:image" content="https://lettersunscrambler.com/og.jpg" />
   <meta name="theme-color" content="#ffffff" />
   <script>try{var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute("content",document.documentElement.getAttribute("data-theme")==="dark"?"#202124":"#ffffff");}catch(e){}</script>
   <link rel="manifest" href="/manifest.webmanifest" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/icon-180.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Unscramble" />
   <link rel="stylesheet" href="/styles.css?v=31" />
   <link rel="stylesheet" href="/modern-v42.css?v=3" />
   <link rel="preconnect" href="https://www.googletagmanager.com" />
@@ -107,7 +110,7 @@
     gtag('js', new Date());
     gtag('config', 'G-VR1EE3K51N', { anonymize_ip: true });
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Word ladder solver","url":"https://lettersunscrambler.com/word-ladder-solver","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"GBP"},"description":"Finds the shortest word ladder between two ENABLE words of 3 to 6 letters.","inLanguage":"en-GB"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lettersunscrambler.com/"},{"@type":"ListItem","position":2,"name":"Word ladder solver","item":"https://lettersunscrambler.com/word-ladder-solver"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a word ladder?","acceptedAnswer":{"@type":"Answer","text":"A word ladder is a chain of real words. Each step changes exactly one letter, and the word stays the same length. COLD can become CORD, then CARD, then WARD, then WARM."}},{"@type":"Question","name":"Why was no ladder found?","acceptedAnswer":{"@type":"Answer","text":"Both words must be in the ENABLE list, the same length, and between 3 and 6 letters. Some pairs are in different parts of the dictionary and have no chain. A max-steps limit can also stop a longer ladder."}},{"@type":"Question","name":"Which dictionary does the ladder use?","acceptedAnswer":{"@type":"Answer","text":"The same public-domain ENABLE list as the rest of this site, about 168,000 words. The search runs in your browser. The two words you type are not sent to a server."}},{"@type":"Question","name":"What does max steps do?","acceptedAnswer":{"@type":"Answer","text":"Leave it blank for the shortest ladder of any length. Type a number to refuse ladders that need more changes than that. If nothing fits, the page says no ladder was found."}}]}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Daily scramble","url":"https://lettersunscrambler.com/daily","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"GBP"},"description":"A seven-letter scramble each day, with the previous 14 days listed.","inLanguage":"en-GB"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lettersunscrambler.com/"},{"@type":"ListItem","position":2,"name":"Daily scramble","item":"https://lettersunscrambler.com/daily"}]}]}</script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -121,42 +124,29 @@
       <button class="menu-btn" type="button" data-nav aria-expanded="false" aria-controls="site-nav">Menu</button>
       <nav class="nav" id="site-nav" aria-label="Primary">
         <a href="/">Unscrambler</a>
-        <a href="/scrabble-word-finder">Scrabble</a>
+        <a href="/daily" aria-current="page">Daily</a>
         <a href="/anagram-solver">Anagrams</a>
+        <a href="/scrabble-word-finder">Scrabble</a>
         <a href="/wordle-helper">Wordle</a>
-        <a href="/crossword-solver">Crossword</a>
-        <a href="/word-ladder-solver" aria-current="page">Ladder</a>
+        <a href="/word-ladder-solver">Ladder</a>
       </nav>
     </div>
   </header>
   <main class="wrap" id="main">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <span>Word ladder solver</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <span>Daily scramble</span></nav>
     <section class="hero">
-      <h1>Word ladder solver</h1>
-      <p class="lede">Change one letter at a time. This page finds the shortest chain of ENABLE words between your start and your end.</p>
+      <h1>Daily scramble</h1>
+      <p class="lede">A new seven-letter jumble every day. Today’s answer stays hidden. Earlier days show the word.</p>
     </section>
-    <section class="panel" aria-labelledby="ladder-heading">
-      <h2 id="ladder-heading" class="try-label">Find a ladder</h2>
-      <form id="ladderForm">
-        <div class="ladder-row">
-          <div style="flex:1 1 140px">
-            <label for="ladderStart">Start</label>
-            <input id="ladderStart" type="text" maxlength="6" autocomplete="off" spellcheck="false" placeholder="COLD" aria-describedby="ladderHelp" />
-          </div>
-          <div style="flex:1 1 140px">
-            <label for="ladderEnd">End</label>
-            <input id="ladderEnd" type="text" maxlength="6" autocomplete="off" spellcheck="false" placeholder="WARM" />
-          </div>
-          <div style="flex:0 1 120px">
-            <label for="ladderMax">Max steps</label>
-            <input id="ladderMax" type="number" min="1" max="20" inputmode="numeric" placeholder="Any" />
-          </div>
-        </div>
-        <p class="coach" id="ladderHelp">3 to 6 letters. Both words must be the same length. Leave max steps blank for the shortest path.</p>
-        <p style="margin:16px 0 0"><button class="primary" id="ladderGo" type="submit">Find ladder</button></p>
-      </form>
-      <p class="try-label" id="ladderStatus" style="margin-top:16px">The ladder will show here.</p>
-      <div id="ladderOut" class="ladder-steps" aria-live="polite"></div>
+    <section class="panel" aria-labelledby="today-heading">
+      <h2 id="today-heading" class="try-label">Today</h2>
+      <p class="daily-word" id="dailyTodayWord">·······</p>
+      <p class="mini" id="dailyTodayMeta">Loading today’s puzzle.</p>
+      <p style="margin:16px 0 0"><a class="primary" id="dailyTodayPlay" href="/">Play today’s</a></p>
+    </section>
+    <section class="prose" aria-labelledby="past-heading">
+      <h2 id="past-heading">Past 14 days</h2>
+      <ol id="dailyList" class="daily-archive"></ol>
     </section>
     <aside class="ad-region" aria-label="Advertisement">
       <p class="ad-label">Advertisement</p>
@@ -164,53 +154,16 @@
         <ins class="adsbygoogle" style="display:block;min-height:90px" data-ad-client="ca-pub-2666058844257008" data-ad-format="auto" data-full-width-responsive="true"></ins>
       </div>
     </aside>
-    <section class="prose" id="how">
-      <h2>What a word ladder is</h2>
-      <p>A word ladder, sometimes called a doublets puzzle after Lewis Carroll, is a chain of real words. You begin with one word and finish with another. Every step changes exactly one letter, and the length never changes. COLD can become CORD, then CARD, then WARD, then WARM. You may not rearrange letters, add one, or drop one. That is what separates a ladder from an anagram. SILENT is an anagram of LISTEN because the letters move. A ladder keeps every position and alters only one of them.</p>
-      <p>This solver searches the same public-domain ENABLE list as the rest of the site, about 168,000 English words. It keeps the words that match the length you typed, from three letters through six. The search is a breadth-first walk: from the start word it tries every one-letter change that is still in the dictionary, then the changes from those words. The first time it reaches the end, that path is a shortest ladder. Other routes of the same length may exist. None is shorter.</p>
-      <p>Nothing you type is sent to a server. The word list loads in the browser when you press Find ladder, and the path is calculated on this device. If either word is missing from ENABLE, or the two words never meet, the page says no ladder was found. It does not invent a near-miss. Leave max steps blank for the shortest chain of any length. Type 4 and a chain that needs five changes is reported as not found, even if a longer ladder exists.</p>
-      <h2>How to use it</h2>
-      <ol>
-        <li>Type a start word and an end word of the same length, 3 to 6 letters.</li>
-        <li>Leave max steps empty, or set a cap if you want a shorter puzzle.</li>
-        <li>Press Find ladder. Each tile is one word. The arrow is a single letter change.</li>
-      </ol>
-    </section>
-    <section class="prose faq" id="faq">
-      <h2>FAQ</h2>
-      <details open>
-        <summary>What is a word ladder?</summary>
-        <p>A chain of real words. Each step changes exactly one letter and keeps the same length. COLD can become CORD, CARD, WARD, then WARM.</p>
-      </details>
-      <details>
-        <summary>Why was no ladder found?</summary>
-        <p>Both words must be in ENABLE, the same length, and between 3 and 6 letters. Some pairs never meet. A max-steps limit can also hide a longer chain.</p>
-      </details>
-      <details>
-        <summary>Which dictionary does this use?</summary>
-        <p>The same ENABLE list as the <a href="/">word unscrambler</a>. The search stays in your browser.</p>
-      </details>
-      <details>
-        <summary>What does max steps do?</summary>
-        <p>Blank means the shortest ladder of any length. A number refuses ladders with more changes than that.</p>
-      </details>
-    </section>
-    <div class="related">
-      <a class="card" href="/anagram-solver"><h3>Anagram solver</h3><p>Use every letter, instead of changing one.</p></a>
-      <a class="card" href="/jumble-solver"><h3>Jumble solver</h3><p>Exact anagrams for a scrambled word.</p></a>
-      <a class="card" href="/"><h3>Word unscrambler</h3><p>Every shorter word from a rack of letters.</p></a>
-    </div>
   </main>
   <footer class="site-footer">
     <div class="wrap footer-grid">
       <div>
         <p class="footer-head">Tools</p>
         <a href="/">Word unscrambler</a>
+        <a href="/daily">Daily scramble</a>
         <a href="/anagram-solver">Anagram solver</a>
-        <a href="/word-ladder-solver">Word ladder solver</a>
-        <a href="/jumble-solver">Jumble solver</a>
-        <a href="/wordle-helper">Wordle helper</a>
         <a href="/scrabble-word-finder">Scrabble word finder</a>
+        <a href="/word-ladder-solver">Word ladder solver</a>
       </div>
       <div>
         <p class="footer-head">Site</p>
@@ -256,7 +209,8 @@
       });
     })();
   </script>
-  <script src="/word-ladder.js" defer></script>
+  <script src="/daily-share.js" defer></script>
+  <script src="/daily.js" defer></script>
   <script src="/help.js" defer></script>
 </body>
 </html>

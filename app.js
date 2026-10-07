@@ -920,7 +920,7 @@
       document.title = v ? ("Scramble " + v + " – Word scrambler") : BASE_TITLE;
       return;
     }
-    document.title = v ? ("Unscramble " + v + " – Word Unscrambler") : BASE_TITLE;
+    document.title = v ? ("Unscramble " + v + " – Letters Unscrambler") : BASE_TITLE;
   }
 
   let lastRack = "";
@@ -1165,33 +1165,25 @@
       seen.add(href);
       links.push([href, label]);
     }
-    if (n === 5) {
-      add("/wordle-helper", "Wordle helper");
-      add("/5-letter-words", "All 5-letter words");
+    const qLink = raw ? "?q=" + encodeURIComponent(raw) : "";
+    if (raw) {
+      add("/anagram-solver" + qLink, "Anagrams");
+      add("/scrabble-word-finder" + qLink, "Scrabble");
+      add("/jumble-solver" + qLink, "Jumble");
+      add("/crossword-solver" + qLink, "Crossword");
+      add("/scrabble-score-calculator" + qLink, "Score");
+      if (n === 5) add("/wordle-helper" + qLink, "Wordle");
+      if (n >= 3 && n <= 7 && raw.indexOf("?") === -1) add("/spelling-bee" + qLink, "Spelling Bee");
+      if (n >= 3 && n <= 6 && raw.indexOf("?") === -1) add("/word-ladder-solver" + qLink, "Word ladder");
+      if (n === 16 && raw.indexOf("?") === -1) add("/boggle-solver" + qLink, "Boggle");
     }
-    if (n === 7) {
-      add("/scrabble-word-finder", "Scrabble finder");
-      add("/bingo-stems", "Bingo stems");
-      add("/7-letter-words", "All 7-letter words");
-    }
+    if (n === 5) add("/5-letter-words", "All 5-letter words");
+    if (n === 7) add("/7-letter-words", "All 7-letter words");
     if (n === 2) add("/2-letter-words", "Two-letter words");
     if (n >= 2 && n <= 10 && n !== 5 && n !== 7) add("/" + n + "-letter-words", n + "-letter list");
-    if (mode !== "anagram" && n >= 3) add("/anagram-solver?q=" + encodeURIComponent(raw), "Anagrams only");
-    add("/jumble-solver", "Jumble solver");
-    add("/word-generator", "Word generator");
-    add("/spelling-bee", "Spelling Bee helper");
-    add("/letter-boxed", "Letter Boxed");
-    add("/text-twist-solver", "Text Twist");
-    add("/crossword-solver", "Crossword solver");
-    add("/hangman-solver", "Hangman solver");
-    add("/word-checker", "Check a word");
-    if (n === 5) add("/5-letter-words-starting-with", "5-letter starting with");
-    else add("/words-starting-with", "Words starting with");
-    add("/words-ending-with", "Words ending with");
-    add("/words-containing", "Words containing");
     nav.hidden = false;
     nav.replaceChildren();
-    nav.appendChild(el("p", "try-label", "Play these next"));
+    nav.appendChild(el("p", "try-label", raw ? "Try these letters in…" : "Play these next"));
     const row = el("div", "examples");
     links.forEach(([href, label]) => {
       const a = el("a", "chip", label);
@@ -1540,7 +1532,7 @@
 
   $("share")?.addEventListener("click", async () => {
     const q = lettersEl.value.trim().toUpperCase();
-    const data = { title: q ? "Words from " + q : "Word Unscrambler", url: location.href };
+    const data = { title: q ? "Words from " + q : "Letters Unscrambler", url: location.href };
     try {
       if (navigator.share) await navigator.share(data);
       else {
@@ -1577,7 +1569,6 @@
     renderRecents();
   }
 
-  const DAILY_WORDS = "LETTERS PUZZLES ENGLISH PLAYING READING WRITING NATURAL STRANGE RESULTS MACHINE ALREADY PROBLEM SERVICE PICTURE BETWEEN WITHOUT GREATER ANOTHER BECAUSE THROUGH JUMBLED RACKETS FINDERS SOLVING WORDING".split(" ");
   function dayKey() {
     const d = new Date();
     return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
@@ -1600,13 +1591,10 @@
     const out = arr.join("");
     return out === word ? word.slice(1) + word[0] : out;
   }
-  function dailySeed() {
-    return Number(dayKey().replace(/-/g, "")) || 1;
-  }
-  const dailyAnswer = DAILY_WORDS[Math.floor(mulberry(dailySeed())() * DAILY_WORDS.length)];
-  const dailyScramble = scramble(dailyAnswer, dailySeed() + 17);
-
   const DS = globalThis.DailyShare;
+  const todayPuzzle = DS && DS.puzzle ? DS.puzzle(new Date()) : { answer: "", scramble: "" };
+  const dailyAnswer = todayPuzzle.answer;
+  const dailyScramble = todayPuzzle.scramble;
   function loadDailyStats() {
     if (!DS) return { played: 0, streak: 0, best: 0, solved: "", tries: 0, triesDay: "", solvedTries: 0 };
     try {
