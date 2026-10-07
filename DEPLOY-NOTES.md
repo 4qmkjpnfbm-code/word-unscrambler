@@ -29,6 +29,9 @@ Keys are paths with no leading slash. Upload these changed files:
 - `2-letter-words.html`
 - `about.html`
 - `contact.html`
+- `how-it-works.html`
+- `index.html`
+- `modern-v42.css`
 - `feedback.html`
 - `guide-blank-tiles.html`
 - `guide-how-to-unscramble.html`
