@@ -470,6 +470,11 @@ html[data-theme="light"] .stage-tool .daily {
   margin: 8px 0 0;
   font-variant-numeric: tabular-nums;
 }
+.reviewed {
+  margin: 0 0 16px;
+  color: #5f6368;
+  font-size: 0.875rem;
+}
 .ladder-row { display: flex; flex-wrap: wrap; gap: 12px; }
 .ladder-row label { display: block; font-weight: 500; margin-bottom: 8px; }
 .ladder-row input[type="text"],
@@ -1036,6 +1041,7 @@ html[data-theme="dark"] .stage-tool .daily {
 }
 html[data-theme="dark"] .daily .daily-word,
 html[data-theme="dark"] .stage-tool .daily .daily-word { color: #e8eaed !important; }
+html[data-theme="dark"] .reviewed { color: #9aa0a6 !important; }
 html[data-theme="dark"] .daily-stats dt,
 html[data-theme="dark"] .daily-countdown,
 html[data-theme="dark"] .ladder-arrow,

@@ -64,6 +64,18 @@ test("shortest ladder changes one letter per step", () => {
   }
 });
 
+test("author bio stays hidden until Harry replaces the placeholder", () => {
+  const about = fs.readFileSync(new URL("../about.html", import.meta.url), "utf8");
+  const bio = fs.readFileSync(new URL("../author-bio.html", import.meta.url), "utf8");
+  assert.match(about, /id="author" hidden/);
+  assert.match(bio, /PLACEHOLDER/);
+  assert.match(about, /Last reviewed 7 October 2026/);
+  for (const name of ["guide-how-to-unscramble.html", "guide-blank-tiles.html", "how-it-works.html"]) {
+    const html = fs.readFileSync(new URL("../" + name, import.meta.url), "utf8");
+    assert.match(html, /Last reviewed 7 October 2026/);
+  }
+});
+
 test("max steps and missing words produce no ladder", () => {
   const words = ["cat", "cot", "cog", "dog"];
   assert.equal(ladder.shortestLadder(words, "cat", "dog", 2).path, null);
