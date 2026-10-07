@@ -178,6 +178,22 @@ test("daily archive is stable and today’s share text hides the answer", () => 
   assert.match(app, /scrabble-score-calculator" \+ qLink/);
 });
 
+test("helpfulness sends a yes or no and never the letters", () => {
+  const js = fs.readFileSync(new URL("../help.js", import.meta.url), "utf8");
+  assert.match(js, /typeof gtag === "function"/);
+  assert.match(js, /"helpfulness"/);
+  assert.match(js, /location\.pathname/);
+  assert.equal(js.includes("location.search"), false);
+  assert.equal(js.includes("localStorage"), false);
+  assert.equal(js.includes("letters"), false);
+  const worker = fs.readFileSync(new URL("../worker.js", import.meta.url), "utf8");
+  assert.match(worker, /help\.js/);
+  for (const name of ["index.html", "word-ladder-solver.html", "guide-how-to-unscramble.html", "how-it-works.html", "boggle-solver.html"]) {
+    const html = fs.readFileSync(new URL("../" + name, import.meta.url), "utf8");
+    assert.match(html, /src="\/help\.js"/);
+  }
+});
+
 test("max steps and missing words produce no ladder", () => {
   const words = ["cat", "cot", "cog", "dog"];
   assert.equal(ladder.shortestLadder(words, "cat", "dog", 2).path, null);
