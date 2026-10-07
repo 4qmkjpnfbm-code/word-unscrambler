@@ -31,6 +31,7 @@ Keys are paths with no leading slash. Upload these changed files:
 - `contact.html`
 - `how-it-works.html`
 - `index.html`
+- `app.js`
 - `modern-v42.css`
 - `feedback.html`
 - `guide-blank-tiles.html`
@@ -47,3 +48,5 @@ Keys are paths with no leading slash. Upload these changed files:
 - `word-scrambler.html`
 
 `seo-redirect.mjs` is part of the Worker bundle, not a KV key. `robots.txt` is unchanged and already points at the sitemap.
+
+The visual polish does not change `worker.js` again. It does change `index.html`, `app.js` and `modern-v42.css`, which are in the list above.

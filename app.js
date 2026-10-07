@@ -802,21 +802,30 @@
         frag.appendChild(note);
       }
     }
+    let topScore = 0;
+    let topMarked = false;
+    for (let ti = 0; ti < matches.length; ti++) if (matches[ti].score > topScore) topScore = matches[ti].score;
+    const badgeHue = [210, 262, 174, 32, 4, 282, 196, 152, 340, 220, 250, 16, 188, 128];
     lens.forEach((len) => {
       const group = el("div", "group");
       group.id = "len-" + len;
+      group.style.setProperty("--badge", "hsl(" + badgeHue[(len + badgeHue.length) % badgeHue.length] + " 72% 42%)");
       const title = el("div", "group-title");
       const words = grouped[len];
       if (sortBy === "alpha") words.sort((a, b) => a.word.localeCompare(b.word));
       else words.sort((a, b) => b.score - a.score || a.word.localeCompare(b.word));
       const shown = words.length > MAX_PER_LEN ? words.slice(0, MAX_PER_LEN) : words;
       if (shown.length < words.length) truncated = true;
-      title.appendChild(el("span", "", len + "-letter words"));
+      title.appendChild(el("span", "len-badge", len + " letters"));
       title.appendChild(el("span", "", words.length.toLocaleString("en-GB") + (shown.length < words.length ? " · showing " + shown.length : "")));
       const grid = el("div", "grid");
       shown.forEach((m) => {
         const card = el("button", (m.pangram || (mode !== "bee" && mode !== "gen" && mode !== "boxed" && m.len >= 7 && m.len === maxLen)) ? "word bingo" : "word", null);
         card.type = "button";
+        if (!topMarked && topScore > 0 && m.score === topScore) {
+          card.classList.add("is-top");
+          topMarked = true;
+        }
         if (typeof dailyAnswer === "string" && m.word === dailyAnswer.toLowerCase()) card.classList.add("daily-hit");
         card.dataset.word = m.word;
         card.appendChild(el("b", "", m.word));

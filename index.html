@@ -121,7 +121,7 @@
   <link rel="stylesheet" href="/modern-v39.css?v=47" />
   <link rel="stylesheet" href="/modern-v40.css?v=47" />
   <link rel="stylesheet" href="/modern-v41.css?v=47" />
-  <link rel="stylesheet" href="/modern-v42.css?v=4" />
+  <link rel="stylesheet" href="/modern-v42.css?v=5" />
 </head>
 <body data-tool="subset" class="cinematic">
   <noscript><p class="wrap">This word unscrambler needs JavaScript. Meanwhile, browse the <a href="/2-letter-words">two-letter word list</a>, <a href="/5-letter-words">5-letter words</a> or <a href="/how-it-works">how it works</a>.</p></noscript>
@@ -150,6 +150,7 @@
     <div class="stage-copy home-copy">
       <p class="kicker">Word unscrambler · 168,000 ENABLE words</p>
       <h1 class="split-title">Make words from letters</h1>
+      <p class="hero-rack" id="heroRack" aria-hidden="true"><span class="htile" data-o="0">L<i>1</i></span><span class="htile" data-o="1">I<i>1</i></span><span class="htile" data-o="2">S<i>1</i></span><span class="htile" data-o="3">T<i>1</i></span><span class="htile" data-o="4">E<i>1</i></span><span class="htile" data-o="5">N<i>1</i></span></p>
       <p class="lede">Type your rack. Every valid English word appears as you type — including shorter leftovers.</p>
     </div>
     <div class="stage-tool">
@@ -160,6 +161,7 @@
         <button class="primary" id="go" type="button">Unscramble</button>
       </div>
       <p class="coach" id="coach">Use ? for a blank tile.</p>
+      <div class="tiles" id="tiles" aria-hidden="true"></div>
     </section>
   <section class="panel" aria-label="Solver">
       <div class="keypad" id="keypad" aria-label="Letter keys"><div class="key-row"><button type="button" class="key">Q</button><button type="button" class="key">W</button><button type="button" class="key">E</button><button type="button" class="key">R</button><button type="button" class="key">T</button><button type="button" class="key">Y</button><button type="button" class="key">U</button><button type="button" class="key">I</button><button type="button" class="key">O</button><button type="button" class="key">P</button></div><div class="key-row"><button type="button" class="key">A</button><button type="button" class="key">S</button><button type="button" class="key">D</button><button type="button" class="key">F</button><button type="button" class="key">G</button><button type="button" class="key">H</button><button type="button" class="key">J</button><button type="button" class="key">K</button><button type="button" class="key">L</button></div><div class="key-row"><button type="button" class="key key-wide" aria-label="Delete last letter">⌫</button><button type="button" class="key">Z</button><button type="button" class="key">X</button><button type="button" class="key">C</button><button type="button" class="key">V</button><button type="button" class="key">B</button><button type="button" class="key">N</button><button type="button" class="key">M</button><button type="button" class="key key-wide" aria-label="Blank tile">?</button></div></div>
@@ -172,7 +174,6 @@
     </div>
     <div id="results" class="empty"><p>Type a rack, or a start / end / contains filter — no letters required.</p></div>
       <nav id="nextPlay" class="next-play" hidden aria-label="Related tools"></nav>
-      <div class="tiles" id="tiles" aria-hidden="true"></div>
       <div class="modes" role="tablist" aria-label="Mode">
         <button role="tab" class="mode" type="button" data-mode="subset" aria-selected="true">All words</button>
         <button role="tab" class="mode" type="button" data-mode="anagram" aria-selected="false">Anagrams</button>
@@ -226,34 +227,34 @@
     </div>
   </section>
   <div class="wrap after-stage">
-    <nav class="tool-row" aria-label="Tools">
-      <a class="tool-card is-feature" href="#letters"><em>Start here</em><strong>Word unscrambler</strong><span>Type a rack. Every ENABLE word, including the short ones.</span></a>
-      <a class="tool-card" href="/anagram-solver"><em>Anagrams</em><strong>Anagram solver</strong><span>LISTEN becomes SILENT, ENLIST, TINSEL.</span></a>
-      <a class="tool-card" href="/wordle-helper"><em>Wordle</em><strong>Wordle helper</strong><span>Greens, yellows and greys. Five letters only.</span></a>
-      <a class="tool-card" href="/scrabble-word-finder"><em>Scrabble</em><strong>Scrabble finder</strong><span>Scores, bingos and hooks for a seven-tile rack.</span></a>
-      <a class="tool-card" href="/scrabble-score-calculator"><em>Score</em><strong>Scrabble score calculator</strong><span>Premiums and the bingo for one word.</span></a>
-      <a class="tool-card" href="/boggle-solver"><em>Boggle</em><strong>Boggle solver</strong><span>Every word on a 4×4 board. Q counts as QU.</span></a>
-      <a class="tool-card" href="/crossword-solver"><em>Crossword</em><strong>Crossword solver</strong><span>Use ? for the squares you cannot see.</span></a>
-      <a class="tool-card" href="/spelling-bee"><em>Spelling Bee</em><strong>Spelling Bee helper</strong><span>Centre letter, hive and pangrams.</span></a>
-      <a class="tool-card" href="/jumble-solver"><em>Jumble</em><strong>Jumble solver</strong><span>Exact anagrams for newspaper jumbles and Text Twist.</span></a>
-      <a class="tool-card" href="/word-ladder-solver"><em>Ladder</em><strong>Word ladder solver</strong><span>Change one letter at a time. Shortest path.</span></a>
-      <a class="tool-card" href="/word-checker"><em>Check</em><strong>Word checker</strong><span>Is this a valid ENABLE word? Scores and hooks.</span></a>
-      <a class="tool-card" href="/word-generator"><em>Generate</em><strong>Word generator</strong><span>Reuse letters. Random English word.</span></a>
-      <a class="tool-card" href="/letter-boxed"><em>Boxed</em><strong>Letter Boxed helper</strong><span>12-letter square. Hop sides.</span></a>
-      <a class="tool-card" href="/word-lists"><em>Lists</em><strong>Word lists</strong><span>Two-letter words through ten, plus Q without U.</span></a>
-      <a class="tool-card" href="/2-letter-words"><em>Endgames</em><strong>Two-letter words</strong><span>The short list that wins close games.</span></a>
-      <a class="tool-card" href="/q-without-u"><em>Learn</em><strong>Q without U</strong><span>QI, QAT, QOPH — dump the Q with no U-tile.</span></a>
-      <a class="tool-card" href="/words-starting-with"><em>Prefixes</em><strong>Words starting with</strong><span>A–Z prefixes. No rack required.</span></a>
-      <a class="tool-card" href="/guides/how-to-unscramble#which-word"><em>Guide</em><strong>Which word to play</strong><span>The top score can need two Z tiles. How to read the list.</span></a>
+    <nav class="tool-row reveal" aria-label="Tools">
+      <a class="tool-card is-feature" href="#letters"><i class="tool-ico" aria-hidden="true">W</i><em>Start here</em><strong>Word unscrambler</strong><span>Type a rack. Every ENABLE word, including the short ones.</span></a>
+      <a class="tool-card" href="/anagram-solver"><i class="tool-ico" aria-hidden="true">A</i><em>Anagrams</em><strong>Anagram solver</strong><span>LISTEN becomes SILENT, ENLIST, TINSEL.</span></a>
+      <a class="tool-card" href="/wordle-helper"><i class="tool-ico" aria-hidden="true">5</i><em>Wordle</em><strong>Wordle helper</strong><span>Greens, yellows and greys. Five letters only.</span></a>
+      <a class="tool-card" href="/scrabble-word-finder"><i class="tool-ico" aria-hidden="true">S</i><em>Scrabble</em><strong>Scrabble finder</strong><span>Scores, bingos and hooks for a seven-tile rack.</span></a>
+      <a class="tool-card" href="/scrabble-score-calculator"><i class="tool-ico" aria-hidden="true">+</i><em>Score</em><strong>Scrabble score calculator</strong><span>Premiums and the bingo for one word.</span></a>
+      <a class="tool-card" href="/boggle-solver"><i class="tool-ico" aria-hidden="true">B</i><em>Boggle</em><strong>Boggle solver</strong><span>Every word on a 4×4 board. Q counts as QU.</span></a>
+      <a class="tool-card" href="/crossword-solver"><i class="tool-ico" aria-hidden="true">C</i><em>Crossword</em><strong>Crossword solver</strong><span>Use ? for the squares you cannot see.</span></a>
+      <a class="tool-card" href="/spelling-bee"><i class="tool-ico" aria-hidden="true">✶</i><em>Spelling Bee</em><strong>Spelling Bee helper</strong><span>Centre letter, hive and pangrams.</span></a>
+      <a class="tool-card" href="/jumble-solver"><i class="tool-ico" aria-hidden="true">J</i><em>Jumble</em><strong>Jumble solver</strong><span>Exact anagrams for newspaper jumbles and Text Twist.</span></a>
+      <a class="tool-card" href="/word-ladder-solver"><i class="tool-ico" aria-hidden="true">L</i><em>Ladder</em><strong>Word ladder solver</strong><span>Change one letter at a time. Shortest path.</span></a>
+      <a class="tool-card" href="/word-checker"><i class="tool-ico" aria-hidden="true">✓</i><em>Check</em><strong>Word checker</strong><span>Is this a valid ENABLE word? Scores and hooks.</span></a>
+      <a class="tool-card" href="/word-generator"><i class="tool-ico" aria-hidden="true">G</i><em>Generate</em><strong>Word generator</strong><span>Reuse letters. Random English word.</span></a>
+      <a class="tool-card" href="/letter-boxed"><i class="tool-ico" aria-hidden="true">□</i><em>Boxed</em><strong>Letter Boxed helper</strong><span>12-letter square. Hop sides.</span></a>
+      <a class="tool-card" href="/word-lists"><i class="tool-ico" aria-hidden="true">#</i><em>Lists</em><strong>Word lists</strong><span>Two-letter words through ten, plus Q without U.</span></a>
+      <a class="tool-card" href="/2-letter-words"><i class="tool-ico" aria-hidden="true">2</i><em>Endgames</em><strong>Two-letter words</strong><span>The short list that wins close games.</span></a>
+      <a class="tool-card" href="/q-without-u"><i class="tool-ico" aria-hidden="true">Q</i><em>Learn</em><strong>Q without U</strong><span>QI, QAT, QOPH — dump the Q with no U-tile.</span></a>
+      <a class="tool-card" href="/words-starting-with"><i class="tool-ico" aria-hidden="true">Aa</i><em>Prefixes</em><strong>Words starting with</strong><span>A–Z prefixes. No rack required.</span></a>
+      <a class="tool-card" href="/guides/how-to-unscramble#which-word"><i class="tool-ico" aria-hidden="true">?</i><em>Guide</em><strong>Which word to play</strong><span>The top score can need two Z tiles. How to read the list.</span></a>
     </nav>
-    <aside class="daily" id="daily" aria-label="Today’s scramble">
+    <aside class="daily reveal" id="daily" aria-label="Today’s scramble">
       <div>
         <p class="try-label">Today’s scramble <span id="dailyNum"></span></p>
         <p class="daily-word" id="dailyScramble">·······</p>
         <p class="mini" id="dailyMeta">A new seven-letter jumble every day.</p>
         <dl class="daily-stats">
           <div><dt>Played</dt><dd id="dailyPlayed">0</dd></div>
-          <div><dt>Streak</dt><dd id="dailyStreak">0</dd></div>
+          <div><dt>Streak <span class="flame" aria-hidden="true">🔥</span></dt><dd id="dailyStreak">0</dd></div>
           <div><dt>Best</dt><dd id="dailyBest">0</dd></div>
           <div><dt>Today</dt><dd id="dailyToday">Not yet</dd></div>
         </dl>
@@ -282,8 +283,8 @@
     </aside>
 
     <script src="/daily-share.js" defer></script>
-    <script src="/app.js?v=26" defer></script>
-  <ol class="story-beats" id="story-beats" aria-label="Tips">
+    <script src="/app.js?v=27" defer></script>
+  <ol class="story-beats reveal" id="story-beats" aria-label="Tips">
       <li>
         <p class="try-label">01 · Type</p>
         <h3>Put the rack in the box</h3>
@@ -300,13 +301,13 @@
         <p>92 ENABLE words stay in this browser. Wordle, Scrabble and anagrams are one tap away.</p>
       </li>
     </ol>
-  <section class="bento" aria-label="Recent racks">
+  <section class="bento reveal" aria-label="Recent racks">
       <div class="bento-card" id="recentsCard">
         <p class="try-label">Recent racks</p>
         <div id="recents" class="examples"></div>
       </div>
     </section>
-  <section class="prose" id="how">
+  <section class="prose reveal" id="how">
     <h2>Make words from any jumble of letters</h2>
     <p><strong>Unscramble letters</strong> by typing the rack, not the board. A word unscrambler lists every valid English word those tiles can make, including shorter plays. Type <a href="/?q=LISTEN">LISTEN</a> and ENABLE returns silent, enlist, tinsel, inlets, elints plus 87 shorter words such as isle, tile, sent, in, is and it. Solving stays in this browser against the public ENABLE list (~168,000 words). Nothing you type is sent to a server.</p>
     <dl>
@@ -331,7 +332,7 @@
     <p>Some words at the top of the list cannot be played from an English Scrabble set. Type <a href="/?q=FIZZY">FIZZY</a>: the finder ranks FIZZY at 29 and FIZZ at 25, but both need two Z tiles and the set has one. With no blank, the play is <a href="/?q=FIZ">FIZ</a> at 15. A blank scores 0, so FIZZ with a blank is also 15. The rest of the method — tied racks, the tiles you keep, and where Scrabble and Words With Friends disagree — is in <a href="/guides/how-to-unscramble#which-word">how to unscramble, then choose</a>.</p>
     <p>Updated <time datetime="2026-10-04">4 October 2026</time>.</p>
   </section>
-  <section class="prose faq" id="faq">
+  <section class="prose faq reveal" id="faq">
     <h2>FAQ</h2>
     <details open>
       <summary>What is a word unscrambler?</summary>
@@ -468,5 +469,38 @@
   </script>
   <script>addEventListener("load",function(){if(document.querySelector("script[data-profit]"))return;var s=document.createElement("script");s.src="/profit-v1.js";s.defer=true;s.setAttribute("data-profit","1");document.body.appendChild(s);},{once:true});</script>
   <script src="/help.js" defer></script>
+  <script>
+    (function () {
+      var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduce) return;
+      document.documentElement.classList.add("js-motion");
+      var nodes = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window) {
+        var io = new IntersectionObserver(function (entries) {
+          for (var i = 0; i < entries.length; i++) {
+            if (!entries[i].isIntersecting) continue;
+            entries[i].target.classList.add("is-in");
+            io.unobserve(entries[i].target);
+          }
+        }, { rootMargin: "0px 0px -32px 0px" });
+        for (var n = 0; n < nodes.length; n++) io.observe(nodes[n]);
+      }
+      var rack = document.getElementById("heroRack");
+      if (!rack) return;
+      var step = 0;
+      var timer = setInterval(function () {
+        var tiles = rack.children;
+        step++;
+        var a = step % tiles.length;
+        var b = (step * 3) % tiles.length;
+        if (a !== b) rack.insertBefore(tiles[b], tiles[a]);
+        if (step < 6) return;
+        clearInterval(timer);
+        var ordered = Array.prototype.slice.call(rack.children);
+        ordered.sort(function (x, y) { return Number(x.dataset.o) - Number(y.dataset.o); });
+        for (var k = 0; k < ordered.length; k++) rack.appendChild(ordered[k]);
+      }, 130);
+    })();
+  </script>
 </body>
 </html>
