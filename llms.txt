@@ -1,4 +1,4 @@
-# Word Unscrambler
+# Letters Unscrambler
 
 > Free English word unscrambler: https://lettersunscrambler.com/
 

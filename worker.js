@@ -205,7 +205,7 @@ async function handleFeedback(req) {
   const email = clip(data.email, 120);
   const path = clip(data.path, 180);
   const payload = {
-    _subject: "Word Unscrambler feedback (" + kind + ")",
+    _subject: "Letters Unscrambler feedback (" + kind + ")",
     _template: "table",
     _captcha: "false",
     kind: kind,
@@ -302,7 +302,7 @@ function injectModern(htmlBuf) {
     if (out.indexOf("</head>") !== -1) out = out.replace("</head>", pre + "\n</head>");
   }
   if (out.indexOf("application/ld+json") === -1 && out.indexOf("</head>") !== -1) {
-    const schema = '<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Word Unscrambler","url":"https://lettersunscrambler.com/","inLanguage":"en-GB","publisher":{"@id":"https://lettersunscrambler.com/#org"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://lettersunscrambler.com/?q={search_term_string}"},"query-input":"required name=search_term_string"}},{"@type":"Organization","@id":"https://lettersunscrambler.com/#org","name":"Word Unscrambler","legalName":"HDK Distribution Ltd","url":"https://lettersunscrambler.com/","logo":{"@type":"ImageObject","url":"https://lettersunscrambler.com/og.jpg"},"address":{"@type":"PostalAddress","addressCountry":"GB"}}]}</script>';
+    const schema = '<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Letters Unscrambler","url":"https://lettersunscrambler.com/","inLanguage":"en-GB","publisher":{"@id":"https://lettersunscrambler.com/#org"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://lettersunscrambler.com/?q={search_term_string}"},"query-input":"required name=search_term_string"}},{"@type":"Organization","@id":"https://lettersunscrambler.com/#org","name":"Letters Unscrambler","legalName":"HDK Distribution Ltd","url":"https://lettersunscrambler.com/","logo":{"@type":"ImageObject","url":"https://lettersunscrambler.com/og.jpg"},"address":{"@type":"PostalAddress","addressCountry":"GB"}}]}</script>';
     out = out.replace("</head>", schema + "\n</head>");
   }
   if (out.indexOf('href="/feedback"') === -1 && out.indexOf('href="/contact">Contact</a>') !== -1) {
@@ -383,7 +383,7 @@ function searchTitle(mode, letters, base) {
   if (mode === "gen") return "Words from " + letters + " – Word generator";
   if (mode === "boxed") return "Letter Boxed – " + letters;
   if (mode === "scramble") return "Scramble " + letters + " – Word scrambler";
-  return "Unscramble " + letters + " – Word Unscrambler";
+  return "Unscramble " + letters + " – Letters Unscrambler";
 }
 function nextTools(path, mode, letters) {
   const enc = encodeURIComponent(letters);

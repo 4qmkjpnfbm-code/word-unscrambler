@@ -920,7 +920,7 @@
       document.title = v ? ("Scramble " + v + " – Word scrambler") : BASE_TITLE;
       return;
     }
-    document.title = v ? ("Unscramble " + v + " – Word Unscrambler") : BASE_TITLE;
+    document.title = v ? ("Unscramble " + v + " – Letters Unscrambler") : BASE_TITLE;
   }
 
   let lastRack = "";
@@ -1540,7 +1540,7 @@
 
   $("share")?.addEventListener("click", async () => {
     const q = lettersEl.value.trim().toUpperCase();
-    const data = { title: q ? "Words from " + q : "Word Unscrambler", url: location.href };
+    const data = { title: q ? "Words from " + q : "Letters Unscrambler", url: location.href };
     try {
       if (navigator.share) await navigator.share(data);
       else {
