@@ -442,6 +442,75 @@ html[data-theme="light"] .stage-tool .daily {
   backdrop-filter: none !important;
 }
 .daily .daily-word, .stage-tool .daily .daily-word { color: #202124 !important; letter-spacing: 0.12em; }
+.daily-actions { display: flex; flex-direction: column; gap: 4px; align-items: flex-end; }
+.daily-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin: 8px 0 0;
+  min-height: 44px;
+}
+.daily-stats dt {
+  margin: 0;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #5f6368;
+  font-weight: 500;
+}
+.daily-stats dd {
+  margin: 0;
+  min-height: 1.25em;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: #202124;
+}
+.daily-countdown {
+  min-height: 1.4em;
+  margin: 8px 0 0;
+  font-variant-numeric: tabular-nums;
+}
+.ladder-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.ladder-row label { display: block; font-weight: 500; margin-bottom: 8px; }
+.ladder-row input[type="text"],
+.ladder-row input[type="number"] {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid #dadce0;
+  border-radius: 12px;
+  padding: 0 14px;
+  background: #fff;
+  color: #202124;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.ladder-row input[type="number"] { letter-spacing: 0; text-transform: none; }
+.ladder-steps { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-height: 48px; }
+.ladder-step {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: 12px;
+  border: 1px solid #dadce0;
+  background: #fff;
+  color: #202124;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.ladder-arrow { color: #5f6368; }
+.ladder-empty {
+  margin: 0;
+  padding: 16px;
+  border: 1px dashed #dadce0;
+  border-radius: 16px;
+  background: #f8f9fa;
+  color: #5f6368;
+}
+@media (max-width: 599px) {
+  .daily-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 
 .tool-row {
   display: grid;
@@ -967,6 +1036,22 @@ html[data-theme="dark"] .stage-tool .daily {
 }
 html[data-theme="dark"] .daily .daily-word,
 html[data-theme="dark"] .stage-tool .daily .daily-word { color: #e8eaed !important; }
+html[data-theme="dark"] .daily-stats dt,
+html[data-theme="dark"] .daily-countdown,
+html[data-theme="dark"] .ladder-arrow,
+html[data-theme="dark"] .ladder-empty { color: #9aa0a6 !important; }
+html[data-theme="dark"] .daily-stats dd { color: #e8eaed !important; }
+html[data-theme="dark"] .ladder-row input[type="text"],
+html[data-theme="dark"] .ladder-row input[type="number"],
+html[data-theme="dark"] .ladder-step {
+  background: #303134 !important;
+  color: #e8eaed !important;
+  border-color: #3c4043 !important;
+}
+html[data-theme="dark"] .ladder-empty {
+  background: #202124 !important;
+  border-color: #3c4043 !important;
+}
 
 html[data-theme="dark"] .tool-card,
 html[data-theme="dark"] .story-beats li,

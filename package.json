@@ -3,7 +3,8 @@
   "private": true,
   "description": "Local preview tooling for the Material 3 redesign. Do not deploy wrangler.toml.",
   "scripts": {
-    "preview": "wrangler dev -c wrangler.preview.toml --port 8912 --ip 127.0.0.1"
+    "preview": "wrangler dev -c wrangler.preview.toml --port 8912 --ip 127.0.0.1",
+    "test": "node --test scripts/features.test.mjs"
   },
   "devDependencies": {
     "wrangler": "^4.40.0"

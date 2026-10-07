@@ -1,86 +1,41 @@
-# Deploy dark mode
+# Deploy features-v1
 
-Draft branch `dark-mode`. Do not merge until Harry says so. Preview deploy, from a checkout of this branch:
+Draft branch `features-v1`. Do not merge until Harry says so. This environment does not deploy. Fetch the branch via codeload and deploy the preview yourself:
 
 ```bash
 npx wrangler deploy -c wrangler.preview.toml
 ```
 
-That publishes `lus-redesign-preview` only. No routes and no production KV binding.
+Use only `wrangler.preview.toml`. It publishes `lus-redesign-preview`, with `workers_dev` on, no routes, and no production KV binding. `preview-worker.js` serves this branch and still strips AdSense, GA4 and the consent bar.
 
 ## Worker
 
-`worker.js` did not change for this pass. The cutout reuses the existing names `img/listen-hero.avif` and `img/listen-hero.webp`, which are already on the allow-list. A production `wrangler deploy -c wrangler.toml` is not required.
+`worker.js` changed. The new page is not reachable on the live Worker until you deploy production after a merge:
+
+```bash
+npx wrangler deploy -c wrangler.toml
+```
+
+The change allow-lists `/word-ladder-solver` (file `word-ladder-solver.html`) plus `word-ladder.js` and `daily-share.js`. Without that deploy those URLs 404 even if the bytes are in KV.
+
+Do the KV upload first, then the Worker deploy, so the new allow-list and the new files go live together.
 
 ## KV keys to re-upload
 
-The live Worker prefers KV `SITE` when the value is longer than 20 bytes. Keys are paths with no leading slash.
+Keys are paths with no leading slash. The live Worker uses KV `SITE` when the value is longer than 20 bytes, so changed files must be uploaded again.
 
-Changed images (same keys, new transparent bytes):
+New:
 
-- `img/listen-hero.avif`
-- `img/listen-hero.webp`
+- `word-ladder-solver.html`
+- `word-ladder.js`
+- `daily-share.js`
 
-Changed brand files:
-
-- `favicon.svg`
-- `modern-v42.css`
-
-`manifest.webmanifest` already points at `/favicon.svg`, so the manifest file itself did not change.
-
-Every HTML file (theme script, and the home hero size):
+Changed:
 
 - `index.html`
-- `404.html`
-- `about.html`
-- `anagram-solver.html`
-- `bingo-stems.html`
-- `contact.html`
-- `crossword-solver.html`
-- `feedback.html`
-- `guide-blank-tiles.html`
-- `guide-how-to-unscramble.html`
-- `guide-pattern-solver.html`
-- `guide-scrabble-vs-wwf.html`
-- `guide-wordle-starters.html`
-- `hangman-solver.html`
-- `how-it-works.html`
-- `is-it-a-word.html`
-- `jqxz-words.html`
-- `jumble-solver.html`
-- `letter-boxed.html`
-- `multiple-word-unscrambler.html`
-- `privacy.html`
-- `q-without-u.html`
-- `scrabble-word-finder.html`
-- `spelling-bee.html`
-- `terms.html`
-- `text-twist-solver.html`
-- `unscramble-aeinrst.html`
-- `unscramble-airbag.html`
-- `unscramble-eagle.html`
-- `unscramble-listen.html`
-- `unscramble-pallet.html`
-- `unscramble-scrabble.html`
-- `unscramble.html`
-- `word-checker.html`
-- `word-generator.html`
-- `word-lists.html`
-- `word-scrambler.html`
-- `wordle-helper.html`
-- `words-containing.html`
-- `words-ending-with.html`
-- `words-starting-with.html`
-- `words-with-friends.html`
-- `2-letter-words.html`
-- `3-letter-words.html`
-- `4-letter-words.html`
-- `5-letter-words-starting-with.html`
-- `5-letter-words.html`
-- `6-letter-words.html`
-- `7-letter-words.html`
-- `8-letter-words.html`
-- `9-letter-words.html`
-- `10-letter-words.html`
+- `app.js`
+- `modern-v42.css`
+- `sitemap.xml`
+- `llms.txt`
 
-`stage.jpg`, `stage.avif` and `stage.webp` are not used by these pages (the home hero is the cutout). `og.jpg` is unchanged and was left out on purpose. No new filenames, so nothing new to add to the Worker allow-list.
+Ads stay after the results on the home page and on the ladder page. No new font or hero image.

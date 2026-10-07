@@ -1606,50 +1606,121 @@
   const dailyAnswer = DAILY_WORDS[Math.floor(mulberry(dailySeed())() * DAILY_WORDS.length)];
   const dailyScramble = scramble(dailyAnswer, dailySeed() + 17);
 
-  function dailyInit() {
-    const scrambleEl = $("dailyScramble");
-    if (!scrambleEl) return;
-    scrambleEl.textContent = dailyScramble;
-    const key = dayKey();
+  const DS = globalThis.DailyShare;
+  function loadDailyStats() {
+    if (!DS) return { played: 0, streak: 0, best: 0, solved: "", tries: 0, triesDay: "", solvedTries: 0 };
+    try {
+      const raw = JSON.parse(localStorage.getItem("wu_daily_stats") || "null");
+      if (raw && typeof raw === "object") {
+        return {
+          played: raw.played || 0,
+          streak: raw.streak || 0,
+          best: raw.best || 0,
+          solved: raw.solved || "",
+          tries: raw.tries || 0,
+          triesDay: raw.triesDay || "",
+          solvedTries: raw.solvedTries || 0
+        };
+      }
+    } catch {}
     let last = "";
     let streak = 0;
     try {
       last = localStorage.getItem("wu_daily_last") || "";
       streak = parseInt(localStorage.getItem("wu_daily_streak") || "0", 10) || 0;
     } catch {}
-    const solved = last === key;
+    return { played: last ? Math.max(streak, 1) : 0, streak: streak, best: streak, solved: last, tries: 0, triesDay: "", solvedTries: 0 };
+  }
+  function saveDailyStats(stats) {
+    try {
+      localStorage.setItem("wu_daily_stats", JSON.stringify(stats));
+      if (stats.solved) localStorage.setItem("wu_daily_last", stats.solved);
+      localStorage.setItem("wu_daily_streak", String(stats.streak || 0));
+    } catch {}
+  }
+  function paintDaily(stats) {
+    const key = dayKey();
+    const solved = stats.solved === key;
+    const num = $("dailyNum");
+    if (num && DS) num.textContent = "· #" + DS.puzzleNumber(new Date());
     const meta = $("dailyMeta");
-    if (meta) meta.textContent = solved ? "Solved · streak " + streak : "New seven-letter jumble · streak " + streak;
+    if (meta) meta.textContent = solved ? "Solved today" : "New seven-letter jumble";
+    const set = (id, v) => { const n = $(id); if (n) n.textContent = v; };
+    set("dailyPlayed", String(stats.played || 0));
+    set("dailyStreak", String(stats.streak || 0));
+    set("dailyBest", String(stats.best || 0));
+    set("dailyToday", solved ? "Solved" : "Not yet");
+    const share = $("dailyShare");
+    if (share) share.hidden = !solved;
     if (solved) $("daily")?.classList.add("is-solved");
+    const clock = $("dailyCountdown");
+    if (clock && DS) clock.textContent = DS.countdown(new Date());
+  }
+  function sameRack(a, b) {
+    const n = (s) => String(s || "").toUpperCase().replace(/[^A-Z]/g, "").split("").sort().join("");
+    return n(a) === n(b) && n(a).length > 0;
+  }
+  function dailyInit() {
+    const scrambleEl = $("dailyScramble");
+    if (!scrambleEl || !DS) return;
+    scrambleEl.textContent = dailyScramble;
+    paintDaily(loadDailyStats());
     $("dailyPlay")?.addEventListener("click", () => {
+      const key = dayKey();
+      let stats = loadDailyStats();
+      if (stats.solved !== key) {
+        stats = DS.recordTry(stats, key);
+        saveDailyStats(stats);
+        paintDaily(stats);
+      }
       lettersEl.value = dailyScramble;
       setMode("anagram");
       if (submitSearch()) return;
       lettersEl.focus();
     });
+    $("go")?.addEventListener("click", () => {
+      const key = dayKey();
+      let stats = loadDailyStats();
+      if (stats.solved === key || !sameRack(lettersEl.value, dailyAnswer)) return;
+      stats = DS.recordTry(stats, key);
+      saveDailyStats(stats);
+      paintDaily(stats);
+    }, true);
+    $("dailyShare")?.addEventListener("click", async () => {
+      const key = dayKey();
+      const stats = loadDailyStats();
+      if (stats.solved !== key) return;
+      const text = DS.shareLine(DS.puzzleNumber(new Date()), stats.solvedTries || 1, stats.streak || 0);
+      try {
+        if (navigator.share) {
+          await navigator.share({ text: text });
+          return;
+        }
+      } catch (e) {
+        if (e && e.name === "AbortError") return;
+      }
+      try {
+        await navigator.clipboard.writeText(text);
+        toast("Result copied");
+      } catch {}
+    });
+    setInterval(() => {
+      const clock = $("dailyCountdown");
+      if (clock) clock.textContent = DS.countdown(new Date());
+    }, 1000);
   }
   function maybeSolveDaily(matches) {
-    if (!matches || !matches.some((m) => m.word === dailyAnswer.toLowerCase())) return;
+    if (!DS || !matches || !matches.some((m) => m.word === dailyAnswer.toLowerCase())) return;
     const key = dayKey();
-    let last = "";
-    let streak = 0;
-    try {
-      last = localStorage.getItem("wu_daily_last") || "";
-      streak = parseInt(localStorage.getItem("wu_daily_streak") || "0", 10) || 0;
-    } catch {}
-    if (last === key) return;
-    const y = new Date();
-    y.setDate(y.getDate() - 1);
-    const yesterday = y.getFullYear() + "-" + String(y.getMonth() + 1).padStart(2, "0") + "-" + String(y.getDate()).padStart(2, "0");
-    streak = last === yesterday ? streak + 1 : 1;
-    try {
-      localStorage.setItem("wu_daily_last", key);
-      localStorage.setItem("wu_daily_streak", String(streak));
-    } catch {}
-    $("daily")?.classList.add("is-solved");
-    const meta = $("dailyMeta");
-    if (meta) meta.textContent = "Solved · streak " + streak;
-    toast("Daily solved · streak " + streak);
+    let stats = loadDailyStats();
+    if (stats.solved === key) return;
+    if (!sameRack(lettersEl.value, dailyAnswer) && stats.triesDay !== key) {
+      stats = DS.recordTry(stats, key);
+    }
+    stats = DS.applySolve(stats, key);
+    saveDailyStats(stats);
+    paintDaily(stats);
+    toast("Daily solved · streak " + stats.streak);
   }
 
   dailyInit();

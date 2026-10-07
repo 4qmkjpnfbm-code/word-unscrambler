@@ -227,11 +227,21 @@
     </section>
     <aside class="daily" id="daily" aria-label="Today’s scramble">
       <div>
-        <p class="try-label">Today’s scramble</p>
+        <p class="try-label">Today’s scramble <span id="dailyNum"></span></p>
         <p class="daily-word" id="dailyScramble">·······</p>
-        <p class="mini" id="dailyMeta">A new seven-letter jumble every day. Come back tomorrow.</p>
+        <p class="mini" id="dailyMeta">A new seven-letter jumble every day.</p>
+        <dl class="daily-stats">
+          <div><dt>Played</dt><dd id="dailyPlayed">0</dd></div>
+          <div><dt>Streak</dt><dd id="dailyStreak">0</dd></div>
+          <div><dt>Best</dt><dd id="dailyBest">0</dd></div>
+          <div><dt>Today</dt><dd id="dailyToday">Not yet</dd></div>
+        </dl>
+        <p class="mini daily-countdown" id="dailyCountdown">Next puzzle in 00h 00m 00s</p>
       </div>
-      <button class="ghost" id="dailyPlay" type="button">Play today’s</button>
+      <div class="daily-actions">
+        <button class="ghost" id="dailyPlay" type="button">Play today’s</button>
+        <button class="ghost" id="dailyShare" type="button" hidden>Share result</button>
+      </div>
     </aside>
     </div>
     </div>
@@ -244,6 +254,7 @@
       <a class="tool-card" href="/crossword-solver"><em>Crossword</em><strong>Crossword solver</strong><span>Use ? for the squares you cannot see.</span></a>
       <a class="tool-card" href="/spelling-bee"><em>Spelling Bee</em><strong>Spelling Bee helper</strong><span>Centre letter, hive and pangrams.</span></a>
       <a class="tool-card" href="/word-lists"><em>Lists</em><strong>Word lists</strong><span>Two-letter words through ten, plus Q without U.</span></a>
+      <a class="tool-card" href="/word-ladder-solver"><em>Ladder</em><strong>Word ladder solver</strong><span>Change one letter at a time. Shortest path.</span></a>
     </nav>
     <aside class="ad-region ad-after-results" id="adAfterResults" hidden aria-label="Advertisement">
       <p class="ad-label">Advertisement</p>
@@ -256,6 +267,7 @@
       </div>
     </aside>
 
+    <script src="/daily-share.js" defer></script>
     <script src="/app.js?v=26" defer></script>
   <ol class="story-beats" id="story-beats" aria-label="Tips">
       <li>
@@ -356,6 +368,7 @@
     <a class="card" href="/scrabble-word-finder"><h3>Scrabble word finder</h3><p>Scores, bingos and two-letter hooks for a seven-tile rack.</p></a>
     <a class="card" href="/guides/how-to-unscramble#which-word"><h3>Which word to play</h3><p>The top score can need two Z tiles. How to read the list before you play.</p></a>
     <a class="card" href="/anagram-solver"><h3>Anagram solver</h3><p>Use every letter. Find LISTEN → SILENT, ENLIST, TINSEL.</p></a>
+    <a class="card" href="/word-ladder-solver"><h3>Word ladder solver</h3><p>Turn one word into another, one letter at a time.</p></a>
     <a class="card" href="/wordle-helper"><h3>Wordle helper</h3><p>Greens, yellows and greys without leaving the page.</p></a>
     <a class="card" href="/2-letter-words"><h3>2-letter words</h3><p>124 two-letter words (ENABLE plus NWL and Collins additions) that win endgames.</p></a>
     <a class="card" href="/q-without-u"><h3>Q without U</h3><p>QI, QAT, QOPH, TRANQ — dump the Q with no U-tile.</p></a>
@@ -387,6 +400,7 @@
         <a href="/text-twist-solver">Text Twist solver</a>
         <a href="/is-it-a-word">Is it a word</a>
         <a href="/crossword-solver">Crossword solver</a>
+        <a href="/word-ladder-solver">Word ladder solver</a>
       </div>
       <div>
         <p class="footer-head">Word lists</p>
